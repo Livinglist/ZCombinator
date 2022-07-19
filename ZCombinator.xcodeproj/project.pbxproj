@@ -1,0 +1,731 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E50FB9E42886738D00AA325C /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9E32886738D00AA325C /* Tests_iOS.swift */; };
+		E50FB9E62886738D00AA325C /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9E52886738D00AA325C /* Tests_iOSLaunchTests.swift */; };
+		E50FB9F02886738D00AA325C /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9EF2886738D00AA325C /* Tests_macOS.swift */; };
+		E50FB9F22886738D00AA325C /* Tests_macOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9F12886738D00AA325C /* Tests_macOSLaunchTests.swift */; };
+		E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9C82886738B00AA325C /* ZCombinator.xcdatamodeld */; };
+		E50FB9F42886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9C82886738B00AA325C /* ZCombinator.xcdatamodeld */; };
+		E50FB9F52886738D00AA325C /* ZCombinatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9CA2886738B00AA325C /* ZCombinatorApp.swift */; };
+		E50FB9F62886738D00AA325C /* ZCombinatorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9CA2886738B00AA325C /* ZCombinatorApp.swift */; };
+		E50FB9F72886738D00AA325C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9CB2886738B00AA325C /* ContentView.swift */; };
+		E50FB9F82886738D00AA325C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9CB2886738B00AA325C /* ContentView.swift */; };
+		E50FB9F92886738D00AA325C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9CC2886738B00AA325C /* Persistence.swift */; };
+		E50FB9FA2886738D00AA325C /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9CC2886738B00AA325C /* Persistence.swift */; };
+		E50FB9FB2886738D00AA325C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50FB9CD2886738D00AA325C /* Assets.xcassets */; };
+		E50FB9FC2886738D00AA325C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50FB9CD2886738D00AA325C /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E50FB9E02886738D00AA325C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E50FB9C32886738B00AA325C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E50FB9D12886738D00AA325C;
+			remoteInfo = "ZCombinator (iOS)";
+		};
+		E50FB9EC2886738D00AA325C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E50FB9C32886738B00AA325C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E50FB9D72886738D00AA325C;
+			remoteInfo = "ZCombinator (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E50FB9C92886738B00AA325C /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
+		E50FB9CA2886738B00AA325C /* ZCombinatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZCombinatorApp.swift; sourceTree = "<group>"; };
+		E50FB9CB2886738B00AA325C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E50FB9CC2886738B00AA325C /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		E50FB9CD2886738D00AA325C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E50FB9D22886738D00AA325C /* ZCombinator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZCombinator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50FB9D82886738D00AA325C /* ZCombinator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZCombinator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50FB9DA2886738D00AA325C /* macOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = macOS.entitlements; sourceTree = "<group>"; };
+		E50FB9DF2886738D00AA325C /* Tests iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50FB9E32886738D00AA325C /* Tests_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOS.swift; sourceTree = "<group>"; };
+		E50FB9E52886738D00AA325C /* Tests_iOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_iOSLaunchTests.swift; sourceTree = "<group>"; };
+		E50FB9EB2886738D00AA325C /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E50FB9EF2886738D00AA325C /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
+		E50FB9F12886738D00AA325C /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E50FB9CF2886738D00AA325C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50FB9D52886738D00AA325C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50FB9DC2886738D00AA325C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50FB9E82886738D00AA325C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E50FB9C22886738B00AA325C = {
+			isa = PBXGroup;
+			children = (
+				E50FB9C72886738B00AA325C /* Shared */,
+				E50FB9D92886738D00AA325C /* macOS */,
+				E50FB9E22886738D00AA325C /* Tests iOS */,
+				E50FB9EE2886738D00AA325C /* Tests macOS */,
+				E50FB9D32886738D00AA325C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E50FB9C72886738B00AA325C /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				E50FB9CA2886738B00AA325C /* ZCombinatorApp.swift */,
+				E50FB9CB2886738B00AA325C /* ContentView.swift */,
+				E50FB9CC2886738B00AA325C /* Persistence.swift */,
+				E50FB9CD2886738D00AA325C /* Assets.xcassets */,
+				E50FB9C82886738B00AA325C /* ZCombinator.xcdatamodeld */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		E50FB9D32886738D00AA325C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E50FB9D22886738D00AA325C /* ZCombinator.app */,
+				E50FB9D82886738D00AA325C /* ZCombinator.app */,
+				E50FB9DF2886738D00AA325C /* Tests iOS.xctest */,
+				E50FB9EB2886738D00AA325C /* Tests macOS.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E50FB9D92886738D00AA325C /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				E50FB9DA2886738D00AA325C /* macOS.entitlements */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		E50FB9E22886738D00AA325C /* Tests iOS */ = {
+			isa = PBXGroup;
+			children = (
+				E50FB9E32886738D00AA325C /* Tests_iOS.swift */,
+				E50FB9E52886738D00AA325C /* Tests_iOSLaunchTests.swift */,
+			);
+			path = "Tests iOS";
+			sourceTree = "<group>";
+		};
+		E50FB9EE2886738D00AA325C /* Tests macOS */ = {
+			isa = PBXGroup;
+			children = (
+				E50FB9EF2886738D00AA325C /* Tests_macOS.swift */,
+				E50FB9F12886738D00AA325C /* Tests_macOSLaunchTests.swift */,
+			);
+			path = "Tests macOS";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E50FB9D12886738D00AA325C /* ZCombinator (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E50FB9FF2886738D00AA325C /* Build configuration list for PBXNativeTarget "ZCombinator (iOS)" */;
+			buildPhases = (
+				E50FB9CE2886738D00AA325C /* Sources */,
+				E50FB9CF2886738D00AA325C /* Frameworks */,
+				E50FB9D02886738D00AA325C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ZCombinator (iOS)";
+			productName = "ZCombinator (iOS)";
+			productReference = E50FB9D22886738D00AA325C /* ZCombinator.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E50FB9D72886738D00AA325C /* ZCombinator (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E50FBA022886738D00AA325C /* Build configuration list for PBXNativeTarget "ZCombinator (macOS)" */;
+			buildPhases = (
+				E50FB9D42886738D00AA325C /* Sources */,
+				E50FB9D52886738D00AA325C /* Frameworks */,
+				E50FB9D62886738D00AA325C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ZCombinator (macOS)";
+			productName = "ZCombinator (macOS)";
+			productReference = E50FB9D82886738D00AA325C /* ZCombinator.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E50FB9DE2886738D00AA325C /* Tests iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E50FBA052886738D00AA325C /* Build configuration list for PBXNativeTarget "Tests iOS" */;
+			buildPhases = (
+				E50FB9DB2886738D00AA325C /* Sources */,
+				E50FB9DC2886738D00AA325C /* Frameworks */,
+				E50FB9DD2886738D00AA325C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E50FB9E12886738D00AA325C /* PBXTargetDependency */,
+			);
+			name = "Tests iOS";
+			productName = "Tests iOS";
+			productReference = E50FB9DF2886738D00AA325C /* Tests iOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		E50FB9EA2886738D00AA325C /* Tests macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E50FBA082886738D00AA325C /* Build configuration list for PBXNativeTarget "Tests macOS" */;
+			buildPhases = (
+				E50FB9E72886738D00AA325C /* Sources */,
+				E50FB9E82886738D00AA325C /* Frameworks */,
+				E50FB9E92886738D00AA325C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E50FB9ED2886738D00AA325C /* PBXTargetDependency */,
+			);
+			name = "Tests macOS";
+			productName = "Tests macOS";
+			productReference = E50FB9EB2886738D00AA325C /* Tests macOS.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E50FB9C32886738B00AA325C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					E50FB9D12886738D00AA325C = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					E50FB9D72886738D00AA325C = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+					E50FB9DE2886738D00AA325C = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = E50FB9D12886738D00AA325C;
+					};
+					E50FB9EA2886738D00AA325C = {
+						CreatedOnToolsVersion = 13.4.1;
+						TestTargetID = E50FB9D72886738D00AA325C;
+					};
+				};
+			};
+			buildConfigurationList = E50FB9C62886738B00AA325C /* Build configuration list for PBXProject "ZCombinator" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E50FB9C22886738B00AA325C;
+			productRefGroup = E50FB9D32886738D00AA325C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E50FB9D12886738D00AA325C /* ZCombinator (iOS) */,
+				E50FB9D72886738D00AA325C /* ZCombinator (macOS) */,
+				E50FB9DE2886738D00AA325C /* Tests iOS */,
+				E50FB9EA2886738D00AA325C /* Tests macOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E50FB9D02886738D00AA325C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50FB9FB2886738D00AA325C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50FB9D62886738D00AA325C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50FB9FC2886738D00AA325C /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50FB9DD2886738D00AA325C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50FB9E92886738D00AA325C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E50FB9CE2886738D00AA325C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50FB9F52886738D00AA325C /* ZCombinatorApp.swift in Sources */,
+				E50FB9F92886738D00AA325C /* Persistence.swift in Sources */,
+				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
+				E50FB9F72886738D00AA325C /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50FB9D42886738D00AA325C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50FB9F62886738D00AA325C /* ZCombinatorApp.swift in Sources */,
+				E50FB9FA2886738D00AA325C /* Persistence.swift in Sources */,
+				E50FB9F42886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
+				E50FB9F82886738D00AA325C /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50FB9DB2886738D00AA325C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50FB9E62886738D00AA325C /* Tests_iOSLaunchTests.swift in Sources */,
+				E50FB9E42886738D00AA325C /* Tests_iOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E50FB9E72886738D00AA325C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E50FB9F22886738D00AA325C /* Tests_macOSLaunchTests.swift in Sources */,
+				E50FB9F02886738D00AA325C /* Tests_macOS.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E50FB9E12886738D00AA325C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E50FB9D12886738D00AA325C /* ZCombinator (iOS) */;
+			targetProxy = E50FB9E02886738D00AA325C /* PBXContainerItemProxy */;
+		};
+		E50FB9ED2886738D00AA325C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E50FB9D72886738D00AA325C /* ZCombinator (macOS) */;
+			targetProxy = E50FB9EC2886738D00AA325C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		E50FB9FD2886738D00AA325C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		E50FB9FE2886738D00AA325C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		E50FBA002886738D00AA325C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QMWX3X2NF7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
+				PRODUCT_NAME = ZCombinator;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E50FBA012886738D00AA325C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QMWX3X2NF7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
+				PRODUCT_NAME = ZCombinator;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E50FBA032886738D00AA325C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QMWX3X2NF7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
+				PRODUCT_NAME = ZCombinator;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E50FBA042886738D00AA325C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QMWX3X2NF7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
+				PRODUCT_NAME = ZCombinator;
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		E50FBA062886738D00AA325C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QMWX3X2NF7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jiaqi.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "ZCombinator (iOS)";
+			};
+			name = Debug;
+		};
+		E50FBA072886738D00AA325C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QMWX3X2NF7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jiaqi.Tests-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "ZCombinator (iOS)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E50FBA092886738D00AA325C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QMWX3X2NF7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jiaqi.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "ZCombinator (macOS)";
+			};
+			name = Debug;
+		};
+		E50FBA0A2886738D00AA325C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QMWX3X2NF7;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jiaqi.Tests-macOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "ZCombinator (macOS)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E50FB9C62886738B00AA325C /* Build configuration list for PBXProject "ZCombinator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E50FB9FD2886738D00AA325C /* Debug */,
+				E50FB9FE2886738D00AA325C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E50FB9FF2886738D00AA325C /* Build configuration list for PBXNativeTarget "ZCombinator (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E50FBA002886738D00AA325C /* Debug */,
+				E50FBA012886738D00AA325C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E50FBA022886738D00AA325C /* Build configuration list for PBXNativeTarget "ZCombinator (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E50FBA032886738D00AA325C /* Debug */,
+				E50FBA042886738D00AA325C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E50FBA052886738D00AA325C /* Build configuration list for PBXNativeTarget "Tests iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E50FBA062886738D00AA325C /* Debug */,
+				E50FBA072886738D00AA325C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E50FBA082886738D00AA325C /* Build configuration list for PBXNativeTarget "Tests macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E50FBA092886738D00AA325C /* Debug */,
+				E50FBA0A2886738D00AA325C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E50FB9C82886738B00AA325C /* ZCombinator.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E50FB9C92886738B00AA325C /* Shared.xcdatamodel */,
+			);
+			currentVersion = E50FB9C92886738B00AA325C /* Shared.xcdatamodel */;
+			path = ZCombinator.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = E50FB9C32886738B00AA325C /* Project object */;
+}
