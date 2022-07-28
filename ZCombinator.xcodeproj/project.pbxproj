@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E500F9682892659B00080EAF /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500F9672892659B00080EAF /* HomeViewViewModel.swift */; };
+		E500F9692892659B00080EAF /* HomeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500F9672892659B00080EAF /* HomeViewViewModel.swift */; };
 		E50FB9E42886738D00AA325C /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9E32886738D00AA325C /* Tests_iOS.swift */; };
 		E50FB9E62886738D00AA325C /* Tests_iOSLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9E52886738D00AA325C /* Tests_iOSLaunchTests.swift */; };
 		E50FB9F02886738D00AA325C /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9EF2886738D00AA325C /* Tests_macOS.swift */; };
@@ -34,8 +36,6 @@
 		E50FBA1C288676CE00AA325C /* StoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA19288676CE00AA325C /* StoriesRepository.swift */; };
 		E50FBA1D288676CE00AA325C /* StoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA19288676CE00AA325C /* StoriesRepository.swift */; };
 		E52134B728877030005CFB77 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E52134B628877030005CFB77 /* Alamofire */; };
-		E52134BC288779D3005CFB77 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134BB288779D3005CFB77 /* HomeViewModel.swift */; };
-		E52134BD288779D3005CFB77 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134BB288779D3005CFB77 /* HomeViewModel.swift */; };
 		E52134C028877C06005CFB77 /* StoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134BF28877C06005CFB77 /* StoryRow.swift */; };
 		E52134C128877C06005CFB77 /* StoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134BF28877C06005CFB77 /* StoryRow.swift */; };
 		E52134C328877ED7005CFB77 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134C228877ED7005CFB77 /* ItemView.swift */; };
@@ -67,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E500F9672892659B00080EAF /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = "<group>"; };
 		E50FB9C92886738B00AA325C /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		E50FB9CA2886738B00AA325C /* ZCombinatorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZCombinatorApp.swift; sourceTree = "<group>"; };
 		E50FB9CB2886738B00AA325C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -84,7 +85,6 @@
 		E50FBA0D288673B400AA325C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E50FBA10288674B100AA325C /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		E50FBA19288676CE00AA325C /* StoriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesRepository.swift; sourceTree = "<group>"; };
-		E52134BB288779D3005CFB77 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E52134BF28877C06005CFB77 /* StoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRow.swift; sourceTree = "<group>"; };
 		E52134C228877ED7005CFB77 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		E526555E2887E28800D0B79A /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
@@ -228,7 +228,7 @@
 		E52134B828877996005CFB77 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				E52134BB288779D3005CFB77 /* HomeViewModel.swift */,
+				E500F9672892659B00080EAF /* HomeViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -405,12 +405,12 @@
 				E50FBA0E288673B400AA325C /* Item.swift in Sources */,
 				E50FB9F52886738D00AA325C /* ZCombinatorApp.swift in Sources */,
 				E526555F2887E28800D0B79A /* SafariView.swift in Sources */,
-				E52134BC288779D3005CFB77 /* HomeViewModel.swift in Sources */,
 				E50FBA1A288676CE00AA325C /* StoriesRepository.swift in Sources */,
 				E50FB9F92886738D00AA325C /* Persistence.swift in Sources */,
 				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E56C06C228867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9F72886738D00AA325C /* HomeView.swift in Sources */,
+				E500F9682892659B00080EAF /* HomeViewViewModel.swift in Sources */,
 				E50FBA11288674B100AA325C /* Story.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,7 +422,6 @@
 				E52134C128877C06005CFB77 /* StoryRow.swift in Sources */,
 				E52134C428877ED7005CFB77 /* ItemView.swift in Sources */,
 				E50FBA15288674CD00AA325C /* Item.swift in Sources */,
-				E52134BD288779D3005CFB77 /* HomeViewModel.swift in Sources */,
 				E52655602887E28800D0B79A /* SafariView.swift in Sources */,
 				E50FB9F62886738D00AA325C /* ZCombinatorApp.swift in Sources */,
 				E50FBA1B288676CE00AA325C /* StoriesRepository.swift in Sources */,
@@ -430,6 +429,7 @@
 				E50FB9F42886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E56C06C328867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9F82886738D00AA325C /* HomeView.swift in Sources */,
+				E500F9692892659B00080EAF /* HomeViewViewModel.swift in Sources */,
 				E50FBA12288674B100AA325C /* Story.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
