@@ -1,5 +1,5 @@
 //
-//  StoryView.swift
+//  StoryRow.swift
 //  ZCombinator
 //
 //  Created by Jiaqi Feng on 7/19/22.

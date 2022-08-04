@@ -1,5 +1,5 @@
 //
-//  HNRepository.swift
+//  StoriesRepository.swift
 //  ZCombinator
 //
 //  Created by Jiaqi Feng on 7/18/22.

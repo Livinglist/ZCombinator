@@ -1,5 +1,5 @@
 //
-//  HomeViewViewModel.swift
+//  HomeView+ViewModel.swift
 //  ZCombinator
 //
 //  Created by Jiaqi Feng on 7/27/22.
