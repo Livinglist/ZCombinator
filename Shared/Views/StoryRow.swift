@@ -9,32 +9,6 @@ import SwiftUI
 import LinkPresentation
 import UniformTypeIdentifiers
 
-struct LinkView: UIViewRepresentable {
-    typealias UIViewType = LPLinkView
-    
-    var url: URL
-    let storyTitle: String
-    
-    func makeUIView(context: UIViewRepresentableContext<LinkView>) -> LinkView.UIViewType {
-        return LPLinkView(url: url)
-    }
-    
-    func updateUIView(_ uiView: LPLinkView, context: Context) {
-        let provider = LPMetadataProvider()
-        
-        provider.startFetchingMetadata(for: url) { metadata, error in
-            if let metadata = metadata {
-                metadata.title = storyTitle
-                
-                DispatchQueue.main.async {
-                    uiView.metadata = metadata
-                    uiView.sizeToFit()
-                }
-            }
-        }
-    }
-}
-
 struct StoryRow: View {
     let story: Story
     let url: URL?
@@ -53,60 +27,53 @@ struct StoryRow: View {
             if url == nil {
                 Text(story.title ?? "")
             } else {
-                Button(action: {
-                    self.showSafari = true
-                }, label: {
-                    HStack {
-                        VStack {
-                            Text(story.title ?? "title").frame(maxWidth: .infinity, alignment: .leading).multilineTextAlignment(.leading)
-                            Spacer()
-                            HStack{
-                                if let url = story.readableUrl {
-                                    Text(url).font(.footnote).foregroundColor(.orange)
-                                } else if let text = story.text {
-                                    Text(text).font(.footnote).lineLimit(2).foregroundColor(.gray)
+                ZStack {
+                    NavigationLink(destination: {
+                        ItemView<Story>(item: story)
+                    }, label: {
+                        EmptyView()
+                    })
+                    .sheet(isPresented: $showSafari) {
+                        SafariView(url:url!)
+                    }
+                    Button(action: {
+                        
+                    }, label: {
+                        HStack {
+                            VStack {
+                                Text(story.title ?? "title").frame(maxWidth: .infinity, alignment: .leading).multilineTextAlignment(.leading)
+                                Spacer()
+                                HStack{
+                                    if let url = story.readableUrl {
+                                        Text(url).font(.footnote).foregroundColor(.orange)
+                                    } else if let text = story.text {
+                                        Text(text).font(.footnote).lineLimit(2).foregroundColor(.gray)
+                                    }
+                                    Spacer()
                                 }
                                 Spacer()
+                                HStack{
+                                    Text("\(story.score ?? 0) pts | \(story.descendants ?? 0) cmts | \(story.createdAt) by \(story.by)").font(.caption)
+                                    Spacer()
+                                }
                             }
                             Spacer()
-                            HStack{
-                                Text("\(story.score ?? 0) points | \(story.createdAt) by \(story.by)").font(.caption)
-                                Spacer()
-                            }
                         }
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color(UIColor.secondarySystemBackground))
-                    .cornerRadius(16)
-                })
-//                .contextMenu {
-//                    Button {
-//                        // Add this item to a list of favorites.
-//                    } label: {
-//                        Label("Add to Favorites", systemImage: "heart")
-//                    }
-//                    Button {
-//                        // Open Maps and center it on this item.
-//                    } label: {
-//                        Label("Show in Maps", systemImage: "mappin")
-//                    }
-//                } preview: {
-//                    Image("turtlerock") // Loads the image from an asset catalog.
-//                }
-                .buttonStyle(ScaleButtonStyle())
-                .sheet(isPresented: $showSafari) {
-                    SafariView(url:url!)
+                        .padding()
+                        .background(Color(UIColor.secondarySystemBackground))
+                        .cornerRadius(16)
+                    })
+                    .contextMenu(PreviewContextMenu(destination: SafariView(url:url!), actionProvider: { items in
+                        return UIMenu(title: "My Menu", children: [UIAction(
+                            title: "View in browser",
+                            image: UIImage(systemName: "safari"),
+                            identifier: nil,
+                            handler: { _ in showSafari = true }
+                        )])
+                    }))
                 }
             }
-        }.padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
-    }
-}
-
-struct ScaleButtonStyle: ButtonStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.9 : 1).animation(.spring(), value: configuration.isPressed)
+        }
     }
 }
 

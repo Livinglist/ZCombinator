@@ -9,22 +9,22 @@ import Foundation
 
 extension HomeView {
     @MainActor
-    class HomeViewViewModel: ObservableObject {
+    class HomeViewModel: ObservableObject {
         @Published var storyType: StoryType = .top
         @Published var stories: [Story] = [Story]()
-        var currentPage: Int = 0
         
         private let pageSize: Int = 10
+        private var currentPage: Int = 0
         private var storyIds: [Int] = [Int]()
         
         func fetchStories() async {
             self.currentPage = 0
             self.stories = [Story]()
-            self.storyIds = await StoriesRepository.fetchStoryIds(from: self.storyType)
+            self.storyIds = await StoriesRepository.shared.fetchStoryIds(from: self.storyType)
             
             var stories = [Story]()
             
-            await StoriesRepository.fetchStories(ids: Array(storyIds[0..<10])) { story in
+            await StoriesRepository.shared.fetchStories(ids: Array(storyIds[0..<10])) { story in
                 stories.append(story)
             }
             
@@ -51,7 +51,7 @@ extension HomeView {
             let endIndex = min(startIndex + pageSize, storyIds.count)
             var stories = [Story]()
             
-            await StoriesRepository.fetchStories(ids: Array(storyIds[startIndex..<endIndex])) { story in
+            await StoriesRepository.shared.fetchStories(ids: Array(storyIds[startIndex..<endIndex])) { story in
                 stories.append(story)
             }
             

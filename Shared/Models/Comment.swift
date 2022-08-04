@@ -1,13 +1,13 @@
 //
-//  Story.swift
+//  Comment.swift
 //  ZCombinator
 //
-//  Created by Jiaqi Feng on 7/18/22.
+//  Created by Jiaqi Feng on 7/28/22.
 //
 
 import Foundation
 
-struct Story : ItemProtocol {
+struct Comment : ItemProtocol {
     let id: Int
     let title: String?
     let text: String?
