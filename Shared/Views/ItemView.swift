@@ -96,7 +96,7 @@ struct ItemView<T : ItemProtocol>: View {
                         nameRow.padding(.bottom, 4)
                         textView.padding(.bottom, 3)
                         if vm.status == Status.loading {
-                            LoadingIndicator()
+                            LoadingIndicator(color: getColor(level: level))
                         } else if vm.status != Status.loaded && item.kids.isNotNullOrEmpty {
                             Button {
                                 let generator = UIImpactFeedbackGenerator()
@@ -152,6 +152,11 @@ struct ItemView<T : ItemProtocol>: View {
                 .foregroundColor(getColor(level: level))
             if let karma = item.score {
                 Text("\(karma) karma")
+                    .borderedFootnote()
+                    .foregroundColor(getColor(level: level))
+            }
+            if let descendants = item.descendants {
+                Text("\(descendants) comments")
                     .borderedFootnote()
                     .foregroundColor(getColor(level: level))
             }
