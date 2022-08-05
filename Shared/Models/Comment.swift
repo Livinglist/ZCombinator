@@ -18,7 +18,7 @@ struct Comment : ItemProtocol {
     let time: Int
     let kids: [Int]?
     
-    init(id: Int, title: String?, text: String?, url: String?, by: String, score: Int?, descendants: Int, time: Int, kids: [Int] = [Int]()) {
+    init(id: Int, title: String?, text: String?, url: String?, by: String, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
         self.id = id
         self.title = title
         self.text = text
@@ -33,5 +33,9 @@ struct Comment : ItemProtocol {
     // Empty initializer
     init() {
         self.init(id: 0, title: "", text: "", url: "", by: "", score: 0, descendants: 0, time: 0)
+    }
+    
+    func copyWith(text: String?) -> Comment{
+        Comment(id: id, title: title, text: text, url: url, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int]())
     }
 }

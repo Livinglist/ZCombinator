@@ -20,6 +20,19 @@ extension Optional where Wrapped: Collection {
         }
     }
     
+    
+    var isNullOrEmpty: Bool {
+        guard let unwrapped = self else {
+            return true
+        }
+        
+        return unwrapped.isEmpty
+    }
+    
+    var isNotNullOrEmpty: Bool {
+        return !isNullOrEmpty
+    }
+    
     var countOrZero: Int {
         guard let unwrapped = self else {
             return 0

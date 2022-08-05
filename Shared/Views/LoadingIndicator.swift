@@ -9,22 +9,23 @@ import SwiftUI
 
 struct LoadingIndicator: View {
     @State private var shouldAnimate = false
+    let size: CGFloat = 12
     
     var body: some View {
         HStack {
             Circle()
                 .fill(.orange)
-                .frame(width: 20, height: 20)
+                .frame(width: size, height: size)
                 .scaleEffect(shouldAnimate ? 1.0 : 0.5)
                 .animation(.easeInOut(duration: 0.5).repeatForever(), value: shouldAnimate)
             Circle()
                 .fill(.orange)
-                .frame(width: 20, height: 20)
+                .frame(width: size, height: size)
                 .scaleEffect(shouldAnimate ? 1.0 : 0.5)
                 .animation(.easeInOut(duration: 0.5).repeatForever().delay(0.3), value: shouldAnimate)
             Circle()
                 .fill(.orange)
-                .frame(width: 20, height: 20)
+                .frame(width: size, height: size)
                 .scaleEffect(shouldAnimate ? 1.0 : 0.5)
                 .animation(.easeInOut(duration: 0.5).repeatForever().delay(0.6), value: shouldAnimate)
         }

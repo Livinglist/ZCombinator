@@ -7,9 +7,10 @@
 
 import SwiftUI
 import WebKit
+import RichText
 
 struct ItemView<T : ItemProtocol>: View {
-    @StateObject var vm: ItemViewViewModel<T> = ItemViewViewModel<T>()
+    @StateObject var vm: ItemViewModel<T> = ItemViewModel<T>()
     let level: Int
     let item: T
     
@@ -30,11 +31,25 @@ struct ItemView<T : ItemProtocol>: View {
     var mainItemView: some View {
         if level == 0 {
             ScrollView{
-                VStack {
-                    if vm.item is Story {
-                        Text("\(item.title.valueOrEmpty)").padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
-                    } else if vm.item is Comment {
-                        Text("\(item.text.valueOrEmpty)").padding(EdgeInsets(top: 0, leading: Double(4 * (level - 1)), bottom: 0, trailing: 0))
+                VStack(spacing: 0) {
+                    if item is Story {
+                        if let url = URL(string: item.url.valueOrEmpty) {
+                            LinkView(url: url)
+                                .padding()
+                        } else {
+                            VStack(spacing: 0) {
+                                Text("\(item.title.valueOrEmpty)")
+                                    .fontWeight(.semibold)
+                                    .padding(.leading, 12)
+                                    .padding(.bottom, 6)
+                                Text("\(item.text.valueOrEmpty)")
+                                    .font(.system(size: 16))
+                                    .padding(.leading, 4)
+                            }
+                        }
+                    } else if item is Comment {
+                        Text("\(item.text.valueOrEmpty)")
+                            .padding(.leading, Double(4 * (level - 1)))
                     }
                     if vm.status == .idle {
                         Button {
@@ -47,49 +62,68 @@ struct ItemView<T : ItemProtocol>: View {
                     } else if vm.status == .loading {
                         LoadingIndicator()
                     }
-                    VStack {
+                    VStack(spacing: 0) {
                         ForEach(vm.kids){ comment in
                             ItemView<Comment>(item: comment, level: level + 1 )
-                                .listRowSeparator(.hidden).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 12, trailing: 0))
+                                .padding(.trailing, 4)
                         }.id(UUID())
-                    }.buttonStyle(PlainButtonStyle())
+                    }
                 }
-            }.listStyle(.plain).listRowSeparator(.hidden)
+            }.navigationBarTitleDisplayMode(.inline)
         } else {
             ZStack {
                 if level > 1 {
                     HStack {
-                        getColor(level: level).frame(width: 1)
+                        getColor(level: level)
+                            .frame(width: 1)
                         Spacer()
                     }
                 }
                 VStack {
                     HStack {
-                        Text(vm.item?.by ?? "").foregroundColor(getColor(level: level))
+                        Text(item.by)
+                            .font(.footnote)
+                            .padding(.horizontal, 4)
+                            .padding(.bottom, 1)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .foregroundColor(getColor(level: level))
+                            .cornerRadius(2)
                         Spacer()
                     }
-                    if vm.item is Story {
-                        Text("\(vm.item?.title ?? "")").padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
-                    } else if vm.item is Comment {
-                        Text(item.text ?? "").fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading).padding(EdgeInsets(top: 0, leading: Double(4 * (level - 1)), bottom: 0, trailing: 0))
+                    if item is Story {
+                        Text("\(item.title.valueOrEmpty)")
+                            .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
+                    } else if item is Comment {
+                        Text(item.text.valueOrEmpty)
+                            .font(.system(size: 16))
+                            .textSelection(.enabled)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, Double(4 * (level - 1)))
                     }
-                    if vm.status != Status.loaded && !(item.kids?.isEmpty ?? true) {
+                    if vm.status == Status.loading {
+                        LoadingIndicator()
+                    } else if vm.status != Status.loaded && item.kids.isNotNullOrEmpty {
                         Button {
                             Task {
                                 await vm.loadKids()
                             }
                         } label: {
-                            Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies":"reply")").font(.footnote).foregroundColor(.orange)
+                            Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies":"reply")")
+                                .font(.footnote.weight(.bold))
+                                .foregroundColor(.orange)
                         }
-                    }
+                        .buttonStyle(.bordered)
+                    } 
                     VStack {
                         ForEach(vm.kids){ comment in
                             ItemView<Comment>(item: comment, level: level + 1)
-                                .listRowSeparator(.hidden).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 12, trailing: 0))
                         }.id(UUID())
                     }.buttonStyle(PlainButtonStyle())
                     Spacer()
-                }.frame(alignment: .leading).padding(EdgeInsets(top: 6, leading: 6, bottom: 12, trailing: 0))
+                }
+                .frame(alignment: .leading)
+                .padding(EdgeInsets(top: 6, leading: 6, bottom: 0, trailing: 0))
             }
             .frame(maxWidth:.infinity)
             .frame(alignment: .leading)

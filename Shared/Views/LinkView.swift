@@ -13,7 +13,6 @@ struct LinkView: UIViewRepresentable {
     typealias UIViewType = LPLinkView
     
     var url: URL
-    let storyTitle: String
     
     func makeUIView(context: UIViewRepresentableContext<LinkView>) -> LinkView.UIViewType {
         return LPLinkView(url: url)
@@ -24,8 +23,6 @@ struct LinkView: UIViewRepresentable {
         
         provider.startFetchingMetadata(for: url) { metadata, error in
             if let metadata = metadata {
-                metadata.title = storyTitle
-                
                 DispatchQueue.main.async {
                     uiView.metadata = metadata
                     uiView.sizeToFit()

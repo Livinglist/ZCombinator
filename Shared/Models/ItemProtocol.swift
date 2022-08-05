@@ -8,6 +8,8 @@
 import Foundation
 
 protocol ItemProtocol: Codable, Identifiable, Hashable {
+    associatedtype Item
+    
     var id: Int { get }
     var title: String? { get }
     var text: String? { get }
@@ -17,4 +19,6 @@ protocol ItemProtocol: Codable, Identifiable, Hashable {
     var descendants: Int? { get }
     var time: Int { get }
     var kids: [Int]? { get }
+    
+    func copyWith(text: String?) -> Item
 }

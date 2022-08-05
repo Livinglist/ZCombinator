@@ -77,6 +77,7 @@
 		E5EF2CE8289C789300AA5290 /* ItemView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CE6289C789300AA5290 /* ItemView+ViewModel.swift */; };
 		E5EF2CEA289C78EC00AA5290 /* ItemProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CE9289C78EC00AA5290 /* ItemProtocol+Ext.swift */; };
 		E5EF2CEB289C78EC00AA5290 /* ItemProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CE9289C78EC00AA5290 /* ItemProtocol+Ext.swift */; };
+		E5EF2CEE289C7EEE00AA5290 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = E5EF2CED289C7EEE00AA5290 /* RichText */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E56C06C0288679E900D4E685 /* Alamofire in Frameworks */,
+				E5EF2CEE289C7EEE00AA5290 /* RichText in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +327,7 @@
 			name = "ZCombinator (iOS)";
 			packageProductDependencies = (
 				E56C06BF288679E900D4E685 /* Alamofire */,
+				E5EF2CED289C7EEE00AA5290 /* RichText */,
 			);
 			productName = "ZCombinator (iOS)";
 			productReference = E50FB9D22886738D00AA325C /* ZCombinator.app */;
@@ -423,6 +426,7 @@
 			mainGroup = E50FB9C22886738B00AA325C;
 			packageReferences = (
 				E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				E5EF2CEC289C7EEE00AA5290 /* XCRemoteSwiftPackageReference "RichText" */,
 			);
 			productRefGroup = E50FB9D32886738D00AA325C /* Products */;
 			projectDirPath = "";
@@ -944,6 +948,14 @@
 				version = 5.6.2;
 			};
 		};
+		E5EF2CEC289C7EEE00AA5290 /* XCRemoteSwiftPackageReference "RichText" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NuPlay/RichText.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.7.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -956,6 +968,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		E5EF2CED289C7EEE00AA5290 /* RichText */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5EF2CEC289C7EEE00AA5290 /* XCRemoteSwiftPackageReference "RichText" */;
+			productName = RichText;
 		};
 /* End XCSwiftPackageProductDependency section */
 

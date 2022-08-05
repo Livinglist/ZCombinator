@@ -10,7 +10,7 @@ import SwiftUI
 
 extension ItemView {
     @MainActor
-    class ItemViewViewModel<T: ItemProtocol> : ObservableObject {
+    class ItemViewModel<T: ItemProtocol> : ObservableObject {
         @Published var kids: [Comment] = [Comment]()
         @Published var loaded: Bool = false
         @Published var status: Status = .idle
