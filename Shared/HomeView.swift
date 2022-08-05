@@ -48,13 +48,17 @@ struct HomeView: View {
                 ToolbarItem{
                     Menu {
                         ForEach(StoryType.allCases, id: \.self) { storyType in
-                            Button("\(storyType.rawValue.uppercased())") {
+                            Button {
                                 viewModel.storyType = storyType
                                 
                                 Task {
                                     await viewModel.fetchStories()
                                 }
-                                
+                            } label: {
+                                HStack {
+                                    Image(systemName: storyType.iconName)
+                                    Text("\(storyType.rawValue.uppercased())")
+                                }
                             }
                         }
                     } label: {

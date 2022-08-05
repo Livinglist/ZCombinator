@@ -53,7 +53,7 @@ struct StoryRow: View {
                                 }
                                 Spacer()
                                 HStack{
-                                    Text("\(story.score ?? 0) pts | \(story.descendants ?? 0) cmts | \(story.createdAt) by \(story.by)").font(.caption)
+                                    Text("\(story.score ?? 0) pts | \(story.descendants ?? 0) cmts | \(story.timeAgo) by \(story.by)").font(.caption)
                                     Spacer()
                                 }
                             }

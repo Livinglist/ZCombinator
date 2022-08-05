@@ -32,6 +32,7 @@ struct ItemView<T : ItemProtocol>: View {
         if level == 0 {
             ScrollView{
                 VStack(spacing: 0) {
+                    nameRow.padding(.leading, 6)
                     if item is Story {
                         if let url = URL(string: item.url.valueOrEmpty) {
                             LinkView(url: url)
@@ -80,16 +81,7 @@ struct ItemView<T : ItemProtocol>: View {
                     }
                 }
                 VStack {
-                    HStack {
-                        Text(item.by)
-                            .font(.footnote)
-                            .padding(.horizontal, 4)
-                            .padding(.bottom, 1)
-                            .background(Color(UIColor.secondarySystemBackground))
-                            .foregroundColor(getColor(level: level))
-                            .cornerRadius(2)
-                        Spacer()
-                    }
+                    nameRow
                     if item is Story {
                         Text("\(item.title.valueOrEmpty)")
                             .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
@@ -127,6 +119,24 @@ struct ItemView<T : ItemProtocol>: View {
             }
             .frame(maxWidth:.infinity)
             .frame(alignment: .leading)
+        }
+    }
+    
+    @ViewBuilder
+    var nameRow: some View {
+        HStack {
+            Text(item.by)
+                .borderedFootnote()
+                .foregroundColor(getColor(level: level))
+            if let karma = item.score {
+                Text("\(karma) karma")
+                    .borderedFootnote()
+                    .foregroundColor(getColor(level: level))
+            }
+            Text(item.timeAgo)
+                .borderedFootnote()
+                .foregroundColor(getColor(level: level))
+            Spacer()
         }
     }
     
