@@ -31,13 +31,15 @@ struct HomeView: View {
                         NavigationLink(destination: ItemView<Story>(item: story), isActive: $isActive) {
                             EmptyView()
                         }.hidden()
-                    }.swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button {
-                            isActive = true
-                        } label: {
-                            Label("Flag", systemImage: "flag")
-                        }
-                    }.listRowSeparator(.hidden)
+                    }
+//                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                        Button {
+//                            isActive = true
+//                        } label: {
+//                            Label("Flag", systemImage: "flag")
+//                        }
+//                    }
+                    .listRowSeparator(.hidden)
                 }
             }
             .listStyle(.plain)
@@ -67,7 +69,7 @@ struct HomeView: View {
                 }
             }
             .navigationTitle(viewModel.storyType.rawValue.uppercased())
-            Text("Select an item")
+            Text("Select an story")
         }.task {
             await viewModel.fetchStories()
         }

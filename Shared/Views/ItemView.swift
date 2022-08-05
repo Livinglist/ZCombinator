@@ -28,6 +28,25 @@ struct ItemView<T : ItemProtocol>: View {
     }
     
     @ViewBuilder
+    var textView: some View {
+        if item is Story {
+            Text("\(item.title.valueOrEmpty)")
+                .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
+        } else if item is Comment {
+            if item.text.isNotNullOrEmpty {
+                Text(item.text.valueOrEmpty)
+                    .font(.system(size: 16))
+                    .textSelection(.enabled)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 4)
+            } else {
+                Text("deleted").font(.footnote).foregroundColor(.gray)
+            }
+        }
+    }
+    
+    @ViewBuilder
     var mainItemView: some View {
         if level == 0 {
             ScrollView{
@@ -52,15 +71,7 @@ struct ItemView<T : ItemProtocol>: View {
                         Text("\(item.text.valueOrEmpty)")
                             .padding(.leading, Double(4 * (level - 1)))
                     }
-                    if vm.status == .idle {
-                        Button {
-                            Task {
-                                await vm.loadKids()
-                            }
-                        } label: {
-                            Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies":"reply")")
-                        }
-                    } else if vm.status == .loading {
+                    if vm.status == .loading {
                         LoadingIndicator()
                     }
                     VStack(spacing: 0) {
@@ -80,46 +91,53 @@ struct ItemView<T : ItemProtocol>: View {
                         Spacer()
                     }
                 }
-                VStack {
-                    nameRow
-                    if item is Story {
-                        Text("\(item.title.valueOrEmpty)")
-                            .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
-                    } else if item is Comment {
-                        if item.text.isNotNullOrEmpty {
-                            Text(item.text.valueOrEmpty)
-                                .font(.system(size: 16))
-                                .textSelection(.enabled)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, Double(4 * (level - 1)))
-                        } else {
-                            Text("deleted").font(.footnote).foregroundColor(.gray)
+                VStack(spacing: 0) {
+                    VStack(spacing: 0) {
+                        nameRow.padding(.bottom, 4)
+                        textView.padding(.bottom, 3)
+                        if vm.status == Status.loading {
+                            LoadingIndicator()
+                        } else if vm.status != Status.loaded && item.kids.isNotNullOrEmpty {
+                            Button {
+                                let generator = UIImpactFeedbackGenerator()
+                                generator.impactOccurred(intensity: 0.6)
+                                Task {
+                                    await vm.loadKids()
+                                }
+                            } label: {
+                                Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies":"reply")")
+                                    .font(.footnote.weight(.bold))
+                                    .foregroundColor(getColor(level: level))
+                            }
+                            .buttonStyle(.bordered)
+                            .padding(.top, 6)
                         }
                     }
-                    if vm.status == Status.loading {
-                        LoadingIndicator()
-                    } else if vm.status != Status.loaded && item.kids.isNotNullOrEmpty {
+                    .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
+                    .background(Color(UIColor.systemBackground))
+                    .contextMenu {
                         Button {
-                            Task {
-                                await vm.loadKids()
-                            }
+                            
                         } label: {
-                            Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies":"reply")")
-                                .font(.footnote.weight(.bold))
-                                .foregroundColor(.orange)
+                            Label("Upvote", systemImage: "hand.thumbsup")
                         }
-                        .buttonStyle(.bordered)
-                    } 
-                    VStack {
+                        Button {
+                            
+                        } label: {
+                            Label("Reply", systemImage: "plus.message")
+                        }
+                    }
+                    VStack(spacing: 0) {
                         ForEach(vm.kids){ comment in
                             ItemView<Comment>(item: comment, level: level + 1)
-                        }.id(UUID())
-                    }.buttonStyle(PlainButtonStyle())
+                        }
+                        .id(UUID())
+                    }
+                    .buttonStyle(PlainButtonStyle())
                     Spacer()
                 }
                 .frame(alignment: .leading)
-                .padding(EdgeInsets(top: 6, leading: 6, bottom: 0, trailing: 0))
+                .padding(.leading, 6)
             }
             .frame(maxWidth:.infinity)
             .frame(alignment: .leading)
