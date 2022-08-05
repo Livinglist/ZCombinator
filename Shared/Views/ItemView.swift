@@ -86,12 +86,16 @@ struct ItemView<T : ItemProtocol>: View {
                         Text("\(item.title.valueOrEmpty)")
                             .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
                     } else if item is Comment {
-                        Text(item.text.valueOrEmpty)
-                            .font(.system(size: 16))
-                            .textSelection(.enabled)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, Double(4 * (level - 1)))
+                        if item.text.isNotNullOrEmpty {
+                            Text(item.text.valueOrEmpty)
+                                .font(.system(size: 16))
+                                .textSelection(.enabled)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, Double(4 * (level - 1)))
+                        } else {
+                            Text("deleted").font(.footnote).foregroundColor(.gray)
+                        }
                     }
                     if vm.status == Status.loading {
                         LoadingIndicator()
