@@ -17,7 +17,7 @@ struct HomeView: View {
         animation: .default)
     private var items: FetchedResults<Item>
     
-    @State private var isActive = false
+    @State private var showAboutSheet = false
     
     var body: some View {
         NavigationView {
@@ -49,6 +49,12 @@ struct HomeView: View {
                                 Label("\(storyType.rawValue.uppercased())", systemImage: storyType.iconName)
                             }
                         }
+                        //Label("Log in", systemImage: "")
+                        Button {
+                            showAboutSheet = true
+                        } label: {
+                            Label("About", systemImage: "")
+                        }
                     } label: {
                         Label("Add Item", systemImage: "list.bullet")
                     }
@@ -56,7 +62,11 @@ struct HomeView: View {
             }
             .navigationTitle(vm.storyType.rawValue.uppercased())
             Text("Select a story")
-        }.task {
+        }
+        .sheet(isPresented: $showAboutSheet) {
+            SafariView(url: Constants.githubUrl)
+        }
+        .task {
             await vm.fetchStories()
         }
     }

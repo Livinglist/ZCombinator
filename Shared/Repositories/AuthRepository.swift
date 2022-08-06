@@ -15,18 +15,14 @@ class AuthRepository {
     
     func login(username: String, password: String) async -> Bool {
         let parameters: [String: String] = [
-            "acct": "livinglist",
-            "pw": "fjq11038"
+            "acct": username,
+            "pw": password
         ]
         let response = await AF.request("\(self.baseUrl)/login", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
         
-        print(response)
-        
-        guard let headerFields = response?.allHeaderFields as? [String: String], let url = response?.url else {
+        guard let url = response?.url else {
             return false
         }
-        
-        print(url)
         
         let cookies = HTTPCookieStorage.shared.cookies(for: url)
         

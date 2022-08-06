@@ -7,10 +7,10 @@
 
 import SwiftUI
 import WebKit
-import RichText
 
 struct ItemView<T : ItemProtocol>: View {
     @StateObject var vm: ItemViewModel<T> = ItemViewModel<T>()
+    @State var showHNSheet: Bool = false
     let level: Int
     let item: T
     
@@ -83,6 +83,24 @@ struct ItemView<T : ItemProtocol>: View {
                         }.id(UUID())
                     }
                     Spacer().frame(height: 60)
+                }
+            }
+            .toolbar {
+                ToolbarItem{
+                    Menu {
+                        Button {
+                            showHNSheet = true
+                        } label: {
+                            Label("View on Hacker News", systemImage: "")
+                        }
+                    } label: {
+                        Label("", systemImage: "ellipsis")
+                    }
+                }
+            }
+            .sheet(isPresented: $showHNSheet) {
+                if let url = URL(string: "https://news.ycombinator.com/item?id=\(item.id)") {
+                    SafariView(url: url)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
