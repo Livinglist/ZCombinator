@@ -14,6 +14,7 @@ protocol ItemProtocol: Codable, Identifiable, Hashable {
     var title: String? { get }
     var text: String? { get }
     var url: String? { get }
+    var type: String? { get }
     var by: String { get }
     var score: Int? { get }
     var descendants: Int? { get }
@@ -42,5 +43,13 @@ extension ItemProtocol {
             return domain
         }
         return nil
+    }
+    
+    var isJob: Bool {
+        return type == "job"
+    }
+    
+    var isJobWithUrl: Bool {
+        return type == "job" && text.isNullOrEmpty && url.isNotNullOrEmpty
     }
 }

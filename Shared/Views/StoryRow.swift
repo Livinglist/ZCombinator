@@ -22,22 +22,30 @@ struct StoryRow: View {
         self.url = URL(string: story.url ?? "https://news.ycombinator.com/item?id=\(story.id)")
     }
     
+    @ViewBuilder
+    var navigationLink: some View {
+        if story.isJobWithUrl {
+            EmptyView()
+        } else {
+            NavigationLink(destination: {
+                ItemView<Story>(item: story)
+            }, label: {
+                EmptyView()
+            })
+        }
+    }
+    
     var body: some View {
         VStack{
             if url == nil {
                 Text(story.title ?? "")
             } else {
                 ZStack {
-                    NavigationLink(destination: {
-                        ItemView<Story>(item: story)
-                    }, label: {
-                        EmptyView()
-                    })
-                    .sheet(isPresented: $showSafari) {
-                        SafariView(url:url!)
-                    }
+                    navigationLink
                     Button(action: {
-                        
+                        if story.isJobWithUrl {
+                            showSafari = true
+                        }
                     }, label: {
                         HStack {
                             VStack {
@@ -53,7 +61,11 @@ struct StoryRow: View {
                                 }
                                 Spacer()
                                 HStack{
-                                    Text("\(story.score ?? 0) pts | \(story.descendants ?? 0) cmts | \(story.timeAgo) by \(story.by)").font(.caption)
+                                    if story.isJob {
+                                        Text("\(story.timeAgo) by \(story.by)").font(.caption)
+                                    } else {
+                                        Text("\(story.score ?? 0) pts | \(story.descendants ?? 0) cmts | \(story.timeAgo) by \(story.by)").font(.caption)
+                                    }
                                     Spacer()
                                 }
                             }
@@ -71,6 +83,9 @@ struct StoryRow: View {
                             handler: { _ in showSafari = true }
                         )])
                     }))
+                }
+                .sheet(isPresented: $showSafari) {
+                    SafariView(url:url!)
                 }
             }
         }

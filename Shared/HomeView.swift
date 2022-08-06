@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct HomeView: View {
-    @ObservedObject private var viewModel = HomeViewModel()
+    @ObservedObject private var vm = HomeViewModel()
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
@@ -19,48 +19,34 @@ struct HomeView: View {
     
     @State private var isActive = false
     
-    
     var body: some View {
         NavigationView {
             List {
-                ForEach(viewModel.stories){ story in
-                    ZStack {
-                        StoryRow(story: story).listRowInsets(EdgeInsets()).onAppear {
-                            viewModel.onStoryRowAppear(story)
+                ForEach(vm.stories){ story in
+                    StoryRow(story: story)
+                        .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
+                        .listRowSeparator(.hidden)
+                        .onAppear {
+                            vm.onStoryRowAppear(story)
                         }
-                        NavigationLink(destination: ItemView<Story>(item: story), isActive: $isActive) {
-                            EmptyView()
-                        }.hidden()
-                    }
-//                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-//                        Button {
-//                            isActive = true
-//                        } label: {
-//                            Label("Flag", systemImage: "flag")
-//                        }
-//                    }
-                    .listRowSeparator(.hidden)
                 }
             }
             .listStyle(.plain)
             .refreshable {
-                viewModel.refresh()
+                vm.refresh()
             }
             .toolbar {
                 ToolbarItem{
                     Menu {
                         ForEach(StoryType.allCases, id: \.self) { storyType in
                             Button {
-                                viewModel.storyType = storyType
+                                vm.storyType = storyType
                                 
                                 Task {
-                                    await viewModel.fetchStories()
+                                    await vm.fetchStories()
                                 }
                             } label: {
-                                HStack {
-                                    Image(systemName: storyType.iconName)
-                                    Text("\(storyType.rawValue.uppercased())")
-                                }
+                                Label("\(storyType.rawValue.uppercased())", systemImage: storyType.iconName)
                             }
                         }
                     } label: {
@@ -68,10 +54,10 @@ struct HomeView: View {
                     }
                 }
             }
-            .navigationTitle(viewModel.storyType.rawValue.uppercased())
+            .navigationTitle(vm.storyType.rawValue.uppercased())
             Text("Select an story")
         }.task {
-            await viewModel.fetchStories()
+            await vm.fetchStories()
         }
     }
 }

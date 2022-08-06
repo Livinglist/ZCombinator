@@ -44,6 +44,14 @@
 		E52134C428877ED7005CFB77 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134C228877ED7005CFB77 /* ItemView.swift */; };
 		E526555F2887E28800D0B79A /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E526555E2887E28800D0B79A /* SafariView.swift */; };
 		E52655602887E28800D0B79A /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E526555E2887E28800D0B79A /* SafariView.swift */; };
+		E5687FA8289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
+		E5687FA9289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
+		E5687FAA289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
+		E5687FAB289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
+		E5687FAD289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
+		E5687FAE289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
+		E5687FAF289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
+		E5687FB0289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
 		E56C06C0288679E900D4E685 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E56C06BF288679E900D4E685 /* Alamofire */; };
 		E56C06C228867B1100D4E685 /* StoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56C06C128867B1100D4E685 /* StoryType.swift */; };
 		E56C06C328867B1100D4E685 /* StoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56C06C128867B1100D4E685 /* StoryType.swift */; };
@@ -75,7 +83,6 @@
 		E5EF2CE5289C783F00AA5290 /* CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CE3289C783F00AA5290 /* CustomText.swift */; };
 		E5EF2CE7289C789300AA5290 /* ItemView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CE6289C789300AA5290 /* ItemView+ViewModel.swift */; };
 		E5EF2CE8289C789300AA5290 /* ItemView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CE6289C789300AA5290 /* ItemView+ViewModel.swift */; };
-		E5EF2CEE289C7EEE00AA5290 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = E5EF2CED289C7EEE00AA5290 /* RichText */; };
 		E5EF2CF3289CA58100AA5290 /* View+Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CF2289CA58100AA5290 /* View+Modifiers.swift */; };
 		E5EF2CF4289CA58100AA5290 /* View+Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CF2289CA58100AA5290 /* View+Modifiers.swift */; };
 		E5EF2CF6289CA6CC00AA5290 /* Date+TimeAgoString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CF5289CA6CC00AA5290 /* Date+TimeAgoString.swift */; };
@@ -122,6 +129,8 @@
 		E52134BF28877C06005CFB77 /* StoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryRow.swift; sourceTree = "<group>"; };
 		E52134C228877ED7005CFB77 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		E526555E2887E28800D0B79A /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
+		E5687FA7289DC23500901F1F /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
+		E5687FAC289E194A00901F1F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		E56C06C128867B1100D4E685 /* StoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryType.swift; sourceTree = "<group>"; };
 		E587CEFE2893914600299CE0 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		E5EF2CC6289C6CFF00AA5290 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
@@ -145,7 +154,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E56C06C0288679E900D4E685 /* Alamofire in Frameworks */,
-				E5EF2CEE289C7EEE00AA5290 /* RichText in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +273,7 @@
 				E5EF2CDA289C77C200AA5290 /* ScaleButtonStyle.swift */,
 				E5EF2CE0289C782A00AA5290 /* WebView.swift */,
 				E5EF2CE3289C783F00AA5290 /* CustomText.swift */,
+				E5687FAC289E194A00901F1F /* TextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -273,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				E50FBA19288676CE00AA325C /* StoriesRepository.swift */,
+				E5687FA7289DC23500901F1F /* AuthRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -331,7 +341,6 @@
 			name = "ZCombinator (iOS)";
 			packageProductDependencies = (
 				E56C06BF288679E900D4E685 /* Alamofire */,
-				E5EF2CED289C7EEE00AA5290 /* RichText */,
 			);
 			productName = "ZCombinator (iOS)";
 			productReference = E50FB9D22886738D00AA325C /* ZCombinator.app */;
@@ -430,7 +439,6 @@
 			mainGroup = E50FB9C22886738B00AA325C;
 			packageReferences = (
 				E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				E5EF2CEC289C7EEE00AA5290 /* XCRemoteSwiftPackageReference "RichText" */,
 			);
 			productRefGroup = E50FB9D32886738D00AA325C /* Products */;
 			projectDirPath = "";
@@ -501,12 +509,14 @@
 				E5EF2CD8289C777A00AA5290 /* ContextMenu.swift in Sources */,
 				E50FB9F92886738D00AA325C /* Persistence.swift in Sources */,
 				E5EF2CD5289C773000AA5290 /* View+ContextMenu.swift in Sources */,
+				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
 				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E5EF2CDE289C780D00AA5290 /* Status.swift in Sources */,
 				E56C06C228867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9F72886738D00AA325C /* HomeView.swift in Sources */,
 				E500F96B289266EF00080EAF /* LinkView.swift in Sources */,
 				E5EF2CC7289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */,
+				E5687FA8289DC23500901F1F /* AuthRepository.swift in Sources */,
 				E500F9682892659B00080EAF /* HomeView+ViewModel.swift in Sources */,
 				E50FBA11288674B100AA325C /* Story.swift in Sources */,
 			);
@@ -535,12 +545,14 @@
 				E5EF2CD9289C777A00AA5290 /* ContextMenu.swift in Sources */,
 				E50FB9FA2886738D00AA325C /* Persistence.swift in Sources */,
 				E5EF2CD6289C773000AA5290 /* View+ContextMenu.swift in Sources */,
+				E5687FAE289E194A00901F1F /* TextView.swift in Sources */,
 				E50FB9F42886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E5EF2CDF289C780D00AA5290 /* Status.swift in Sources */,
 				E56C06C328867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9F82886738D00AA325C /* HomeView.swift in Sources */,
 				E500F96C289266EF00080EAF /* LinkView.swift in Sources */,
 				E5EF2CC8289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */,
+				E5687FA9289DC23500901F1F /* AuthRepository.swift in Sources */,
 				E500F9692892659B00080EAF /* HomeView+ViewModel.swift in Sources */,
 				E50FBA12288674B100AA325C /* Story.swift in Sources */,
 			);
@@ -551,10 +563,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E50FBA16288674D100AA325C /* ItemProtocol+Ext.swift in Sources */,
+				E5687FAA289DC23500901F1F /* AuthRepository.swift in Sources */,
 				E56C06C428867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9E62886738D00AA325C /* Tests_iOSLaunchTests.swift in Sources */,
 				E587CF012893914600299CE0 /* Comment.swift in Sources */,
 				E50FB9E42886738D00AA325C /* Tests_iOS.swift in Sources */,
+				E5687FAF289E194A00901F1F /* TextView.swift in Sources */,
 				E50FBA1C288676CE00AA325C /* StoriesRepository.swift in Sources */,
 				E50FBA13288674B100AA325C /* Story.swift in Sources */,
 			);
@@ -565,10 +579,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E50FBA17288674D500AA325C /* ItemProtocol+Ext.swift in Sources */,
+				E5687FAB289DC23500901F1F /* AuthRepository.swift in Sources */,
 				E56C06C528867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9F22886738D00AA325C /* Tests_macOSLaunchTests.swift in Sources */,
 				E587CF022893914600299CE0 /* Comment.swift in Sources */,
 				E50FB9F02886738D00AA325C /* Tests_macOS.swift in Sources */,
+				E5687FB0289E194A00901F1F /* TextView.swift in Sources */,
 				E50FBA1D288676CE00AA325C /* StoriesRepository.swift in Sources */,
 				E50FBA14288674B100AA325C /* Story.swift in Sources */,
 			);
@@ -954,14 +970,6 @@
 				version = 5.6.2;
 			};
 		};
-		E5EF2CEC289C7EEE00AA5290 /* XCRemoteSwiftPackageReference "RichText" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NuPlay/RichText.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.7.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -974,11 +982,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		E5EF2CED289C7EEE00AA5290 /* RichText */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E5EF2CEC289C7EEE00AA5290 /* XCRemoteSwiftPackageReference "RichText" */;
-			productName = RichText;
 		};
 /* End XCSwiftPackageProductDependency section */
 

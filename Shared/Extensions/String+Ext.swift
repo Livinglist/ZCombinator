@@ -18,6 +18,24 @@ extension String {
     var withExtraLineBreak: String {
         String(self.replacingOccurrences(of: "\n", with: "\n\n").dropLast(2))
     }
+    
+    var markdowned: AttributedString {
+        // Regex matching URLs.
+        let regex = try! NSRegularExpression(pattern: #"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"#)
+        let range = NSRange(location: 0, length: self.utf16.count)
+        let matches = regex.matches(in: self, range: range)
+        var str = self
+    
+        for match in matches {
+            let matchedString = String(self[Range(match.range, in: self)!])
+            let display = "\(matchedString)"
+            
+            str = str.replacingOccurrences(of: matchedString, with: "[\(display)](\(matchedString))")
+        }
+        
+        return try! AttributedString(
+            markdown: str, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace))
+    }
 }
 
 extension Optional where Wrapped == String {

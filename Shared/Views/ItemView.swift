@@ -20,11 +20,12 @@ struct ItemView<T : ItemProtocol>: View {
     }
     
     var body: some View {
-        mainItemView.onAppear {
-            if self.vm.item == nil {
-                self.vm.item = item
+        mainItemView
+            .onAppear {
+                if self.vm.item == nil {
+                    self.vm.item = item
+                }
             }
-        }
     }
     
     @ViewBuilder
@@ -34,7 +35,7 @@ struct ItemView<T : ItemProtocol>: View {
                 .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
         } else if item is Comment {
             if item.text.isNotNullOrEmpty {
-                Text(item.text.valueOrEmpty)
+                Text(item.text.valueOrEmpty.markdowned)
                     .font(.system(size: 16))
                     .textSelection(.enabled)
                     .fixedSize(horizontal: false, vertical: true)
@@ -54,15 +55,16 @@ struct ItemView<T : ItemProtocol>: View {
                     nameRow.padding(.leading, 6)
                     if item is Story {
                         if let url = URL(string: item.url.valueOrEmpty) {
-                            LinkView(url: url)
+                            LinkView(url: url, title: item.title.valueOrEmpty)
                                 .padding()
                         } else {
                             VStack(spacing: 0) {
                                 Text("\(item.title.valueOrEmpty)")
                                     .fontWeight(.semibold)
+                                    .padding(.top, 6)
                                     .padding(.leading, 12)
                                     .padding(.bottom, 6)
-                                Text("\(item.text.valueOrEmpty)")
+                                Text("\(item.text.valueOrEmpty.markdowned)")
                                     .font(.system(size: 16))
                                     .padding(.leading, 4)
                             }
@@ -80,8 +82,10 @@ struct ItemView<T : ItemProtocol>: View {
                                 .padding(.trailing, 4)
                         }.id(UUID())
                     }
+                    Spacer().frame(height: 60)
                 }
-            }.navigationBarTitleDisplayMode(.inline)
+            }
+            .navigationBarTitleDisplayMode(.inline)
         } else {
             ZStack {
                 if level > 1 {
@@ -96,7 +100,7 @@ struct ItemView<T : ItemProtocol>: View {
                         nameRow.padding(.bottom, 4)
                         textView.padding(.bottom, 3)
                         if vm.status == Status.loading {
-                            LoadingIndicator(color: getColor(level: level))
+                            LoadingIndicator(color: getColor(level: level)).padding(.top, 12)
                         } else if vm.status != Status.loaded && item.kids.isNotNullOrEmpty {
                             Button {
                                 let generator = UIImpactFeedbackGenerator()

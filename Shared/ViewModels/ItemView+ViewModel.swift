@@ -12,12 +12,10 @@ extension ItemView {
     @MainActor
     class ItemViewModel<T: ItemProtocol> : ObservableObject {
         @Published var kids: [Comment] = [Comment]()
-        @Published var loaded: Bool = false
         @Published var status: Status = .idle
         
         @Published var item: T? {
             didSet {
-                print("did set \(self.item?.title ?? "")")
                 if item is Story {
                     Task {
                         await loadKids()
@@ -26,7 +24,6 @@ extension ItemView {
             }
         }
         
-        
         func loadKids() async {
             if let kids = self.item?.kids, self.status != .loading && self.status != .loaded {
                 self.status = .loading
@@ -34,16 +31,27 @@ extension ItemView {
                 var comments: [Comment] = [Comment]()
                 
                 await StoriesRepository.shared.fetchComments(ids: kids) { comment in
-                    DispatchQueue.main.async {
-                        print("new comments \(self.kids.count)")
-                        
-                        comments.append(comment)
-                    }
+                    comments.append(comment)
                 }
                 
                 withAnimation {
                     self.kids.append(contentsOf: comments)
                     self.status = .loaded
+                }
+            }
+        }
+        
+        func refresh() {
+            if let id = self.item?.id, item is Story {
+                self.status = .loading
+                Task {
+                    let story = await StoriesRepository.shared.fetchStory(id)
+                    
+                    if let story = story {
+                        self.item = story as? T
+                        
+                        await loadKids()
+                    }
                 }
             }
         }

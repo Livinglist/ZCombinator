@@ -79,11 +79,9 @@ class StoriesRepository {
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
         
         if let data = response.data {
-            print("fetched \(data) \("\(self.baseUrl)item/\(id).json")")
             let comment = try? JSONDecoder().decode(Comment.self, from: data)
             return comment
         } else {
-            print("data is nil for \(id)")
             return nil
         }
         

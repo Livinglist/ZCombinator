@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension HomeView {
     @MainActor
@@ -29,7 +30,9 @@ extension HomeView {
             }
             
             DispatchQueue.main.async {
-                self.stories = stories
+                withAnimation {
+                    self.stories = stories
+                }
             }
         }
         
@@ -56,7 +59,9 @@ extension HomeView {
             }
             
             DispatchQueue.main.async {
-                self.stories.append(contentsOf: stories)
+                withAnimation {
+                    self.stories.append(contentsOf: stories)
+                }
             }
         }
         

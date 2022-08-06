@@ -10,6 +10,12 @@ import SwiftUI
 @main
 struct ZCombinatorApp: App {
     let persistenceController = PersistenceController.shared
+    
+    init(){
+//        Task {
+//            await AuthRepository.shared.login(username: "livinglist", password: "fjq11038")
+//        }
+    }
 
     var body: some Scene {
         WindowGroup {
