@@ -26,8 +26,6 @@ class AuthRepository {
         
         let cookies = HTTPCookieStorage.shared.cookies(for: url)
         
-        print(cookies)
-        
-        return true
+        return cookies.isNotNullOrEmpty
     }
 }
