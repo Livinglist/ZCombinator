@@ -55,19 +55,12 @@ struct HomeView: View {
                 }
             }
             .navigationTitle(vm.storyType.rawValue.uppercased())
-            Text("Select an story")
+            Text("Select a story")
         }.task {
             await vm.fetchStories()
         }
     }
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
