@@ -21,6 +21,11 @@ struct ItemView<T : ItemProtocol>: View {
     
     var body: some View {
         mainItemView
+            .sheet(isPresented: $showHNSheet) {
+                if let url = URL(string: "https://news.ycombinator.com/item?id=\(item.id)") {
+                    SafariView(url: url)
+                }
+            }
             .onAppear {
                 if self.vm.item == nil {
                     self.vm.item = item
@@ -89,18 +94,23 @@ struct ItemView<T : ItemProtocol>: View {
                 ToolbarItem{
                     Menu {
                         Button {
+                            
+                        } label: {
+                            Label("Upvote", systemImage: "hand.thumbsup")
+                        }
+                        Button {
+                            
+                        } label: {
+                            Label("Reply", systemImage: "plus.message")
+                        }
+                        Button {
                             showHNSheet = true
                         } label: {
-                            Label("View on Hacker News", systemImage: "")
+                            Label("View on Hacker News", systemImage: "safari")
                         }
                     } label: {
                         Label("", systemImage: "ellipsis")
                     }
-                }
-            }
-            .sheet(isPresented: $showHNSheet) {
-                if let url = URL(string: "https://news.ycombinator.com/item?id=\(item.id)") {
-                    SafariView(url: url)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -148,6 +158,11 @@ struct ItemView<T : ItemProtocol>: View {
                         } label: {
                             Label("Reply", systemImage: "plus.message")
                         }
+                        Button {
+                            showHNSheet = true
+                        } label: {
+                            Label("View on Hacker News", systemImage: "safari")
+                        }
                     }
                     VStack(spacing: 0) {
                         ForEach(vm.kids){ comment in
@@ -169,7 +184,7 @@ struct ItemView<T : ItemProtocol>: View {
     @ViewBuilder
     var nameRow: some View {
         HStack {
-            Text(item.by)
+            Text(item.by.valueOrEmpty)
                 .borderedFootnote()
                 .foregroundColor(getColor(level: level))
             if let karma = item.score {

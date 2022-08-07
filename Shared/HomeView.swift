@@ -10,11 +10,16 @@ import CoreData
 
 struct HomeView: View {
     @ObservedObject private var vm = HomeViewModel()
-    @Environment(\.managedObjectContext) private var viewContext
+    @State private var showLoginDialog: Bool = false
     
+    @State private var username: String = ""
+    @State private var password: String = ""
+    
+    @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
+    
     private var items: FetchedResults<Item>
     
     @State private var showAboutSheet = false
@@ -49,7 +54,11 @@ struct HomeView: View {
                                 Label("\(storyType.rawValue.uppercased())", systemImage: storyType.iconName)
                             }
                         }
-                        //Label("Log in", systemImage: "")
+                        Button {
+                            showLoginDialog = true
+                        } label: {
+                            Label("Log In", systemImage: "")
+                        }
                         Button {
                             showAboutSheet = true
                         } label: {
@@ -63,9 +72,14 @@ struct HomeView: View {
             .navigationTitle(vm.storyType.rawValue.uppercased())
             Text("Select a story")
         }
-        .sheet(isPresented: $showAboutSheet) {
-            SafariView(url: Constants.githubUrl)
-        }
+        .alert("Login", isPresented: $showLoginDialog, actions: {
+            TextField("Username", text: $username)
+            SecureField("Password", text: $password)
+            Button("Login", action: {})
+            Button("Cancel", role: .cancel, action: {})
+        }, message: {
+            Text("Please enter your username and password.")
+        })
         .task {
             await vm.fetchStories()
         }

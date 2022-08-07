@@ -15,7 +15,7 @@ protocol ItemProtocol: Codable, Identifiable, Hashable {
     var text: String? { get }
     var url: String? { get }
     var type: String? { get }
-    var by: String { get }
+    var by: String? { get }
     var score: Int? { get }
     var descendants: Int? { get }
     var time: Int { get }

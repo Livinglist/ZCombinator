@@ -13,13 +13,13 @@ struct Story : ItemProtocol {
     let text: String?
     let url: String?
     let type: String?
-    let by: String
+    let by: String?
     let score: Int?
     let descendants: Int?
     let time: Int
     let kids: [Int]?
     
-    init(id: Int, title: String?, text: String?, url: String?, type: String?, by: String, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
+    init(id: Int, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
         self.id = id
         self.title = title
         self.text = text

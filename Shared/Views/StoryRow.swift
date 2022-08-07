@@ -62,9 +62,9 @@ struct StoryRow: View {
                                 Spacer()
                                 HStack{
                                     if story.isJob {
-                                        Text("\(story.timeAgo) by \(story.by)").font(.caption)
+                                        Text("\(story.timeAgo) by \(story.by.valueOrEmpty)").font(.caption)
                                     } else {
-                                        Text("\(story.score ?? 0) pts | \(story.descendants ?? 0) cmts | \(story.timeAgo) by \(story.by)").font(.caption)
+                                        Text("\(story.score ?? 0) pts | \(story.descendants ?? 0) cmts | \(story.timeAgo) by \(story.by.valueOrEmpty)").font(.caption)
                                     }
                                     Spacer()
                                 }
