@@ -138,7 +138,7 @@ class AuthRepository {
             "id": String(id),
         ]
         
-        let response = await AF.request("\(self.baseUrl)/flag", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
+        _ = await AF.request("\(self.baseUrl)/flag", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
         
         return true
     }
@@ -155,7 +155,7 @@ class AuthRepository {
             "how": "up",
         ]
         
-        let response = await AF.request("\(self.baseUrl)/vote", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
+        _ = await AF.request("\(self.baseUrl)/vote", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
         
         return true
     }
@@ -171,7 +171,7 @@ class AuthRepository {
             "id": String(id),
         ]
         
-        let response = await AF.request("\(self.baseUrl)/fave", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
+        _ = await AF.request("\(self.baseUrl)/fave", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
         
         return true
     }
@@ -188,7 +188,7 @@ class AuthRepository {
             "text": text,
         ]
         
-        let response = await AF.request("\(self.baseUrl)/comment", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
+        _ = await AF.request("\(self.baseUrl)/comment", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
         
         return true
     }

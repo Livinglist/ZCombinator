@@ -74,15 +74,7 @@ struct HomeView: View {
                     return
                 }
                 
-                Task {
-                    let loggedIn = await authVm.logIn(username: username, password: password)
-                    
-                    if loggedIn {
-                        print("logged in")
-                    } else {
-                        print("not loggede in")
-                    }
-                }
+                authVm.logIn(username: username, password: password)
             })
             Button("Cancel", role: .cancel, action: {})
         }, message: {

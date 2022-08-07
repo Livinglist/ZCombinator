@@ -9,8 +9,10 @@ import SwiftUI
 import WebKit
 
 struct ItemView<T : ItemProtocol>: View {
+    @EnvironmentObject var authVm: AuthViewModel
     @StateObject var vm: ItemViewModel<T> = ItemViewModel<T>()
     @State var showHNSheet: Bool = false
+    @State var showReplySheet: Bool = false
     let level: Int
     let item: T
     
@@ -26,6 +28,9 @@ struct ItemView<T : ItemProtocol>: View {
                     SafariView(url: url)
                 }
             }
+            .sheet(isPresented: $showReplySheet) {
+                ReplyView(replyingTo: item)
+            }
             .onAppear {
                 if self.vm.item == nil {
                     self.vm.item = item
@@ -40,11 +45,13 @@ struct ItemView<T : ItemProtocol>: View {
             } label: {
                 Label("Upvote", systemImage: "hand.thumbsup")
             }
+            .disabled(!authVm.loggedIn)
             Button {
-                
+                showReplySheet = true
             } label: {
                 Label("Reply", systemImage: "plus.message")
             }
+            .disabled(!authVm.loggedIn)
             Divider()
             Button {
                 displayActionSheet()
@@ -164,11 +171,13 @@ struct ItemView<T : ItemProtocol>: View {
                         } label: {
                             Label("Upvote", systemImage: "hand.thumbsup")
                         }
+                        .disabled(!authVm.loggedIn)
                         Button {
-                            
+                            showReplySheet = true
                         } label: {
                             Label("Reply", systemImage: "plus.message")
                         }
+                        .disabled(!authVm.loggedIn)
                         Divider()
                         Button {
                             displayActionSheet()

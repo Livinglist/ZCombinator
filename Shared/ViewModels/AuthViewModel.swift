@@ -21,23 +21,35 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func logIn(username: String, password: String) async -> Bool {
-        let loggedIn = await AuthRepository.shared.logIn(username: username, password: password)
-        
-        DispatchQueue.main.async {
-            self.loggedIn = loggedIn
+    func logIn(username: String, password: String) {
+        Task {
+            let loggedIn = await AuthRepository.shared.logIn(username: username, password: password)
             
-            if loggedIn {
-                self.username = username
+            DispatchQueue.main.async {
+                self.loggedIn = loggedIn
+                
+                if loggedIn {
+                    self.username = username
+                }
             }
         }
-        
-        return loggedIn
     }
     
     func logOut() {
         _ = AuthRepository.shared.logOut()
         self.loggedIn = false
         self.username = nil
+    }
+    
+    func upvote(_ id: Int) {
+        Task {
+            await AuthRepository.shared.upvote(id)
+        }
+    }
+    
+    func reply(to id: Int, with text: String) {
+        Task {
+            await AuthRepository.shared.reply(to: id, with: text)
+        }
     }
 }
