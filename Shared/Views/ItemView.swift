@@ -54,6 +54,12 @@ struct ItemView<T : ItemProtocol>: View {
             .disabled(!authVm.loggedIn)
             Divider()
             Button {
+                
+            } label: {
+                Label("Flag", systemImage: "flag")
+            }
+            Divider()
+            Button {
                 displayActionSheet()
             } label: {
                 Label("Share", systemImage: "square.and.arrow.up")
@@ -176,6 +182,13 @@ struct ItemView<T : ItemProtocol>: View {
                             showReplySheet = true
                         } label: {
                             Label("Reply", systemImage: "plus.message")
+                        }
+                        .disabled(!authVm.loggedIn)
+                        Divider()
+                        Button {
+                            
+                        } label: {
+                            Label("Flag", systemImage: "flag")
                         }
                         .disabled(!authVm.loggedIn)
                         Divider()
