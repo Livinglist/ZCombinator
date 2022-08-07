@@ -14,34 +14,56 @@ class AuthRepository {
     
     private let server: String = "news.ycombinator.com"
     private let baseUrl: String = "https://news.ycombinator.com"
+    private let query: CFDictionary = [
+        kSecClass: kSecClassInternetPassword,
+        kSecAttrServer: Constants.server,
+        kSecReturnAttributes: true,
+        kSecReturnData: true
+    ] as CFDictionary
     
     var loggedIn: Bool {
-        let query = [
-          kSecClass: kSecClassInternetPassword,
-          kSecAttrServer: server,
-          kSecReturnAttributes: true,
-          kSecReturnData: true
-        ] as CFDictionary
-
         var result: AnyObject?
-        let status = SecItemCopyMatching(query, &result)
-
-        print("Operation finished with status: \(status)")
+        _ = SecItemCopyMatching(query, &result)
         
         guard let dic = result as? NSDictionary else {
             return false
         }
-
-        let username = dic[kSecAttrAccount] as! String?
-        let passwordData = dic[kSecValueData] as! Data
-        let password = String(data: passwordData, encoding: .utf8)!
-        print("Username: \(username)")
-        print("Password: \(password)")
         
-        return !(username.valueOrEmpty.isEmpty)
+        let username = dic[kSecAttrAccount] as! String?
+        
+        return username.isNotNullOrEmpty
     }
     
-    func login(username: String, password: String) async -> Bool {
+    var username: String? {
+        var result: AnyObject?
+        _ = SecItemCopyMatching(query, &result)
+        
+        guard let dic = result as? NSDictionary else {
+            return nil
+        }
+        
+        let username = dic[kSecAttrAccount] as! String?
+        
+        return username
+    }
+    
+    var password: String? {
+        var result: AnyObject?
+        _ = SecItemCopyMatching(query, &result)
+        
+        guard let dic = result as? NSDictionary else {
+            return nil
+        }
+        
+        let passwordData = dic[kSecValueData] as! Data
+        let password = String(data: passwordData, encoding: .utf8)
+        
+        return password
+    }
+    
+    // MARK: - Authentication
+    
+    func logIn(username: String, password: String) async -> Bool {
         let parameters: [String: String] = [
             "acct": username,
             "pw": password
@@ -57,27 +79,23 @@ class AuthRepository {
         
         if loggedIn {
             let keychainItem = [
-              kSecValueData: username.data(using: .utf8)!,
-              kSecAttrAccount: password,
-              kSecAttrServer: server,
-              kSecClass: kSecClassInternetPassword,
-              kSecReturnData: true,
-              kSecReturnAttributes: true
+                kSecValueData: password.data(using: .utf8)!,
+                kSecAttrAccount: username,
+                kSecAttrServer: server,
+                kSecClass: kSecClassInternetPassword,
+                kSecReturnData: true,
+                kSecReturnAttributes: true
             ] as CFDictionary
             
             var ref: AnyObject?
-
-            let status = SecItemAdd(keychainItem, &ref)
-            let result = ref as! Data
-            print("Operation finished with status: \(status)")
-            let password = String(data: result, encoding: .utf8)!
-            print("Password: \(password)")
+            
+            _ = SecItemAdd(keychainItem, &ref)
         }
         
         return loggedIn
     }
     
-    func logout() async -> Bool {
+    func logOut() -> Bool {
         guard let url = URL(string: baseUrl) else {
             return false
         }
@@ -91,27 +109,86 @@ class AuthRepository {
         }
         
         let query = [
-          kSecClass: kSecClassInternetPassword,
-          kSecAttrServer: server,
-          kSecReturnAttributes: true,
-          kSecReturnData: true
+            kSecClass: kSecClassInternetPassword,
+            kSecAttrServer: server,
+            kSecReturnAttributes: true,
+            kSecReturnData: true
         ] as CFDictionary
-
+        
         
         let delStatus = SecItemDelete(query)
-        print("Delete Operation finished with status: \(delStatus)")
         
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query, &result)
-
-        print("Operation finished with status: \(status)")
-        let dic = result as! NSDictionary
-
-        let username = dic[kSecAttrAccount] ?? ""
-        let passwordData = dic[kSecValueData] as! Data
-        let password = String(data: passwordData, encoding: .utf8)!
-        print("Username: \(username)")
-        print("Password: \(password)")
+        if delStatus != 0 {
+            return false
+        }
+        
+        return true
+    }
+    
+    // MARK: - Actions that require authentication
+    
+    func flag(_ id: Int) async -> Bool {
+        guard let username = self.username, let password = self.password else {
+            return false
+        }
+        
+        let parameters: [String: String] = [
+            "acct": username,
+            "pw": password,
+            "id": String(id),
+        ]
+        
+        let response = await AF.request("\(self.baseUrl)/flag", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
+        
+        return true
+    }
+    
+    func upvote(_ id: Int) async -> Bool {
+        guard let username = self.username, let password = self.password else {
+            return false
+        }
+        
+        let parameters: [String: String] = [
+            "acct": username,
+            "pw": password,
+            "id": String(id),
+            "how": "up",
+        ]
+        
+        let response = await AF.request("\(self.baseUrl)/vote", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
+        
+        return true
+    }
+    
+    func fav(_ id: Int) async -> Bool {
+        guard let username = self.username, let password = self.password else {
+            return false
+        }
+        
+        let parameters: [String: String] = [
+            "acct": username,
+            "pw": password,
+            "id": String(id),
+        ]
+        
+        let response = await AF.request("\(self.baseUrl)/fave", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
+        
+        return true
+    }
+    
+    func reply(to id: Int, with text: String) async -> Bool {
+        guard let username = self.username, let password = self.password else {
+            return false
+        }
+        
+        let parameters: [String: String] = [
+            "acct": username,
+            "pw": password,
+            "parent": String(id),
+            "text": text,
+        ]
+        
+        let response = await AF.request("\(self.baseUrl)/comment", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
         
         return true
     }

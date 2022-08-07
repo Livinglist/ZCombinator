@@ -65,6 +65,14 @@
 		E587CF002893914600299CE0 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E587CEFE2893914600299CE0 /* Comment.swift */; };
 		E587CF012893914600299CE0 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E587CEFE2893914600299CE0 /* Comment.swift */; };
 		E587CF022893914600299CE0 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E587CEFE2893914600299CE0 /* Comment.swift */; };
+		E5E048D0289F69D700702733 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048CF289F69D700702733 /* AuthButton.swift */; };
+		E5E048D1289F69D700702733 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048CF289F69D700702733 /* AuthButton.swift */; };
+		E5E048D3289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */; };
+		E5E048D4289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */; };
+		E5E048D6289F72D700702733 /* View+ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */; };
+		E5E048D7289F72D700702733 /* View+ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */; };
+		E5E048D9289F737700702733 /* Bool+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D8289F737700702733 /* Bool+Ext.swift */; };
+		E5E048DA289F737700702733 /* Bool+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D8289F737700702733 /* Bool+Ext.swift */; };
 		E5EF2CC7289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CC6289C6CFF00AA5290 /* LoadingIndicator.swift */; };
 		E5EF2CC8289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CC6289C6CFF00AA5290 /* LoadingIndicator.swift */; };
 		E5EF2CCB289C6F8C00AA5290 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CCA289C6F8C00AA5290 /* String+Ext.swift */; };
@@ -139,6 +147,10 @@
 		E5687FAC289E194A00901F1F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		E56C06C128867B1100D4E685 /* StoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryType.swift; sourceTree = "<group>"; };
 		E587CEFE2893914600299CE0 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		E5E048CF289F69D700702733 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
+		E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
+		E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ConditionalModifier.swift"; sourceTree = "<group>"; };
+		E5E048D8289F737700702733 /* Bool+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Ext.swift"; sourceTree = "<group>"; };
 		E5EF2CC6289C6CFF00AA5290 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		E5EF2CCA289C6F8C00AA5290 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		E5EF2CCD289C71CC00AA5290 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
@@ -280,6 +292,7 @@
 				E5EF2CE0289C782A00AA5290 /* WebView.swift */,
 				E5EF2CE3289C783F00AA5290 /* CustomText.swift */,
 				E5687FAC289E194A00901F1F /* TextView.swift */,
+				E5E048CF289F69D700702733 /* AuthButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -319,6 +332,9 @@
 				E5EF2CD4289C773000AA5290 /* View+ContextMenu.swift */,
 				E5EF2CF2289CA58100AA5290 /* View+Modifiers.swift */,
 				E5EF2CF5289CA6CC00AA5290 /* Date+TimeAgoString.swift */,
+				E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */,
+				E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */,
+				E5E048D8289F737700702733 /* Bool+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -418,7 +434,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					E50FB9D12886738D00AA325C = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -506,9 +522,11 @@
 				E53CA981289E3979009FDAE6 /* Constants.swift in Sources */,
 				E5EF2CCE289C71CC00AA5290 /* Array+Ext.swift in Sources */,
 				E52134C328877ED7005CFB77 /* ItemView.swift in Sources */,
+				E5E048D6289F72D700702733 /* View+ConditionalModifier.swift in Sources */,
 				E5EF2CDB289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
 				E5EF2CCB289C6F8C00AA5290 /* String+Ext.swift in Sources */,
 				E50FBA0E288673B400AA325C /* ItemProtocol+Ext.swift in Sources */,
+				E5E048D9289F737700702733 /* Bool+Ext.swift in Sources */,
 				E5EF2CD2289C771200AA5290 /* Comparable+Clamped.swift in Sources */,
 				E587CEFF2893914600299CE0 /* Comment.swift in Sources */,
 				E50FB9F52886738D00AA325C /* ZCombinatorApp.swift in Sources */,
@@ -517,10 +535,12 @@
 				E50FBA1A288676CE00AA325C /* StoriesRepository.swift in Sources */,
 				E5EF2CD8289C777A00AA5290 /* ContextMenu.swift in Sources */,
 				E50FB9F92886738D00AA325C /* Persistence.swift in Sources */,
+				E5E048D0289F69D700702733 /* AuthButton.swift in Sources */,
 				E5EF2CD5289C773000AA5290 /* View+ContextMenu.swift in Sources */,
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
 				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E5EF2CDE289C780D00AA5290 /* Status.swift in Sources */,
+				E5E048D3289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */,
 				E56C06C228867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9F72886738D00AA325C /* HomeView.swift in Sources */,
 				E500F96B289266EF00080EAF /* LinkView.swift in Sources */,
@@ -544,9 +564,11 @@
 				E53CA982289E3979009FDAE6 /* Constants.swift in Sources */,
 				E5EF2CCF289C71CC00AA5290 /* Array+Ext.swift in Sources */,
 				E52134C428877ED7005CFB77 /* ItemView.swift in Sources */,
+				E5E048D7289F72D700702733 /* View+ConditionalModifier.swift in Sources */,
 				E5EF2CDC289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
 				E5EF2CCC289C6F8C00AA5290 /* String+Ext.swift in Sources */,
 				E50FBA15288674CD00AA325C /* ItemProtocol+Ext.swift in Sources */,
+				E5E048DA289F737700702733 /* Bool+Ext.swift in Sources */,
 				E5EF2CD3289C771200AA5290 /* Comparable+Clamped.swift in Sources */,
 				E587CF002893914600299CE0 /* Comment.swift in Sources */,
 				E52655602887E28800D0B79A /* SafariView.swift in Sources */,
@@ -555,10 +577,12 @@
 				E50FBA1B288676CE00AA325C /* StoriesRepository.swift in Sources */,
 				E5EF2CD9289C777A00AA5290 /* ContextMenu.swift in Sources */,
 				E50FB9FA2886738D00AA325C /* Persistence.swift in Sources */,
+				E5E048D1289F69D700702733 /* AuthButton.swift in Sources */,
 				E5EF2CD6289C773000AA5290 /* View+ContextMenu.swift in Sources */,
 				E5687FAE289E194A00901F1F /* TextView.swift in Sources */,
 				E50FB9F42886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E5EF2CDF289C780D00AA5290 /* Status.swift in Sources */,
+				E5E048D4289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */,
 				E56C06C328867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9F82886738D00AA325C /* HomeView.swift in Sources */,
 				E500F96C289266EF00080EAF /* LinkView.swift in Sources */,
@@ -651,6 +675,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -709,6 +734,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -742,7 +768,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -772,7 +798,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -794,9 +820,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -822,9 +850,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -891,6 +921,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
@@ -910,6 +941,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;

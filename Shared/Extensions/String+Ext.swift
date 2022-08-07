@@ -8,6 +8,10 @@
 import Foundation
 
 extension String {
+    var isNotEmpty: Bool {
+        !isEmpty
+    }
+    
     var htmlStripped: String {
         let res = try? NSAttributedString(data: self.data(using: .unicode)!,
                                        options: [.documentType: NSAttributedString.DocumentType.html],
@@ -52,5 +56,13 @@ extension Optional where Wrapped == String {
         }
         
         return unwrapped.htmlStripped
+    }
+    
+    var isNotNullOrEmpty: Bool {
+        guard let unwrapped = self else {
+            return false
+        }
+        
+        return unwrapped.isNotEmpty
     }
 }

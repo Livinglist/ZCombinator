@@ -22,7 +22,7 @@ struct ItemView<T : ItemProtocol>: View {
     var body: some View {
         mainItemView
             .sheet(isPresented: $showHNSheet) {
-                if let url = URL(string: "https://news.ycombinator.com/item?id=\(item.id)") {
+                if let url = URL(string: item.itemUrl) {
                     SafariView(url: url)
                 }
             }
@@ -31,6 +31,34 @@ struct ItemView<T : ItemProtocol>: View {
                     self.vm.item = item
                 }
             }
+    }
+    
+    var menu: some View {
+        Menu {
+            Button {
+                
+            } label: {
+                Label("Upvote", systemImage: "hand.thumbsup")
+            }
+            Button {
+                
+            } label: {
+                Label("Reply", systemImage: "plus.message")
+            }
+            Divider()
+            Button {
+                displayActionSheet()
+            } label: {
+                Label("Share", systemImage: "square.and.arrow.up")
+            }
+            Button {
+                showHNSheet = true
+            } label: {
+                Label("View on Hacker News", systemImage: "safari")
+            }
+        } label: {
+            Label("", systemImage: "ellipsis")
+        }
     }
     
     @ViewBuilder
@@ -72,6 +100,7 @@ struct ItemView<T : ItemProtocol>: View {
                                 Text("\(item.text.valueOrEmpty.markdowned)")
                                     .font(.system(size: 16))
                                     .padding(.leading, 4)
+                                    .padding(.bottom, 6)
                             }
                         }
                     } else if item is Comment {
@@ -79,7 +108,7 @@ struct ItemView<T : ItemProtocol>: View {
                             .padding(.leading, Double(4 * (level - 1)))
                     }
                     if vm.status == .loading {
-                        LoadingIndicator()
+                        LoadingIndicator().padding(.top, 12)
                     }
                     VStack(spacing: 0) {
                         ForEach(vm.kids){ comment in
@@ -92,25 +121,7 @@ struct ItemView<T : ItemProtocol>: View {
             }
             .toolbar {
                 ToolbarItem{
-                    Menu {
-                        Button {
-                            
-                        } label: {
-                            Label("Upvote", systemImage: "hand.thumbsup")
-                        }
-                        Button {
-                            
-                        } label: {
-                            Label("Reply", systemImage: "plus.message")
-                        }
-                        Button {
-                            showHNSheet = true
-                        } label: {
-                            Label("View on Hacker News", systemImage: "safari")
-                        }
-                    } label: {
-                        Label("", systemImage: "ellipsis")
-                    }
+                    menu
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
@@ -158,6 +169,12 @@ struct ItemView<T : ItemProtocol>: View {
                         } label: {
                             Label("Reply", systemImage: "plus.message")
                         }
+                        Divider()
+                        Button {
+                            displayActionSheet()
+                        } label: {
+                            Label("Share", systemImage: "square.and.arrow.up")
+                        }
                         Button {
                             showHNSheet = true
                         } label: {
@@ -202,6 +219,13 @@ struct ItemView<T : ItemProtocol>: View {
                 .foregroundColor(getColor(level: level))
             Spacer()
         }
+    }
+    
+    
+    func displayActionSheet() {
+        guard let urlShare = URL(string: item.itemUrl) else { return }
+        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
+        UIApplication.shared.keyWindow?.rootViewController?.present(activityVC, animated: true, completion: nil)
     }
     
     func getColor(level: Int) -> Color {

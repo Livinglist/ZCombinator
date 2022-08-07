@@ -75,14 +75,29 @@ struct StoryRow: View {
                         .background(Color(UIColor.secondarySystemBackground))
                         .cornerRadius(16)
                     })
-                    .contextMenu(PreviewContextMenu(destination: SafariView(url:url!), actionProvider: { items in
-                        return UIMenu(title: "My Menu", children: [UIAction(
-                            title: "View in browser",
-                            image: UIImage(systemName: "safari"),
-                            identifier: nil,
-                            handler: { _ in showSafari = true }
-                        )])
-                    }))
+                    .if(.iOS16) { view in
+                        view
+                            .contextMenu(menuItems: {
+                                Button {
+                                    showSafari = true
+                                } label: {
+                                    Label("View in browser", systemImage: "safari")
+                                }
+                            }, preview: {
+                                SafariView(url:url!)
+                            })
+                    }
+                    .if(!.iOS16) { view in
+                        view
+                            .contextMenu(PreviewContextMenu(destination: SafariView(url:url!), actionProvider: { items in
+                                return UIMenu(title: "", children: [UIAction(
+                                    title: "View in browser",
+                                    image: UIImage(systemName: "safari"),
+                                    identifier: nil,
+                                    handler: { _ in showSafari = true }
+                                )])
+                            }))
+                    }
                 }
                 .sheet(isPresented: $showSafari) {
                     SafariView(url:url!)

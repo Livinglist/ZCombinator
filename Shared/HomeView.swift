@@ -10,19 +10,15 @@ import CoreData
 
 struct HomeView: View {
     @ObservedObject private var vm = HomeViewModel()
+    
     @State private var showLoginDialog: Bool = false
+    @State private var showLogoutDialog: Bool = false
+    @State private var showAboutSheet: Bool = false
     
     @State private var username: String = ""
     @State private var password: String = ""
     
-    @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    
-    private var items: FetchedResults<Item>
-    
-    @State private var showAboutSheet = false
+    @EnvironmentObject private var authVm: AuthViewModel
     
     var body: some View {
         NavigationView {
@@ -54,11 +50,7 @@ struct HomeView: View {
                                 Label("\(storyType.rawValue.uppercased())", systemImage: storyType.iconName)
                             }
                         }
-                        Button {
-                            showLoginDialog = true
-                        } label: {
-                            Label("Log In", systemImage: "")
-                        }
+                        AuthButton(showLoginDialog: $showLoginDialog, showLogoutDialog: $showLogoutDialog)
                         Button {
                             showAboutSheet = true
                         } label: {
@@ -74,11 +66,33 @@ struct HomeView: View {
         }
         .alert("Login", isPresented: $showLoginDialog, actions: {
             TextField("Username", text: $username)
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.never)
             SecureField("Password", text: $password)
-            Button("Login", action: {})
+            Button("Login", action: {
+                guard username.isNotEmpty && password.isNotEmpty else {
+                    return
+                }
+                
+                Task {
+                    let loggedIn = await authVm.logIn(username: username, password: password)
+                    
+                    if loggedIn {
+                        print("logged in")
+                    } else {
+                        print("not loggede in")
+                    }
+                }
+            })
             Button("Cancel", role: .cancel, action: {})
         }, message: {
             Text("Please enter your username and password.")
+        })
+        .alert("Logout", isPresented: $showLogoutDialog, actions: {
+            Button("Logout", role: .destructive, action: authVm.logOut)
+            Button("Cancel", role: .cancel, action: {})
+        }, message: {
+            Text("Do you want to log out as \(authVm.username.valueOrEmpty)?")
         })
         .task {
             await vm.fetchStories()

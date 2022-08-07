@@ -9,4 +9,5 @@ import Foundation
 
 enum Constants {
     static let githubUrl = URL(string: "https://github.com/Livinglist/ZCombinator")!
+    static let server = "news.ycombinator.com"
 }

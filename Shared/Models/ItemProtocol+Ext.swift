@@ -37,6 +37,10 @@ extension ItemProtocol {
         return date.timeAgoString
     }
     
+    var itemUrl: String {
+        "https://news.ycombinator.com/item?id=\(self.id)"
+    }
+    
     var readableUrl: String? {
         if let url = self.url {
             let domain = URL(string: url)?.host

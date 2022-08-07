@@ -13,7 +13,7 @@ class StoriesRepository {
     
     private let baseUrl: String = "https://hacker-news.firebaseio.com/v0/"
     
-    // MARK: - Functions for fetching stories.
+    // MARK: - Stories related.
     
     public func fetchStories(from storyType: StoryType, onStoryFetched: @escaping (Story) -> Void) async -> Void {
         let storyIds = await fetchStoryIds(from: storyType)
@@ -59,7 +59,7 @@ class StoriesRepository {
         
     }
     
-    // MARK: - Functions for fetching comments.
+    // MARK: - Comments related.
     
     public func fetchComments(ids: [Int], filtered: Bool = true, onCommentFetched: @escaping (Comment) -> Void) async -> Void {
         for id in ids {

@@ -10,13 +10,13 @@ import SwiftUI
 @main
 struct ZCombinatorApp: App {
     let persistenceController = PersistenceController.shared
-    let authViewModel = AuthViewModel()
+    let authVm = AuthViewModel()
 
     var body: some Scene {
         WindowGroup {
             HomeView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
-                .environmentObject(self.authViewModel)
+                .environmentObject(self.authVm)
         }
     }
 }

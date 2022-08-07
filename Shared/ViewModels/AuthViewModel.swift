@@ -14,20 +14,30 @@ class AuthViewModel: ObservableObject {
     init(){
         Task {
             let loggedIn = AuthRepository.shared.loggedIn
+            let username = AuthRepository.shared.username
             
             self.loggedIn = loggedIn
+            self.username = username
         }
     }
     
-    func login(username: String, password: String) {
-        Task {
-            let loggedIn = await AuthRepository.shared.login(username: username, password: password)
-            
-            self.loggedIn = loggedIn
-        }
-    }
-    
-    func logout() {
+    func logIn(username: String, password: String) async -> Bool {
+        let loggedIn = await AuthRepository.shared.logIn(username: username, password: password)
         
+        DispatchQueue.main.async {
+            self.loggedIn = loggedIn
+            
+            if loggedIn {
+                self.username = username
+            }
+        }
+        
+        return loggedIn
+    }
+    
+    func logOut() {
+        _ = AuthRepository.shared.logOut()
+        self.loggedIn = false
+        self.username = nil
     }
 }

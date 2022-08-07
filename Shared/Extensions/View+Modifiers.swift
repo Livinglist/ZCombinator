@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct BorderedFootnote: ViewModifier {
+fileprivate struct BorderedFootnote: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.footnote)
