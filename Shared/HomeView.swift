@@ -64,6 +64,9 @@ struct HomeView: View {
             .navigationTitle(vm.storyType.rawValue.uppercased())
             Text("Select a story")
         }
+        .sheet(isPresented: $showAboutSheet, content: {
+            SafariView(url: Constants.githubUrl)
+        })
         .alert("Login", isPresented: $showLoginDialog, actions: {
             TextField("Username", text: $username)
                 .autocorrectionDisabled(true)
