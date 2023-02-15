@@ -69,8 +69,8 @@
 		E5E048D4289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */; };
 		E5E048D6289F72D700702733 /* View+ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */; };
 		E5E048D7289F72D700702733 /* View+ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */; };
-		E5E048D9289F737700702733 /* Bool+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D8289F737700702733 /* Bool+Ext.swift */; };
-		E5E048DA289F737700702733 /* Bool+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D8289F737700702733 /* Bool+Ext.swift */; };
+		E5E048D9289F737700702733 /* Bool+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D8289F737700702733 /* Bool+.swift */; };
+		E5E048DA289F737700702733 /* Bool+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D8289F737700702733 /* Bool+.swift */; };
 		E5E048DC289F86D400702733 /* ReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048DB289F86D400702733 /* ReplyView.swift */; };
 		E5E048DD289F86D400702733 /* ReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048DB289F86D400702733 /* ReplyView.swift */; };
 		E5EF2CC7289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CC6289C6CFF00AA5290 /* LoadingIndicator.swift */; };
@@ -149,7 +149,7 @@
 		E5E048CF289F69D700702733 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
 		E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ConditionalModifier.swift"; sourceTree = "<group>"; };
-		E5E048D8289F737700702733 /* Bool+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+Ext.swift"; sourceTree = "<group>"; };
+		E5E048D8289F737700702733 /* Bool+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+.swift"; sourceTree = "<group>"; };
 		E5E048DB289F86D400702733 /* ReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyView.swift; sourceTree = "<group>"; };
 		E5EF2CC6289C6CFF00AA5290 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		E5EF2CCA289C6F8C00AA5290 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
@@ -334,7 +334,7 @@
 				E5EF2CF5289CA6CC00AA5290 /* Date+TimeAgoString.swift */,
 				E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */,
 				E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */,
-				E5E048D8289F737700702733 /* Bool+Ext.swift */,
+				E5E048D8289F737700702733 /* Bool+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -527,7 +527,7 @@
 				E5EF2CDB289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
 				E5EF2CCB289C6F8C00AA5290 /* String+Ext.swift in Sources */,
 				E50FBA0E288673B400AA325C /* Item.swift in Sources */,
-				E5E048D9289F737700702733 /* Bool+Ext.swift in Sources */,
+				E5E048D9289F737700702733 /* Bool+.swift in Sources */,
 				E5EF2CD2289C771200AA5290 /* Comparable+Clamped.swift in Sources */,
 				E587CEFF2893914600299CE0 /* Comment.swift in Sources */,
 				E50FB9F52886738D00AA325C /* ZCombinatorApp.swift in Sources */,
@@ -569,7 +569,7 @@
 				E5EF2CDC289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
 				E5EF2CCC289C6F8C00AA5290 /* String+Ext.swift in Sources */,
 				E50FBA15288674CD00AA325C /* Item.swift in Sources */,
-				E5E048DA289F737700702733 /* Bool+Ext.swift in Sources */,
+				E5E048DA289F737700702733 /* Bool+.swift in Sources */,
 				E5EF2CD3289C771200AA5290 /* Comparable+Clamped.swift in Sources */,
 				E587CF002893914600299CE0 /* Comment.swift in Sources */,
 				E52655602887E28800D0B79A /* SafariView.swift in Sources */,
