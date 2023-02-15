@@ -23,14 +23,14 @@
 		E50FB9F82886738D00AA325C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FB9CB2886738B00AA325C /* HomeView.swift */; };
 		E50FB9FB2886738D00AA325C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50FB9CD2886738D00AA325C /* Assets.xcassets */; };
 		E50FB9FC2886738D00AA325C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50FB9CD2886738D00AA325C /* Assets.xcassets */; };
-		E50FBA0E288673B400AA325C /* ItemProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA0D288673B400AA325C /* ItemProtocol+Ext.swift */; };
+		E50FBA0E288673B400AA325C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA0D288673B400AA325C /* Item.swift */; };
 		E50FBA11288674B100AA325C /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA10288674B100AA325C /* Story.swift */; };
 		E50FBA12288674B100AA325C /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA10288674B100AA325C /* Story.swift */; };
 		E50FBA13288674B100AA325C /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA10288674B100AA325C /* Story.swift */; };
 		E50FBA14288674B100AA325C /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA10288674B100AA325C /* Story.swift */; };
-		E50FBA15288674CD00AA325C /* ItemProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA0D288673B400AA325C /* ItemProtocol+Ext.swift */; };
-		E50FBA16288674D100AA325C /* ItemProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA0D288673B400AA325C /* ItemProtocol+Ext.swift */; };
-		E50FBA17288674D500AA325C /* ItemProtocol+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA0D288673B400AA325C /* ItemProtocol+Ext.swift */; };
+		E50FBA15288674CD00AA325C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA0D288673B400AA325C /* Item.swift */; };
+		E50FBA16288674D100AA325C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA0D288673B400AA325C /* Item.swift */; };
+		E50FBA17288674D500AA325C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA0D288673B400AA325C /* Item.swift */; };
 		E50FBA1A288676CE00AA325C /* StoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA19288676CE00AA325C /* StoriesRepository.swift */; };
 		E50FBA1B288676CE00AA325C /* StoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA19288676CE00AA325C /* StoriesRepository.swift */; };
 		E50FBA1C288676CE00AA325C /* StoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FBA19288676CE00AA325C /* StoriesRepository.swift */; };
@@ -134,7 +134,7 @@
 		E50FB9EB2886738D00AA325C /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50FB9EF2886738D00AA325C /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		E50FB9F12886738D00AA325C /* Tests_macOSLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOSLaunchTests.swift; sourceTree = "<group>"; };
-		E50FBA0D288673B400AA325C /* ItemProtocol+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemProtocol+Ext.swift"; sourceTree = "<group>"; };
+		E50FBA0D288673B400AA325C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E50FBA10288674B100AA325C /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		E50FBA19288676CE00AA325C /* StoriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesRepository.swift; sourceTree = "<group>"; };
 		E51C9DA2289F2EF4001EA8E8 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
@@ -318,7 +318,7 @@
 				E587CEFE2893914600299CE0 /* Comment.swift */,
 				E56C06C128867B1100D4E685 /* StoryType.swift */,
 				E50FBA10288674B100AA325C /* Story.swift */,
-				E50FBA0D288673B400AA325C /* ItemProtocol+Ext.swift */,
+				E50FBA0D288673B400AA325C /* Item.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -526,7 +526,7 @@
 				E5E048D6289F72D700702733 /* View+ConditionalModifier.swift in Sources */,
 				E5EF2CDB289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
 				E5EF2CCB289C6F8C00AA5290 /* String+Ext.swift in Sources */,
-				E50FBA0E288673B400AA325C /* ItemProtocol+Ext.swift in Sources */,
+				E50FBA0E288673B400AA325C /* Item.swift in Sources */,
 				E5E048D9289F737700702733 /* Bool+Ext.swift in Sources */,
 				E5EF2CD2289C771200AA5290 /* Comparable+Clamped.swift in Sources */,
 				E587CEFF2893914600299CE0 /* Comment.swift in Sources */,
@@ -568,7 +568,7 @@
 				E5E048D7289F72D700702733 /* View+ConditionalModifier.swift in Sources */,
 				E5EF2CDC289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
 				E5EF2CCC289C6F8C00AA5290 /* String+Ext.swift in Sources */,
-				E50FBA15288674CD00AA325C /* ItemProtocol+Ext.swift in Sources */,
+				E50FBA15288674CD00AA325C /* Item.swift in Sources */,
 				E5E048DA289F737700702733 /* Bool+Ext.swift in Sources */,
 				E5EF2CD3289C771200AA5290 /* Comparable+Clamped.swift in Sources */,
 				E587CF002893914600299CE0 /* Comment.swift in Sources */,
@@ -598,7 +598,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E50FBA16288674D100AA325C /* ItemProtocol+Ext.swift in Sources */,
+				E50FBA16288674D100AA325C /* Item.swift in Sources */,
 				E5687FAA289DC23500901F1F /* AuthRepository.swift in Sources */,
 				E56C06C428867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9E62886738D00AA325C /* Tests_iOSLaunchTests.swift in Sources */,
@@ -614,7 +614,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E50FBA17288674D500AA325C /* ItemProtocol+Ext.swift in Sources */,
+				E50FBA17288674D500AA325C /* Item.swift in Sources */,
 				E5687FAB289DC23500901F1F /* AuthRepository.swift in Sources */,
 				E56C06C528867B1100D4E685 /* StoryType.swift in Sources */,
 				E50FB9F22886738D00AA325C /* Tests_macOSLaunchTests.swift in Sources */,
