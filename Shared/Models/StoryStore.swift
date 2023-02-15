@@ -10,7 +10,7 @@ import SwiftUI
 
 extension HomeView {
     @MainActor
-    class HomeViewModel: ObservableObject {
+    class StoryStore: ObservableObject {
         @Published var storyType: StoryType = .top
         @Published var stories: [Story] = [Story]()
         

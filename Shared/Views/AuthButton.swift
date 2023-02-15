@@ -9,17 +9,17 @@ import SwiftUI
 
 extension HomeView {
     struct AuthButton: View {
-        @EnvironmentObject private var authVm: AuthViewModel
+        @EnvironmentObject private var auth: Authentication
         
         @Binding var showLoginDialog: Bool
         @Binding var showLogoutDialog: Bool
         
         var body: some View {
-            if authVm.loggedIn {
+            if auth.loggedIn {
                 Button {
                     showLogoutDialog = true
                 } label: {
-                    Label(authVm.username.valueOrEmpty, systemImage: "person")
+                    Label(auth.username.valueOrEmpty, systemImage: "person")
                 }
             } else {
                 Button {

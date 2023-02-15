@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AuthViewModel: ObservableObject {
+class Authentication: ObservableObject {
     @Published var username: String?
     @Published var loggedIn: Bool = false
     

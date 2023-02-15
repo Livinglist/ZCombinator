@@ -10,7 +10,7 @@ import SwiftUI
 
 extension ItemView {
     @MainActor
-    class ItemViewModel<T: ItemProtocol> : ObservableObject {
+    class ItemStore<T: Item> : ObservableObject {
         @Published var kids: [Comment] = [Comment]()
         @Published var status: Status = .idle
         

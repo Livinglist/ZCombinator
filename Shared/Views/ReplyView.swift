@@ -12,7 +12,7 @@ struct ReplyView: View {
     
     @State var text: String = ""
     
-    let replyingTo: any ItemProtocol
+    let replyingTo: any Item
     
     var body: some View {
         VStack(spacing: 0) {

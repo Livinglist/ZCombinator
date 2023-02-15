@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Comment : ItemProtocol {
+struct Comment : Item {
     let id: Int
     let title: String?
     let text: String?

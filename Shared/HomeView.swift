@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 struct HomeView: View {
-    @ObservedObject private var vm = HomeViewModel()
+    @ObservedObject private var storyStore = StoryStore()
     
     @State private var showLoginDialog: Bool = false
     @State private var showLogoutDialog: Bool = false
@@ -18,33 +18,33 @@ struct HomeView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     
-    @EnvironmentObject private var authVm: AuthViewModel
+    @EnvironmentObject private var auth: Authentication
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(vm.stories){ story in
+                ForEach(storyStore.stories){ story in
                     StoryRow(story: story)
                         .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                         .listRowSeparator(.hidden)
                         .onAppear {
-                            vm.onStoryRowAppear(story)
+                            storyStore.onStoryRowAppear(story)
                         }
                 }
             }
             .listStyle(.plain)
             .refreshable {
-                vm.refresh()
+                storyStore.refresh()
             }
             .toolbar {
                 ToolbarItem{
                     Menu {
                         ForEach(StoryType.allCases, id: \.self) { storyType in
                             Button {
-                                vm.storyType = storyType
+                                storyStore.storyType = storyType
                                 
                                 Task {
-                                    await vm.fetchStories()
+                                    await storyStore.fetchStories()
                                 }
                             } label: {
                                 Label("\(storyType.rawValue.uppercased())", systemImage: storyType.iconName)
@@ -61,7 +61,7 @@ struct HomeView: View {
                     }
                 }
             }
-            .navigationTitle(vm.storyType.rawValue.uppercased())
+            .navigationTitle(storyStore.storyType.rawValue.uppercased())
             Text("Select a story")
         }
         .sheet(isPresented: $showAboutSheet, content: {
@@ -77,26 +77,26 @@ struct HomeView: View {
                     return
                 }
                 
-                authVm.logIn(username: username, password: password)
+                auth.logIn(username: username, password: password)
             })
             Button("Cancel", role: .cancel, action: {})
         }, message: {
             Text("Please enter your username and password.")
         })
         .alert("Logout", isPresented: $showLogoutDialog, actions: {
-            Button("Logout", role: .destructive, action: authVm.logOut)
+            Button("Logout", role: .destructive, action: auth.logOut)
             Button("Cancel", role: .cancel, action: {})
         }, message: {
-            Text("Do you want to log out as \(authVm.username.valueOrEmpty)?")
+            Text("Do you want to log out as \(auth.username.valueOrEmpty)?")
         })
         .task {
-            await vm.fetchStories()
+            await storyStore.fetchStories()
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        HomeView()
     }
 }

@@ -8,9 +8,9 @@
 import SwiftUI
 import WebKit
 
-struct ItemView<T : ItemProtocol>: View {
-    @EnvironmentObject var authVm: AuthViewModel
-    @StateObject var vm: ItemViewModel<T> = ItemViewModel<T>()
+struct ItemView<T : Item>: View {
+    @EnvironmentObject var auth: Authentication
+    @StateObject var itemStore: ItemStore<T> = ItemStore<T>()
     @State var showHNSheet: Bool = false
     @State var showReplySheet: Bool = false
     let level: Int
@@ -32,8 +32,8 @@ struct ItemView<T : ItemProtocol>: View {
                 ReplyView(replyingTo: item)
             }
             .onAppear {
-                if self.vm.item == nil {
-                    self.vm.item = item
+                if self.itemStore.item == nil {
+                    self.itemStore.item = item
                 }
             }
     }
@@ -45,13 +45,13 @@ struct ItemView<T : ItemProtocol>: View {
             } label: {
                 Label("Upvote", systemImage: "hand.thumbsup")
             }
-            .disabled(!authVm.loggedIn)
+            .disabled(!auth.loggedIn)
             Button {
                 showReplySheet = true
             } label: {
                 Label("Reply", systemImage: "plus.message")
             }
-            .disabled(!authVm.loggedIn)
+            .disabled(!auth.loggedIn)
             Divider()
             Button {
                 
@@ -120,11 +120,11 @@ struct ItemView<T : ItemProtocol>: View {
                         Text("\(item.text.valueOrEmpty)")
                             .padding(.leading, Double(4 * (level - 1)))
                     }
-                    if vm.status == .loading {
+                    if itemStore.status == .loading {
                         LoadingIndicator().padding(.top, 12)
                     }
                     VStack(spacing: 0) {
-                        ForEach(vm.kids){ comment in
+                        ForEach(itemStore.kids){ comment in
                             ItemView<Comment>(item: comment, level: level + 1 )
                                 .padding(.trailing, 4)
                         }.id(UUID())
@@ -151,14 +151,14 @@ struct ItemView<T : ItemProtocol>: View {
                     VStack(spacing: 0) {
                         nameRow.padding(.bottom, 4)
                         textView.padding(.bottom, 3)
-                        if vm.status == Status.loading {
+                        if itemStore.status == Status.loading {
                             LoadingIndicator(color: getColor(level: level)).padding(.top, 12)
-                        } else if vm.status != Status.loaded && item.kids.isNotNullOrEmpty {
+                        } else if itemStore.status != Status.loaded && item.kids.isNotNullOrEmpty {
                             Button {
                                 let generator = UIImpactFeedbackGenerator()
                                 generator.impactOccurred(intensity: 0.6)
                                 Task {
-                                    await vm.loadKids()
+                                    await itemStore.loadKids()
                                 }
                             } label: {
                                 Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies":"reply")")
@@ -177,20 +177,20 @@ struct ItemView<T : ItemProtocol>: View {
                         } label: {
                             Label("Upvote", systemImage: "hand.thumbsup")
                         }
-                        .disabled(!authVm.loggedIn)
+                        .disabled(!auth.loggedIn)
                         Button {
                             showReplySheet = true
                         } label: {
                             Label("Reply", systemImage: "plus.message")
                         }
-                        .disabled(!authVm.loggedIn)
+                        .disabled(!auth.loggedIn)
                         Divider()
                         Button {
                             
                         } label: {
                             Label("Flag", systemImage: "flag")
                         }
-                        .disabled(!authVm.loggedIn)
+                        .disabled(!auth.loggedIn)
                         Divider()
                         Button {
                             displayActionSheet()
@@ -204,7 +204,7 @@ struct ItemView<T : ItemProtocol>: View {
                         }
                     }
                     VStack(spacing: 0) {
-                        ForEach(vm.kids){ comment in
+                        ForEach(itemStore.kids){ comment in
                             ItemView<Comment>(item: comment, level: level + 1)
                         }
                         .id(UUID())

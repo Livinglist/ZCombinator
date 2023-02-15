@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Story : ItemProtocol {
+struct Story : Item {
     let id: Int
     let title: String?
     let text: String?
