@@ -75,10 +75,10 @@
 		E5E048DD289F86D400702733 /* ReplyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048DB289F86D400702733 /* ReplyView.swift */; };
 		E5EF2CC7289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CC6289C6CFF00AA5290 /* LoadingIndicator.swift */; };
 		E5EF2CC8289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CC6289C6CFF00AA5290 /* LoadingIndicator.swift */; };
-		E5EF2CCB289C6F8C00AA5290 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CCA289C6F8C00AA5290 /* String+Ext.swift */; };
-		E5EF2CCC289C6F8C00AA5290 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CCA289C6F8C00AA5290 /* String+Ext.swift */; };
-		E5EF2CCE289C71CC00AA5290 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CCD289C71CC00AA5290 /* Array+Ext.swift */; };
-		E5EF2CCF289C71CC00AA5290 /* Array+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CCD289C71CC00AA5290 /* Array+Ext.swift */; };
+		E5EF2CCB289C6F8C00AA5290 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CCA289C6F8C00AA5290 /* String+.swift */; };
+		E5EF2CCC289C6F8C00AA5290 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CCA289C6F8C00AA5290 /* String+.swift */; };
+		E5EF2CCE289C71CC00AA5290 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CCD289C71CC00AA5290 /* Array+.swift */; };
+		E5EF2CCF289C71CC00AA5290 /* Array+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CCD289C71CC00AA5290 /* Array+.swift */; };
 		E5EF2CD2289C771200AA5290 /* Comparable+Clamped.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CD1289C771200AA5290 /* Comparable+Clamped.swift */; };
 		E5EF2CD3289C771200AA5290 /* Comparable+Clamped.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CD1289C771200AA5290 /* Comparable+Clamped.swift */; };
 		E5EF2CD5289C773000AA5290 /* View+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CD4289C773000AA5290 /* View+ContextMenu.swift */; };
@@ -152,8 +152,8 @@
 		E5E048D8289F737700702733 /* Bool+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bool+.swift"; sourceTree = "<group>"; };
 		E5E048DB289F86D400702733 /* ReplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyView.swift; sourceTree = "<group>"; };
 		E5EF2CC6289C6CFF00AA5290 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
-		E5EF2CCA289C6F8C00AA5290 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
-		E5EF2CCD289C71CC00AA5290 /* Array+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Ext.swift"; sourceTree = "<group>"; };
+		E5EF2CCA289C6F8C00AA5290 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		E5EF2CCD289C71CC00AA5290 /* Array+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+.swift"; sourceTree = "<group>"; };
 		E5EF2CD1289C771200AA5290 /* Comparable+Clamped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Clamped.swift"; sourceTree = "<group>"; };
 		E5EF2CD4289C773000AA5290 /* View+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ContextMenu.swift"; sourceTree = "<group>"; };
 		E5EF2CD7289C777A00AA5290 /* ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenu.swift; sourceTree = "<group>"; };
@@ -326,8 +326,8 @@
 		E5EF2CC9289C6F7300AA5290 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E5EF2CCA289C6F8C00AA5290 /* String+Ext.swift */,
-				E5EF2CCD289C71CC00AA5290 /* Array+Ext.swift */,
+				E5EF2CCA289C6F8C00AA5290 /* String+.swift */,
+				E5EF2CCD289C71CC00AA5290 /* Array+.swift */,
 				E5EF2CD1289C771200AA5290 /* Comparable+Clamped.swift */,
 				E5EF2CD4289C773000AA5290 /* View+ContextMenu.swift */,
 				E5EF2CF2289CA58100AA5290 /* View+Modifiers.swift */,
@@ -521,11 +521,11 @@
 				E5EF2CF6289CA6CC00AA5290 /* Date+TimeAgoString.swift in Sources */,
 				E5EF2CF3289CA58100AA5290 /* View+Modifiers.swift in Sources */,
 				E53CA981289E3979009FDAE6 /* Constants.swift in Sources */,
-				E5EF2CCE289C71CC00AA5290 /* Array+Ext.swift in Sources */,
+				E5EF2CCE289C71CC00AA5290 /* Array+.swift in Sources */,
 				E52134C328877ED7005CFB77 /* ItemView.swift in Sources */,
 				E5E048D6289F72D700702733 /* View+ConditionalModifier.swift in Sources */,
 				E5EF2CDB289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
-				E5EF2CCB289C6F8C00AA5290 /* String+Ext.swift in Sources */,
+				E5EF2CCB289C6F8C00AA5290 /* String+.swift in Sources */,
 				E50FBA0E288673B400AA325C /* Item.swift in Sources */,
 				E5E048D9289F737700702733 /* Bool+.swift in Sources */,
 				E5EF2CD2289C771200AA5290 /* Comparable+Clamped.swift in Sources */,
@@ -563,11 +563,11 @@
 				E5EF2CF7289CA6CC00AA5290 /* Date+TimeAgoString.swift in Sources */,
 				E5EF2CF4289CA58100AA5290 /* View+Modifiers.swift in Sources */,
 				E53CA982289E3979009FDAE6 /* Constants.swift in Sources */,
-				E5EF2CCF289C71CC00AA5290 /* Array+Ext.swift in Sources */,
+				E5EF2CCF289C71CC00AA5290 /* Array+.swift in Sources */,
 				E52134C428877ED7005CFB77 /* ItemView.swift in Sources */,
 				E5E048D7289F72D700702733 /* View+ConditionalModifier.swift in Sources */,
 				E5EF2CDC289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
-				E5EF2CCC289C6F8C00AA5290 /* String+Ext.swift in Sources */,
+				E5EF2CCC289C6F8C00AA5290 /* String+.swift in Sources */,
 				E50FBA15288674CD00AA325C /* Item.swift in Sources */,
 				E5E048DA289F737700702733 /* Bool+.swift in Sources */,
 				E5EF2CD3289C771200AA5290 /* Comparable+Clamped.swift in Sources */,
