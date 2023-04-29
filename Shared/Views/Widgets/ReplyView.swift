@@ -29,7 +29,7 @@ struct ReplyView: View {
                 .padding()
             }
             HStack {
-                Text("Replying \(replyingTo.by.valueOrEmpty)")
+                Text("Replying \(replyingTo.by.orEmpty)")
                     .font(.footnote)
                     .padding(.leading, 12)
                     .padding(.bottom, 12)

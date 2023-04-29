@@ -18,6 +18,13 @@ struct Story : Item {
     let descendants: Int?
     let time: Int
     let kids: [Int]?
+    var metadata: String? {
+        if isJob {
+            return "\(timeAgo) by \(by.orEmpty)"
+        } else {
+            return "\(score.orZero) pts | \(descendants.orZero) cmts | \(timeAgo) by \(by.orEmpty)"
+        }
+    }
     
     init(id: Int, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
         self.id = id

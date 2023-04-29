@@ -18,6 +18,7 @@ protocol Item: Codable, Identifiable, Hashable {
     var descendants: Int? { get }
     var time: Int { get }
     var kids: [Int]? { get }
+    var metadata: String? { get }
     
    // func copyWith(text: String?) -> Item
 }

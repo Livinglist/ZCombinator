@@ -59,10 +59,29 @@ struct ItemView<T : Item>: View {
                 Label("Flag", systemImage: "flag")
             }
             Divider()
-            Button {
-                displayActionSheet()
-            } label: {
-                Label("Share", systemImage: "square.and.arrow.up")
+            if item is Story {
+                Menu {
+                    if item.url.orEmpty.isNotEmpty {
+                        Button {
+                            showShareSheet(url: item.url.orEmpty)
+                        } label: {
+                            Text("Link to story")
+                        }
+                    }
+                    Button {
+                        showShareSheet(url: item.itemUrl)
+                    } label: {
+                        Text("Link to HN")
+                    }
+                } label: {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
+            } else {
+                Button {
+                    showShareSheet(url: item.itemUrl)
+                } label: {
+                    Label("Share", systemImage: "square.and.arrow.up")
+                }
             }
             Button {
                 showHNSheet = true
@@ -77,11 +96,11 @@ struct ItemView<T : Item>: View {
     @ViewBuilder
     var textView: some View {
         if item is Story {
-            Text("\(item.title.valueOrEmpty)")
+            Text("\(item.title.orEmpty)")
                 .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
         } else if item is Comment {
             if item.text.isNotNullOrEmpty {
-                Text(item.text.valueOrEmpty.markdowned)
+                Text(item.text.orEmpty.markdowned)
                     .font(.system(size: 16))
                     .textSelection(.enabled)
                     .fixedSize(horizontal: false, vertical: true)
@@ -100,24 +119,24 @@ struct ItemView<T : Item>: View {
                 VStack(spacing: 0) {
                     nameRow.padding(.leading, 6)
                     if item is Story {
-                        if let url = URL(string: item.url.valueOrEmpty) {
-                            LinkView(url: url, title: item.title.valueOrEmpty)
+                        if let url = URL(string: item.url.orEmpty) {
+                            LinkView(url: url, title: item.title.orEmpty)
                                 .padding()
                         } else {
                             VStack(spacing: 0) {
-                                Text("\(item.title.valueOrEmpty)")
+                                Text("\(item.title.orEmpty)")
                                     .fontWeight(.semibold)
                                     .padding(.top, 6)
                                     .padding(.leading, 12)
                                     .padding(.bottom, 6)
-                                Text("\(item.text.valueOrEmpty.markdowned)")
+                                Text("\(item.text.orEmpty.markdowned)")
                                     .font(.system(size: 16))
                                     .padding(.leading, 4)
                                     .padding(.bottom, 6)
                             }
                         }
                     } else if item is Comment {
-                        Text("\(item.text.valueOrEmpty)")
+                        Text("\(item.text.orEmpty)")
                             .padding(.leading, Double(4 * (level - 1)))
                     }
                     if itemStore.status == .loading {
@@ -193,7 +212,7 @@ struct ItemView<T : Item>: View {
                         .disabled(!auth.loggedIn)
                         Divider()
                         Button {
-                            displayActionSheet()
+                            showShareSheet(url: item.itemUrl)
                         } label: {
                             Label("Share", systemImage: "square.and.arrow.up")
                         }
@@ -223,7 +242,7 @@ struct ItemView<T : Item>: View {
     @ViewBuilder
     var nameRow: some View {
         HStack {
-            Text(item.by.valueOrEmpty)
+            Text(item.by.orEmpty)
                 .borderedFootnote()
                 .foregroundColor(getColor(level: level))
             if let karma = item.score {
@@ -243,29 +262,12 @@ struct ItemView<T : Item>: View {
         }
     }
     
-    
-    func displayActionSheet() {
-        guard let urlShare = URL(string: item.itemUrl) else { return }
-        let activityVC = UIActivityViewController(activityItems: [urlShare], applicationActivities: nil)
-        
-        // Get a scene that's showing (iPad can have many instances of the same app, some in the background)
-        let activeScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
-                
-        let rootViewController = (activeScene?.windows ?? []).first(where: { $0.isKeyWindow })?.rootViewController
-                
-        // iPad stuff (fine to leave this in for all iOS devices, it will be effectively ignored when not needed)
-        activityVC.popoverPresentationController?.sourceView = rootViewController?.view
-        activityVC.popoverPresentationController?.sourceRect = .zero
-        
-        UIApplication.shared.keyWindow?.rootViewController?.present(activityVC, animated: true, completion: nil)
-    }
-    
     func getColor(level: Int) -> Color {
         var level = level
         let initialLevel = level
         
-        if colors[initialLevel] != nil {
-            return colors[initialLevel]!
+        if let color = colors[initialLevel] {
+            return color
         }
         
         while level >= 10 {

@@ -62,7 +62,6 @@ struct PreviewContextView<Content: View>: UIViewRepresentable {
 }
 
 struct PreviewContextViewModifier<V: View>: ViewModifier {
-    
     let menu: PreviewContextMenu<V>
     @Environment(\.presentationMode) var mode
     

@@ -16,7 +16,7 @@ extension String {
         let res = try? NSAttributedString(data: self.data(using: .unicode)!,
                                        options: [.documentType: NSAttributedString.DocumentType.html],
                                        documentAttributes: nil).string
-        return res ?? ""
+        return res.orEmpty
     }
     
     var withExtraLineBreak: String {
@@ -43,7 +43,7 @@ extension String {
 }
 
 extension Optional where Wrapped == String {
-    var valueOrEmpty: String {
+    var orEmpty: String {
         guard let unwrapped = self else {
             return ""
         }

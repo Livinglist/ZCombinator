@@ -87,7 +87,7 @@ struct HomeView: View {
             Button("Logout", role: .destructive, action: auth.logOut)
             Button("Cancel", role: .cancel, action: {})
         }, message: {
-            Text("Do you want to log out as \(auth.username.valueOrEmpty)?")
+            Text("Do you want to log out as \(auth.username.orEmpty)?")
         })
         .task {
             await storyStore.fetchStories()

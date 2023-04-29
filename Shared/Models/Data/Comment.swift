@@ -18,6 +18,9 @@ struct Comment : Item {
     let descendants: Int?
     let time: Int
     let kids: [Int]?
+    var metadata: String? {
+        ""
+    }
     
     init(id: Int, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
         self.id = id

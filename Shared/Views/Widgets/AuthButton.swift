@@ -19,7 +19,7 @@ extension HomeView {
                 Button {
                     showLogoutDialog = true
                 } label: {
-                    Label(auth.username.valueOrEmpty, systemImage: "person")
+                    Label(auth.username.orEmpty, systemImage: "person")
                 }
             } else {
                 Button {
