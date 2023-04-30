@@ -133,9 +133,12 @@ class AuthRepository {
             "id": String(id),
         ]
         
-        _ = await AF.request("\(self.baseUrl)/flag", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
-        
-        return true
+        let res = await AF.request("\(self.baseUrl)/flag", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response
+        if res.error == nil {
+            return true
+        } else {
+            return false
+        }
     }
     
     func upvote(_ id: Int) async -> Bool {
@@ -150,9 +153,12 @@ class AuthRepository {
             "how": "up",
         ]
         
-        _ = await AF.request("\(self.baseUrl)/vote", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
-        
-        return true
+        let res = await AF.request("\(self.baseUrl)/vote", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response
+        if res.error == nil {
+            return true
+        } else {
+            return false
+        }
     }
     
     func fav(_ id: Int) async -> Bool {
@@ -166,9 +172,12 @@ class AuthRepository {
             "id": String(id),
         ]
         
-        _ = await AF.request("\(self.baseUrl)/fave", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
-        
-        return true
+        let res = await AF.request("\(self.baseUrl)/fave", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response
+        if res.error == nil {
+            return true
+        } else {
+            return false
+        }
     }
     
     func reply(to id: Int, with text: String) async -> Bool {
@@ -183,8 +192,11 @@ class AuthRepository {
             "text": text,
         ]
         
-        _ = await AF.request("\(self.baseUrl)/comment", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
-        
-        return true
+        let res = await AF.request("\(self.baseUrl)/comment", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response
+        if res.error == nil {
+            return true
+        } else {
+            return false
+        }
     }
 }
