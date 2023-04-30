@@ -1,10 +1,3 @@
-//
-//  ItemView+ViewModel.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 8/4/22.
-//
-
 import Foundation
 import SwiftUI
 

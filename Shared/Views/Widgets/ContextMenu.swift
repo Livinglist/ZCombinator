@@ -1,10 +1,3 @@
-//
-//  ContextMenu.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 8/4/22.
-//
-
 import SwiftUI
 
 // MARK: - Custom Menu Context Implementation
@@ -62,7 +55,6 @@ struct PreviewContextView<Content: View>: UIViewRepresentable {
 }
 
 struct PreviewContextViewModifier<V: View>: ViewModifier {
-    
     let menu: PreviewContextMenu<V>
     @Environment(\.presentationMode) var mode
     

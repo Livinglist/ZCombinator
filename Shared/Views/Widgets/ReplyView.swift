@@ -1,10 +1,3 @@
-//
-//  ReplyView.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 8/6/22.
-//
-
 import SwiftUI
 
 struct ReplyView: View {
@@ -29,7 +22,7 @@ struct ReplyView: View {
                 .padding()
             }
             HStack {
-                Text("Replying \(replyingTo.by.valueOrEmpty)")
+                Text("Replying \(replyingTo.by.orEmpty)")
                     .font(.footnote)
                     .padding(.leading, 12)
                     .padding(.bottom, 12)

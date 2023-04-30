@@ -1,10 +1,3 @@
-//
-//  SafariView.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 7/20/22.
-//
-
 import SwiftUI
 import SafariServices
 

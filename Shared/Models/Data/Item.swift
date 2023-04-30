@@ -1,10 +1,3 @@
-//
-//  Item.swift
-//  ZCombinator (iOS)
-//
-//  Created by Jiaqi Feng on 7/18/22.
-//
-
 import Foundation
 
 protocol Item: Codable, Identifiable, Hashable {
@@ -18,8 +11,7 @@ protocol Item: Codable, Identifiable, Hashable {
     var descendants: Int? { get }
     var time: Int { get }
     var kids: [Int]? { get }
-    
-   // func copyWith(text: String?) -> Item
+    var metadata: String? { get }
 }
 
 extension Item {

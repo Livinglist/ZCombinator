@@ -1,10 +1,3 @@
-//
-//  AuthRepository.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 8/5/22.
-//
-
 import Foundation
 import Alamofire
 import Security
@@ -20,6 +13,8 @@ class AuthRepository {
         kSecReturnAttributes: true,
         kSecReturnData: true
     ] as CFDictionary
+    
+    private init() {}
     
     var loggedIn: Bool {
         var result: AnyObject?
@@ -125,6 +120,18 @@ class AuthRepository {
         return true
     }
     
+    func fetchUser(_ id: String) async -> User? {
+        let response = await AF.request("\(self.baseUrl)user/\(id).json").serializingString().response
+        
+        if let data = response.data {
+            let user = try? JSONDecoder().decode(User.self, from: data)
+            
+            return user
+        } else {
+            return nil
+        }
+    }
+    
     // MARK: - Actions that require authentication
     
     func flag(_ id: Int) async -> Bool {
@@ -138,9 +145,7 @@ class AuthRepository {
             "id": String(id),
         ]
         
-        _ = await AF.request("\(self.baseUrl)/flag", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
-        
-        return true
+        return await performPost(data: parameters, path: "/flag")
     }
     
     func upvote(_ id: Int) async -> Bool {
@@ -155,9 +160,7 @@ class AuthRepository {
             "how": "up",
         ]
         
-        _ = await AF.request("\(self.baseUrl)/vote", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
-        
-        return true
+        return await performPost(data: parameters, path: "/vote")
     }
     
     func fav(_ id: Int) async -> Bool {
@@ -171,9 +174,7 @@ class AuthRepository {
             "id": String(id),
         ]
         
-        _ = await AF.request("\(self.baseUrl)/fave", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
-        
-        return true
+        return await performPost(data: parameters, path: "/fave")
     }
     
     func reply(to id: Int, with text: String) async -> Bool {
@@ -188,8 +189,15 @@ class AuthRepository {
             "text": text,
         ]
         
-        _ = await AF.request("\(self.baseUrl)/comment", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response.response
-        
-        return true
+        return await performPost(data: parameters, path: "/comment")
+    }
+    
+    private func performPost(data: [String: String]?, path: String) async -> Bool {
+        let res = await AF.request("\(self.baseUrl)\(path)", method: .post, parameters: data, encoder: .urlEncodedForm).serializingString().response
+        if res.error == nil {
+            return true
+        } else {
+            return false
+        }
     }
 }

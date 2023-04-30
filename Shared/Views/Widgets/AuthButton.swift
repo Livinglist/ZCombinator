@@ -1,10 +1,3 @@
-//
-//  HomeViewToolbar.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 8/6/22.
-//
-
 import SwiftUI
 
 extension HomeView {
@@ -19,7 +12,7 @@ extension HomeView {
                 Button {
                     showLogoutDialog = true
                 } label: {
-                    Label(auth.username.valueOrEmpty, systemImage: "person")
+                    Label(auth.username.orEmpty, systemImage: "person")
                 }
             } else {
                 Button {

@@ -1,10 +1,3 @@
-//
-//  Comment.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 7/28/22.
-//
-
 import Foundation
 
 struct Comment : Item {
@@ -18,6 +11,9 @@ struct Comment : Item {
     let descendants: Int?
     let time: Int
     let kids: [Int]?
+    var metadata: String? {
+        ""
+    }
     
     init(id: Int, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
         self.id = id
@@ -37,7 +33,7 @@ struct Comment : Item {
         self.init(id: 0, title: "", text: "", url: "", type: "", by: "", score: 0, descendants: 0, time: 0)
     }
     
-    func copyWith(text: String?) -> Comment{
+    func copyWith(text: String?) -> Comment {
         Comment(id: id, title: title, text: text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int]())
     }
 }
