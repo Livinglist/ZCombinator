@@ -37,7 +37,7 @@ struct Story : Item {
         self.init(id: 0, title: "", text: "", url: "", type: "", by: "", score: 0, descendants: 0, time: 0)
     }
     
-    func copyWith(text: String?) -> Story{
+    func copyWith(text: String?) -> Story {
         Story(id: id, title: title, text: text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int]())
     }
 }

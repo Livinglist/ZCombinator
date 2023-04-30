@@ -13,7 +13,8 @@ struct StoryRow: View {
     @State private var showHNSheet: Bool = false
     @State private var showReplySheet: Bool = false
     @State private var showFlagDialog: Bool = false
-    @State private var showFlagResultDialog: Bool = false
+    @State private var showFlagToast: Bool = false
+    @State private var showUpvoteToast: Bool = false
     @GestureState private var isDetectingPress = false
     
     init(story: Story) {
@@ -40,7 +41,7 @@ struct StoryRow: View {
     var menu: some View {
         Menu {
             Button {
-                
+                onUpvote()
             } label: {
                 Label("Upvote", systemImage: "hand.thumbsup")
             }
@@ -162,7 +163,7 @@ struct StoryRow: View {
                 Task {
                     let res = await AuthRepository.shared.flag(story.id)
                     if res {
-                        showFlagResultDialog = true
+                        showFlagToast = true
                         HapticFeedbackService.shared.success()
                     } else {
                         HapticFeedbackService.shared.error()
@@ -172,8 +173,11 @@ struct StoryRow: View {
         } message: {
             Text("Flag \"\(story.title.orEmpty)\" by \(story.by.orEmpty)?")
         }
-        .toast(isPresenting: $showFlagResultDialog){
+        .toast(isPresenting: $showFlagToast){
             AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
+        }
+        .toast(isPresenting: $showUpvoteToast){
+            AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvote")
         }
         .sheet(isPresented: $showHNSheet) {
             if let url = URL(string: story.itemUrl) {
@@ -181,6 +185,19 @@ struct StoryRow: View {
             }
         }
         
+    }
+    
+    func onUpvote() {
+        Task {
+            let res = await auth.upvote(story.id)
+            
+            if res {
+                showUpvoteToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
     }
 }
 

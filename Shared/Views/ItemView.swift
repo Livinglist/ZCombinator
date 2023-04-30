@@ -90,7 +90,7 @@ struct ItemView<T : Item>: View {
     @ViewBuilder
     var textView: some View {
         if item is Story {
-            Text("\(item.title.orEmpty)")
+            Text(item.title.orEmpty)
                 .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
         } else if item is Comment {
             if item.text.isNotNullOrEmpty {
@@ -118,26 +118,32 @@ struct ItemView<T : Item>: View {
                                 .padding()
                         } else {
                             VStack(spacing: 0) {
-                                Text("\(item.title.orEmpty)")
+                                Text(item.title.orEmpty)
+                                    .multilineTextAlignment(.center)
                                     .fontWeight(.semibold)
                                     .padding(.top, 6)
                                     .padding(.leading, 12)
                                     .padding(.bottom, 6)
-                                Text("\(item.text.orEmpty.markdowned)")
+                                Text(item.text.orEmpty.markdowned)
                                     .font(.system(size: 16))
-                                    .padding(.leading, 4)
+                                    .padding(.leading, 8)
                                     .padding(.bottom, 6)
                             }
                         }
                     } else if item is Comment {
-                        Text("\(item.text.orEmpty)")
+                        Text(item.text.orEmpty)
                             .padding(.leading, Double(4 * (level - 1)))
                     }
                     if itemStore.status == .loading {
-                        LoadingIndicator().padding(.top, 12)
+                        LoadingIndicator().padding(.top, 100)
+                    } else if itemStore.status == .loaded && itemStore.kids.isEmpty {
+                        Text("nothing yet")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                            .padding(.top, 100)
                     }
                     VStack(spacing: 0) {
-                        ForEach(itemStore.kids){ comment in
+                        ForEach(itemStore.kids) { comment in
                             ItemView<Comment>(item: comment, level: level + 1 )
                                 .padding(.trailing, 4)
                         }.id(UUID())
@@ -165,7 +171,7 @@ struct ItemView<T : Item>: View {
                         nameRow.padding(.bottom, 4)
                         textView.padding(.bottom, 3)
                         if itemStore.status == Status.loading {
-                            LoadingIndicator(color: getColor(level: level)).padding(.top, 12)
+                            LoadingIndicator(color: getColor(level: level)).padding(.top, 100)
                         } else if itemStore.status != Status.loaded && item.kids.isNotNullOrEmpty {
                             Button {
                                 let generator = UIImpactFeedbackGenerator()

@@ -53,6 +53,10 @@
 		E54B013E29FE302100F7F0A0 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = E54B013D29FE302100F7F0A0 /* AlertToast */; };
 		E54B014329FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */; };
 		E54B014429FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */; };
+		E55E8FD429FEF5D100EE2F89 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8FD329FEF5D100EE2F89 /* User.swift */; };
+		E55E8FD529FEF5D100EE2F89 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8FD329FEF5D100EE2F89 /* User.swift */; };
+		E55E8FD629FEF5D100EE2F89 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8FD329FEF5D100EE2F89 /* User.swift */; };
+		E55E8FD729FEF5D100EE2F89 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8FD329FEF5D100EE2F89 /* User.swift */; };
 		E5687FA8289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
 		E5687FA9289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
 		E5687FAA289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
@@ -153,6 +157,7 @@
 		E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShareSheet.swift"; sourceTree = "<group>"; };
 		E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackService.swift; sourceTree = "<group>"; };
 		E54B014529FE373100F7F0A0 /* ZCombinator--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ZCombinator--iOS--Info.plist"; sourceTree = "<group>"; };
+		E55E8FD329FEF5D100EE2F89 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E5687FA7289DC23500901F1F /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		E5687FAC289E194A00901F1F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		E56C06C128867B1100D4E685 /* StoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryType.swift; sourceTree = "<group>"; };
@@ -340,6 +345,7 @@
 				E56C06C128867B1100D4E685 /* StoryType.swift */,
 				E50FBA10288674B100AA325C /* Story.swift */,
 				E50FBA0D288673B400AA325C /* Item.swift */,
+				E55E8FD329FEF5D100EE2F89 /* User.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -566,6 +572,7 @@
 				E5EF2CD5289C773000AA5290 /* View+ContextMenu.swift in Sources */,
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
 				E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */,
+				E55E8FD429FEF5D100EE2F89 /* User.swift in Sources */,
 				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E54B014329FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */,
 				E5EF2CDE289C780D00AA5290 /* Status.swift in Sources */,
@@ -611,6 +618,7 @@
 				E5EF2CD6289C773000AA5290 /* View+ContextMenu.swift in Sources */,
 				E5687FAE289E194A00901F1F /* TextView.swift in Sources */,
 				E54B013B29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */,
+				E55E8FD529FEF5D100EE2F89 /* User.swift in Sources */,
 				E50FB9F42886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E54B014429FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */,
 				E5EF2CDF289C780D00AA5290 /* Status.swift in Sources */,
@@ -638,6 +646,7 @@
 				E50FB9E42886738D00AA325C /* Tests_iOS.swift in Sources */,
 				E5687FAF289E194A00901F1F /* TextView.swift in Sources */,
 				E50FBA1C288676CE00AA325C /* StoriesRepository.swift in Sources */,
+				E55E8FD629FEF5D100EE2F89 /* User.swift in Sources */,
 				E50FBA13288674B100AA325C /* Story.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -654,6 +663,7 @@
 				E50FB9F02886738D00AA325C /* Tests_macOS.swift in Sources */,
 				E5687FB0289E194A00901F1F /* TextView.swift in Sources */,
 				E50FBA1D288676CE00AA325C /* StoriesRepository.swift in Sources */,
+				E55E8FD729FEF5D100EE2F89 /* User.swift in Sources */,
 				E50FBA14288674B100AA325C /* Story.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

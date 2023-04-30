@@ -33,7 +33,7 @@ struct Comment : Item {
         self.init(id: 0, title: "", text: "", url: "", type: "", by: "", score: 0, descendants: 0, time: 0)
     }
     
-    func copyWith(text: String?) -> Comment{
+    func copyWith(text: String?) -> Comment {
         Comment(id: id, title: title, text: text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int]())
     }
 }

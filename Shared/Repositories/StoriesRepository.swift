@@ -51,7 +51,6 @@ class StoriesRepository {
         } else {
             return nil
         }
-        
     }
     
     // MARK: - Comments related.

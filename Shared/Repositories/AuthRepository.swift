@@ -120,6 +120,18 @@ class AuthRepository {
         return true
     }
     
+    func fetchUser(_ id: String) async -> User? {
+        let response = await AF.request("\(self.baseUrl)user/\(id).json").serializingString().response
+        
+        if let data = response.data {
+            let user = try? JSONDecoder().decode(User.self, from: data)
+            
+            return user
+        } else {
+            return nil
+        }
+    }
+    
     // MARK: - Actions that require authentication
     
     func flag(_ id: Int) async -> Bool {

@@ -3,6 +3,7 @@ import Foundation
 class Authentication: ObservableObject {
     @Published var username: String?
     @Published var loggedIn: Bool = false
+    @Published var user: User?
     
     init(){
         Task {
@@ -11,6 +12,10 @@ class Authentication: ObservableObject {
             
             self.loggedIn = loggedIn
             self.username = username
+            
+            guard let username = username else { return }
+            
+            self.user = await AuthRepository.shared.fetchUser(username) ?? User(id: username)
         }
     }
     
@@ -34,15 +39,11 @@ class Authentication: ObservableObject {
         self.username = nil
     }
     
-    func upvote(_ id: Int) {
-        Task {
-            await AuthRepository.shared.upvote(id)
-        }
+    func upvote(_ id: Int) async -> Bool {
+        return await AuthRepository.shared.upvote(id)
     }
     
-    func reply(to id: Int, with text: String) {
-        Task {
-            await AuthRepository.shared.reply(to: id, with: text)
-        }
+    func reply(to id: Int, with text: String) async -> Bool {
+        return await AuthRepository.shared.reply(to: id, with: text)
     }
 }
