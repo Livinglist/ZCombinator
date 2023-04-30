@@ -5,6 +5,7 @@ class HapticFeedbackService {
     static let shared: HapticFeedbackService = HapticFeedbackService()
     
     private let generator = UINotificationFeedbackGenerator()
+    private let impactGenerator = UIImpactFeedbackGenerator()
     
     private init() {}
     
@@ -18,5 +19,9 @@ class HapticFeedbackService {
     
     func warning() -> Void {
         generator.notificationOccurred(.warning)
+    }
+    
+    func light() -> Void {
+        impactGenerator.impactOccurred(intensity: 0.6)
     }
 }

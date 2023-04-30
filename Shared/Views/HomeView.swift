@@ -1,7 +1,9 @@
+import AlertToast
 import SwiftUI
 import CoreData
 
 struct HomeView: View {
+    @EnvironmentObject private var auth: Authentication
     @ObservedObject private var storyStore = StoryStore()
     
     @State private var showLoginDialog: Bool = false
@@ -11,13 +13,14 @@ struct HomeView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     
-    @EnvironmentObject private var auth: Authentication
+    @State private var showFlagToast: Bool = false
+    @State private var showUpvoteToast: Bool = false
     
     var body: some View {
         NavigationView {
             List {
                 ForEach(storyStore.stories){ story in
-                    StoryRow(story: story)
+                    StoryRow(story: story, showFlagToast: $showFlagToast, showUpvoteToast: $showUpvoteToast)
                         .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                         .listRowSeparator(.hidden)
                         .onAppear {
@@ -56,6 +59,12 @@ struct HomeView: View {
             }
             .navigationTitle(storyStore.storyType.rawValue.uppercased())
             Text("Select a story")
+        }
+        .toast(isPresenting: $showFlagToast) {
+            AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
+        }
+        .toast(isPresenting: $showUpvoteToast) {
+            AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvoted")
         }
         .sheet(isPresented: $showAboutSheet, content: {
             SafariView(url: Constants.githubUrl)

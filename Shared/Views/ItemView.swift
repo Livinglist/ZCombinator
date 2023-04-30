@@ -1,21 +1,33 @@
+import AlertToast
 import SwiftUI
 import WebKit
 
 struct ItemView<T : Item>: View {
     @EnvironmentObject var auth: Authentication
+    
     @StateObject var itemStore: ItemStore<T> = ItemStore<T>()
     @State private var showHNSheet: Bool = false
     @State private var showReplySheet: Bool = false
+    @State private var showFlagDialog: Bool = false
+    @State private var showFlagToast: Bool = false
+    @State private var showUpvoteToast: Bool = false
+    
     let level: Int
     let item: T
     
-    init(item: T, level: Int = 0){
+    init(item: T, level: Int = 0) {
         self.level = level
         self.item = item
     }
     
     var body: some View {
         mainItemView
+            .toast(isPresenting: $showFlagToast) {
+                AlertToast(type: .regular, title: "Flagged")
+            }
+            .toast(isPresenting: $showUpvoteToast) {
+                AlertToast(type: .regular, title: "Upvoted")
+            }
             .sheet(isPresented: $showHNSheet) {
                 if let url = URL(string: item.itemUrl) {
                     SafariView(url: url)
@@ -23,6 +35,13 @@ struct ItemView<T : Item>: View {
             }
             .sheet(isPresented: $showReplySheet) {
                 ReplyView(replyingTo: item)
+            }
+            .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
+                Button("Flag", role: .destructive) {
+                    onFlagTap()
+                }
+            } message: {
+                Text("Flag the post by \(item.by.orEmpty)?")
             }
             .onAppear {
                 if self.itemStore.item == nil {
@@ -34,7 +53,7 @@ struct ItemView<T : Item>: View {
     var menu: some View {
         Menu {
             Button {
-                
+                onUpvote()
             } label: {
                 Label("Upvote", systemImage: "hand.thumbsup")
             }
@@ -144,7 +163,7 @@ struct ItemView<T : Item>: View {
                     }
                     VStack(spacing: 0) {
                         ForEach(itemStore.kids) { comment in
-                            ItemView<Comment>(item: comment, level: level + 1 )
+                            ItemView<Comment>(item: comment, level: level + 1)
                                 .padding(.trailing, 4)
                         }.id(UUID())
                     }
@@ -174,8 +193,7 @@ struct ItemView<T : Item>: View {
                             LoadingIndicator(color: getColor(level: level)).padding(.top, 100)
                         } else if itemStore.status != Status.loaded && item.kids.isNotNullOrEmpty {
                             Button {
-                                let generator = UIImpactFeedbackGenerator()
-                                generator.impactOccurred(intensity: 0.6)
+                                HapticFeedbackService.shared.light()
                                 Task {
                                     await itemStore.loadKids()
                                 }
@@ -192,7 +210,7 @@ struct ItemView<T : Item>: View {
                     .background(Color(UIColor.systemBackground))
                     .contextMenu {
                         Button {
-                            
+                            onUpvote()
                         } label: {
                             Label("Upvote", systemImage: "hand.thumbsup")
                         }
@@ -205,7 +223,7 @@ struct ItemView<T : Item>: View {
                         .disabled(!auth.loggedIn)
                         Divider()
                         Button {
-                            
+                            showFlagDialog = true
                         } label: {
                             Label("Flag", systemImage: "flag")
                         }
@@ -262,7 +280,33 @@ struct ItemView<T : Item>: View {
         }
     }
     
-    func getColor(level: Int) -> Color {
+    private func onUpvote() {
+        Task {
+            let res = await auth.upvote(item.id)
+
+            if res {
+                showUpvoteToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
+    }
+    
+    private func onFlagTap() {
+        Task {
+            let res = await AuthRepository.shared.flag(item.id)
+
+            if res {
+                showFlagToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
+    }
+    
+    private func getColor(level: Int) -> Color {
         var level = level
         let initialLevel = level
         
@@ -300,7 +344,6 @@ var colors = [Int: Color]()
 
 struct ItemVew_Previews: PreviewProvider {
     static var previews: some View {
-        //ItemView(item: Story())
         EmptyView()
     }
 }
