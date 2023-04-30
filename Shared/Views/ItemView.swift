@@ -11,8 +11,8 @@ import WebKit
 struct ItemView<T : Item>: View {
     @EnvironmentObject var auth: Authentication
     @StateObject var itemStore: ItemStore<T> = ItemStore<T>()
-    @State var showHNSheet: Bool = false
-    @State var showReplySheet: Bool = false
+    @State private var showHNSheet: Bool = false
+    @State private var showReplySheet: Bool = false
     let level: Int
     let item: T
     
