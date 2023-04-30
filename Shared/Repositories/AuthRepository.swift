@@ -133,12 +133,7 @@ class AuthRepository {
             "id": String(id),
         ]
         
-        let res = await AF.request("\(self.baseUrl)/flag", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response
-        if res.error == nil {
-            return true
-        } else {
-            return false
-        }
+        return await performPost(data: parameters, path: "/flag")
     }
     
     func upvote(_ id: Int) async -> Bool {
@@ -153,12 +148,7 @@ class AuthRepository {
             "how": "up",
         ]
         
-        let res = await AF.request("\(self.baseUrl)/vote", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response
-        if res.error == nil {
-            return true
-        } else {
-            return false
-        }
+        return await performPost(data: parameters, path: "/vote")
     }
     
     func fav(_ id: Int) async -> Bool {
@@ -172,12 +162,7 @@ class AuthRepository {
             "id": String(id),
         ]
         
-        let res = await AF.request("\(self.baseUrl)/fave", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response
-        if res.error == nil {
-            return true
-        } else {
-            return false
-        }
+        return await performPost(data: parameters, path: "/fave")
     }
     
     func reply(to id: Int, with text: String) async -> Bool {
@@ -192,7 +177,11 @@ class AuthRepository {
             "text": text,
         ]
         
-        let res = await AF.request("\(self.baseUrl)/comment", method: .post, parameters: parameters, encoder: .urlEncodedForm).serializingString().response
+        return await performPost(data: parameters, path: "/comment")
+    }
+    
+    private func performPost(data: [String: String]?, path: String) async -> Bool {
+        let res = await AF.request("\(self.baseUrl)\(path)", method: .post, parameters: data, encoder: .urlEncodedForm).serializingString().response
         if res.error == nil {
             return true
         } else {
