@@ -1,10 +1,3 @@
-//
-//  AuthRepository.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 8/5/22.
-//
-
 import Foundation
 import Alamofire
 import Security
@@ -20,6 +13,8 @@ class AuthRepository {
         kSecReturnAttributes: true,
         kSecReturnData: true
     ] as CFDictionary
+    
+    private init() {}
     
     var loggedIn: Bool {
         var result: AnyObject?

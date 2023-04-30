@@ -50,6 +50,9 @@
 		E54B013129FC852F00F7F0A0 /* Int+OrZero.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B012F29FC852F00F7F0A0 /* Int+OrZero.swift */; };
 		E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */; };
 		E54B013B29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */; };
+		E54B013E29FE302100F7F0A0 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = E54B013D29FE302100F7F0A0 /* AlertToast */; };
+		E54B014329FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */; };
+		E54B014429FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */; };
 		E5687FA8289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
 		E5687FA9289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
 		E5687FAA289DC23500901F1F /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FA7289DC23500901F1F /* AuthRepository.swift */; };
@@ -148,6 +151,7 @@
 		E53CA980289E3979009FDAE6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E54B012F29FC852F00F7F0A0 /* Int+OrZero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+OrZero.swift"; sourceTree = "<group>"; };
 		E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShareSheet.swift"; sourceTree = "<group>"; };
+		E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackService.swift; sourceTree = "<group>"; };
 		E5687FA7289DC23500901F1F /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		E5687FAC289E194A00901F1F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		E56C06C128867B1100D4E685 /* StoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryType.swift; sourceTree = "<group>"; };
@@ -178,6 +182,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E56C06C0288679E900D4E685 /* Alamofire in Frameworks */,
+				E54B013E29FE302100F7F0A0 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				E53CA980289E3979009FDAE6 /* Constants.swift */,
+				E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -381,6 +387,7 @@
 			name = "ZCombinator (iOS)";
 			packageProductDependencies = (
 				E56C06BF288679E900D4E685 /* Alamofire */,
+				E54B013D29FE302100F7F0A0 /* AlertToast */,
 			);
 			productName = "ZCombinator (iOS)";
 			productReference = E50FB9D22886738D00AA325C /* ZCombinator.app */;
@@ -479,6 +486,7 @@
 			mainGroup = E50FB9C22886738B00AA325C;
 			packageReferences = (
 				E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				E54B013C29FE302100F7F0A0 /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			productRefGroup = E50FB9D32886738D00AA325C /* Products */;
 			projectDirPath = "";
@@ -557,6 +565,7 @@
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
 				E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */,
 				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
+				E54B014329FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */,
 				E5EF2CDE289C780D00AA5290 /* Status.swift in Sources */,
 				E5E048D3289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */,
 				E56C06C228867B1100D4E685 /* StoryType.swift in Sources */,
@@ -601,6 +610,7 @@
 				E5687FAE289E194A00901F1F /* TextView.swift in Sources */,
 				E54B013B29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */,
 				E50FB9F42886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
+				E54B014429FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */,
 				E5EF2CDF289C780D00AA5290 /* Status.swift in Sources */,
 				E5E048D4289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */,
 				E56C06C328867B1100D4E685 /* StoryType.swift in Sources */,
@@ -779,7 +789,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -810,7 +820,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1028,6 +1038,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E54B013C29FE302100F7F0A0 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -1043,6 +1061,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		E54B013D29FE302100F7F0A0 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E54B013C29FE302100F7F0A0 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
 		};
 		E56C06BF288679E900D4E685 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

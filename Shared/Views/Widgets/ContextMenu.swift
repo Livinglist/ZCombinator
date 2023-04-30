@@ -1,10 +1,3 @@
-//
-//  ContextMenu.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 8/4/22.
-//
-
 import SwiftUI
 
 // MARK: - Custom Menu Context Implementation

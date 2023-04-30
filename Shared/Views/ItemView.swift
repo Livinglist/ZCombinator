@@ -1,10 +1,3 @@
-//
-//  ItemVew.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 7/19/22.
-//
-
 import SwiftUI
 import WebKit
 
@@ -58,6 +51,7 @@ struct ItemView<T : Item>: View {
             } label: {
                 Label("Flag", systemImage: "flag")
             }
+            .disabled(!auth.loggedIn)
             Divider()
             if item is Story {
                 Menu {

@@ -1,10 +1,3 @@
-//
-//  Item.swift
-//  ZCombinator (iOS)
-//
-//  Created by Jiaqi Feng on 7/18/22.
-//
-
 import Foundation
 
 protocol Item: Codable, Identifiable, Hashable {

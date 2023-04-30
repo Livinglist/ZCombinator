@@ -1,10 +1,3 @@
-//
-//  Comment.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 7/28/22.
-//
-
 import Foundation
 
 struct Comment : Item {

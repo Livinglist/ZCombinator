@@ -1,10 +1,3 @@
-//
-//  StoriesRepository.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 7/18/22.
-//
-
 import Foundation
 import Alamofire
 
@@ -12,6 +5,8 @@ class StoriesRepository {
     static let shared: StoriesRepository = StoriesRepository()
     
     private let baseUrl: String = "https://hacker-news.firebaseio.com/v0/"
+    
+    private init() {}
     
     // MARK: - Stories related.
     

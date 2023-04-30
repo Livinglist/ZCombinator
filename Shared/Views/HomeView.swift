@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  Shared
-//
-//  Created by Jiaqi Feng on 7/18/22.
-//
-
 import SwiftUI
 import CoreData
 

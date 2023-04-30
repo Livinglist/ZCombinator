@@ -1,10 +1,3 @@
-//
-//  HomeViewToolbar.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 8/6/22.
-//
-
 import SwiftUI
 
 extension HomeView {

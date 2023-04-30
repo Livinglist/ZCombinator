@@ -1,10 +1,3 @@
-//
-//  ReplyView.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 8/6/22.
-//
-
 import SwiftUI
 
 struct ReplyView: View {

@@ -1,10 +1,3 @@
-//
-//  HomeView+ViewModel.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 7/27/22.
-//
-
 import Foundation
 import SwiftUI
 

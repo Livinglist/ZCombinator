@@ -1,10 +1,4 @@
-//
-//  StoryRow.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 7/19/22.
-//
-
+import AlertToast
 import LinkPresentation
 import SwiftUI
 import UniformTypeIdentifiers
@@ -18,7 +12,8 @@ struct StoryRow: View {
     @State private var showSafari: Bool = false
     @State private var showHNSheet: Bool = false
     @State private var showReplySheet: Bool = false
-    @State private var isPresentingFlagDialog: Bool = false
+    @State private var showFlagDialog: Bool = false
+    @State private var showFlagResultDialog: Bool = false
     @GestureState private var isDetectingPress = false
     
     init(story: Story) {
@@ -52,10 +47,11 @@ struct StoryRow: View {
             .disabled(!auth.loggedIn)
             Divider()
             Button {
-                isPresentingFlagDialog = true
+                showFlagDialog = true
             } label: {
                 Label("Flag", systemImage: "flag")
             }
+            .disabled(!auth.loggedIn)
             Divider()
             Menu {
                 if story.url.orEmpty.isNotEmpty {
@@ -161,14 +157,23 @@ struct StoryRow: View {
                             }))
             }
         }
-        .confirmationDialog("Are you sure?", isPresented: $isPresentingFlagDialog) {
+        .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
             Button("Flag", role: .destructive) {
                 Task {
-                    await AuthRepository.shared.flag(story.id)
+                    let res = await AuthRepository.shared.flag(story.id)
+                    if res {
+                        showFlagResultDialog = true
+                        HapticFeedbackService.shared.success()
+                    } else {
+                        HapticFeedbackService.shared.error()
+                    }
                 }
             }
         } message: {
             Text("Flag \"\(story.title.orEmpty)\" by \(story.by.orEmpty)?")
+        }
+        .toast(isPresenting: $showFlagResultDialog){
+            AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
         }
         .sheet(isPresented: $showHNSheet) {
             if let url = URL(string: story.itemUrl) {

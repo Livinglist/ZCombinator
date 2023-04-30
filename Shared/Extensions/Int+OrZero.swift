@@ -1,10 +1,3 @@
-//
-//  Int+OrZero.swift
-//  ZCombinator
-//
-//  Created by Jiaqi Feng on 4/28/23.
-//
-
 import Foundation
 
 extension Int?  {
