@@ -116,7 +116,7 @@ struct ItemView<T : Item>: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 4)
             } else {
-                Text("deleted").font(.footnote).foregroundColor(.gray)
+                EmptyView()
             }
         }
     }
