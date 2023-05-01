@@ -3,7 +3,7 @@ import SwiftUI
 
 extension ItemView {
     @MainActor
-    class ItemStore<T: Item> : ObservableObject {
+    class ItemStore : ObservableObject {
         @Published var kids: [Comment] = [Comment]()
         @Published var status: Status = .idle
         
@@ -35,7 +35,10 @@ extension ItemView {
         }
         
         func refresh() {
-            self.kids.removeAll()
+            withAnimation {
+                self.kids.removeAll()
+            }
+            
             if let id = self.item?.id, item is Story {
                 self.status = .loading
                 Task {

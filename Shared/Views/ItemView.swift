@@ -5,7 +5,7 @@ import WebKit
 struct ItemView<T : Item>: View {
     @EnvironmentObject var auth: Authentication
     
-    @StateObject var itemStore: ItemStore<T> = ItemStore<T>()
+    @StateObject var itemStore: ItemStore = ItemStore()
     @State private var isCollapsed: Bool = false
     @State private var showHNSheet: Bool = false
     @State private var showReplySheet: Bool = false
@@ -156,11 +156,6 @@ struct ItemView<T : Item>: View {
                 }
                 if itemStore.status == .loading {
                     LoadingIndicator().padding(.top, 100)
-                } else if itemStore.status == .loaded && itemStore.kids.isEmpty {
-                    Text("nothing yet")
-                        .font(.footnote)
-                        .foregroundColor(.gray)
-                        .padding(.top, 100)
                 }
                 VStack(spacing: 0) {
                     ForEach(itemStore.kids) { comment in
@@ -169,6 +164,9 @@ struct ItemView<T : Item>: View {
                     }.id(UUID())
                 }
                 Spacer().frame(height: 60)
+                if itemStore.status == Status.loaded {
+                    Text(Constants.happyFace).foregroundColor(.gray)
+                }
             }
         }
         .toast(isPresenting: $showFlagToast) {
@@ -327,7 +325,7 @@ struct ItemView<T : Item>: View {
                     .foregroundColor(getColor(level: level))
             }
             if let descendants = item.descendants {
-                Text("\(descendants) comments")
+                Text("\(descendants) comment\(descendants <= 1 ? "" : "s")")
                     .borderedFootnote()
                     .foregroundColor(getColor(level: level))
             }
