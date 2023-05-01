@@ -156,7 +156,6 @@
 		E54B012F29FC852F00F7F0A0 /* Int+OrZero.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+OrZero.swift"; sourceTree = "<group>"; };
 		E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShareSheet.swift"; sourceTree = "<group>"; };
 		E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackService.swift; sourceTree = "<group>"; };
-		E54B014529FE373100F7F0A0 /* ZCombinator--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ZCombinator--iOS--Info.plist"; sourceTree = "<group>"; };
 		E55E8FD329FEF5D100EE2F89 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E5687FA7289DC23500901F1F /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		E5687FAC289E194A00901F1F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
@@ -220,7 +219,6 @@
 		E50FB9C22886738B00AA325C = {
 			isa = PBXGroup;
 			children = (
-				E54B014529FE373100F7F0A0 /* ZCombinator--iOS--Info.plist */,
 				E50FB9C72886738B00AA325C /* Shared */,
 				E50FB9D92886738D00AA325C /* macOS */,
 				E50FB9E22886738D00AA325C /* Tests iOS */,
