@@ -6,11 +6,13 @@ struct ItemView<T : Item>: View {
     @EnvironmentObject var auth: Authentication
     
     @StateObject var itemStore: ItemStore<T> = ItemStore<T>()
+    @State private var isCollapsed: Bool = false
     @State private var showHNSheet: Bool = false
     @State private var showReplySheet: Bool = false
     @State private var showFlagDialog: Bool = false
     @State private var showFlagToast: Bool = false
     @State private var showUpvoteToast: Bool = false
+    @State private var showReplyToast: Bool = false
     
     let level: Int
     let item: T
@@ -22,19 +24,13 @@ struct ItemView<T : Item>: View {
     
     var body: some View {
         mainItemView
-            .toast(isPresenting: $showFlagToast) {
-                AlertToast(type: .regular, title: "Flagged")
-            }
-            .toast(isPresenting: $showUpvoteToast) {
-                AlertToast(type: .regular, title: "Upvoted")
-            }
             .sheet(isPresented: $showHNSheet) {
                 if let url = URL(string: item.itemUrl) {
                     SafariView(url: url)
                 }
             }
             .sheet(isPresented: $showReplySheet) {
-                ReplyView(replyingTo: item)
+                ReplyView(showReplyToast: $showReplyToast, replyingTo: item)
             }
             .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
                 Button("Flag", role: .destructive) {
@@ -126,120 +122,156 @@ struct ItemView<T : Item>: View {
     }
     
     @ViewBuilder
-    var mainItemView: some View {
-        if level == 0 {
-            ScrollView{
-                VStack(spacing: 0) {
-                    nameRow.padding(.leading, 6)
-                    if item is Story {
-                        if let url = URL(string: item.url.orEmpty) {
-                            LinkView(url: url, title: item.title.orEmpty)
-                                .padding()
-                        } else {
-                            VStack(spacing: 0) {
-                                Text(item.title.orEmpty)
-                                    .multilineTextAlignment(.center)
-                                    .fontWeight(.semibold)
-                                    .padding(.top, 6)
-                                    .padding(.leading, 12)
-                                    .padding(.bottom, 6)
-                                Text(item.text.orEmpty.markdowned)
-                                    .font(.system(size: 16))
-                                    .padding(.leading, 8)
-                                    .padding(.bottom, 6)
-                            }
+    var rootView: some View {
+        ScrollView {
+            VStack(spacing: 0) {
+                nameRow.padding(.leading, 6)
+                if item is Story {
+                    if let url = URL(string: item.url.orEmpty) {
+                        LinkView(url: url, title: item.title.orEmpty)
+                            .padding()
+                    } else {
+                        VStack(spacing: 0) {
+                            Text(item.title.orEmpty)
+                                .multilineTextAlignment(.center)
+                                .fontWeight(.semibold)
+                                .padding(.top, 6)
+                                .padding(.leading, 12)
+                                .padding(.bottom, 6)
+                            Text(item.text.orEmpty.markdowned)
+                                .font(.system(size: 16))
+                                .padding(.leading, 8)
+                                .padding(.bottom, 6)
                         }
-                    } else if item is Comment {
-                        Text(item.text.orEmpty)
-                            .padding(.leading, Double(4 * (level - 1)))
                     }
-                    if itemStore.status == .loading {
-                        LoadingIndicator().padding(.top, 100)
-                    } else if itemStore.status == .loaded && itemStore.kids.isEmpty {
-                        Text("nothing yet")
+                } else if item is Comment {
+                    Text(item.text.orEmpty)
+                        .padding(.leading, Double(4 * (level - 1)))
+                }
+                if itemStore.status == .loading {
+                    LoadingIndicator().padding(.top, 100)
+                } else if itemStore.status == .loaded && itemStore.kids.isEmpty {
+                    Text("nothing yet")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                        .padding(.top, 100)
+                }
+                VStack(spacing: 0) {
+                    ForEach(itemStore.kids) { comment in
+                        ItemView<Comment>(item: comment, level: level + 1)
+                            .padding(.trailing, 4)
+                    }.id(UUID())
+                }
+                Spacer().frame(height: 60)
+            }
+        }
+        .toast(isPresenting: $showFlagToast) {
+            AlertToast(type: .regular, title: "Flagged")
+        }
+        .toast(isPresenting: $showUpvoteToast) {
+            AlertToast(type: .regular, title: "Upvoted")
+        }
+        .toast(isPresenting: $showReplyToast) {
+            AlertToast(type: .regular, title: "Replied")
+        }
+        .toolbar {
+            ToolbarItem{
+                menu
+            }
+        }
+        .navigationBarTitleDisplayMode(.inline)
+        .refreshable {
+            itemStore.refresh()
+        }
+    }
+    
+    @ViewBuilder
+    var nodeView: some View {
+        ZStack {
+            if level > 1 {
+                HStack {
+                    getColor(level: level)
+                        .frame(width: 1)
+                    Spacer()
+                }
+            }
+            VStack(spacing: 0) {
+                VStack(spacing: 0) {
+                    nameRow.padding(.bottom, 4)
+                    if isCollapsed {
+                        Text("collapsed")
                             .font(.footnote)
-                            .foregroundColor(.gray)
-                            .padding(.top, 100)
-                    }
-                    VStack(spacing: 0) {
-                        ForEach(itemStore.kids) { comment in
-                            ItemView<Comment>(item: comment, level: level + 1)
-                                .padding(.trailing, 4)
-                        }.id(UUID())
-                    }
-                    Spacer().frame(height: 60)
-                }
-            }
-            .toolbar {
-                ToolbarItem{
-                    menu
-                }
-            }
-            .navigationBarTitleDisplayMode(.inline)
-        } else {
-            ZStack {
-                if level > 1 {
-                    HStack {
-                        getColor(level: level)
-                            .frame(width: 1)
-                        Spacer()
-                    }
-                }
-                VStack(spacing: 0) {
-                    VStack(spacing: 0) {
-                        nameRow.padding(.bottom, 4)
+                            .foregroundColor(getColor(level: level))
+                            .padding(.top, 12)
+                    } else {
                         textView.padding(.bottom, 3)
-                        if itemStore.status == Status.loading {
-                            LoadingIndicator(color: getColor(level: level)).padding(.top, 100)
-                        } else if itemStore.status != Status.loaded && item.kids.isNotNullOrEmpty {
-                            Button {
-                                HapticFeedbackService.shared.light()
-                                Task {
-                                    await itemStore.loadKids()
-                                }
-                            } label: {
-                                Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies":"reply")")
-                                    .font(.footnote.weight(.bold))
-                                    .foregroundColor(getColor(level: level))
+                            .toast(isPresenting: $showFlagToast) {
+                                AlertToast(type: .regular, title: "Flagged")
                             }
-                            .buttonStyle(.bordered)
-                            .padding(.top, 6)
-                        }
+                            .toast(isPresenting: $showUpvoteToast) {
+                                AlertToast(type: .regular, title: "Upvoted")
+                            }
+                            .toast(isPresenting: $showReplyToast) {
+                                AlertToast(type: .regular, title: "Replied")
+                            }
                     }
-                    .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
-                    .background(Color(UIColor.systemBackground))
-                    .contextMenu {
+                    if itemStore.status == Status.loading {
+                        LoadingIndicator(color: getColor(level: level)).padding(.top, 24)
+                    } else if isCollapsed == false && itemStore.status != Status.loaded && item.kids.isNotNullOrEmpty {
                         Button {
-                            onUpvote()
+                            HapticFeedbackService.shared.light()
+                            Task {
+                                await itemStore.loadKids()
+                            }
                         } label: {
-                            Label("Upvote", systemImage: "hand.thumbsup")
+                            Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies":"reply")")
+                                .font(.footnote.weight(.bold))
+                                .foregroundColor(getColor(level: level))
                         }
-                        .disabled(!auth.loggedIn)
-                        Button {
-                            showReplySheet = true
-                        } label: {
-                            Label("Reply", systemImage: "plus.message")
-                        }
-                        .disabled(!auth.loggedIn)
-                        Divider()
-                        Button {
-                            showFlagDialog = true
-                        } label: {
-                            Label("Flag", systemImage: "flag")
-                        }
-                        .disabled(!auth.loggedIn)
-                        Divider()
-                        Button {
-                            showShareSheet(url: item.itemUrl)
-                        } label: {
-                            Label("Share", systemImage: "square.and.arrow.up")
-                        }
-                        Button {
-                            showHNSheet = true
-                        } label: {
-                            Label("View on Hacker News", systemImage: "safari")
-                        }
+                        .buttonStyle(.bordered)
+                        .padding(.top, 6)
                     }
+                }
+                .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
+                .background(Color(UIColor.systemBackground))
+                .contextMenu {
+                    Button {
+                        onUpvote()
+                    } label: {
+                        Label("Upvote", systemImage: "hand.thumbsup")
+                    }
+                    .disabled(!auth.loggedIn)
+                    Button {
+                        showReplySheet = true
+                    } label: {
+                        Label("Reply", systemImage: "plus.message")
+                    }
+                    .disabled(!auth.loggedIn)
+                    Divider()
+                    Button {
+                        showFlagDialog = true
+                    } label: {
+                        Label("Flag", systemImage: "flag")
+                    }
+                    .disabled(!auth.loggedIn)
+                    Divider()
+                    Button {
+                        showShareSheet(url: item.itemUrl)
+                    } label: {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
+                    Button {
+                        showHNSheet = true
+                    } label: {
+                        Label("View on Hacker News", systemImage: "safari")
+                    }
+                }
+                .onTapGesture {
+                    withAnimation {
+                        isCollapsed.toggle()
+                    }
+                }
+                if isCollapsed == false {
                     VStack(spacing: 0) {
                         ForEach(itemStore.kids){ comment in
                             ItemView<Comment>(item: comment, level: level + 1)
@@ -247,13 +279,22 @@ struct ItemView<T : Item>: View {
                         .id(UUID())
                     }
                     .buttonStyle(PlainButtonStyle())
-                    Spacer()
                 }
-                .frame(alignment: .leading)
-                .padding(.leading, 6)
+                Spacer()
             }
-            .frame(maxWidth:.infinity)
             .frame(alignment: .leading)
+            .padding(.leading, 6)
+        }
+        .frame(maxWidth:.infinity)
+        .frame(alignment: .leading)
+    }
+    
+    @ViewBuilder
+    var mainItemView: some View {
+        if level == 0 {
+            rootView
+        } else {
+            nodeView
         }
     }
     

@@ -43,7 +43,7 @@ class StoriesRepository {
     
     public func fetchStory(_ id: Int) async -> Story?{
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
-        
+
         if let data = response.data {
             let story = try? JSONDecoder().decode(Story.self, from: data)
             
@@ -79,5 +79,26 @@ class StoriesRepository {
             return nil
         }
         
+    }
+    
+    public func fetchItem(_ id: Int) async -> (any Item)? {
+        let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
+
+        if let data = response.data, let result = try? response.result.get(), let map = result.toJSON() as? [String: AnyObject] {
+            guard let type = map["type"] as? String else { return nil }
+            
+            switch type {
+            case "story":
+                let story = try? JSONDecoder().decode(Story.self, from: data)
+                return story
+            case "comment":
+                let comment = try? JSONDecoder().decode(Comment.self, from: data)
+                return comment
+            default:
+                return nil
+            }
+        } else {
+            return nil
+        }
     }
 }
