@@ -125,7 +125,9 @@ struct ItemView<T : Item>: View {
     var rootView: some View {
         ScrollView {
             VStack(spacing: 0) {
-                nameRow.padding(.leading, 6)
+                nameRow
+                    .padding(.leading, 6)
+                    .padding(.trailing, 4)
                 if item is Story {
                     if let url = URL(string: item.url.orEmpty) {
                         LinkView(url: url, title: item.title.orEmpty)
@@ -202,7 +204,7 @@ struct ItemView<T : Item>: View {
                         Text("collapsed")
                             .font(.footnote)
                             .foregroundColor(getColor(level: level))
-                            .padding(.top, 12)
+                            .padding(.top, 8)
                     } else {
                         textView.padding(.bottom, 3)
                             .toast(isPresenting: $showFlagToast) {
@@ -267,6 +269,7 @@ struct ItemView<T : Item>: View {
                     }
                 }
                 .onTapGesture {
+                    HapticFeedbackService.shared.ultralight()
                     withAnimation {
                         isCollapsed.toggle()
                     }
@@ -314,10 +317,11 @@ struct ItemView<T : Item>: View {
                     .borderedFootnote()
                     .foregroundColor(getColor(level: level))
             }
+            Spacer()
             Text(item.timeAgo)
                 .borderedFootnote()
                 .foregroundColor(getColor(level: level))
-            Spacer()
+                .padding(.trailing, 2)
         }
     }
     

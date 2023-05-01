@@ -24,4 +24,8 @@ class HapticFeedbackService {
     func light() -> Void {
         impactGenerator.impactOccurred(intensity: 0.6)
     }
+    
+    func ultralight() -> Void {
+        impactGenerator.impactOccurred(intensity: 0.3)
+    }
 }
