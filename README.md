@@ -11,10 +11,13 @@ A WIP [Hacker News](https://news.ycombinator.com/) client made with SwiftUI.
   <img width="240" alt="05" src="https://user-images.githubusercontent.com/7277662/235520880-ca3380fd-de31-4d4e-b0a3-af40ca3e2010.png"> 
   <img width="240" alt="06" src="https://user-images.githubusercontent.com/7277662/235520877-b58e7e12-f2bf-40d2-9e2a-67e8b4d45209.png"> 
     
-  <img width="240" alt="04" src="https://user-images.githubusercontent.com/7277662/235520875-554c1cae-5c1c-4c76-bbc9-c343087fad7f.png"> 
-  <img width="240" alt="05" src="https://user-images.githubusercontent.com/7277662/235520867-ccba2703-c079-4ec1-87dc-f75ac0e02fb7.png"> 
-  <img width="240" alt="06" src="https://user-images.githubusercontent.com/7277662/235520861-71d4d1bd-f5fd-40bb-b131-9f9085f92068.png"> 
-  <img width="240" alt="06" src="https://user-images.githubusercontent.com/7277662/235520850-26c1f998-9448-42e2-b437-1c290ca0275f.png">
+  <img width="240" alt="07" src="https://user-images.githubusercontent.com/7277662/235520875-554c1cae-5c1c-4c76-bbc9-c343087fad7f.png"> 
+  <img width="240" alt="08" src="https://user-images.githubusercontent.com/7277662/235520867-ccba2703-c079-4ec1-87dc-f75ac0e02fb7.png"> 
+  <img width="240" alt="09" src="https://user-images.githubusercontent.com/7277662/235520861-71d4d1bd-f5fd-40bb-b131-9f9085f92068.png"> 
+  <img width="240" alt="10" src="https://user-images.githubusercontent.com/7277662/235520850-26c1f998-9448-42e2-b437-1c290ca0275f.png">
+  
+  <img width="600" alt="11" src="https://user-images.githubusercontent.com/7277662/235521432-97b3fbed-f343-4cdd-ac47-7ea42025cb4f.png"> 
+  <img width="600" alt="12" src="https://user-images.githubusercontent.com/7277662/235521429-7f33cb07-476a-4ead-b6f7-4bee94c1e16c.png">
 </p>
 
 
