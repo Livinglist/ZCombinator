@@ -12,7 +12,9 @@ struct ItemView<T : Item>: View {
     @State private var showFlagDialog: Bool = false
     @State private var showFlagToast: Bool = false
     @State private var showUpvoteToast: Bool = false
+    @State private var showDownvoteToast: Bool = false
     @State private var showReplyToast: Bool = false
+    @State private var showFavoriteToast: Bool = false
     
     let level: Int
     let item: T
@@ -52,6 +54,18 @@ struct ItemView<T : Item>: View {
                 onUpvote()
             } label: {
                 Label("Upvote", systemImage: "hand.thumbsup")
+            }
+            .disabled(!auth.loggedIn)
+            Button {
+                onDownvote()
+            } label: {
+                Label("Downvote", systemImage: "hand.thumbsdown")
+            }
+            .disabled(!auth.loggedIn)
+            Button {
+                onFavorite()
+            } label: {
+                Label("Favorite", systemImage: "heart")
             }
             .disabled(!auth.loggedIn)
             Button {
@@ -170,13 +184,19 @@ struct ItemView<T : Item>: View {
             }
         }
         .toast(isPresenting: $showFlagToast) {
-            AlertToast(type: .regular, title: "Flagged")
+            AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
         }
         .toast(isPresenting: $showUpvoteToast) {
-            AlertToast(type: .regular, title: "Upvoted")
+            AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvoted")
+        }
+        .toast(isPresenting: $showDownvoteToast) {
+            AlertToast(type: .systemImage("hand.thumbsdown.fill", .gray), title: "Downvoted")
         }
         .toast(isPresenting: $showReplyToast) {
-            AlertToast(type: .regular, title: "Replied")
+            AlertToast(type: .systemImage("arrowshape.turn.up.left.circle.fill", .gray), title: "Replied")
+        }
+        .toast(isPresenting: $showFavoriteToast) {
+            AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
         }
         .toolbar {
             ToolbarItem{
@@ -222,8 +242,14 @@ struct ItemView<T : Item>: View {
                             .toast(isPresenting: $showUpvoteToast) {
                                 AlertToast(type: .regular, title: "Upvoted")
                             }
+                            .toast(isPresenting: $showDownvoteToast) {
+                                AlertToast(type: .regular, title: "Downvoted")
+                            }
                             .toast(isPresenting: $showReplyToast) {
                                 AlertToast(type: .regular, title: "Replied")
+                            }
+                            .toast(isPresenting: $showFavoriteToast) {
+                                AlertToast(type: .regular, title: "Added")
                             }
                     }
                     if itemStore.status == Status.loading {
@@ -253,6 +279,12 @@ struct ItemView<T : Item>: View {
                         onUpvote()
                     } label: {
                         Label("Upvote", systemImage: "hand.thumbsup")
+                    }
+                    .disabled(!auth.loggedIn)
+                    Button {
+                        onDownvote()
+                    } label: {
+                        Label("Downvote", systemImage: "hand.thumbsdown")
                     }
                     .disabled(!auth.loggedIn)
                     Button {
@@ -343,6 +375,32 @@ struct ItemView<T : Item>: View {
 
             if res {
                 showUpvoteToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
+    }
+    
+    private func onDownvote() {
+        Task {
+            let res = await auth.downvote(item.id)
+            
+            if res {
+                showDownvoteToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
+    }
+    
+    private func onFavorite() {
+        Task {
+            let res = await auth.favorite(item.id)
+            
+            if res {
+                showFavoriteToast = true
                 HapticFeedbackService.shared.success()
             } else {
                 HapticFeedbackService.shared.error()

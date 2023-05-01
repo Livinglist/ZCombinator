@@ -16,12 +16,20 @@ struct StoryRow: View {
     @GestureState private var isDetectingPress = false
     @Binding private var showFlagToast: Bool
     @Binding private var showUpvoteToast: Bool
+    @Binding private var showDownvoteToast: Bool
+    @Binding private var showFavoriteToast: Bool
     
-    init(story: Story, showFlagToast: Binding<Bool>, showUpvoteToast: Binding<Bool>) {
+    init(story: Story,
+         showFlagToast: Binding<Bool>,
+         showUpvoteToast: Binding<Bool>,
+         showDownvoteToast: Binding<Bool>,
+         showFavoriteToast: Binding<Bool>) {
         self.story = story
         self.url = URL(string: story.url ?? "https://news.ycombinator.com/item?id=\(story.id)")
         self._showFlagToast = showFlagToast
         self._showUpvoteToast = showUpvoteToast
+        self._showDownvoteToast = showDownvoteToast
+        self._showFavoriteToast = showFavoriteToast
     }
     
     @ViewBuilder
@@ -46,6 +54,18 @@ struct StoryRow: View {
                 onUpvote()
             } label: {
                 Label("Upvote", systemImage: "hand.thumbsup")
+            }
+            .disabled(!auth.loggedIn)
+            Button {
+                onDownvote()
+            } label: {
+                Label("Downvote", systemImage: "hand.thumbsdown")
+            }
+            .disabled(!auth.loggedIn)
+            Button {
+                onFavorite()
+            } label: {
+                Label("Favorite", systemImage: "heart")
             }
             .disabled(!auth.loggedIn)
             Divider()
@@ -190,6 +210,32 @@ struct StoryRow: View {
             
             if res {
                 showUpvoteToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
+    }
+    
+    private func onDownvote() {
+        Task {
+            let res = await auth.downvote(story.id)
+            
+            if res {
+                showDownvoteToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
+    }
+    
+    private func onFavorite() {
+        Task {
+            let res = await auth.favorite(story.id)
+            
+            if res {
+                showFavoriteToast = true
                 HapticFeedbackService.shared.success()
             } else {
                 HapticFeedbackService.shared.error()

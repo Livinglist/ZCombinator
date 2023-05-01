@@ -43,6 +43,14 @@ class Authentication: ObservableObject {
         return await AuthRepository.shared.upvote(id)
     }
     
+    func downvote(_ id: Int) async -> Bool {
+        return await AuthRepository.shared.downvote(id)
+    }
+    
+    func favorite(_ id: Int) async -> Bool {
+        return await AuthRepository.shared.fav(id)
+    }
+    
     func reply(to id: Int, with text: String) async -> Bool {
         return await AuthRepository.shared.reply(to: id, with: text)
     }

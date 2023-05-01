@@ -15,13 +15,19 @@ struct HomeView: View {
     
     @State private var showFlagToast: Bool = false
     @State private var showUpvoteToast: Bool = false
+    @State private var showDownvoteToast: Bool = false
     @State private var showLoginToast: Bool = false
+    @State private var showFavoriteToast: Bool = false
     
     var body: some View {
         NavigationView {
             List {
                 ForEach(storyStore.stories){ story in
-                    StoryRow(story: story, showFlagToast: $showFlagToast, showUpvoteToast: $showUpvoteToast)
+                    StoryRow(story: story,
+                             showFlagToast: $showFlagToast,
+                             showUpvoteToast: $showUpvoteToast,
+                             showDownvoteToast: $showDownvoteToast,
+                             showFavoriteToast: $showFavoriteToast)
                         .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                         .listRowSeparator(.hidden)
                         .onAppear {
@@ -69,8 +75,14 @@ struct HomeView: View {
         .toast(isPresenting: $showUpvoteToast) {
             AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvoted")
         }
+        .toast(isPresenting: $showDownvoteToast) {
+            AlertToast(type: .systemImage("hand.thumbsdown.fill", .gray), title: "Downvoted")
+        }
         .toast(isPresenting: $showLoginToast, alert: {
             AlertToast(type: .systemImage("person.badge.shield.checkmark.fill", .gray), title: "Welcome")
+        })
+        .toast(isPresenting: $showFavoriteToast, alert: {
+            AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
         })
         .sheet(isPresented: $showAboutSheet, content: {
             SafariView(url: Constants.githubUrl)

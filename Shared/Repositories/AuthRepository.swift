@@ -121,7 +121,7 @@ class AuthRepository {
     }
     
     func fetchUser(_ id: String) async -> User? {
-        let response = await AF.request("\(self.baseUrl)user/\(id).json").serializingString().response
+        let response = await AF.request("\(self.baseUrl)/user/\(id).json").serializingString().response
         
         if let data = response.data {
             let user = try? JSONDecoder().decode(User.self, from: data)
@@ -139,13 +139,25 @@ class AuthRepository {
             return false
         }
         
-        let parameters: [String: String] = [
+        let parameters: [String: Any] = [
             "acct": username,
             "pw": password,
-            "id": String(id),
+            "id": id,
         ]
         
         return await performPost(data: parameters, path: "/flag")
+    }
+    
+    struct Pair {
+        let key: String
+        let value: Int
+    }
+    
+    struct Temp: Encodable {
+        let acct: String
+        let pw: String
+        let id: Int
+        let how: String = "up"
     }
     
     func upvote(_ id: Int) async -> Bool {
@@ -153,11 +165,26 @@ class AuthRepository {
             return false
         }
         
-        let parameters: [String: String] = [
+        let parameters: Parameters = [
             "acct": username,
             "pw": password,
-            "id": String(id),
+            "id": id,
             "how": "up",
+        ]
+    
+        return await performPost(data: parameters, path: "/vote")
+    }
+    
+    func downvote(_ id: Int) async -> Bool {
+        guard let username = self.username, let password = self.password else {
+            return false
+        }
+        
+        let parameters: [String: Any] = [
+            "acct": username,
+            "pw": password,
+            "id": id,
+            "how": "down",
         ]
         
         return await performPost(data: parameters, path: "/vote")
@@ -168,10 +195,10 @@ class AuthRepository {
             return false
         }
         
-        let parameters: [String: String] = [
+        let parameters: [String: Any] = [
             "acct": username,
             "pw": password,
-            "id": String(id),
+            "id": id,
         ]
         
         return await performPost(data: parameters, path: "/fave")
@@ -182,22 +209,26 @@ class AuthRepository {
             return false
         }
         
-        let parameters: [String: String] = [
+        let parameters: [String: Any] = [
             "acct": username,
             "pw": password,
-            "parent": String(id),
+            "parent": id,
             "text": text,
         ]
         
         return await performPost(data: parameters, path: "/comment")
     }
     
-    private func performPost(data: [String: String]?, path: String) async -> Bool {
-        let res = await AF.request("\(self.baseUrl)\(path)", method: .post, parameters: data, encoder: .urlEncodedForm).serializingString().response
-        if res.error == nil {
-            return true
-        } else {
-            return false
-        }
+    private func performPost(data: [String: Any], path: String) async -> Bool {
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        let request = AF.request("\(baseUrl)\(path)",
+                                 method: .post,
+                                 parameters: data,
+                                 headers: HTTPHeaders([
+                                    HTTPHeader(name: "content-type", value: "application/x-www-form-urlencoded")
+                                 ]))
+        let res = await request.serializingString().response
+        guard let statusCode = res.response?.statusCode, statusCode == 200 else { return false }
+        return true
     }
 }

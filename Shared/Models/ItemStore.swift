@@ -31,6 +31,10 @@ extension ItemView {
                     self.kids.append(contentsOf: comments)
                     self.status = .loaded
                 }
+            } else {
+                withAnimation {
+                    self.status = .loaded
+                }
             }
         }
         
@@ -40,7 +44,7 @@ extension ItemView {
                     self.kids.removeAll()
                 }
                 self.status = .loading
-                
+
                 let item = await StoriesRepository.shared.fetchItem(id)
                 
                 if let item = item {

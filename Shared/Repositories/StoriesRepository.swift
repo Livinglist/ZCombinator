@@ -78,7 +78,6 @@ class StoriesRepository {
         } else {
             return nil
         }
-        
     }
     
     public func fetchItem(_ id: Int) async -> (any Item)? {
