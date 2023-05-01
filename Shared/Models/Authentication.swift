@@ -44,7 +44,6 @@ class Authentication: ObservableObject {
     }
     
     func reply(to id: Int, with text: String) async -> Bool {
-        return true
-        //return await AuthRepository.shared.reply(to: id, with: text)
+        return await AuthRepository.shared.reply(to: id, with: text)
     }
 }
