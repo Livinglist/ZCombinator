@@ -3,11 +3,11 @@ import SwiftUI
 
 extension ItemView {
     @MainActor
-    class ItemStore<T: Item> : ObservableObject {
+    class ItemStore : ObservableObject {
         @Published var kids: [Comment] = [Comment]()
         @Published var status: Status = .idle
         
-        @Published var item: T? {
+        @Published var item: (any Item)? {
             didSet {
                 if item is Story {
                     Task {
@@ -18,7 +18,7 @@ extension ItemView {
         }
         
         func loadKids() async {
-            if let kids = self.item?.kids, self.status != .loading && self.status != .loaded {
+            if let kids = self.item?.kids {
                 self.status = .loading
                 
                 var comments: [Comment] = [Comment]()
@@ -31,20 +31,24 @@ extension ItemView {
                     self.kids.append(contentsOf: comments)
                     self.status = .loaded
                 }
+            } else {
+                withAnimation {
+                    self.status = .loaded
+                }
             }
         }
         
-        func refresh() {
+        func refresh() async -> Void {
             if let id = self.item?.id, item is Story {
+                withAnimation {
+                    self.kids.removeAll()
+                }
                 self.status = .loading
-                Task {
-                    let story = await StoriesRepository.shared.fetchStory(id)
-                    
-                    if let story = story {
-                        self.item = story as? T
-                        
-                        await loadKids()
-                    }
+
+                let item = await StoriesRepository.shared.fetchItem(id)
+                
+                if let item = item {
+                    self.item = item
                 }
             }
         }

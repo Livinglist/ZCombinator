@@ -1,4 +1,3 @@
-import AlertToast
 import LinkPresentation
 import SwiftUI
 import UniformTypeIdentifiers
@@ -8,18 +7,29 @@ struct StoryRow: View {
     let url: URL?
     
     @EnvironmentObject var auth: Authentication
+    
     @State private var isLoaded: Bool = false
     @State private var showSafari: Bool = false
     @State private var showHNSheet: Bool = false
     @State private var showReplySheet: Bool = false
     @State private var showFlagDialog: Bool = false
-    @State private var showFlagToast: Bool = false
-    @State private var showUpvoteToast: Bool = false
     @GestureState private var isDetectingPress = false
+    @Binding private var showFlagToast: Bool
+    @Binding private var showUpvoteToast: Bool
+    @Binding private var showDownvoteToast: Bool
+    @Binding private var showFavoriteToast: Bool
     
-    init(story: Story) {
+    init(story: Story,
+         showFlagToast: Binding<Bool>,
+         showUpvoteToast: Binding<Bool>,
+         showDownvoteToast: Binding<Bool>,
+         showFavoriteToast: Binding<Bool>) {
         self.story = story
         self.url = URL(string: story.url ?? "https://news.ycombinator.com/item?id=\(story.id)")
+        self._showFlagToast = showFlagToast
+        self._showUpvoteToast = showUpvoteToast
+        self._showDownvoteToast = showDownvoteToast
+        self._showFavoriteToast = showFavoriteToast
     }
     
     @ViewBuilder
@@ -44,6 +54,18 @@ struct StoryRow: View {
                 onUpvote()
             } label: {
                 Label("Upvote", systemImage: "hand.thumbsup")
+            }
+            .disabled(!auth.loggedIn)
+            Button {
+                onDownvote()
+            } label: {
+                Label("Downvote", systemImage: "hand.thumbsdown")
+            }
+            .disabled(!auth.loggedIn)
+            Button {
+                onFavorite()
+            } label: {
+                Label("Favorite", systemImage: "heart")
             }
             .disabled(!auth.loggedIn)
             Divider()
@@ -77,6 +99,9 @@ struct StoryRow: View {
             }
         } label: {
             Label("", systemImage: "ellipsis")
+                .padding(.leading)
+                .padding(.bottom, 12)
+                .foregroundColor(.orange)
         }
     }
     
@@ -115,10 +140,11 @@ struct StoryRow: View {
                                 Text(story.metadata.orEmpty)
                                     .font(.caption)
                                     .padding(.top, 6)
+                                    .padding(.leading)
+                                    .padding(.bottom, 12)
                                 Spacer()
                                 menu
-                            }.padding(.leading)
-                                .padding(.bottom, 12)
+                            }
                         }
                     }
                     .background(Color(UIColor.secondarySystemBackground))
@@ -160,34 +186,25 @@ struct StoryRow: View {
         }
         .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
             Button("Flag", role: .destructive) {
-                Task {
-                    let res = await AuthRepository.shared.flag(story.id)
-                    if res {
-                        showFlagToast = true
-                        HapticFeedbackService.shared.success()
-                    } else {
-                        HapticFeedbackService.shared.error()
-                    }
-                }
+                onFlagTap()
             }
         } message: {
             Text("Flag \"\(story.title.orEmpty)\" by \(story.by.orEmpty)?")
-        }
-        .toast(isPresenting: $showFlagToast){
-            AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
-        }
-        .toast(isPresenting: $showUpvoteToast){
-            AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvote")
         }
         .sheet(isPresented: $showHNSheet) {
             if let url = URL(string: story.itemUrl) {
                 SafariView(url: url)
             }
         }
+        .sheet(isPresented: $showSafari) {
+            if let urlStr = story.url, let url = URL(string: urlStr) {
+                SafariView(url: url)
+            }
+        }
         
     }
     
-    func onUpvote() {
+    private func onUpvote() {
         Task {
             let res = await auth.upvote(story.id)
             
@@ -199,10 +216,43 @@ struct StoryRow: View {
             }
         }
     }
-}
-
-struct StoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        StoryRow(story: Story())
+    
+    private func onDownvote() {
+        Task {
+            let res = await auth.downvote(story.id)
+            
+            if res {
+                showDownvoteToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
+    }
+    
+    private func onFavorite() {
+        Task {
+            let res = await auth.favorite(story.id)
+            
+            if res {
+                showFavoriteToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
+    }
+    
+    private func onFlagTap() {
+        Task {
+            let res = await AuthRepository.shared.flag(story.id)
+            
+            if res {
+                showFlagToast = true
+                HapticFeedbackService.shared.success()
+            } else {
+                HapticFeedbackService.shared.error()
+            }
+        }
     }
 }
