@@ -34,19 +34,17 @@ extension ItemView {
             }
         }
         
-        func refresh() {
-            withAnimation {
-                self.kids.removeAll()
-            }
-            
+        func refresh() async -> Void {
             if let id = self.item?.id, item is Story {
+                withAnimation {
+                    self.kids.removeAll()
+                }
                 self.status = .loading
-                Task {
-                    let item = await StoriesRepository.shared.fetchItem(id)
-
-                    if let item = item {
-                        self.item = item
-                    }
+                
+                let item = await StoriesRepository.shared.fetchItem(id)
+                
+                if let item = item {
+                    self.item = item
                 }
             }
         }

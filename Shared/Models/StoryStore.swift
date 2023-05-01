@@ -6,16 +6,20 @@ extension HomeView {
     class StoryStore: ObservableObject {
         @Published var storyType: StoryType = .top
         @Published var stories: [Story] = [Story]()
+        @Published var status: Status = .idle
         
         private let pageSize: Int = 10
         private var currentPage: Int = 0
         private var storyIds: [Int] = [Int]()
-        
+
         func fetchStories() async {
+            withAnimation {
+                self.stories = [Story]()
+                self.status = .loading
+            }
             self.currentPage = 0
-            self.stories = [Story]()
             self.storyIds = await StoriesRepository.shared.fetchStoryIds(from: self.storyType)
-            
+  
             var stories = [Story]()
             
             await StoriesRepository.shared.fetchStories(ids: Array(storyIds[0..<10])) { story in
@@ -24,15 +28,14 @@ extension HomeView {
             
             DispatchQueue.main.async {
                 withAnimation {
+                    self.status = .loaded
                     self.stories = stories
                 }
             }
         }
         
-        func refresh() {
-            Task {
-                await fetchStories()
-            }
+        func refresh() async -> Void {
+            await fetchStories()
         }
         
         func loadMore() async {
@@ -53,6 +56,7 @@ extension HomeView {
             
             DispatchQueue.main.async {
                 withAnimation {
+                    self.status = .loaded
                     self.stories.append(contentsOf: stories)
                 }
             }

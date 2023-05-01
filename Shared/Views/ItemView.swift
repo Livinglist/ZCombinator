@@ -185,7 +185,7 @@ struct ItemView<T : Item>: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .refreshable {
-            itemStore.refresh()
+            await itemStore.refresh()
         }
     }
     

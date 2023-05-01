@@ -30,7 +30,7 @@ struct HomeView: View {
             }
             .listStyle(.plain)
             .refreshable {
-                storyStore.refresh()
+                await storyStore.refresh()
             }
             .toolbar {
                 ToolbarItem{
