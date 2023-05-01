@@ -19,18 +19,18 @@ class Authentication: ObservableObject {
         }
     }
     
-    func logIn(username: String, password: String) {
-        Task {
-            let loggedIn = await AuthRepository.shared.logIn(username: username, password: password)
+    func logIn(username: String, password: String) async -> Bool {
+        let loggedIn = await AuthRepository.shared.logIn(username: username, password: password)
+        
+        DispatchQueue.main.async {
+            self.loggedIn = loggedIn
             
-            DispatchQueue.main.async {
-                self.loggedIn = loggedIn
-                
-                if loggedIn {
-                    self.username = username
-                }
+            if loggedIn {
+                self.username = username
             }
         }
+        
+        return loggedIn
     }
     
     func logOut() {

@@ -15,6 +15,7 @@ struct HomeView: View {
     
     @State private var showFlagToast: Bool = false
     @State private var showUpvoteToast: Bool = false
+    @State private var showLoginToast: Bool = false
     
     var body: some View {
         NavigationView {
@@ -68,6 +69,9 @@ struct HomeView: View {
         .toast(isPresenting: $showUpvoteToast) {
             AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvoted")
         }
+        .toast(isPresenting: $showLoginToast, alert: {
+            AlertToast(type: .systemImage("person.badge.shield.checkmark.fill", .gray), title: "Welcome")
+        })
         .sheet(isPresented: $showAboutSheet, content: {
             SafariView(url: Constants.githubUrl)
         })
@@ -78,17 +82,30 @@ struct HomeView: View {
             SecureField("Password", text: $password)
             Button("Login", action: {
                 guard username.isNotEmpty && password.isNotEmpty else {
+                    HapticFeedbackService.shared.error()
                     return
                 }
                 
-                auth.logIn(username: username, password: password)
+                Task {
+                    let res = await auth.logIn(username: username, password: password)
+                    
+                    if res {
+                        HapticFeedbackService.shared.success()
+                        showLoginToast = true
+                    } else {
+                        HapticFeedbackService.shared.error()
+                    }
+                }
             })
             Button("Cancel", role: .cancel, action: {})
         }, message: {
             Text("Please enter your username and password.")
         })
         .alert("Logout", isPresented: $showLogoutDialog, actions: {
-            Button("Logout", role: .destructive, action: auth.logOut)
+            Button("Logout", role: .destructive, action: {
+                HapticFeedbackService.shared.success()
+                auth.logOut()
+            })
             Button("Cancel", role: .cancel, action: {})
         }, message: {
             Text("Do you want to log out as \(auth.username.orEmpty)?")
