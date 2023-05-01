@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ReplyView: View {
+    @EnvironmentObject var auth: Authentication
     @Environment(\.presentationMode) var presentationMode
     
     @State private var text: String = ""
@@ -18,11 +19,19 @@ struct ReplyView: View {
                 .padding()
                 Spacer()
                 Button("Submit") {
-                    showReplyToast = true
-                    HapticFeedbackService.shared.success()
+                    Task {
+                        let res = await auth.reply(to: replyingTo.id, with: text)
+                        
+                        if res {
+                            showReplyToast = true
+                            HapticFeedbackService.shared.success()
+                        } else {
+                            HapticFeedbackService.shared.error()
+                        }
+                    }
                     self.presentationMode.wrappedValue.dismiss()
                 }
-                .disabled(text.isEmpty)
+                .disabled(text.trimmingCharacters(in: .whitespaces).isEmpty)
                 .padding()
             }
             HStack {
