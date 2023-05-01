@@ -62,7 +62,7 @@ struct ItemView<T : Item>: View {
             .disabled(!auth.loggedIn)
             Divider()
             Button {
-                
+                showFlagDialog = true
             } label: {
                 Label("Flag", systemImage: "flag")
             }
@@ -116,7 +116,9 @@ struct ItemView<T : Item>: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading, 4)
             } else {
-                EmptyView()
+                Text("deleted")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
             }
         }
     }
