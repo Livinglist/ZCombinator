@@ -205,10 +205,17 @@ struct ItemView<T : Item>: View {
                 VStack(spacing: 0) {
                     nameRow.padding(.bottom, 4)
                     if isCollapsed {
-                        Text("collapsed")
-                            .font(.footnote)
-                            .foregroundColor(getColor(level: level))
-                            .padding(.top, 8)
+                        Button {
+                            HapticFeedbackService.shared.ultralight()
+                            withAnimation {
+                                isCollapsed.toggle()
+                            }
+                        } label: {
+                            Text("Collapsed")
+                                .font(.footnote.weight(.bold))
+                                .foregroundColor(getColor(level: level))
+                        }
+
                     } else {
                         textView.padding(.bottom, 3)
                             .toast(isPresenting: $showFlagToast) {
@@ -222,7 +229,9 @@ struct ItemView<T : Item>: View {
                             }
                     }
                     if itemStore.status == Status.loading {
-                        LoadingIndicator(color: getColor(level: level)).padding(.top, 16)
+                        LoadingIndicator(color: getColor(level: level))
+                            .padding(.top, 14)
+                            .padding(.bottom, 10)
                     } else if isCollapsed == false && itemStore.status != Status.loaded && item.kids.isNotNullOrEmpty {
                         Button {
                             HapticFeedbackService.shared.light()
