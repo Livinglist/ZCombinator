@@ -99,6 +99,7 @@ struct ItemView<T : Item>: View {
             }
         } label: {
             Label("", systemImage: "ellipsis")
+                .foregroundColor(.orange)
         }
     }
     
@@ -119,6 +120,7 @@ struct ItemView<T : Item>: View {
                 Text("deleted")
                     .font(.footnote)
                     .foregroundColor(.gray)
+                    .padding(.top, 6)
             }
         }
     }
@@ -220,7 +222,7 @@ struct ItemView<T : Item>: View {
                             }
                     }
                     if itemStore.status == Status.loading {
-                        LoadingIndicator(color: getColor(level: level)).padding(.top, 24)
+                        LoadingIndicator(color: getColor(level: level)).padding(.top, 16)
                     } else if isCollapsed == false && itemStore.status != Status.loaded && item.kids.isNotNullOrEmpty {
                         Button {
                             HapticFeedbackService.shared.light()
@@ -233,6 +235,7 @@ struct ItemView<T : Item>: View {
                                 .foregroundColor(getColor(level: level))
                         }
                         .buttonStyle(.bordered)
+                        .buttonBorderShape(.capsule)
                         .padding(.top, 6)
                     }
                 }

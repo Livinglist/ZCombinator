@@ -54,12 +54,14 @@ struct HomeView: View {
                         }
                     } label: {
                         Label("Add Item", systemImage: "list.bullet")
+                            .foregroundColor(.orange)
                     }
                 }
             }
             .navigationTitle(storyStore.storyType.rawValue.uppercased())
             Text("Select a story")
         }
+        .tint(.orange)
         .toast(isPresenting: $showFlagToast) {
             AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
         }

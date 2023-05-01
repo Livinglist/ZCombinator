@@ -81,6 +81,7 @@ struct StoryRow: View {
             Label("", systemImage: "ellipsis")
                 .padding(.leading)
                 .padding(.bottom, 12)
+                .foregroundColor(.orange)
         }
     }
     
