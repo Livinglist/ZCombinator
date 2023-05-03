@@ -12,8 +12,9 @@ struct Comment : Item {
     let time: Int
     let kids: [Int]?
     var metadata: String? {
-        ""
+        "\(kids?.count ?? 0) cmts | \(timeAgo) by \(by.orEmpty)"
     }
+
     
     init(id: Int, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
         self.id = id

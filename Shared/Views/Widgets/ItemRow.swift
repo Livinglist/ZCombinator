@@ -2,15 +2,14 @@ import LinkPresentation
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct StoryRow: View {
-    let story: Story
+struct ItemRow: View {
+    let settings = Settings.shared
+    let item: any Item
     let url: URL?
     let isPinnedStory: Bool
 
     @EnvironmentObject var auth: Authentication
-    @EnvironmentObject var settingsStore: SettingsStore
 
-    @State private var isLoaded: Bool = Bool()
     @State private var showSafari: Bool = Bool()
     @State private var showHNSheet: Bool = Bool()
     @State private var showReplySheet: Bool = Bool()
@@ -20,30 +19,33 @@ struct StoryRow: View {
     @Binding private var showUpvoteToast: Bool
     @Binding private var showDownvoteToast: Bool
     @Binding private var showFavoriteToast: Bool
+    @Binding private var showUnfavoriteToast: Bool
 
-    init(story: Story,
+    init(item: any Item,
          isPinnedStory: Bool = false,
          showFlagToast: Binding<Bool>,
          showUpvoteToast: Binding<Bool>,
          showDownvoteToast: Binding<Bool>,
-         showFavoriteToast: Binding<Bool>) {
-        self.story = story
-        self.url = URL(string: story.url ?? "https://news.ycombinator.com/item?id=\(story.id)")
+         showFavoriteToast: Binding<Bool>,
+         showUnfavoriteToast: Binding<Bool>) {
+        self.item = item
+        self.url = URL(string: item.url ?? "https://news.ycombinator.com/item?id=\(item.id)")
         self.isPinnedStory = isPinnedStory
         self._showFlagToast = showFlagToast
         self._showUpvoteToast = showUpvoteToast
         self._showDownvoteToast = showDownvoteToast
         self._showFavoriteToast = showFavoriteToast
+        self._showUnfavoriteToast = showUnfavoriteToast
     }
 
     @ViewBuilder
     var navigationLink: some View {
-        if story.isJobWithUrl {
+        if item is Story, item.isJobWithUrl {
             EmptyView()
         } else {
             NavigationLink(
                 destination: {
-                    ItemView<Story>(item: story)
+                    ItemView(item: item)
                 },
                 label: {
                     EmptyView()
@@ -54,33 +56,13 @@ struct StoryRow: View {
     @ViewBuilder
     var menu: some View {
         Menu {
-            Button {
-                onUpvote()
-            } label: {
-                Label("Upvote", systemImage: "hand.thumbsup")
-            }
-                .disabled(!auth.loggedIn)
-            Button {
-                onDownvote()
-            } label: {
-                Label("Downvote", systemImage: "hand.thumbsdown")
-            }
-                .disabled(!auth.loggedIn)
-            Button {
-                onFavorite()
-            } label: {
-                Label("Favorite", systemImage: "heart")
-            }
-                .disabled(!auth.loggedIn)
-
+            UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
+            DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
+            FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
             Button {
                 onPin()
             } label: {
-                if isPinnedStory {
-                    Label("Unpin", systemImage: "pin.slash.fill")
-                } else {
-                    Label("Pin", systemImage: "pin")
-                }
+                Label("Pin", systemImage: "pin")
             }
             Divider()
             Button {
@@ -90,22 +72,7 @@ struct StoryRow: View {
             }
                 .disabled(!auth.loggedIn)
             Divider()
-            Menu {
-                if story.url.orEmpty.isNotEmpty {
-                    Button {
-                        showShareSheet(url: story.url.orEmpty)
-                    } label: {
-                        Text("Link to story")
-                    }
-                }
-                Button {
-                    showShareSheet(url: story.itemUrl)
-                } label: {
-                    Text("Link to HN")
-                }
-            } label: {
-                Label("Share", systemImage: "square.and.arrow.up")
-            }
+            ShareMenu(item: item)
             Button {
                 showHNSheet = true
             } label: {
@@ -124,34 +91,36 @@ struct StoryRow: View {
             navigationLink
             Button(
                 action: {
-                    if story.isJobWithUrl {
+                    if item.isJobWithUrl {
                         showSafari = true
                     }
                 },
                 label: {
                     HStack {
                         VStack {
-                            Text(story.title.orEmpty)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .multilineTextAlignment(.leading)
-                                .padding([.horizontal, .top])
-                            Spacer()
+                            if item is Story {
+                                Text(item.title.orEmpty)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .multilineTextAlignment(.leading)
+                                    .padding([.horizontal, .top])
+                                Spacer()
+                            }
                             HStack {
-                                if let url = story.readableUrl {
+                                if let url = item.readableUrl {
                                     Text(url)
                                         .font(.footnote)
                                         .foregroundColor(.orange)
-                                } else if let text = story.text {
+                                } else if let text = item.text {
                                     Text(text)
                                         .font(.footnote)
                                         .lineLimit(2)
                                         .foregroundColor(.gray)
                                 }
                                 Spacer()
-                            }.padding(.horizontal)
+                            }.padding(item is Comment ? [.horizontal, .top] : [.horizontal])
                             Divider().frame(maxWidth: .infinity)
                             HStack(alignment: .center) {
-                                Text(story.metadata.orEmpty)
+                                Text(item.metadata.orEmpty)
                                     .font(.caption)
                                     .padding(.top, 6)
                                     .padding(.leading)
@@ -159,7 +128,7 @@ struct StoryRow: View {
                                 Spacer()
                                 if isPinnedStory {
                                     Button {
-                                        settingsStore.onPinToggle(story.id)
+                                        onPin()
                                     } label: {
                                         Label(String(), systemImage: "pin.fill")
                                             .rotationEffect(Angle(degrees: 45))
@@ -215,15 +184,15 @@ struct StoryRow: View {
                 onFlagTap()
             }
         } message: {
-            Text("Flag \"\(story.title.orEmpty)\" by \(story.by.orEmpty)?")
+            Text("Flag \"\(item.title.orEmpty)\" by \(item.by.orEmpty)?")
         }
             .sheet(isPresented: $showHNSheet) {
-            if let url = URL(string: story.itemUrl) {
+            if let url = URL(string: item.itemUrl) {
                 SafariView(url: url)
             }
         }
             .sheet(isPresented: $showSafari) {
-            if let urlStr = story.url, let url = URL(string: urlStr) {
+            if let urlStr = item.url, let url = URL(string: urlStr) {
                 SafariView(url: url)
             }
         }
@@ -232,7 +201,7 @@ struct StoryRow: View {
 
     private func onUpvote() {
         Task {
-            let res = await auth.upvote(story.id)
+            let res = await auth.upvote(item.id)
 
             if res {
                 showUpvoteToast = true
@@ -245,7 +214,7 @@ struct StoryRow: View {
 
     private func onDownvote() {
         Task {
-            let res = await auth.downvote(story.id)
+            let res = await auth.downvote(item.id)
 
             if res {
                 showDownvoteToast = true
@@ -257,26 +226,32 @@ struct StoryRow: View {
     }
 
     private func onFavorite() {
-        Task {
-            let res = await auth.favorite(story.id)
-
-            if res {
+        let id = item.id
+        let isFav = settings.favList.contains(id)
+        if isFav {
+            Task {
+                _ = await auth.unfavorite(id)
+                showUnfavoriteToast = true
+                HapticFeedbackService.shared.success()
+            }
+        } else {
+            Task {
+                _ = await auth.favorite(id)
                 showFavoriteToast = true
                 HapticFeedbackService.shared.success()
-            } else {
-                HapticFeedbackService.shared.error()
             }
         }
+        settings.onFavToggle(id)
     }
     
     private func onPin() {
-        settingsStore.onPinToggle(story.id)
+        settings.onPinToggle(item.id)
         HapticFeedbackService.shared.light()
     }
 
     private func onFlagTap() {
         Task {
-            let res = await AuthRepository.shared.flag(story.id)
+            let res = await AuthRepository.shared.flag(item.id)
 
             if res {
                 showFlagToast = true

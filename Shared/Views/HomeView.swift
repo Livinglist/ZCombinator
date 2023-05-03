@@ -4,8 +4,8 @@ import CoreData
 
 struct HomeView: View {
     @EnvironmentObject private var auth: Authentication
-    @EnvironmentObject private var settingsStore: SettingsStore
     @ObservedObject private var storyStore = StoryStore()
+    private let settings = Settings.shared
     
     @State private var showLoginDialog: Bool = Bool()
     @State private var showLogoutDialog: Bool = Bool()
@@ -20,17 +20,20 @@ struct HomeView: View {
     @State private var showDownvoteToast: Bool = Bool()
     @State private var showLoginToast: Bool = Bool()
     @State private var showFavoriteToast: Bool = Bool()
+    @State private var showUnfavoriteToast: Bool = Bool()
+
     
     var body: some View {
         NavigationView {
             List {
                 ForEach(storyStore.pinnedStories) { story in
-                    StoryRow(story: story,
+                    ItemRow(item: story,
                              isPinnedStory: true,
                              showFlagToast: $showFlagToast,
                              showUpvoteToast: $showUpvoteToast,
                              showDownvoteToast: $showDownvoteToast,
-                             showFavoriteToast: $showFavoriteToast)
+                             showFavoriteToast: $showFavoriteToast,
+                             showUnfavoriteToast: $showUnfavoriteToast)
                     .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                     .listRowSeparator(.hidden)
                     .onAppear {
@@ -41,11 +44,12 @@ struct HomeView: View {
                     if storyStore.pinnedStories.contains(story) {
                         EmptyView()
                     } else {
-                        StoryRow(story: story,
+                        ItemRow(item: story,
                                  showFlagToast: $showFlagToast,
                                  showUpvoteToast: $showUpvoteToast,
                                  showDownvoteToast: $showDownvoteToast,
-                                 showFavoriteToast: $showFavoriteToast)
+                                 showFavoriteToast: $showFavoriteToast,
+                                 showUnfavoriteToast: $showUnfavoriteToast)
                         .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                         .listRowSeparator(.hidden)
                         .onAppear {
@@ -60,11 +64,12 @@ struct HomeView: View {
             }
             .toolbar {
                 ToolbarItem {
-                    Button {
-                        
+                    NavigationLink {
+                        FavView()
                     } label: {
-                         Text("Fav")
+                        Label(String(), systemImage: "heart")
                     }
+
                 }
                 ToolbarItem {
                     Menu {
@@ -79,6 +84,7 @@ struct HomeView: View {
                                 Label("\(storyType.rawValue.uppercased())", systemImage: storyType.iconName)
                             }
                         }
+                        Divider()
                         AuthButton(showLoginDialog: $showLoginDialog, showLogoutDialog: $showLogoutDialog)
                         Button {
                             showAboutSheet = true
@@ -106,6 +112,9 @@ struct HomeView: View {
         }
         .toast(isPresenting: $showLoginToast, alert: {
             AlertToast(type: .systemImage("person.badge.shield.checkmark.fill", .gray), title: "Welcome")
+        })
+        .toast(isPresenting: $showUnfavoriteToast, alert: {
+            AlertToast(type: .systemImage("heart.slash", .gray), title: "Removed")
         })
         .toast(isPresenting: $showFavoriteToast, alert: {
             AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
@@ -152,14 +161,5 @@ struct HomeView: View {
         .task {
             await storyStore.fetchStories()
         }
-        .onAppear {
-            storyStore.settingsStore = settingsStore
-        }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeView()
     }
 }

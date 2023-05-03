@@ -10,7 +10,7 @@ class StoriesRepository {
     
     // MARK: - Stories related.
     
-    public func fetchStories(from storyType: StoryType, onStoryFetched: @escaping (Story) -> Void) async -> Void {
+    public func fetchAllStories(from storyType: StoryType, onStoryFetched: @escaping (Story) -> Void) async -> Void {
         let storyIds = await fetchStoryIds(from: storyType)
         
         for id in storyIds {
@@ -40,6 +40,47 @@ class StoriesRepository {
             }
         }
     }
+    
+    public func fetchItems(ids: [Int], filtered: Bool = true, onItemFetched: @escaping (any Item) -> Void) async -> Void {
+        for id in ids {
+            let item = await fetchItem(id)
+            
+            guard let item = item else { continue }
+            
+            if var story = item as? Story {
+                if filtered {
+                    let filteredText = story.text.htmlStripped.withExtraLineBreak
+                    story = story.copyWith(text: filteredText)
+                }
+                onItemFetched(story)
+            } else if var cmt = item as? Comment {
+                if filtered {
+                    let filteredText = cmt.text.htmlStripped.withExtraLineBreak
+                    cmt = cmt.copyWith(text: filteredText)
+                }
+                onItemFetched(cmt)
+            }
+        }
+    }
+    
+//    public func fetchItem(_ id: Int) async -> (any Item)? {
+//        let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
+//
+//        if let data = response.data,
+//           let json = try? JSONSerialization.jsonObject(with: data, options: []),
+//           let map = json as? [String: Any],
+//           let type = map["type"] as? String {
+//            if type == "story" {
+//                let story = try? JSONDecoder().decode(Story.self, from: data)
+//                return story
+//            } else if type == "comment" {
+//                let cmt = try? JSONDecoder().decode(Comment.self, from: data)
+//                return cmt
+//            }
+//        } else {
+//            return nil
+//        }
+//    }
     
     public func fetchStory(_ id: Int) async -> Story?{
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
@@ -83,9 +124,10 @@ class StoriesRepository {
     public func fetchItem(_ id: Int) async -> (any Item)? {
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
 
-        if let data = response.data, let result = try? response.result.get(), let map = result.toJSON() as? [String: AnyObject] {
-            guard let type = map["type"] as? String else { return nil }
-            
+        if let data = response.data,
+           let result = try? response.result.get(),
+           let map = result.toJSON() as? [String: AnyObject],
+           let type = map["type"] as? String {
             switch type {
             case "story":
                 let story = try? JSONDecoder().decode(Story.self, from: data)

@@ -48,7 +48,17 @@ class Authentication: ObservableObject {
     }
     
     func favorite(_ id: Int) async -> Bool {
-        return await AuthRepository.shared.fav(id)
+        if loggedIn {
+            return await AuthRepository.shared.fav(id)
+        }
+        return false
+    }
+    
+    func unfavorite(_ id: Int) async -> Bool {
+        if loggedIn {
+            return await AuthRepository.shared.unfav(id)
+        }
+        return false
     }
     
     func reply(to id: Int, with text: String) async -> Bool {

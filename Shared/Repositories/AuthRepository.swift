@@ -204,6 +204,21 @@ class AuthRepository {
         return await performPost(data: parameters, path: "/fave")
     }
     
+    func unfav(_ id: Int) async -> Bool {
+        guard let username = self.username, let password = self.password else {
+            return false
+        }
+        
+        let parameters: [String: Any] = [
+            "acct": username,
+            "pw": password,
+            "id": id,
+            "un": "t",
+        ]
+        
+        return await performPost(data: parameters, path: "/fave")
+    }
+    
     func reply(to id: Int, with text: String) async -> Bool {
         guard let username = self.username, let password = self.password else {
             return false

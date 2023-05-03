@@ -2,9 +2,8 @@ import AlertToast
 import SwiftUI
 import WebKit
 
-struct ItemView<T : Item>: View {
+struct ItemView: View {
     @EnvironmentObject var auth: Authentication
-    @EnvironmentObject var settingsStore: SettingsStore
 
     @StateObject var itemStore: ItemStore = ItemStore()
     @State private var isCollapsed: Bool = Bool()
@@ -16,11 +15,13 @@ struct ItemView<T : Item>: View {
     @State private var showDownvoteToast: Bool = Bool()
     @State private var showReplyToast: Bool = Bool()
     @State private var showFavoriteToast: Bool = Bool()
+    @State private var showUnfavoriteToast: Bool = Bool()
 
     let level: Int
-    let item: T
+    let item: any Item
+    let settings = Settings.shared
 
-    init(item: T, level: Int = 0) {
+    init(item: any Item, level: Int = 0) {
         self.level = level
         self.item = item
     }
@@ -28,85 +29,52 @@ struct ItemView<T : Item>: View {
     var body: some View {
         mainItemView
             .sheet(isPresented: $showHNSheet) {
-            if let url = URL(string: item.itemUrl) {
-                SafariView(url: url)
+                if let url = URL(string: item.itemUrl) {
+                    SafariView(url: url)
+                }
             }
-        }
             .sheet(isPresented: $showReplySheet) {
-            ReplyView(showReplyToast: $showReplyToast, replyingTo: item)
-        }
+                ReplyView(showReplyToast: $showReplyToast, replyingTo: item)
+            }
             .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
-            Button("Flag", role: .destructive) {
-                onFlagTap()
+                Button("Flag", role: .destructive) {
+                    onFlagTap()
+                }
+            } message: {
+                Text("Flag the post by \(item.by.orEmpty)?")
             }
-        } message: {
-            Text("Flag the post by \(item.by.orEmpty)?")
-        }
             .onAppear {
-            if self.itemStore.item == nil {
-                self.itemStore.item = item
+                if itemStore.item == nil {
+                    itemStore.item = item
+                    if level == 0 {
+                        Task {
+                            await itemStore.loadKids()
+                        }
+                    }
+                }
             }
-        }
     }
 
     var menu: some View {
         Menu {
-            Button {
-                onUpvote()
-            } label: {
-                Label("Upvote", systemImage: "hand.thumbsup")
-            }
-                .disabled(!auth.loggedIn)
-            Button {
-                onDownvote()
-            } label: {
-                Label("Downvote", systemImage: "hand.thumbsdown")
-            }
-                .disabled(!auth.loggedIn)
-            Button {
-                onFavorite()
-            } label: {
-                Label("Favorite", systemImage: "heart")
-            }
-                .disabled(!auth.loggedIn)
+            UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
+            DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
+            FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
             Button {
                 showReplySheet = true
             } label: {
                 Label("Reply", systemImage: "plus.message")
             }
-                .disabled(!auth.loggedIn)
+            .disabled(!auth.loggedIn)
             Divider()
             Button {
                 showFlagDialog = true
             } label: {
                 Label("Flag", systemImage: "flag")
             }
-                .disabled(!auth.loggedIn)
+            .disabled(!auth.loggedIn)
             Divider()
-            if item is Story {
-                Menu {
-                    if item.url.orEmpty.isNotEmpty {
-                        Button {
-                            showShareSheet(url: item.url.orEmpty)
-                        } label: {
-                            Text("Link to story")
-                        }
-                    }
-                    Button {
-                        showShareSheet(url: item.itemUrl)
-                    } label: {
-                        Text("Link to HN")
-                    }
-                } label: {
-                    Label("Share", systemImage: "square.and.arrow.up")
-                }
-            } else {
-                Button {
-                    showShareSheet(url: item.itemUrl)
-                } label: {
-                    Label("Share", systemImage: "square.and.arrow.up")
-                }
-            }
+            ShareMenu(item: item)
             Button {
                 showHNSheet = true
             } label: {
@@ -166,46 +134,53 @@ struct ItemView<T : Item>: View {
                         }
                     }
                 } else if item is Comment {
-                    Text(item.text.orEmpty)
-                        .padding(.leading, Double(4 * (level - 1)))
+                    Text(item.text.orEmpty.markdowned)
+                        .font(.system(size: 16))
+                        .padding(.leading, 8)
+                        .padding(.bottom, 6)
                 }
                 if itemStore.status == .loading {
                     LoadingIndicator().padding(.top, 100)
                 }
                 VStack(spacing: 0) {
                     ForEach(itemStore.kids) { comment in
-                        ItemView<Comment>(item: comment, level: level + 1)
+                        ItemView(item: comment, level: level + 1)
                             .padding(.trailing, 4)
                     }.id(UUID())
                 }
                 Spacer().frame(height: 60)
                 if itemStore.status == Status.loaded {
-                    Text(Constants.happyFace).foregroundColor(.gray)
+                    Text(Constants.happyFace)
+                        .foregroundColor(.gray)
+                        .padding(.bottom, 40)
                 }
             }
         }
-            .toast(isPresenting: $showFlagToast) {
+        .toast(isPresenting: $showFlagToast) {
             AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
         }
-            .toast(isPresenting: $showUpvoteToast) {
+        .toast(isPresenting: $showUpvoteToast) {
             AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvoted")
         }
-            .toast(isPresenting: $showDownvoteToast) {
+        .toast(isPresenting: $showDownvoteToast) {
             AlertToast(type: .systemImage("hand.thumbsdown.fill", .gray), title: "Downvoted")
         }
-            .toast(isPresenting: $showReplyToast) {
+        .toast(isPresenting: $showReplyToast) {
             AlertToast(type: .systemImage("arrowshape.turn.up.left.circle.fill", .gray), title: "Replied")
         }
-            .toast(isPresenting: $showFavoriteToast) {
+        .toast(isPresenting: $showUnfavoriteToast, alert: {
+                AlertToast(type: .systemImage("heart.slash", .gray), title: "Removed")
+            })
+        .toast(isPresenting: $showFavoriteToast) {
             AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
         }
-            .toolbar {
+        .toolbar {
             ToolbarItem {
                 menu
             }
         }
-            .navigationBarTitleDisplayMode(.inline)
-            .refreshable {
+        .navigationBarTitleDisplayMode(.inline)
+        .refreshable {
             await itemStore.refresh()
         }
     }
@@ -238,20 +213,20 @@ struct ItemView<T : Item>: View {
                     } else {
                         textView.padding(.bottom, 3)
                             .toast(isPresenting: $showFlagToast) {
-                            AlertToast(type: .regular, title: "Flagged")
-                        }
+                                AlertToast(type: .regular, title: "Flagged")
+                            }
                             .toast(isPresenting: $showUpvoteToast) {
-                            AlertToast(type: .regular, title: "Upvoted")
-                        }
+                                AlertToast(type: .regular, title: "Upvoted")
+                            }
                             .toast(isPresenting: $showDownvoteToast) {
-                            AlertToast(type: .regular, title: "Downvoted")
-                        }
+                                AlertToast(type: .regular, title: "Downvoted")
+                            }
                             .toast(isPresenting: $showReplyToast) {
-                            AlertToast(type: .regular, title: "Replied")
-                        }
+                                AlertToast(type: .regular, title: "Replied")
+                            }
                             .toast(isPresenting: $showFavoriteToast) {
-                            AlertToast(type: .regular, title: "Added")
-                        }
+                                AlertToast(type: .regular, title: "Added")
+                            }
                     }
                     if itemStore.status == Status.loading {
                         LoadingIndicator(color: getColor(level: level))
@@ -273,21 +248,12 @@ struct ItemView<T : Item>: View {
                             .padding(.top, 6)
                     }
                 }
-                    .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
-                    .background(Color(UIColor.systemBackground))
-                    .contextMenu {
-                    Button {
-                        onUpvote()
-                    } label: {
-                        Label("Upvote", systemImage: "hand.thumbsup")
-                    }
-                        .disabled(!auth.loggedIn)
-                    Button {
-                        onDownvote()
-                    } label: {
-                        Label("Downvote", systemImage: "hand.thumbsdown")
-                    }
-                        .disabled(!auth.loggedIn)
+                .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
+                .background(Color(UIColor.systemBackground))
+                .contextMenu {
+                    UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
+                    DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
+                    FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
                     Button {
                         showReplySheet = true
                     } label: {
@@ -302,18 +268,14 @@ struct ItemView<T : Item>: View {
                     }
                         .disabled(!auth.loggedIn)
                     Divider()
-                    Button {
-                        showShareSheet(url: item.itemUrl)
-                    } label: {
-                        Label("Share", systemImage: "square.and.arrow.up")
-                    }
+                    ShareMenu(item: item)
                     Button {
                         showHNSheet = true
                     } label: {
                         Label("View on Hacker News", systemImage: "safari")
                     }
                 }
-                    .onTapGesture {
+                .onTapGesture {
                     HapticFeedbackService.shared.ultralight()
                     withAnimation {
                         isCollapsed.toggle()
@@ -322,19 +284,19 @@ struct ItemView<T : Item>: View {
                 if isCollapsed == false {
                     VStack(spacing: 0) {
                         ForEach(itemStore.kids) { comment in
-                            ItemView<Comment>(item: comment, level: level + 1)
+                            ItemView(item: comment, level: level + 1)
                         }
-                            .id(UUID())
+                        .id(UUID())
                     }
-                        .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(PlainButtonStyle())
                 }
                 Spacer()
             }
-                .frame(alignment: .leading)
-                .padding(.leading, 6)
-        }
-            .frame(maxWidth: .infinity)
             .frame(alignment: .leading)
+            .padding(.leading, 6)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(alignment: .leading)
     }
 
     @ViewBuilder
@@ -348,6 +310,8 @@ struct ItemView<T : Item>: View {
 
     @ViewBuilder
     var nameRow: some View {
+        let item = itemStore.item ?? item
+        
         HStack {
             Text(item.by.orEmpty)
                 .borderedFootnote()
@@ -389,19 +353,6 @@ struct ItemView<T : Item>: View {
 
             if res {
                 showDownvoteToast = true
-                HapticFeedbackService.shared.success()
-            } else {
-                HapticFeedbackService.shared.error()
-            }
-        }
-    }
-
-    private func onFavorite() {
-        Task {
-            let res = await auth.favorite(item.id)
-
-            if res {
-                showFavoriteToast = true
                 HapticFeedbackService.shared.success()
             } else {
                 HapticFeedbackService.shared.error()

@@ -9,14 +9,7 @@ extension HomeView {
         @Published var stories: [Story] = [Story]()
         @Published var pinnedStories: [Story] = [Story]()
         @Published var status: Status = .idle
-        var settingsStore: SettingsStore? {
-            didSet {
-                pinListCancellable = settingsStore?.$pinList.sink(receiveValue: { ids in
-                    self.pinnedIds = Array<Int>(ids)
-                })
-            }
-        }
-        
+        private let settings = Settings.shared
         private let pageSize: Int = 10
         private var currentPage: Int = 0
         private var storyIds: [Int] = [Int]()
@@ -28,6 +21,12 @@ extension HomeView {
             }
         }
         private var pinListCancellable: AnyCancellable?
+        
+        init() {
+            pinListCancellable = settings.$pinList.sink(receiveValue: { ids in
+                self.pinnedIds = Array<Int>(ids)
+            })
+        }
 
         func fetchStories() async {
             withAnimation {
@@ -38,8 +37,8 @@ extension HomeView {
             self.storyIds = await StoriesRepository.shared.fetchStoryIds(from: self.storyType)
   
             var stories = [Story]()
-            
-            await StoriesRepository.shared.fetchStories(ids: Array(storyIds[0..<10])) { story in
+            let range = 0..<min(10, storyIds.count)
+            await StoriesRepository.shared.fetchStories(ids: Array(storyIds[range])) { story in
                 stories.append(story)
             }
             
@@ -78,7 +77,7 @@ extension HomeView {
             currentPage = currentPage + 1
             
             
-            let startIndex = currentPage * pageSize
+            let startIndex = min(currentPage * pageSize, storyIds.count)
             let endIndex = min(startIndex + pageSize, storyIds.count)
             var stories = [Story]()
             

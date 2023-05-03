@@ -6,16 +6,7 @@ extension ItemView {
     class ItemStore : ObservableObject {
         @Published var kids: [Comment] = [Comment]()
         @Published var status: Status = .idle
-        
-        @Published var item: (any Item)? {
-            didSet {
-                if item is Story {
-                    Task {
-                        await loadKids()
-                    }
-                }
-            }
-        }
+        @Published var item: (any Item)?
         
         func loadKids() async {
             if let kids = self.item?.kids {
@@ -39,7 +30,7 @@ extension ItemView {
         }
         
         func refresh() async -> Void {
-            if let id = self.item?.id, item is Story {
+            if let id = self.item?.id {
                 withAnimation {
                     self.kids.removeAll()
                 }
@@ -49,6 +40,7 @@ extension ItemView {
                 
                 if let item = item {
                     self.item = item
+                    await loadKids()
                 }
             }
         }
