@@ -25,9 +25,6 @@ struct ItemView: View {
     init(item: any Item, level: Int = 0) {
         self.level = level
         self.item = item
-        if let kids = item.kids, kids.isEmpty && item.descendants != 0 {
-            fetchStoryAndComments()
-        }
     }
 
     var body: some View {
@@ -51,8 +48,16 @@ struct ItemView: View {
                 if itemStore.item == nil {
                     itemStore.item = item
                     if level == 0 {
-                        Task {
-                            await itemStore.loadKids()
+                        // Items from search resuls don't contain kids,
+                        // so we force a refresh to fetch the data.
+                        if let kids = item.kids, kids.isEmpty && item.descendants != 0 {
+                            Task {
+                                await itemStore.refresh()
+                            }
+                        } else {
+                            Task {
+                                await itemStore.loadKids()
+                            }
                         }
                     }
                 }

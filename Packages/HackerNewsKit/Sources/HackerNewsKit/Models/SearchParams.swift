@@ -4,6 +4,7 @@ public class SearchParams {
     public let page: Int
     public let query: String
     public let sorted: Bool
+    public let filters: [any SearchFilter]
     
     public var filteredQuery: String {
         var buffer = String()
@@ -15,18 +16,30 @@ public class SearchParams {
             buffer.append("search?query=?query=\(encodedQuery)")
         }
         
+        if filters.isEmpty == false {
+            buffer.append("&tags=")
+            
+            for filter in filters {
+                buffer.append(filter.query)
+                buffer.append(",")
+            }
+            
+            buffer = String(buffer.dropLast(1))
+        }
+        
         buffer.append("&page=\(page)");
         
         return buffer
     }
     
-    public init(page: Int, query: String, sorted: Bool) {
+    public init(page: Int, query: String, sorted: Bool, filters: [any SearchFilter]) {
         self.page = page
         self.query = query
         self.sorted = sorted
+        self.filters = filters
     }
     
-    public func copyWith(page: Int? = nil, query: String? = nil, sorted: Bool? = nil) -> SearchParams {
-        return SearchParams(page: page ?? self.page, query: query ?? self.query, sorted: sorted ?? self.sorted)
+    public func copyWith(page: Int? = nil, query: String? = nil, sorted: Bool? = nil, filters: [any SearchFilter]? = nil) -> SearchParams {
+        return SearchParams(page: page ?? self.page, query: query ?? self.query, sorted: sorted ?? self.sorted, filters: filters ?? self.filters)
     }
 }

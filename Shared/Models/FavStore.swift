@@ -22,16 +22,13 @@ extension FavView {
         }
         
         init() {
+            print("init fav store");
             cancellable = settingsStore.$favList.sink(receiveValue: { ids in
                 self.favIds = Array<Int>(ids)
             })
         }
         
         func fetchStories() async {
-            withAnimation {
-                self.items = [any Item]()
-                self.status = .loading
-            }
             self.currentPage = 0
             
             var items = [any Item]()

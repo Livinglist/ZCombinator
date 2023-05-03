@@ -42,12 +42,10 @@ extension HomeView {
             await StoriesRepository.shared.fetchStories(ids: Array(storyIds[range])) { story in
                 stories.append(story)
             }
-            
-            DispatchQueue.main.async {
-                withAnimation {
-                    self.status = .loaded
-                    self.stories = stories
-                }
+ 
+            withAnimation {
+                self.status = .loaded
+                self.stories = stories
             }
         }
         
@@ -58,11 +56,8 @@ extension HomeView {
                 items.append(item)
             }
             
-            DispatchQueue.main.async {
-                withAnimation {
-                    self.pinnedItems = items
-                    self.stories = self.stories
-                }
+            withAnimation {
+                self.pinnedItems = items
             }
         }
         

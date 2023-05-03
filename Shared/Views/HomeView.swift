@@ -27,19 +27,9 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(storyStore.pinnedItems, id: \.self.id) { item in
-                    ItemRow(item: item,
-                             isPinnedStory: true,
-                             showFlagToast: $showFlagToast,
-                             showUpvoteToast: $showUpvoteToast,
-                             showDownvoteToast: $showDownvoteToast,
-                             showFavoriteToast: $showFavoriteToast,
-                             showUnfavoriteToast: $showUnfavoriteToast)
-                    .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .listRowSeparator(.hidden)
-                }
+                PinView()
                 ForEach(storyStore.stories) { story in
-                    if storyStore.pinnedIds.contains(story.id) {
+                    if settings.pinList.contains(story.id) {
                         EmptyView()
                     } else {
                         ItemRow(item: story,

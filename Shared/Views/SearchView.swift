@@ -4,23 +4,6 @@ import SwiftUI
 import Combine
 import HackerNewsKit
 
-public final class DebounceObject: ObservableObject {
-    @Published var text: String = String()
-    @Published var debouncedText: String = String()
-    private var bag = Set<AnyCancellable>()
-    
-    public init(dueTime: TimeInterval = 1) {
-        $text
-            .removeDuplicates()
-            .debounce(for: .seconds(dueTime), scheduler: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] value in
-                self?.debouncedText = value
-            })
-            .store(in: &bag)
-    }
-}
-
-
 struct SearchView: View {
     @ObservedObject var searchStore = SearchStore()
     @StateObject var debounceObject = DebounceObject()
@@ -29,9 +12,15 @@ struct SearchView: View {
     @State private var showDownvoteToast: Bool = Bool()
     @State private var showFavoriteToast: Bool = Bool()
     @State private var showUnfavoriteToast: Bool = Bool()
+    @State private var filter: Filter = .story
     
     var body: some View {
         List {
+            Picker("Type", selection: $filter) {
+                ForEach(Filter.allCases, id: \.self) {
+                    Text($0.rawValue.capitalized)
+                }
+            }.pickerStyle(.segmented)
             ForEach(searchStore.results, id: \.self.id) { item in
                 ItemRow(item: item,
                         showFlagToast: $showFlagToast,
@@ -44,7 +33,7 @@ struct SearchView: View {
                 .onAppear {
                     searchStore.onItemRowAppear(item)
                 }
-            }.id(UUID())
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .listStyle(.plain)
@@ -65,8 +54,14 @@ struct SearchView: View {
             AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
         })
         .onChange(of: debounceObject.debouncedText) { text in
+            if text.isEmpty { return }
             Task {
-                await searchStore.search(query: text)
+                await searchStore.search(query: text, filter: filter)
+            }
+        }.onChange(of: filter) { filter in
+            if debounceObject.debouncedText.isEmpty { return }
+            Task {
+                await searchStore.search(query: debounceObject.debouncedText, filter: filter)
             }
         }
     }
