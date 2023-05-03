@@ -1,8 +1,9 @@
 import Foundation
+import HackerNewsKit
 
-class Authentication: ObservableObject {
+public class Authentication: ObservableObject {
     @Published var username: String?
-    @Published var loggedIn: Bool = false
+    @Published var loggedIn: Bool = Bool()
     @Published var user: User?
     
     init(){
@@ -19,8 +20,8 @@ class Authentication: ObservableObject {
         }
     }
     
-    func logIn(username: String, password: String) async -> Bool {
-        let loggedIn = await AuthRepository.shared.logIn(username: username, password: password)
+    func logIn(username: String, password: String, shouldRememberMe: Bool) async -> Bool {
+        let loggedIn = await AuthRepository.shared.logIn(username: username, password: password, shouldRememberMe: shouldRememberMe)
         
         DispatchQueue.main.async {
             self.loggedIn = loggedIn
@@ -48,7 +49,17 @@ class Authentication: ObservableObject {
     }
     
     func favorite(_ id: Int) async -> Bool {
-        return await AuthRepository.shared.fav(id)
+        if loggedIn {
+            return await AuthRepository.shared.fav(id)
+        }
+        return false
+    }
+    
+    func unfavorite(_ id: Int) async -> Bool {
+        if loggedIn {
+            return await AuthRepository.shared.unfav(id)
+        }
+        return false
     }
     
     func reply(to id: Int, with text: String) async -> Bool {

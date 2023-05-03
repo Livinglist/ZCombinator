@@ -1,10 +1,11 @@
 import SwiftUI
+import HackerNewsKit
 
 struct ReplyView: View {
     @EnvironmentObject var auth: Authentication
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var text: String = ""
+    @State private var text: String = String()
     @FocusState private var focusState: Bool
     
     @Binding var showReplyToast: Bool

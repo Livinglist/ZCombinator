@@ -1,6 +1,4 @@
-import Foundation
-
-struct User: Decodable {
+public struct User: Decodable {
     let id: String
     let about: String
     let created: Int
@@ -17,7 +15,7 @@ struct User: Decodable {
     
     /// If a user does not have any activity, the user endpoint will not return anything.
     /// in that case, we create a user with only username.
-    init(id: String) {
+    public init(id: String) {
         self.id = id
         self.about = String()
         self.created = Int()

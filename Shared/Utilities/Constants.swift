@@ -11,4 +11,9 @@ struct Constants {
         "(─‿‿─)",
         "(¬‿¬)",
     ].randomElement().orEmpty
+    
+    struct UserDefaults {
+        static let favListKey = "favList"
+        static let pinListKey = "pinList"
+    }
 }

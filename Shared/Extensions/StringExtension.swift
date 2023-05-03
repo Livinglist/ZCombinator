@@ -13,7 +13,13 @@ extension String {
     }
     
     var withExtraLineBreak: String {
-        String(self.replacingOccurrences(of: "\n", with: "\n\n").dropLast(2))
+        if isEmpty { return self }
+        let range = startIndex..<index(endIndex, offsetBy: -1)
+        var str = String(replacingOccurrences(of: "\n", with: "\n\n", range: range))
+        while str.last?.isWhitespace == true {
+            str = String(str.dropLast())
+        }
+        return str
     }
     
     var markdowned: AttributedString {

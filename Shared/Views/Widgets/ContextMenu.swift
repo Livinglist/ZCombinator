@@ -58,7 +58,7 @@ struct PreviewContextViewModifier<V: View>: ViewModifier {
     let menu: PreviewContextMenu<V>
     @Environment(\.presentationMode) var mode
     
-    @State var isActive: Bool = false
+    @State var isActive: Bool = Bool()
     
     func body(content: Content) -> some View {
         content.overlay(PreviewContextView(menu: menu, didCommitView: { self.isActive = true }))

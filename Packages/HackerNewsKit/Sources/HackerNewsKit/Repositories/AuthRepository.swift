@@ -2,8 +2,8 @@ import Foundation
 import Alamofire
 import Security
 
-class AuthRepository {
-    static let shared: AuthRepository = AuthRepository()
+public class AuthRepository {
+    public static let shared: AuthRepository = AuthRepository()
     
     private let server: String = "news.ycombinator.com"
     private let baseUrl: String = "https://news.ycombinator.com"
@@ -16,7 +16,7 @@ class AuthRepository {
     
     private init() {}
     
-    var loggedIn: Bool {
+    public var loggedIn: Bool {
         var result: AnyObject?
         _ = SecItemCopyMatching(query, &result)
         
@@ -29,7 +29,7 @@ class AuthRepository {
         return username.isNotNullOrEmpty
     }
     
-    var username: String? {
+    public var username: String? {
         var result: AnyObject?
         _ = SecItemCopyMatching(query, &result)
         
@@ -42,7 +42,7 @@ class AuthRepository {
         return username
     }
     
-    var password: String? {
+    public var password: String? {
         var result: AnyObject?
         _ = SecItemCopyMatching(query, &result)
         
@@ -58,7 +58,7 @@ class AuthRepository {
     
     // MARK: - Authentication
     
-    func logIn(username: String, password: String) async -> Bool {
+    public func logIn(username: String, password: String, shouldRememberMe: Bool) async -> Bool {
         let parameters: [String: String] = [
             "acct": username,
             "pw": password
@@ -72,7 +72,7 @@ class AuthRepository {
         let cookies = HTTPCookieStorage.shared.cookies(for: url)
         let loggedIn = cookies.isNotNullOrEmpty
         
-        if loggedIn {
+        if loggedIn && shouldRememberMe {
             let keychainItem = [
                 kSecValueData: password.data(using: .utf8)!,
                 kSecAttrAccount: username,
@@ -90,7 +90,7 @@ class AuthRepository {
         return loggedIn
     }
     
-    func logOut() -> Bool {
+    public func logOut() -> Bool {
         guard let url = URL(string: baseUrl) else {
             return false
         }
@@ -120,7 +120,7 @@ class AuthRepository {
         return true
     }
     
-    func fetchUser(_ id: String) async -> User? {
+    public func fetchUser(_ id: String) async -> User? {
         let response = await AF.request("\(self.baseUrl)/user/\(id).json").serializingString().response
         
         if let data = response.data {
@@ -134,7 +134,7 @@ class AuthRepository {
     
     // MARK: - Actions that require authentication
     
-    func flag(_ id: Int) async -> Bool {
+    public func flag(_ id: Int) async -> Bool {
         guard let username = self.username, let password = self.password else {
             return false
         }
@@ -148,19 +148,7 @@ class AuthRepository {
         return await performPost(data: parameters, path: "/flag")
     }
     
-    struct Pair {
-        let key: String
-        let value: Int
-    }
-    
-    struct Temp: Encodable {
-        let acct: String
-        let pw: String
-        let id: Int
-        let how: String = "up"
-    }
-    
-    func upvote(_ id: Int) async -> Bool {
+    public func upvote(_ id: Int) async -> Bool {
         guard let username = self.username, let password = self.password else {
             return false
         }
@@ -175,7 +163,7 @@ class AuthRepository {
         return await performPost(data: parameters, path: "/vote")
     }
     
-    func downvote(_ id: Int) async -> Bool {
+    public func downvote(_ id: Int) async -> Bool {
         guard let username = self.username, let password = self.password else {
             return false
         }
@@ -190,7 +178,7 @@ class AuthRepository {
         return await performPost(data: parameters, path: "/vote")
     }
     
-    func fav(_ id: Int) async -> Bool {
+    public func fav(_ id: Int) async -> Bool {
         guard let username = self.username, let password = self.password else {
             return false
         }
@@ -204,7 +192,22 @@ class AuthRepository {
         return await performPost(data: parameters, path: "/fave")
     }
     
-    func reply(to id: Int, with text: String) async -> Bool {
+    public func unfav(_ id: Int) async -> Bool {
+        guard let username = self.username, let password = self.password else {
+            return false
+        }
+        
+        let parameters: [String: Any] = [
+            "acct": username,
+            "pw": password,
+            "id": id,
+            "un": "t",
+        ]
+        
+        return await performPost(data: parameters, path: "/fave")
+    }
+    
+    public func reply(to id: Int, with text: String) async -> Bool {
         guard let username = self.username, let password = self.password else {
             return false
         }

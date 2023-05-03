@@ -1,4 +1,5 @@
 import SwiftUI
+import HackerNewsKit
 
 @main
 struct ZCombinatorApp: App {
@@ -7,7 +8,7 @@ struct ZCombinatorApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
-                .environmentObject(self.auth)
+                .environmentObject(auth)
         }
     }
 }
