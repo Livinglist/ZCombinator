@@ -1,6 +1,7 @@
 import Foundation
 import Combine
 import SwiftUI
+import HackerNewsKit
 
 extension FavView {
     @MainActor

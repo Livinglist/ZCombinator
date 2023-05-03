@@ -1,20 +1,18 @@
-import Foundation
-
-struct Comment : Item {
-    let id: Int
-    let title: String?
-    let text: String?
-    let url: String?
-    let type: String?
-    let by: String?
-    let score: Int?
-    let descendants: Int?
-    let time: Int
-    let kids: [Int]?
-    var metadata: String? {
+public struct Comment : Item {
+    public let id: Int
+    public let title: String?
+    public let text: String?
+    public let url: String?
+    public let type: String?
+    public let by: String?
+    public let score: Int?
+    public let descendants: Int?
+    public let time: Int
+    public let kids: [Int]?
+    public var metadata: String? {
         "\(kids?.count ?? 0) cmts | \(timeAgo) by \(by.orEmpty)"
     }
-
+    
     
     init(id: Int, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
         self.id = id

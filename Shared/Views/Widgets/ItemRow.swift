@@ -1,6 +1,7 @@
 import LinkPresentation
 import SwiftUI
 import UniformTypeIdentifiers
+import HackerNewsKit
 
 struct ItemRow: View {
     let settings = Settings.shared
@@ -142,11 +143,11 @@ struct ItemRow: View {
                             }
                         }
                     }
-                        .background(Color(UIColor.secondarySystemBackground))
-                        .cornerRadius(16)
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(16)
                 }
             )
-                .if(.iOS16) { view in
+            .if(.iOS16) { view in
                 view
                     .contextMenu(
                     menuItems: {
@@ -160,7 +161,7 @@ struct ItemRow: View {
                         SafariView(url: url!)
                     })
             }
-                .if(!.iOS16) { view in
+            .if(!.iOS16) { view in
                 view
                     .contextMenu(
                     PreviewContextMenu(
@@ -179,24 +180,23 @@ struct ItemRow: View {
                         }))
             }
         }
-            .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
+        .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
             Button("Flag", role: .destructive) {
                 onFlagTap()
             }
         } message: {
             Text("Flag \"\(item.title.orEmpty)\" by \(item.by.orEmpty)?")
         }
-            .sheet(isPresented: $showHNSheet) {
+        .sheet(isPresented: $showHNSheet) {
             if let url = URL(string: item.itemUrl) {
                 SafariView(url: url)
             }
         }
-            .sheet(isPresented: $showSafari) {
+        .sheet(isPresented: $showSafari) {
             if let urlStr = item.url, let url = URL(string: urlStr) {
                 SafariView(url: url)
             }
         }
-
     }
 
     private func onUpvote() {

@@ -1,6 +1,7 @@
 import AlertToast
 import SwiftUI
 import WebKit
+import HackerNewsKit
 
 struct ItemView: View {
     @EnvironmentObject var auth: Authentication

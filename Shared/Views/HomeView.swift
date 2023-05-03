@@ -1,6 +1,7 @@
 import AlertToast
 import SwiftUI
 import CoreData
+import HackerNewsKit
 
 struct HomeView: View {
     @EnvironmentObject private var auth: Authentication

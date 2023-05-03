@@ -1,6 +1,6 @@
 import Foundation
 
-protocol Item: Codable, Identifiable, Hashable {
+public protocol Item: Codable, Identifiable, Hashable {
     var id: Int { get }
     var title: String? { get }
     var text: String? { get }
@@ -14,23 +14,23 @@ protocol Item: Codable, Identifiable, Hashable {
     var metadata: String? { get }
 }
 
-extension Item {
+public extension Item {
     var createdAt: String {
         let date = Date(timeIntervalSince1970: Double(time))
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy"
         return dateFormatter.string(from: date)
     }
-
+    
     var timeAgo: String {
         let date = Date(timeIntervalSince1970: Double(time))
         return date.timeAgoString
     }
-
+    
     var itemUrl: String {
         "https://news.ycombinator.com/item?id=\(self.id)"
     }
-
+    
     var readableUrl: String? {
         if let url = self.url {
             let domain = URL(string: url)?.host
@@ -38,11 +38,11 @@ extension Item {
         }
         return nil
     }
-
+    
     var isJob: Bool {
         return type == "job"
     }
-
+    
     var isJobWithUrl: Bool {
         return type == "job" && text.isNullOrEmpty && url.isNotNullOrEmpty
     }

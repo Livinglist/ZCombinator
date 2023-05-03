@@ -1,6 +1,7 @@
 import Foundation
+import HackerNewsKit
 
-class Authentication: ObservableObject {
+public class Authentication: ObservableObject {
     @Published var username: String?
     @Published var loggedIn: Bool = Bool()
     @Published var user: User?

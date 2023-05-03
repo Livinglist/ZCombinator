@@ -1,4 +1,5 @@
 import SwiftUI
+import HackerNewsKit
 
 struct ReplyView: View {
     @EnvironmentObject var auth: Authentication

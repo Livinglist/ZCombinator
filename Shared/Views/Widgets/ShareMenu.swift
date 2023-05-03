@@ -1,4 +1,5 @@
 import SwiftUI
+import HackerNewsKit
 
 struct ShareMenu: View {
     let item: any Item

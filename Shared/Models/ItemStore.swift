@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import HackerNewsKit
 
 extension ItemView {
     @MainActor

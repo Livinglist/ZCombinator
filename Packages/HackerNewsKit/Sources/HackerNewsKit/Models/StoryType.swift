@@ -1,6 +1,4 @@
-import Foundation
-
-enum StoryType: String, Equatable, CaseIterable {
+public enum StoryType: String, Equatable, CaseIterable {
     case top = "top"
     case best = "best"
     case new = "new"
@@ -8,7 +6,7 @@ enum StoryType: String, Equatable, CaseIterable {
     case show = "show"
     case jobs = "job"
     
-    var iconName: String {
+    public var iconName: String {
         switch self {
         case .top:
             return "flame"
