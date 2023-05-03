@@ -1,5 +1,6 @@
 public struct Comment : Item {
     public let id: Int
+    public let parent: Int?
     public let title: String?
     public let text: String?
     public let url: String?
@@ -14,8 +15,9 @@ public struct Comment : Item {
     }
     
     
-    init(id: Int, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
+    init(id: Int, parent: Int?, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
         self.id = id
+        self.parent = parent
         self.title = title
         self.text = text
         self.url = url
@@ -29,10 +31,10 @@ public struct Comment : Item {
     
     // Empty initializer
     init() {
-        self.init(id: 0, title: "", text: "", url: "", type: "", by: "", score: 0, descendants: 0, time: 0)
+        self.init(id: 0, parent: 0, title: "", text: "", url: "", type: "", by: "", score: 0, descendants: 0, time: 0)
     }
     
     func copyWith(text: String?) -> Comment {
-        Comment(id: id, title: title, text: text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int]())
+        Comment(id: id, parent: parent, title: title, text: text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int]())
     }
 }

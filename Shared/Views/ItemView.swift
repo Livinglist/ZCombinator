@@ -61,6 +61,7 @@ struct ItemView: View {
             UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
             DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
             FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
+            PinButton(id: item.id)
             Button {
                 showReplySheet = true
             } label: {
@@ -255,6 +256,7 @@ struct ItemView: View {
                     UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
                     DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
                     FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
+                    PinButton(id: item.id)
                     Button {
                         showReplySheet = true
                     } label: {

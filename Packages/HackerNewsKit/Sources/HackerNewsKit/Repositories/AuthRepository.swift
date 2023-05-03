@@ -9,7 +9,7 @@ public class AuthRepository {
     private let baseUrl: String = "https://news.ycombinator.com"
     private let query: CFDictionary = [
         kSecClass: kSecClassInternetPassword,
-        kSecAttrServer: Constants.server,
+        kSecAttrServer: "news.ycombinator.com",
         kSecReturnAttributes: true,
         kSecReturnData: true
     ] as CFDictionary

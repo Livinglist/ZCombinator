@@ -52,5 +52,69 @@
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1B8343DF-5F1E-4F22-B9BE-63326B07F8F5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Views/Widgets/ItemRow.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "59D8260A-0DE7-4D7E-B068-D3479EF17354"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Packages/HackerNewsKit/Sources/HackerNewsKit/Repositories/SearchRepository.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "search(params:onItemFetched:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "59D8260A-0DE7-4D7E-B068-D3479EF17354 - 897c37e9ab7e5dbc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for HackerNewsKit.SearchRepository.search(params: HackerNewsKit.SearchParams, onItemFetched: (HackerNewsKit.Item) -&gt; ()) async -&gt; ()"
+                  moduleName = "ZCombinator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jiaqifeng/Dev/ZCombinator/Packages/HackerNewsKit/Sources/HackerNewsKit/Repositories/SearchRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "15502">
+               </Location>
+               <Location
+                  uuid = "59D8260A-0DE7-4D7E-B068-D3479EF17354 - 897c37e9ab7e5dbc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for HackerNewsKit.SearchRepository.search(params: HackerNewsKit.SearchParams, onItemFetched: (HackerNewsKit.Item) -&gt; ()) async -&gt; ()"
+                  moduleName = "ZCombinator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jiaqifeng/Dev/ZCombinator/Packages/HackerNewsKit/Sources/HackerNewsKit/Repositories/SearchRepository.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "18096">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

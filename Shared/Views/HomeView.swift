@@ -27,8 +27,8 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(storyStore.pinnedStories) { story in
-                    ItemRow(item: story,
+                ForEach(storyStore.pinnedItems, id: \.self.id) { item in
+                    ItemRow(item: item,
                              isPinnedStory: true,
                              showFlagToast: $showFlagToast,
                              showUpvoteToast: $showUpvoteToast,
@@ -37,12 +37,9 @@ struct HomeView: View {
                              showUnfavoriteToast: $showUnfavoriteToast)
                     .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                     .listRowSeparator(.hidden)
-                    .onAppear {
-                        storyStore.onStoryRowAppear(story)
-                    }
                 }
                 ForEach(storyStore.stories) { story in
-                    if storyStore.pinnedStories.contains(story) {
+                    if storyStore.pinnedIds.contains(story.id) {
                         EmptyView()
                     } else {
                         ItemRow(item: story,
@@ -64,6 +61,14 @@ struct HomeView: View {
                 await storyStore.refresh()
             }
             .toolbar {
+                ToolbarItem {
+                    NavigationLink {
+                        SearchView()
+                    } label: {
+                        Label(String(), systemImage: "magnifyingglass")
+                    }
+                    
+                }
                 ToolbarItem {
                     NavigationLink {
                         FavView()

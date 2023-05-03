@@ -63,25 +63,6 @@ public class StoriesRepository {
         }
     }
     
-//    public func fetchItem(_ id: Int) async -> (any Item)? {
-//        let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
-//
-//        if let data = response.data,
-//           let json = try? JSONSerialization.jsonObject(with: data, options: []),
-//           let map = json as? [String: Any],
-//           let type = map["type"] as? String {
-//            if type == "story" {
-//                let story = try? JSONDecoder().decode(Story.self, from: data)
-//                return story
-//            } else if type == "comment" {
-//                let cmt = try? JSONDecoder().decode(Comment.self, from: data)
-//                return cmt
-//            }
-//        } else {
-//            return nil
-//        }
-//    }
-    
     public func fetchStory(_ id: Int) async -> Story?{
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
 

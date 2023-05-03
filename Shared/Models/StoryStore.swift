@@ -8,13 +8,13 @@ extension HomeView {
     class StoryStore: ObservableObject {
         @Published var storyType: StoryType = .top
         @Published var stories: [Story] = [Story]()
-        @Published var pinnedStories: [Story] = [Story]()
+        @Published var pinnedItems: [any Item] = [any Item]()
         @Published var status: Status = .idle
         private let settings = Settings.shared
         private let pageSize: Int = 10
         private var currentPage: Int = 0
         private var storyIds: [Int] = [Int]()
-        private var pinnedIds: [Int] = [Int]() {
+        private(set) var pinnedIds: [Int] = [Int]() {
             didSet {
                 Task {
                     await fetchPinnedStories()
@@ -52,15 +52,15 @@ extension HomeView {
         }
         
         func fetchPinnedStories() async {
-            var stories = [Story]()
+            var items = [any Item]()
 
-            await StoriesRepository.shared.fetchStories(ids: pinnedIds) { story in
-                stories.append(story)
+            await StoriesRepository.shared.fetchItems(ids: pinnedIds) { item in
+                items.append(item)
             }
             
             DispatchQueue.main.async {
                 withAnimation {
-                    self.pinnedStories = stories
+                    self.pinnedItems = items
                     self.stories = self.stories
                 }
             }
