@@ -5,8 +5,8 @@ import HackerNewsKit
 
 struct HomeView: View {
     @EnvironmentObject private var auth: Authentication
-    @ObservedObject private var storyStore = StoryStore()
-    private let settings = Settings.shared
+    @StateObject private var storyStore = StoryStore()
+    @ObservedObject private var settings = Settings.shared
     
     @State private var showLoginDialog: Bool = Bool()
     @State private var showLogoutDialog: Bool = Bool()
@@ -27,35 +27,24 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(storyStore.pinnedStories) { story in
+                NavigationLink {
+                    PinView()
+                } label: {
+                    Label("Pins", systemImage: "pin")
+                }
+                .listRowSeparator(.hidden)
+
+                ForEach(storyStore.stories) { story in
                     ItemRow(item: story,
-                             isPinnedStory: true,
-                             showFlagToast: $showFlagToast,
-                             showUpvoteToast: $showUpvoteToast,
-                             showDownvoteToast: $showDownvoteToast,
-                             showFavoriteToast: $showFavoriteToast,
-                             showUnfavoriteToast: $showUnfavoriteToast)
+                            showFlagToast: $showFlagToast,
+                            showUpvoteToast: $showUpvoteToast,
+                            showDownvoteToast: $showDownvoteToast,
+                            showFavoriteToast: $showFavoriteToast,
+                            showUnfavoriteToast: $showUnfavoriteToast)
                     .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                     .listRowSeparator(.hidden)
                     .onAppear {
                         storyStore.onStoryRowAppear(story)
-                    }
-                }
-                ForEach(storyStore.stories) { story in
-                    if storyStore.pinnedStories.contains(story) {
-                        EmptyView()
-                    } else {
-                        ItemRow(item: story,
-                                 showFlagToast: $showFlagToast,
-                                 showUpvoteToast: $showUpvoteToast,
-                                 showDownvoteToast: $showDownvoteToast,
-                                 showFavoriteToast: $showFavoriteToast,
-                                 showUnfavoriteToast: $showUnfavoriteToast)
-                        .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                        .listRowSeparator(.hidden)
-                        .onAppear {
-                            storyStore.onStoryRowAppear(story)
-                        }
                     }
                 }
             }
@@ -64,6 +53,13 @@ struct HomeView: View {
                 await storyStore.refresh()
             }
             .toolbar {
+                ToolbarItem {
+                    NavigationLink {
+                        SearchView()
+                    } label: {
+                        Label(String(), systemImage: "magnifyingglass")
+                    }
+                }
                 ToolbarItem {
                     NavigationLink {
                         FavView()

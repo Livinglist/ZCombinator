@@ -2,6 +2,7 @@ import Foundation
 
 public protocol Item: Codable, Identifiable, Hashable {
     var id: Int { get }
+    var parent: Int? { get }
     var title: String? { get }
     var text: String? { get }
     var url: String? { get }

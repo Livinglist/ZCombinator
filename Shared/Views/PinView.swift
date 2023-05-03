@@ -1,41 +1,31 @@
-import SwiftUI
 import AlertToast
+import SwiftUI
 
-struct FavView: View {
-    @StateObject var favStore = FavStore()
+struct PinView: View {
+    @StateObject var pinStore = PinStore()
     @State private var showFlagToast: Bool = Bool()
     @State private var showUpvoteToast: Bool = Bool()
     @State private var showDownvoteToast: Bool = Bool()
+    @State private var showLoginToast: Bool = Bool()
     @State private var showFavoriteToast: Bool = Bool()
     @State private var showUnfavoriteToast: Bool = Bool()
-    private let settings = Settings.shared
     
-    var body: some View {
-        if settings.favList.isEmpty {
-            Text("")
-        }
+    var body: some View {        
         List {
-            ForEach(favStore.items, id: \.self.id) { story in
-                ItemRow(item: story,
-                         showFlagToast: $showFlagToast,
-                         showUpvoteToast: $showUpvoteToast,
-                         showDownvoteToast: $showDownvoteToast,
-                         showFavoriteToast: $showFavoriteToast,
-                         showUnfavoriteToast: $showUnfavoriteToast)
+            ForEach(pinStore.pinnedItems, id: \.self.id) { item in
+                ItemRow(item: item,
+                        isPinnedStory: true,
+                        showFlagToast: $showFlagToast,
+                        showUpvoteToast: $showUpvoteToast,
+                        showDownvoteToast: $showDownvoteToast,
+                        showFavoriteToast: $showFavoriteToast,
+                        showUnfavoriteToast: $showUnfavoriteToast)
                 .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                 .listRowSeparator(.hidden)
-                .onAppear {
-                    favStore.onItemRowAppear(story)
-                }
             }
         }
-        .navigationTitle(Text("Favorites"))
+        .navigationTitle(Text("Pins"))
         .listStyle(.plain)
-        .refreshable {
-            Task {
-                await favStore.refresh()
-            }
-        }
         .toast(isPresenting: $showFlagToast) {
             AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
         }
@@ -51,12 +41,5 @@ struct FavView: View {
         .toast(isPresenting: $showFavoriteToast, alert: {
             AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
         })
-        .onAppear {
-            if favStore.status == Status.idle {
-                Task {
-                    await favStore.fetchStories()
-                }
-            }
-        }
     }
 }

@@ -60,18 +60,9 @@ struct ItemRow: View {
             UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
             DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
             FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
-            Button {
-                onPin()
-            } label: {
-                Label("Pin", systemImage: "pin")
-            }
+            PinButton(id: item.id)
             Divider()
-            Button {
-                showFlagDialog = true
-            } label: {
-                Label("Flag", systemImage: "flag")
-            }
-                .disabled(!auth.loggedIn)
+            FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
             Divider()
             ShareMenu(item: item)
             Button {
@@ -147,7 +138,7 @@ struct ItemRow: View {
                     .cornerRadius(16)
                 }
             )
-            .if(.iOS16) { view in
+            .if(.iOS16 && url != nil) { view in
                 view
                     .contextMenu(
                     menuItems: {

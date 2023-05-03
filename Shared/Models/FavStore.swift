@@ -28,10 +28,6 @@ extension FavView {
         }
         
         func fetchStories() async {
-            withAnimation {
-                self.items = [any Item]()
-                self.status = .loading
-            }
             self.currentPage = 0
             
             var items = [any Item]()

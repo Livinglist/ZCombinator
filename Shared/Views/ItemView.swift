@@ -48,8 +48,16 @@ struct ItemView: View {
                 if itemStore.item == nil {
                     itemStore.item = item
                     if level == 0 {
-                        Task {
-                            await itemStore.loadKids()
+                        // Items from search resuls don't contain kids,
+                        // so we force a refresh to fetch the data.
+                        if let kids = item.kids, kids.isEmpty && item.descendants != 0 {
+                            Task {
+                                await itemStore.refresh()
+                            }
+                        } else {
+                            Task {
+                                await itemStore.loadKids()
+                            }
                         }
                     }
                 }
@@ -61,6 +69,7 @@ struct ItemView: View {
             UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
             DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
             FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
+            PinButton(id: item.id)
             Button {
                 showReplySheet = true
             } label: {
@@ -68,12 +77,7 @@ struct ItemView: View {
             }
             .disabled(!auth.loggedIn)
             Divider()
-            Button {
-                showFlagDialog = true
-            } label: {
-                Label("Flag", systemImage: "flag")
-            }
-            .disabled(!auth.loggedIn)
+            FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
             Divider()
             ShareMenu(item: item)
             Button {
@@ -255,6 +259,7 @@ struct ItemView: View {
                     UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
                     DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
                     FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
+                    PinButton(id: item.id)
                     Button {
                         showReplySheet = true
                     } label: {
@@ -262,12 +267,7 @@ struct ItemView: View {
                     }
                         .disabled(!auth.loggedIn)
                     Divider()
-                    Button {
-                        showFlagDialog = true
-                    } label: {
-                        Label("Flag", systemImage: "flag")
-                    }
-                        .disabled(!auth.loggedIn)
+                    FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
                     Divider()
                     ShareMenu(item: item)
                     Button {
@@ -334,32 +334,13 @@ struct ItemView: View {
                 .padding(.trailing, 2)
         }
     }
-
-    private func onUpvote() {
+    
+    private func fetchStoryAndComments() {
         Task {
-            let res = await auth.upvote(item.id)
-
-            if res {
-                showUpvoteToast = true
-                HapticFeedbackService.shared.success()
-            } else {
-                HapticFeedbackService.shared.error()
-            }
+            await itemStore.refresh()
         }
     }
 
-    private func onDownvote() {
-        Task {
-            let res = await auth.downvote(item.id)
-
-            if res {
-                showDownvoteToast = true
-                HapticFeedbackService.shared.success()
-            } else {
-                HapticFeedbackService.shared.error()
-            }
-        }
-    }
 
     private func onFlagTap() {
         Task {
