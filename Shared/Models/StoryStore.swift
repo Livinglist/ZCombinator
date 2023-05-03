@@ -8,26 +8,11 @@ extension HomeView {
     class StoryStore: ObservableObject {
         @Published var storyType: StoryType = .top
         @Published var stories: [Story] = [Story]()
-        @Published var pinnedItems: [any Item] = [any Item]()
         @Published var status: Status = .idle
-        private let settings = Settings.shared
+
         private let pageSize: Int = 10
         private var currentPage: Int = 0
         private var storyIds: [Int] = [Int]()
-        private(set) var pinnedIds: [Int] = [Int]() {
-            didSet {
-                Task {
-                    await fetchPinnedStories()
-                }
-            }
-        }
-        private var pinListCancellable: AnyCancellable?
-        
-        init() {
-            pinListCancellable = settings.$pinList.sink(receiveValue: { ids in
-                self.pinnedIds = Array<Int>(ids)
-            })
-        }
 
         func fetchStories() async {
             withAnimation {
@@ -46,18 +31,6 @@ extension HomeView {
             withAnimation {
                 self.status = .loaded
                 self.stories = stories
-            }
-        }
-        
-        func fetchPinnedStories() async {
-            var items = [any Item]()
-
-            await StoriesRepository.shared.fetchItems(ids: pinnedIds) { item in
-                items.append(item)
-            }
-            
-            withAnimation {
-                self.pinnedItems = items
             }
         }
         

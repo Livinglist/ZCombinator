@@ -22,7 +22,6 @@ extension FavView {
         }
         
         init() {
-            print("init fav store");
             cancellable = settingsStore.$favList.sink(receiveValue: { ids in
                 self.favIds = Array<Int>(ids)
             })

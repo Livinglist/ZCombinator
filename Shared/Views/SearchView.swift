@@ -5,7 +5,7 @@ import Combine
 import HackerNewsKit
 
 struct SearchView: View {
-    @ObservedObject var searchStore = SearchStore()
+    @StateObject var searchStore = SearchStore()
     @StateObject var debounceObject = DebounceObject()
     @State private var showFlagToast: Bool = Bool()
     @State private var showUpvoteToast: Bool = Bool()
@@ -20,7 +20,9 @@ struct SearchView: View {
                 ForEach(Filter.allCases, id: \.self) {
                     Text($0.rawValue.capitalized)
                 }
-            }.pickerStyle(.segmented)
+            }
+            .pickerStyle(.segmented)
+            .listRowSeparator(.hidden)
             ForEach(searchStore.results, id: \.self.id) { item in
                 ItemRow(item: item,
                         showFlagToast: $showFlagToast,

@@ -24,8 +24,6 @@ extension SearchView {
         private var page: Int = 0
 
         func search(query: String, filter: Filter) async {
-            debugPrint(query)
-
             self.status = .loading
 
             let searchParams = SearchParams(page: 0, query: query, sorted: false, filters: [filter.toSearchFilter()])

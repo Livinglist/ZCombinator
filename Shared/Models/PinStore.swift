@@ -11,8 +11,24 @@ extension PinView {
         private let settings = Settings.shared
         private(set) var pinnedIds: [Int] = [Int]() {
             didSet {
-                Task {
-                    await fetchPinnedStories()
+                if status == .idle {
+                    Task {
+                        await fetchPinnedStories()
+                    }
+                } else if pinnedIds.count > oldValue.count {
+                    let newIds = pinnedIds.filter { id in
+                        oldValue.contains(id) == false
+                    }
+                    
+                    Task{
+                        await fetchNewlyPinnedStories(ids: newIds)
+                    }
+                } else if pinnedIds.count < oldValue.count {
+                    let oldIds = oldValue.filter { id in
+                        pinnedIds.contains(id) == false
+                    }
+                    
+                    removeUnpinnedStories(ids: oldIds)
                 }
             }
         }
@@ -32,7 +48,28 @@ extension PinView {
             }
             
             withAnimation {
+                self.status = .loaded
                 self.pinnedItems = items
+            }
+        }
+        
+        func fetchNewlyPinnedStories(ids: [Int]) async {
+            var items = [any Item]()
+            
+            await StoriesRepository.shared.fetchItems(ids: pinnedIds) { item in
+                items.append(item)
+            }
+            
+            withAnimation {
+                self.pinnedItems.append(contentsOf: items)
+            }
+        }
+        
+        func removeUnpinnedStories(ids: [Int]) {
+            withAnimation {
+                self.pinnedItems.removeAll { item in
+                    ids.contains(item.id)
+                }
             }
         }
     }

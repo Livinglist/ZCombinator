@@ -11,7 +11,6 @@ public class SearchRepository {
     public func search(params: SearchParams, onItemFetched: @escaping (any Item) -> Void) async -> Void {
         let urlStr = "\(baseUrl)\(params.filteredQuery)"
         guard let url = URL(string: urlStr) else { return }
-        debugPrint(url.absoluteString)
         let response = await AF.request(url).serializingString().response
         
         guard let result = try? response.result.get(),

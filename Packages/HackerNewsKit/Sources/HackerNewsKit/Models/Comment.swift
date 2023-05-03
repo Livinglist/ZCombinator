@@ -11,7 +11,7 @@ public struct Comment : Item {
     public let time: Int
     public let kids: [Int]?
     public var metadata: String? {
-        if let count = kids?.count {
+        if let count = kids?.count, count != 0 {
             return "\(count) cmts | \(timeAgo) by \(by.orEmpty)"
         } else {
             return "\(timeAgo) by \(by.orEmpty)"

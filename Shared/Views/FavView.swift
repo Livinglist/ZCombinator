@@ -2,7 +2,7 @@ import SwiftUI
 import AlertToast
 
 struct FavView: View {
-    @ObservedObject var favStore = FavStore()
+    @StateObject var favStore = FavStore()
     @State private var showFlagToast: Bool = Bool()
     @State private var showUpvoteToast: Bool = Bool()
     @State private var showDownvoteToast: Bool = Bool()
