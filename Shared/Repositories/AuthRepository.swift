@@ -58,7 +58,7 @@ class AuthRepository {
     
     // MARK: - Authentication
     
-    func logIn(username: String, password: String) async -> Bool {
+    func logIn(username: String, password: String, shouldRememberMe: Bool) async -> Bool {
         let parameters: [String: String] = [
             "acct": username,
             "pw": password
@@ -72,7 +72,7 @@ class AuthRepository {
         let cookies = HTTPCookieStorage.shared.cookies(for: url)
         let loggedIn = cookies.isNotNullOrEmpty
         
-        if loggedIn {
+        if loggedIn && shouldRememberMe {
             let keychainItem = [
                 kSecValueData: password.data(using: .utf8)!,
                 kSecAttrAccount: username,

@@ -1,6 +1,6 @@
 import Foundation
 
-struct Story : Item {
+struct Story: Item {
     let id: Int
     let title: String?
     let text: String?
@@ -18,7 +18,7 @@ struct Story : Item {
             return "\(score.orZero) pts | \(descendants.orZero) cmts | \(timeAgo) by \(by.orEmpty)"
         }
     }
-    
+
     init(id: Int, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
         self.id = id
         self.title = title
@@ -31,12 +31,12 @@ struct Story : Item {
         self.time = time
         self.kids = kids
     }
-    
+
     // Empty initializer
     init() {
         self.init(id: 0, title: "", text: "", url: "", type: "", by: "", score: 0, descendants: 0, time: 0)
     }
-    
+
     func copyWith(text: String?) -> Story {
         Story(id: id, title: title, text: text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int]())
     }

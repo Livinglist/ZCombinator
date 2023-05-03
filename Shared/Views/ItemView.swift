@@ -4,50 +4,51 @@ import WebKit
 
 struct ItemView<T : Item>: View {
     @EnvironmentObject var auth: Authentication
-    
+    @EnvironmentObject var settingsStore: SettingsStore
+
     @StateObject var itemStore: ItemStore = ItemStore()
-    @State private var isCollapsed: Bool = false
-    @State private var showHNSheet: Bool = false
-    @State private var showReplySheet: Bool = false
-    @State private var showFlagDialog: Bool = false
-    @State private var showFlagToast: Bool = false
-    @State private var showUpvoteToast: Bool = false
-    @State private var showDownvoteToast: Bool = false
-    @State private var showReplyToast: Bool = false
-    @State private var showFavoriteToast: Bool = false
-    
+    @State private var isCollapsed: Bool = Bool()
+    @State private var showHNSheet: Bool = Bool()
+    @State private var showReplySheet: Bool = Bool()
+    @State private var showFlagDialog: Bool = Bool()
+    @State private var showFlagToast: Bool = Bool()
+    @State private var showUpvoteToast: Bool = Bool()
+    @State private var showDownvoteToast: Bool = Bool()
+    @State private var showReplyToast: Bool = Bool()
+    @State private var showFavoriteToast: Bool = Bool()
+
     let level: Int
     let item: T
-    
+
     init(item: T, level: Int = 0) {
         self.level = level
         self.item = item
     }
-    
+
     var body: some View {
         mainItemView
             .sheet(isPresented: $showHNSheet) {
-                if let url = URL(string: item.itemUrl) {
-                    SafariView(url: url)
-                }
+            if let url = URL(string: item.itemUrl) {
+                SafariView(url: url)
             }
+        }
             .sheet(isPresented: $showReplySheet) {
-                ReplyView(showReplyToast: $showReplyToast, replyingTo: item)
-            }
+            ReplyView(showReplyToast: $showReplyToast, replyingTo: item)
+        }
             .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
-                Button("Flag", role: .destructive) {
-                    onFlagTap()
-                }
-            } message: {
-                Text("Flag the post by \(item.by.orEmpty)?")
+            Button("Flag", role: .destructive) {
+                onFlagTap()
             }
+        } message: {
+            Text("Flag the post by \(item.by.orEmpty)?")
+        }
             .onAppear {
-                if self.itemStore.item == nil {
-                    self.itemStore.item = item
-                }
+            if self.itemStore.item == nil {
+                self.itemStore.item = item
             }
+        }
     }
-    
+
     var menu: some View {
         Menu {
             Button {
@@ -55,32 +56,32 @@ struct ItemView<T : Item>: View {
             } label: {
                 Label("Upvote", systemImage: "hand.thumbsup")
             }
-            .disabled(!auth.loggedIn)
+                .disabled(!auth.loggedIn)
             Button {
                 onDownvote()
             } label: {
                 Label("Downvote", systemImage: "hand.thumbsdown")
             }
-            .disabled(!auth.loggedIn)
+                .disabled(!auth.loggedIn)
             Button {
                 onFavorite()
             } label: {
                 Label("Favorite", systemImage: "heart")
             }
-            .disabled(!auth.loggedIn)
+                .disabled(!auth.loggedIn)
             Button {
                 showReplySheet = true
             } label: {
                 Label("Reply", systemImage: "plus.message")
             }
-            .disabled(!auth.loggedIn)
+                .disabled(!auth.loggedIn)
             Divider()
             Button {
                 showFlagDialog = true
             } label: {
                 Label("Flag", systemImage: "flag")
             }
-            .disabled(!auth.loggedIn)
+                .disabled(!auth.loggedIn)
             Divider()
             if item is Story {
                 Menu {
@@ -116,7 +117,7 @@ struct ItemView<T : Item>: View {
                 .foregroundColor(.orange)
         }
     }
-    
+
     @ViewBuilder
     var textView: some View {
         if item is Story {
@@ -138,7 +139,7 @@ struct ItemView<T : Item>: View {
             }
         }
     }
-    
+
     @ViewBuilder
     var rootView: some View {
         ScrollView {
@@ -183,32 +184,32 @@ struct ItemView<T : Item>: View {
                 }
             }
         }
-        .toast(isPresenting: $showFlagToast) {
+            .toast(isPresenting: $showFlagToast) {
             AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
         }
-        .toast(isPresenting: $showUpvoteToast) {
+            .toast(isPresenting: $showUpvoteToast) {
             AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvoted")
         }
-        .toast(isPresenting: $showDownvoteToast) {
+            .toast(isPresenting: $showDownvoteToast) {
             AlertToast(type: .systemImage("hand.thumbsdown.fill", .gray), title: "Downvoted")
         }
-        .toast(isPresenting: $showReplyToast) {
+            .toast(isPresenting: $showReplyToast) {
             AlertToast(type: .systemImage("arrowshape.turn.up.left.circle.fill", .gray), title: "Replied")
         }
-        .toast(isPresenting: $showFavoriteToast) {
+            .toast(isPresenting: $showFavoriteToast) {
             AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
         }
-        .toolbar {
-            ToolbarItem{
+            .toolbar {
+            ToolbarItem {
                 menu
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .refreshable {
+            .navigationBarTitleDisplayMode(.inline)
+            .refreshable {
             await itemStore.refresh()
         }
     }
-    
+
     @ViewBuilder
     var nodeView: some View {
         ZStack {
@@ -237,20 +238,20 @@ struct ItemView<T : Item>: View {
                     } else {
                         textView.padding(.bottom, 3)
                             .toast(isPresenting: $showFlagToast) {
-                                AlertToast(type: .regular, title: "Flagged")
-                            }
+                            AlertToast(type: .regular, title: "Flagged")
+                        }
                             .toast(isPresenting: $showUpvoteToast) {
-                                AlertToast(type: .regular, title: "Upvoted")
-                            }
+                            AlertToast(type: .regular, title: "Upvoted")
+                        }
                             .toast(isPresenting: $showDownvoteToast) {
-                                AlertToast(type: .regular, title: "Downvoted")
-                            }
+                            AlertToast(type: .regular, title: "Downvoted")
+                        }
                             .toast(isPresenting: $showReplyToast) {
-                                AlertToast(type: .regular, title: "Replied")
-                            }
+                            AlertToast(type: .regular, title: "Replied")
+                        }
                             .toast(isPresenting: $showFavoriteToast) {
-                                AlertToast(type: .regular, title: "Added")
-                            }
+                            AlertToast(type: .regular, title: "Added")
+                        }
                     }
                     if itemStore.status == Status.loading {
                         LoadingIndicator(color: getColor(level: level))
@@ -263,43 +264,43 @@ struct ItemView<T : Item>: View {
                                 await itemStore.loadKids()
                             }
                         } label: {
-                            Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies":"reply")")
+                            Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies" : "reply")")
                                 .font(.footnote.weight(.bold))
                                 .foregroundColor(getColor(level: level))
                         }
-                        .buttonStyle(.bordered)
-                        .buttonBorderShape(.capsule)
-                        .padding(.top, 6)
+                            .buttonStyle(.bordered)
+                            .buttonBorderShape(.capsule)
+                            .padding(.top, 6)
                     }
                 }
-                .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
-                .background(Color(UIColor.systemBackground))
-                .contextMenu {
+                    .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
+                    .background(Color(UIColor.systemBackground))
+                    .contextMenu {
                     Button {
                         onUpvote()
                     } label: {
                         Label("Upvote", systemImage: "hand.thumbsup")
                     }
-                    .disabled(!auth.loggedIn)
+                        .disabled(!auth.loggedIn)
                     Button {
                         onDownvote()
                     } label: {
                         Label("Downvote", systemImage: "hand.thumbsdown")
                     }
-                    .disabled(!auth.loggedIn)
+                        .disabled(!auth.loggedIn)
                     Button {
                         showReplySheet = true
                     } label: {
                         Label("Reply", systemImage: "plus.message")
                     }
-                    .disabled(!auth.loggedIn)
+                        .disabled(!auth.loggedIn)
                     Divider()
                     Button {
                         showFlagDialog = true
                     } label: {
                         Label("Flag", systemImage: "flag")
                     }
-                    .disabled(!auth.loggedIn)
+                        .disabled(!auth.loggedIn)
                     Divider()
                     Button {
                         showShareSheet(url: item.itemUrl)
@@ -312,7 +313,7 @@ struct ItemView<T : Item>: View {
                         Label("View on Hacker News", systemImage: "safari")
                     }
                 }
-                .onTapGesture {
+                    .onTapGesture {
                     HapticFeedbackService.shared.ultralight()
                     withAnimation {
                         isCollapsed.toggle()
@@ -320,22 +321,22 @@ struct ItemView<T : Item>: View {
                 }
                 if isCollapsed == false {
                     VStack(spacing: 0) {
-                        ForEach(itemStore.kids){ comment in
+                        ForEach(itemStore.kids) { comment in
                             ItemView<Comment>(item: comment, level: level + 1)
                         }
-                        .id(UUID())
+                            .id(UUID())
                     }
-                    .buttonStyle(PlainButtonStyle())
+                        .buttonStyle(PlainButtonStyle())
                 }
                 Spacer()
             }
-            .frame(alignment: .leading)
-            .padding(.leading, 6)
+                .frame(alignment: .leading)
+                .padding(.leading, 6)
         }
-        .frame(maxWidth:.infinity)
-        .frame(alignment: .leading)
+            .frame(maxWidth: .infinity)
+            .frame(alignment: .leading)
     }
-    
+
     @ViewBuilder
     var mainItemView: some View {
         if level == 0 {
@@ -344,7 +345,7 @@ struct ItemView<T : Item>: View {
             nodeView
         }
     }
-    
+
     @ViewBuilder
     var nameRow: some View {
         HStack {
@@ -368,7 +369,7 @@ struct ItemView<T : Item>: View {
                 .padding(.trailing, 2)
         }
     }
-    
+
     private func onUpvote() {
         Task {
             let res = await auth.upvote(item.id)
@@ -381,11 +382,11 @@ struct ItemView<T : Item>: View {
             }
         }
     }
-    
+
     private func onDownvote() {
         Task {
             let res = await auth.downvote(item.id)
-            
+
             if res {
                 showDownvoteToast = true
                 HapticFeedbackService.shared.success()
@@ -394,11 +395,11 @@ struct ItemView<T : Item>: View {
             }
         }
     }
-    
+
     private func onFavorite() {
         Task {
             let res = await auth.favorite(item.id)
-            
+
             if res {
                 showFavoriteToast = true
                 HapticFeedbackService.shared.success()
@@ -407,7 +408,7 @@ struct ItemView<T : Item>: View {
             }
         }
     }
-    
+
     private func onFlagTap() {
         Task {
             let res = await AuthRepository.shared.flag(item.id)
@@ -420,37 +421,37 @@ struct ItemView<T : Item>: View {
             }
         }
     }
-    
+
     private func getColor(level: Int) -> Color {
         var level = level
         let initialLevel = level
-        
+
         if let color = colors[initialLevel] {
             return color
         }
-        
+
         while level >= 10 {
             level = level - 10
         }
-        
+
         let r = 255
         var g = level * 40 < 255 ? 152 : (level * 20).clamped(to: 0...255)
         var b = (level * 40).clamped(to: 0...255)
-        
+
         if (g == 255 && b == 255) {
             g = (level * 30 - 255).clamped(to: 0...255)
             b = (level * 40 - 255).clamped(to: 0...255)
         }
-        
+
         let color = Color.init(
             red: Double(r) / 255,
             green: Double(g) / 255,
             blue: Double(b) / 255,
             opacity: 1
         )
-        
+
         colors[initialLevel] = color
-        
+
         return color
     }
 }

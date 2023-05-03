@@ -5,33 +5,37 @@ import UniformTypeIdentifiers
 struct StoryRow: View {
     let story: Story
     let url: URL?
-    
+    let isPinnedStory: Bool
+
     @EnvironmentObject var auth: Authentication
-    
-    @State private var isLoaded: Bool = false
-    @State private var showSafari: Bool = false
-    @State private var showHNSheet: Bool = false
-    @State private var showReplySheet: Bool = false
-    @State private var showFlagDialog: Bool = false
-    @GestureState private var isDetectingPress = false
+    @EnvironmentObject var settingsStore: SettingsStore
+
+    @State private var isLoaded: Bool = Bool()
+    @State private var showSafari: Bool = Bool()
+    @State private var showHNSheet: Bool = Bool()
+    @State private var showReplySheet: Bool = Bool()
+    @State private var showFlagDialog: Bool = Bool()
+    @GestureState private var isDetectingPress = Bool()
     @Binding private var showFlagToast: Bool
     @Binding private var showUpvoteToast: Bool
     @Binding private var showDownvoteToast: Bool
     @Binding private var showFavoriteToast: Bool
-    
+
     init(story: Story,
+         isPinnedStory: Bool = false,
          showFlagToast: Binding<Bool>,
          showUpvoteToast: Binding<Bool>,
          showDownvoteToast: Binding<Bool>,
          showFavoriteToast: Binding<Bool>) {
         self.story = story
         self.url = URL(string: story.url ?? "https://news.ycombinator.com/item?id=\(story.id)")
+        self.isPinnedStory = isPinnedStory
         self._showFlagToast = showFlagToast
         self._showUpvoteToast = showUpvoteToast
         self._showDownvoteToast = showDownvoteToast
         self._showFavoriteToast = showFavoriteToast
     }
-    
+
     @ViewBuilder
     var navigationLink: some View {
         if story.isJobWithUrl {
@@ -46,7 +50,7 @@ struct StoryRow: View {
                 })
         }
     }
-    
+
     @ViewBuilder
     var menu: some View {
         Menu {
@@ -55,26 +59,36 @@ struct StoryRow: View {
             } label: {
                 Label("Upvote", systemImage: "hand.thumbsup")
             }
-            .disabled(!auth.loggedIn)
+                .disabled(!auth.loggedIn)
             Button {
                 onDownvote()
             } label: {
                 Label("Downvote", systemImage: "hand.thumbsdown")
             }
-            .disabled(!auth.loggedIn)
+                .disabled(!auth.loggedIn)
             Button {
                 onFavorite()
             } label: {
                 Label("Favorite", systemImage: "heart")
             }
-            .disabled(!auth.loggedIn)
+                .disabled(!auth.loggedIn)
+
+            Button {
+                onPin()
+            } label: {
+                if isPinnedStory {
+                    Label("Unpin", systemImage: "pin.slash.fill")
+                } else {
+                    Label("Pin", systemImage: "pin")
+                }
+            }
             Divider()
             Button {
                 showFlagDialog = true
             } label: {
                 Label("Flag", systemImage: "flag")
             }
-            .disabled(!auth.loggedIn)
+                .disabled(!auth.loggedIn)
             Divider()
             Menu {
                 if story.url.orEmpty.isNotEmpty {
@@ -104,7 +118,7 @@ struct StoryRow: View {
                 .foregroundColor(.orange)
         }
     }
-    
+
     var body: some View {
         ZStack {
             navigationLink
@@ -143,71 +157,83 @@ struct StoryRow: View {
                                     .padding(.leading)
                                     .padding(.bottom, 12)
                                 Spacer()
-                                menu
+                                if isPinnedStory {
+                                    Button {
+                                        settingsStore.onPinToggle(story.id)
+                                    } label: {
+                                        Label(String(), systemImage: "pin.fill")
+                                            .rotationEffect(Angle(degrees: 45))
+                                            .transformEffect(.init(translationX: 0, y: 5))
+                                    }
+
+                                } else {
+                                    menu
+                                }
+
                             }
                         }
                     }
-                    .background(Color(UIColor.secondarySystemBackground))
-                    .cornerRadius(16)
+                        .background(Color(UIColor.secondarySystemBackground))
+                        .cornerRadius(16)
                 }
             )
-            .if(.iOS16) { view in
+                .if(.iOS16) { view in
                 view
                     .contextMenu(
-                        menuItems: {
-                            Button {
-                                showSafari = true
-                            } label: {
-                                Label("View in browser", systemImage: "safari")
-                            }
-                        },
-                        preview: {
-                            SafariView(url: url!)
-                        })
+                    menuItems: {
+                        Button {
+                            showSafari = true
+                        } label: {
+                            Label("View in browser", systemImage: "safari")
+                        }
+                    },
+                    preview: {
+                        SafariView(url: url!)
+                    })
             }
-            .if(!.iOS16) { view in
+                .if(!.iOS16) { view in
                 view
                     .contextMenu(
-                        PreviewContextMenu(
-                            destination: SafariView(url: url!),
-                            actionProvider: { items in
-                                return UIMenu(
-                                    title: "",
-                                    children: [
-                                        UIAction(
-                                            title: "View in browser",
-                                            image: UIImage(systemName: "safari"),
-                                            identifier: nil,
-                                            handler: { _ in showSafari = true }
-                                        )
-                                    ])
-                            }))
+                    PreviewContextMenu(
+                        destination: SafariView(url: url!),
+                        actionProvider: { items in
+                            return UIMenu(
+                                title: "",
+                                children: [
+                                    UIAction(
+                                        title: "View in browser",
+                                        image: UIImage(systemName: "safari"),
+                                        identifier: nil,
+                                        handler: { _ in showSafari = true }
+                                    )
+                                ])
+                        }))
             }
         }
-        .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
+            .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
             Button("Flag", role: .destructive) {
                 onFlagTap()
             }
         } message: {
             Text("Flag \"\(story.title.orEmpty)\" by \(story.by.orEmpty)?")
         }
-        .sheet(isPresented: $showHNSheet) {
+            .sheet(isPresented: $showHNSheet) {
             if let url = URL(string: story.itemUrl) {
                 SafariView(url: url)
             }
         }
-        .sheet(isPresented: $showSafari) {
+            .sheet(isPresented: $showSafari) {
             if let urlStr = story.url, let url = URL(string: urlStr) {
                 SafariView(url: url)
             }
         }
-        
+
     }
-    
+
     private func onUpvote() {
         Task {
             let res = await auth.upvote(story.id)
-            
+
             if res {
                 showUpvoteToast = true
                 HapticFeedbackService.shared.success()
@@ -216,11 +242,11 @@ struct StoryRow: View {
             }
         }
     }
-    
+
     private func onDownvote() {
         Task {
             let res = await auth.downvote(story.id)
-            
+
             if res {
                 showDownvoteToast = true
                 HapticFeedbackService.shared.success()
@@ -229,11 +255,11 @@ struct StoryRow: View {
             }
         }
     }
-    
+
     private func onFavorite() {
         Task {
             let res = await auth.favorite(story.id)
-            
+
             if res {
                 showFavoriteToast = true
                 HapticFeedbackService.shared.success()
@@ -243,10 +269,15 @@ struct StoryRow: View {
         }
     }
     
+    private func onPin() {
+        settingsStore.onPinToggle(story.id)
+        HapticFeedbackService.shared.light()
+    }
+
     private func onFlagTap() {
         Task {
             let res = await AuthRepository.shared.flag(story.id)
-            
+
             if res {
                 showFlagToast = true
                 HapticFeedbackService.shared.success()

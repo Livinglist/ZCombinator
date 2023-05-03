@@ -8,7 +8,7 @@ struct CustomText: UIViewRepresentable {
         DispatchQueue.main.async {
             let data = Data(self.html.utf8)
             if let attributedString = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
-                uiView.isEditable = false
+                uiView.isEditable = Bool()
                 uiView.attributedText = attributedString
             }
         }

@@ -4,35 +4,54 @@ import CoreData
 
 struct HomeView: View {
     @EnvironmentObject private var auth: Authentication
+    @EnvironmentObject private var settingsStore: SettingsStore
     @ObservedObject private var storyStore = StoryStore()
     
-    @State private var showLoginDialog: Bool = false
-    @State private var showLogoutDialog: Bool = false
-    @State private var showAboutSheet: Bool = false
+    @State private var showLoginDialog: Bool = Bool()
+    @State private var showLogoutDialog: Bool = Bool()
+    @State private var showAboutSheet: Bool = Bool()
     
-    @State private var username: String = ""
-    @State private var password: String = ""
+    @State private var username: String = String()
+    @State private var password: String = String()
+    @State private var shouldRememberMe: Bool = Bool()
     
-    @State private var showFlagToast: Bool = false
-    @State private var showUpvoteToast: Bool = false
-    @State private var showDownvoteToast: Bool = false
-    @State private var showLoginToast: Bool = false
-    @State private var showFavoriteToast: Bool = false
+    @State private var showFlagToast: Bool = Bool()
+    @State private var showUpvoteToast: Bool = Bool()
+    @State private var showDownvoteToast: Bool = Bool()
+    @State private var showLoginToast: Bool = Bool()
+    @State private var showFavoriteToast: Bool = Bool()
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(storyStore.stories){ story in
+                ForEach(storyStore.pinnedStories) { story in
                     StoryRow(story: story,
+                             isPinnedStory: true,
                              showFlagToast: $showFlagToast,
                              showUpvoteToast: $showUpvoteToast,
                              showDownvoteToast: $showDownvoteToast,
                              showFavoriteToast: $showFavoriteToast)
+                    .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
+                    .listRowSeparator(.hidden)
+                    .onAppear {
+                        storyStore.onStoryRowAppear(story)
+                    }
+                }
+                ForEach(storyStore.stories) { story in
+                    if storyStore.pinnedStories.contains(story) {
+                        EmptyView()
+                    } else {
+                        StoryRow(story: story,
+                                 showFlagToast: $showFlagToast,
+                                 showUpvoteToast: $showUpvoteToast,
+                                 showDownvoteToast: $showDownvoteToast,
+                                 showFavoriteToast: $showFavoriteToast)
                         .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                         .listRowSeparator(.hidden)
                         .onAppear {
                             storyStore.onStoryRowAppear(story)
                         }
+                    }
                 }
             }
             .listStyle(.plain)
@@ -40,7 +59,14 @@ struct HomeView: View {
                 await storyStore.refresh()
             }
             .toolbar {
-                ToolbarItem{
+                ToolbarItem {
+                    Button {
+                        
+                    } label: {
+                         Text("Fav")
+                    }
+                }
+                ToolbarItem {
                     Menu {
                         ForEach(StoryType.allCases, id: \.self) { storyType in
                             Button {
@@ -99,7 +125,8 @@ struct HomeView: View {
                 }
                 
                 Task {
-                    let res = await auth.logIn(username: username, password: password)
+                    // TODO: Ask user whether or not the app should store their login info.
+                    let res = await auth.logIn(username: username, password: password, shouldRememberMe: true)
                     
                     if res {
                         HapticFeedbackService.shared.success()
@@ -124,6 +151,9 @@ struct HomeView: View {
         })
         .task {
             await storyStore.fetchStories()
+        }
+        .onAppear {
+            storyStore.settingsStore = settingsStore
         }
     }
 }

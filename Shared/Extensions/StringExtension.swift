@@ -13,7 +13,9 @@ extension String {
     }
     
     var withExtraLineBreak: String {
-        String(self.replacingOccurrences(of: "\n", with: "\n\n").dropLast(2))
+        if isEmpty { return self }
+        let range = startIndex..<index(endIndex, offsetBy: -1)
+        return String(replacingOccurrences(of: "\n", with: "\n\n", range: range))
     }
     
     var markdowned: AttributedString {

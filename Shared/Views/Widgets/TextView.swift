@@ -14,7 +14,7 @@ struct TextView: UIViewRepresentable {
         textView.autocapitalizationType = .sentences
         textView.isSelectable = true
         textView.isUserInteractionEnabled = true
-        textView.isEditable = false
+        textView.isEditable = Bool()
         textView.dataDetectorTypes = .link
         
         return textView
