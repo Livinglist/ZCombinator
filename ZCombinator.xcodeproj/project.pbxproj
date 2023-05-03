@@ -49,6 +49,7 @@
 		E5687FAF289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
 		E5687FB0289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
 		E56C06C0288679E900D4E685 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E56C06BF288679E900D4E685 /* Alamofire */; };
+		E57640322A0302A10075F5D1 /* FlagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640312A0302A10075F5D1 /* FlagButton.swift */; };
 		E5E048D0289F69D700702733 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048CF289F69D700702733 /* AuthButton.swift */; };
 		E5E048D3289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */; };
 		E5E048D6289F72D700702733 /* View+ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */; };
@@ -140,6 +141,7 @@
 		E54D07002A01BB2D00F3E57B /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		E55CF5C62A01D33300C6B80C /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		E5687FAC289E194A00901F1F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		E57640312A0302A10075F5D1 /* FlagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagButton.swift; sourceTree = "<group>"; };
 		E5E048CF289F69D700702733 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
 		E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ConditionalModifier.swift"; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				E504A03C2A0226080090AFAB /* UpvoteButton.swift */,
 				E504A03F2A02269A0090AFAB /* DownvoteButton.swift */,
 				E514FC442A02FEF100BEFC14 /* PinButton.swift */,
+				E57640312A0302A10075F5D1 /* FlagButton.swift */,
 			);
 			path = ActionMenu;
 			sourceTree = "<group>";
@@ -555,6 +558,7 @@
 				E5EF2CD5289C773000AA5290 /* View+ContextMenu.swift in Sources */,
 				E54D07012A01BB2D00F3E57B /* UserDefaultWrapper.swift in Sources */,
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
+				E57640322A0302A10075F5D1 /* FlagButton.swift in Sources */,
 				E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */,
 				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E54B014329FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */,

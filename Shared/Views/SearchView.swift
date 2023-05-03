@@ -9,7 +9,7 @@ public final class DebounceObject: ObservableObject {
     @Published var debouncedText: String = String()
     private var bag = Set<AnyCancellable>()
     
-    public init(dueTime: TimeInterval = 2) {
+    public init(dueTime: TimeInterval = 1) {
         $text
             .removeDuplicates()
             .debounce(for: .seconds(dueTime), scheduler: DispatchQueue.main)

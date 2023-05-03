@@ -25,6 +25,9 @@ struct ItemView: View {
     init(item: any Item, level: Int = 0) {
         self.level = level
         self.item = item
+        if let kids = item.kids, kids.isEmpty && item.descendants != 0 {
+            fetchStoryAndComments()
+        }
     }
 
     var body: some View {
@@ -69,12 +72,7 @@ struct ItemView: View {
             }
             .disabled(!auth.loggedIn)
             Divider()
-            Button {
-                showFlagDialog = true
-            } label: {
-                Label("Flag", systemImage: "flag")
-            }
-            .disabled(!auth.loggedIn)
+            FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
             Divider()
             ShareMenu(item: item)
             Button {
@@ -264,12 +262,7 @@ struct ItemView: View {
                     }
                         .disabled(!auth.loggedIn)
                     Divider()
-                    Button {
-                        showFlagDialog = true
-                    } label: {
-                        Label("Flag", systemImage: "flag")
-                    }
-                        .disabled(!auth.loggedIn)
+                    FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
                     Divider()
                     ShareMenu(item: item)
                     Button {
@@ -336,32 +329,13 @@ struct ItemView: View {
                 .padding(.trailing, 2)
         }
     }
-
-    private func onUpvote() {
+    
+    private func fetchStoryAndComments() {
         Task {
-            let res = await auth.upvote(item.id)
-
-            if res {
-                showUpvoteToast = true
-                HapticFeedbackService.shared.success()
-            } else {
-                HapticFeedbackService.shared.error()
-            }
+            await itemStore.refresh()
         }
     }
 
-    private func onDownvote() {
-        Task {
-            let res = await auth.downvote(item.id)
-
-            if res {
-                showDownvoteToast = true
-                HapticFeedbackService.shared.success()
-            } else {
-                HapticFeedbackService.shared.error()
-            }
-        }
-    }
 
     private func onFlagTap() {
         Task {

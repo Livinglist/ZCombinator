@@ -62,12 +62,7 @@ struct ItemRow: View {
             FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
             PinButton(id: item.id)
             Divider()
-            Button {
-                showFlagDialog = true
-            } label: {
-                Label("Flag", systemImage: "flag")
-            }
-                .disabled(!auth.loggedIn)
+            FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
             Divider()
             ShareMenu(item: item)
             Button {

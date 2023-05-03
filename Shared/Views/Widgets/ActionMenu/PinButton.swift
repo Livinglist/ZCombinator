@@ -12,12 +12,13 @@ struct PinButton: View {
             if settings.pinList.contains(id) {
                 Label("Unpin", systemImage: "pin.slash")
             } else {
-                Label("Favorite", systemImage: "pin")
+                Label("Pin", systemImage: "pin")
             }
         }
     }
     
     private func onPin() {
         settings.onPinToggle(id)
+        HapticFeedbackService.shared.light()
     }
 }
