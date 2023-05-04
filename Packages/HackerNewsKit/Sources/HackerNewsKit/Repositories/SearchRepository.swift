@@ -34,7 +34,7 @@ public class SearchRepository {
                 guard let text = hit["comment_text"] as? String? ?? "",
                       let parentId = hit["parent_id"] as? Int? ?? 0
                 else { return }
-                let formattedText = text.htmlStripped
+                let formattedText = text.htmlStripped.withExtraLineBreak
                 let cmt = Comment(id: id,
                                   parent: parentId,
                                   title: title,
@@ -48,11 +48,11 @@ public class SearchRepository {
                 onItemFetched(cmt)
             } else {
                 guard let text = hit["story_text"] as? String? ?? "" else { return }
-                let formattedText = text.htmlStripped
+                let formattedText = text.htmlStripped.withExtraLineBreak
                 let story = Story(id: id,
                                   parent: nil,
                                   title: title,
-                                  text: text,
+                                  text: formattedText,
                                   url: url,
                                   type: "story",
                                   by: by,
