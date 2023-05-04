@@ -11,6 +11,7 @@ struct HomeView: View {
     @State private var showLoginDialog = Bool()
     @State private var showLogoutDialog = Bool()
     @State private var showAboutSheet = Bool()
+    @State private var showUrlSheet = Bool()
     
     @State private var username = String()
     @State private var password = String()
@@ -22,6 +23,7 @@ struct HomeView: View {
     @State private var showLoginToast = Bool()
     @State private var showFavoriteToast = Bool()
     @State private var showUnfavoriteToast = Bool()
+    private static var handledUrl: URL? = nil
 
     
     var body: some View {
@@ -119,6 +121,9 @@ struct HomeView: View {
         .sheet(isPresented: $showAboutSheet, content: {
             SafariView(url: Constants.githubUrl)
         })
+        .sheet(isPresented: $showUrlSheet, content: {
+            SafariView(url: Self.handledUrl!)
+        })
         .alert("Login", isPresented: $showLoginDialog, actions: {
             TextField("Username", text: $username)
                 .autocorrectionDisabled(true)
@@ -158,5 +163,10 @@ struct HomeView: View {
         .task {
             await storyStore.fetchStories()
         }
+        .environment(\.openURL, OpenURLAction { url in
+            Self.handledUrl = url
+            showUrlSheet = true
+            return .handled
+        })
     }
 }
