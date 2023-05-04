@@ -30,15 +30,6 @@ struct Provider: TimelineProvider {
             let timeline = Timeline(entries: [entry], policy: .atEnd)
             completion(timeline)
         }
-        
-//        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-//        let currentDate = Date()
-//        for hourOffset in 0 ..< 5 {
-//            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-//            let entry = SimpleEntry(date: entryDate)
-//            entries.append(entry)
-//        }
-
     }
 }
 
@@ -95,7 +86,8 @@ struct StoryWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             StoryWidgetEntryView(story: entry.story)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .supportedFamilies([.systemSmall, .systemMedium])
+        .configurationDisplayName("Top Story")
+        .description("Watch out. It's hot.")
     }
 }
