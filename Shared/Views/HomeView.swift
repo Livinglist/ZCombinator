@@ -8,20 +8,20 @@ struct HomeView: View {
     @StateObject private var storyStore = StoryStore()
     @ObservedObject private var settings = Settings.shared
     
-    @State private var showLoginDialog: Bool = Bool()
-    @State private var showLogoutDialog: Bool = Bool()
-    @State private var showAboutSheet: Bool = Bool()
+    @State private var showLoginDialog = Bool()
+    @State private var showLogoutDialog = Bool()
+    @State private var showAboutSheet = Bool()
     
-    @State private var username: String = String()
-    @State private var password: String = String()
-    @State private var shouldRememberMe: Bool = Bool()
+    @State private var username = String()
+    @State private var password = String()
+    @State private var shouldRememberMe = Bool()
     
-    @State private var showFlagToast: Bool = Bool()
-    @State private var showUpvoteToast: Bool = Bool()
-    @State private var showDownvoteToast: Bool = Bool()
-    @State private var showLoginToast: Bool = Bool()
-    @State private var showFavoriteToast: Bool = Bool()
-    @State private var showUnfavoriteToast: Bool = Bool()
+    @State private var showFlagToast = Bool()
+    @State private var showUpvoteToast = Bool()
+    @State private var showDownvoteToast = Bool()
+    @State private var showLoginToast = Bool()
+    @State private var showFavoriteToast = Bool()
+    @State private var showUnfavoriteToast = Bool()
 
     
     var body: some View {

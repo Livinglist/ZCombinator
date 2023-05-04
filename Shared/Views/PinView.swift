@@ -3,12 +3,12 @@ import SwiftUI
 
 struct PinView: View {
     @StateObject var pinStore = PinStore()
-    @State private var showFlagToast: Bool = Bool()
-    @State private var showUpvoteToast: Bool = Bool()
-    @State private var showDownvoteToast: Bool = Bool()
-    @State private var showLoginToast: Bool = Bool()
-    @State private var showFavoriteToast: Bool = Bool()
-    @State private var showUnfavoriteToast: Bool = Bool()
+    @State private var showFlagToast = Bool()
+    @State private var showUpvoteToast = Bool()
+    @State private var showDownvoteToast = Bool()
+    @State private var showLoginToast = Bool()
+    @State private var showFavoriteToast = Bool()
+    @State private var showUnfavoriteToast = Bool()
     
     var body: some View {        
         List {

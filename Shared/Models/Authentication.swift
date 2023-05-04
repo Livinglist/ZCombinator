@@ -3,7 +3,7 @@ import HackerNewsKit
 
 public class Authentication: ObservableObject {
     @Published var username: String?
-    @Published var loggedIn: Bool = Bool()
+    @Published var loggedIn = Bool()
     @Published var user: User?
     
     init(){

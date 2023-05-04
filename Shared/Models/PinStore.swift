@@ -6,7 +6,7 @@ import HackerNewsKit
 extension PinView {
     @MainActor
     class PinStore: ObservableObject {
-        @Published var pinnedItems: [any Item] = [any Item]()
+        @Published var pinnedItems = [any Item]()
         @Published var status: Status = .idle
         private let settings = Settings.shared
         private(set) var pinnedIds: [Int] = [Int]() {

@@ -7,7 +7,7 @@ public extension String {
     }
     
     var htmlStripped: String {
-        guard let data = self.data(using: .utf8),
+        guard let data = self.data(using: .unicode),
               let res = try? NSAttributedString(data: data,
                                                 options: [.documentType: NSAttributedString.DocumentType.html],
                                                 documentAttributes: nil).string else { return self }
