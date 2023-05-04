@@ -23,7 +23,7 @@ extension FavView {
         
         init() {
             cancellable = settingsStore.$favList.sink(receiveValue: { ids in
-                self.favIds = Array<Int>(ids)
+                self.favIds = Array<Int>(ids.reversed())
             })
         }
         
