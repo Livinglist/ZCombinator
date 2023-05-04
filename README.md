@@ -14,10 +14,11 @@ Features:
   <img width="200" alt="03" src="Resources/iphone-2.png">
   <img width="200" alt="04" src="Resources/iphone-3.png">
   <img width="200" alt="05" src="Resources/iphone-4.png">
-  <img width="200" alt="06" src="Resources/iphone-5.png">
+  
   <img width="200" alt="08" src="Resources/iphone-6.png">
   <img width="200" alt="09" src="Resources/iphone-7.png">
   <img width="200" alt="10" src="Resources/iphone-8.png">
+  <img width="200" alt="06" src="Resources/iphone-5.png">
 </p>
 
 
