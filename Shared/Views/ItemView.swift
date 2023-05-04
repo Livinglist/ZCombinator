@@ -9,6 +9,7 @@ struct ItemView: View {
     @StateObject var itemStore = ItemStore()
     @State private var isCollapsed = Bool()
     @State private var showHNSheet = Bool()
+    @State private var showUrlSheet = Bool()
     @State private var showReplySheet = Bool()
     @State private var showFlagDialog = Bool()
     @State private var showFlagToast = Bool()
@@ -17,6 +18,7 @@ struct ItemView: View {
     @State private var showReplyToast = Bool()
     @State private var showFavoriteToast = Bool()
     @State private var showUnfavoriteToast = Bool()
+    private static var handledUrl: URL? = nil
 
     let level: Int
     let item: any Item
@@ -31,6 +33,11 @@ struct ItemView: View {
         mainItemView
             .sheet(isPresented: $showHNSheet) {
                 if let url = URL(string: item.itemUrl) {
+                    SafariView(url: url)
+                }
+            }
+            .sheet(isPresented: $showUrlSheet) {
+                if let url = Self.handledUrl {
                     SafariView(url: url)
                 }
             }
@@ -122,8 +129,18 @@ struct ItemView: View {
                     .padding(.trailing, 4)
                 if item is Story {
                     if let url = URL(string: item.url.orEmpty) {
-                        LinkView(url: url, title: item.title.orEmpty)
-                            .padding()
+                        ZStack {
+                            LinkView(url: url, title: item.title.orEmpty)
+                                .padding()
+                                .allowsHitTesting(false)
+                            Color.clear
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    Self.handledUrl = url
+                                    showUrlSheet = true
+                                }
+                        }
                     } else {
                         VStack(spacing: 0) {
                             Text(item.title.orEmpty)
