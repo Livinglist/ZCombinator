@@ -7,7 +7,7 @@ extension HomeView {
     @MainActor
     class StoryStore: ObservableObject {
         @Published var storyType: StoryType = .top
-        @Published var stories: [Story] = [Story]()
+        @Published var stories = [Story]()
         @Published var status: Status = .idle
 
         private let pageSize: Int = 10

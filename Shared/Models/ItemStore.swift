@@ -5,7 +5,7 @@ import HackerNewsKit
 extension ItemView {
     @MainActor
     class ItemStore : ObservableObject {
-        @Published var kids: [Comment] = [Comment]()
+        @Published var kids = [Comment]()
         @Published var status: Status = .idle
         @Published var item: (any Item)?
         
@@ -13,7 +13,7 @@ extension ItemView {
             if let kids = self.item?.kids {
                 self.status = .loading
                 
-                var comments: [Comment] = [Comment]()
+                var comments = [Comment]()
                 
                 await StoriesRepository.shared.fetchComments(ids: kids) { comment in
                     comments.append(comment)

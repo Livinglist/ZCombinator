@@ -7,11 +7,11 @@ import HackerNewsKit
 struct SearchView: View {
     @StateObject var searchStore = SearchStore()
     @StateObject var debounceObject = DebounceObject()
-    @State private var showFlagToast: Bool = Bool()
-    @State private var showUpvoteToast: Bool = Bool()
-    @State private var showDownvoteToast: Bool = Bool()
-    @State private var showFavoriteToast: Bool = Bool()
-    @State private var showUnfavoriteToast: Bool = Bool()
+    @State private var showFlagToast = Bool()
+    @State private var showUpvoteToast = Bool()
+    @State private var showDownvoteToast = Bool()
+    @State private var showFavoriteToast = Bool()
+    @State private var showUnfavoriteToast = Bool()
     @State private var filter: Filter = .story
     
     var body: some View {

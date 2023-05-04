@@ -6,17 +6,17 @@ import HackerNewsKit
 struct ItemView: View {
     @EnvironmentObject var auth: Authentication
 
-    @StateObject var itemStore: ItemStore = ItemStore()
-    @State private var isCollapsed: Bool = Bool()
-    @State private var showHNSheet: Bool = Bool()
-    @State private var showReplySheet: Bool = Bool()
-    @State private var showFlagDialog: Bool = Bool()
-    @State private var showFlagToast: Bool = Bool()
-    @State private var showUpvoteToast: Bool = Bool()
-    @State private var showDownvoteToast: Bool = Bool()
-    @State private var showReplyToast: Bool = Bool()
-    @State private var showFavoriteToast: Bool = Bool()
-    @State private var showUnfavoriteToast: Bool = Bool()
+    @StateObject var itemStore = ItemStore()
+    @State private var isCollapsed = Bool()
+    @State private var showHNSheet = Bool()
+    @State private var showReplySheet = Bool()
+    @State private var showFlagDialog = Bool()
+    @State private var showFlagToast = Bool()
+    @State private var showUpvoteToast = Bool()
+    @State private var showDownvoteToast = Bool()
+    @State private var showReplyToast = Bool()
+    @State private var showFavoriteToast = Bool()
+    @State private var showUnfavoriteToast = Bool()
 
     let level: Int
     let item: any Item
