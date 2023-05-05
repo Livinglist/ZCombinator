@@ -8,6 +8,7 @@ Features:
 - Vote on stories/comments
 - Add stories/comments to your HN favorites
 - Collapse threads
+- Story widget.
 
 <p align="center">
   <img width="240" alt="01" src="Resources/Screenshots/iphone-1.png">
