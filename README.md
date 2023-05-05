@@ -15,17 +15,17 @@ Features:
   <img width="240" alt="03" src="Resources/Screenshots/iphone-2.png">
   <img width="240" alt="04" src="Resources/Screenshots/iphone-3.png">
 
-  <img width="240" alt="01" src="Resources/Screenshots/extra-1.png">
-  <img width="240" alt="03" src="Resources/Screenshots/extra-2.png">
-  <img width="240" alt="04" src="Resources/Screenshots/extra-3.png">
+  <img width="240" alt="01" src="Resources/Screenshots/extra2-1.png">
+  <img width="240" alt="03" src="Resources/Screenshots/extra2-2.png">
+  <img width="240" alt="04" src="Resources/Screenshots/extra2-3.png">
 
   <img width="240" alt="01" src="Resources/Screenshots/iphone-4.png">
   <img width="240" alt="03" src="Resources/Screenshots/iphone-5.png">
   <img width="240" alt="04" src="Resources/Screenshots/iphone-6.png">
 
-  <img width="240" alt="01" src="Resources/Screenshots/extra-4.png">
-  <img width="240" alt="03" src="Resources/Screenshots/extra-5.png">
-  <img width="240" alt="04" src="Resources/Screenshots/extra-6.png">
+  <img width="240" alt="01" src="Resources/Screenshots/extra2-4.png">
+  <img width="240" alt="03" src="Resources/Screenshots/extra2-5.png">
+  <img width="240" alt="04" src="Resources/Screenshots/extra2-6.png">
 
 </p>
 
