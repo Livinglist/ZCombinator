@@ -10,15 +10,22 @@ Features:
 - Collapse threads
 
 <p align="center">
-  <img width="200" alt="01" src="Resources/iphone.png">
-  <img width="200" alt="03" src="Resources/iphone-2.png">
-  <img width="200" alt="04" src="Resources/iphone-3.png">
-  <img width="200" alt="05" src="Resources/iphone-4.png">
-  
-  <img width="200" alt="08" src="Resources/iphone-6.png">
-  <img width="200" alt="09" src="Resources/iphone-7.png">
-  <img width="200" alt="10" src="Resources/iphone-8.png">
-  <img width="200" alt="06" src="Resources/iphone-5.png">
+  <img width="240" alt="01" src="Resources/Screenshots/iphone-1.png">
+  <img width="240" alt="03" src="Resources/Screenshots/iphone-2.png">
+  <img width="240" alt="04" src="Resources/Screenshots/iphone-3.png">
+
+  <img width="240" alt="01" src="Resources/Screenshots/extra-1.png">
+  <img width="240" alt="03" src="Resources/Screenshots/extra-2.png">
+  <img width="240" alt="04" src="Resources/Screenshots/extra-3.png">
+
+  <img width="240" alt="01" src="Resources/Screenshots/iphone-4.png">
+  <img width="240" alt="03" src="Resources/Screenshots/iphone-5.png">
+  <img width="240" alt="04" src="Resources/Screenshots/iphone-6.png">
+
+  <img width="240" alt="01" src="Resources/Screenshots/extra-4.png">
+  <img width="240" alt="03" src="Resources/Screenshots/extra-5.png">
+  <img width="240" alt="04" src="Resources/Screenshots/extra-6.png">
+
 </p>
 
 
