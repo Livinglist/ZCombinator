@@ -26,7 +26,6 @@ Features:
   <img width="240" alt="01" src="Resources/Screenshots/extra2-4.png">
   <img width="240" alt="03" src="Resources/Screenshots/extra2-5.png">
   <img width="240" alt="04" src="Resources/Screenshots/extra2-6.png">
-
 </p>
 
 
