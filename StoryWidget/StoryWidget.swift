@@ -46,12 +46,13 @@ struct StoryWidgetView : View {
         switch family {
         case .accessoryRectangular:
                 VStack(alignment: .leading, spacing: 0) {
-                    Text(story.title.orEmpty)
-                        .font(.body)
-                        .multilineTextAlignment(.leading)
-                    Spacer()
                     Text(story.shortMetadata)
                         .font(.caption)
+                    Text(story.title.orEmpty)
+                        .font(.caption).fontWeight(.bold)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                    Spacer(minLength: 0)
             }
         default:
             HStack {
