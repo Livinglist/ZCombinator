@@ -140,6 +140,16 @@ struct ItemView: View {
                                     Self.handledUrl = url
                                     showUrlSheet = true
                                 }
+                                .if(.iOS16 && item.url.isNotNullOrEmpty) { view in
+                                    view
+                                        .contextMenu(
+                                            menuItems: {
+
+                                            },
+                                            preview: {
+                                                SafariView(url: URL(string: item.url.orEmpty)!)
+                                            })
+                                }
                         }
                     } else {
                         VStack(spacing: 0) {
