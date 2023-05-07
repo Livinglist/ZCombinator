@@ -43,41 +43,53 @@ struct StoryWidgetView : View {
     var story: Story
 
     var body: some View {
-        HStack {
-            VStack {
-                Text(story.title.orEmpty)
-                    .font(family == .systemSmall ? .caption : .body)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .multilineTextAlignment(.leading)
-                    .padding([.horizontal, .top])
-                Spacer()
-                HStack {
-                    if let url = story.readableUrl {
-                        Text(url)
-                            .font(family == .systemSmall ? .system(size: 10) : .footnote)
-                            .foregroundColor(.orange)
-                    } else if let text = story.text {
-                        Text(text)
-                            .font(.footnote)
-                            .lineLimit(2)
-                            .foregroundColor(.gray)
+        switch family {
+        case .accessoryRectangular:
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(story.title.orEmpty)
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                    Text(story.shortMetadata)
+                        .font(.caption)
+            }
+        default:
+            HStack {
+                VStack {
+                    Text(story.title.orEmpty)
+                        .font(family == .systemSmall ? .caption : .body)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .multilineTextAlignment(.leading)
+                        .padding([.horizontal, .top])
+                    Spacer()
+                    HStack {
+                        if let url = story.readableUrl {
+                            Text(url)
+                                .font(family == .systemSmall ? .system(size: 10) : .footnote)
+                                .foregroundColor(.orange)
+                        } else if let text = story.text {
+                            Text(text)
+                                .font(.footnote)
+                                .lineLimit(2)
+                                .foregroundColor(.gray)
+                        }
+                        Spacer()
+                    }.padding(.horizontal)
+                    Divider().frame(maxWidth: .infinity)
+                    HStack(alignment: .center) {
+                        Text(story.metadata.orEmpty)
+                            .font(family == .systemSmall ? .system(size: 12) : .caption)
+                            .padding(.top, 6)
+                            .padding(.leading)
+                            .padding(.bottom, 12)
+                        Spacer()
                     }
-                    Spacer()
-                }.padding(.horizontal)
-                Divider().frame(maxWidth: .infinity)
-                HStack(alignment: .center) {
-                    Text(story.metadata.orEmpty)
-                        .font(family == .systemSmall ? .system(size: 12) : .caption)
-                        .padding(.top, 6)
-                        .padding(.leading)
-                        .padding(.bottom, 12)
-                    Spacer()
                 }
             }
+            .widgetURL(URL(string: "\(story.id)"))
+            .background(Color(UIColor.secondarySystemBackground))
+            .cornerRadius(16)
         }
-        .widgetURL(URL(string: "\(story.id)"))
-        .background(Color(UIColor.secondarySystemBackground))
-        .cornerRadius(16)
     }
 }
 
@@ -88,7 +100,7 @@ struct StoryWidget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             StoryWidgetView(story: entry.story)
         }
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([.systemSmall, .systemMedium, .accessoryRectangular])
         .configurationDisplayName("Top Story")
         .description("Watch out. It's hot.")
     }
