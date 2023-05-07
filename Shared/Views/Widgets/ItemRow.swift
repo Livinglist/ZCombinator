@@ -152,24 +152,6 @@ struct ItemRow: View {
                         SafariView(url: url!)
                     })
             }
-            .if(!.iOS16) { view in
-                view
-                    .contextMenu(
-                    PreviewContextMenu(
-                        destination: SafariView(url: url!),
-                        actionProvider: { items in
-                            return UIMenu(
-                                title: "",
-                                children: [
-                                    UIAction(
-                                        title: "View in browser",
-                                        image: UIImage(systemName: "safari"),
-                                        identifier: nil,
-                                        handler: { _ in showSafari = true }
-                                    )
-                                ])
-                        }))
-            }
         }
         .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
             Button("Flag", role: .destructive) {
@@ -184,7 +166,8 @@ struct ItemRow: View {
             }
         }
         .sheet(isPresented: $showSafari) {
-            if let urlStr = item.url, let url = URL(string: urlStr) {
+            let urlStr = item.url.ifNullOrEmpty(then: item.itemUrl)
+            if let url = URL(string: urlStr) {
                 SafariView(url: url)
             }
         }

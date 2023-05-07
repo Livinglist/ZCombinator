@@ -69,4 +69,12 @@ extension Optional where Wrapped == String {
         
         return unwrapped.isNotEmpty
     }
+    
+    func ifNullOrEmpty(then str: String) -> String {
+        guard let unwrapped = self else {
+            return str
+        }
+        
+        return unwrapped.isEmpty ? str : unwrapped
+    }
 }

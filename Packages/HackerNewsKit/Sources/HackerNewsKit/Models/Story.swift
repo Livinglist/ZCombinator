@@ -1,3 +1,13 @@
+public extension Story {
+    var shortMetadata: String {
+        if isJob {
+            return "\(timeAgo)"
+        } else {
+            return "\(score.orZero) | \(descendants.orZero) | \(timeAgo)"
+        }
+    }
+}
+
 public struct Story: Item {
     public let id: Int
     public let parent: Int?
