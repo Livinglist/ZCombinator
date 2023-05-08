@@ -194,8 +194,6 @@ struct HomeView: View {
                         return
                     }
                     
-                    print(path)
-                    
                     path.append(item)
                 }
                 return .handled
