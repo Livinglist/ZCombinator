@@ -140,16 +140,17 @@ struct ItemView: View {
                                 .padding(.leading, 12)
                                 .padding(.bottom, 6)
                             Text(item.text.orEmpty.markdowned)
-                                .font(.system(size: 16))
+                                .font(.body)
                                 .padding(.leading, 8)
                                 .padding(.bottom, 6)
                         }
                     }
                 } else if item is Comment {
                     Text(item.text.orEmpty.markdowned)
-                        .font(.system(size: 16))
+                        .font(.body)
                         .padding(.leading, 8)
                         .padding(.bottom, 6)
+                        .frame(alignment: .leading)
                 }
                 if itemStore.status == .loading {
                     LoadingIndicator().padding(.top, 100)
@@ -190,6 +191,18 @@ struct ItemView: View {
             AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
         }
         .toolbar {
+            if let item = item as? Comment {
+                ToolbarItem {
+                    Button {
+                        Task {
+                            await itemStore.fetchParent(of: item)
+                        }
+                    } label: {
+                        Image(systemName: "backward.circle")
+                    }
+                    
+                }
+            }
             ToolbarItem {
                 menu
             }

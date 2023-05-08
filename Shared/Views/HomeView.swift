@@ -29,13 +29,10 @@ struct HomeView: View {
     var body: some View {
         NavigationStack(path: $router.path) {
             List {
-                Button {
-                    router.to(Destination.pin)
-                } label: {
+                NavigationLink(value: Destination.pin) {
                     Label("Pins", systemImage: "pin")
                 }
                 .listRowSeparator(.hidden)
-
 
                 ForEach(storyStore.stories) { story in
                     ItemRow(item: story,
