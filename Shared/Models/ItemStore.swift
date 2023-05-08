@@ -14,7 +14,8 @@ extension ItemView {
         func loadKids(of cmt: Comment) async {
             if let parentIndex = kids.firstIndex(of: cmt),
                let kids = cmt.kids,
-               let level = cmt.level {
+               let level = cmt.level,
+               loadingItem == nil {
                 self.loadingItem = cmt.id
                 
                 var comments = [Comment]()
@@ -23,11 +24,11 @@ extension ItemView {
                     comments.append(comment.copyWith(level: level + 1))
                 }
                 
-                self.loadingItem = nil
                 self.loadedItems.insert(cmt.id)
                 withAnimation {
                     self.kids.insert(contentsOf: comments, at: parentIndex + 1)
                 }
+                self.loadingItem = nil
             }
         }
         
