@@ -12,8 +12,9 @@ extension ItemView {
         @Published var loadedItems: Set<Int> = Set<Int>()
         
         func loadKids(of cmt: Comment) async {
-            guard let parentIndex = kids.firstIndex(of: cmt) else { return }
-            if let kids = cmt.kids, let level = cmt.level {
+            if let parentIndex = kids.firstIndex(of: cmt),
+               let kids = cmt.kids,
+               let level = cmt.level {
                 self.loadingItem = cmt.id
                 
                 var comments = [Comment]()
@@ -39,9 +40,8 @@ extension ItemView {
                 }
                 self.status = .loading
                 
-                let item = await StoriesRepository.shared.fetchItem(id)
-                
-                if let item = item, let kids = item.kids {
+                if let item = await StoriesRepository.shared.fetchItem(id),
+                   let kids = item.kids {
                     self.item = item
                     
                     var comments = [Comment]()
@@ -62,6 +62,13 @@ extension ItemView {
                 }
             }
         }
+        
+        func fetchParent(of cmt: Comment) async {
+            guard let parentId = cmt.parent,
+                  let parent = await StoriesRepository.shared.fetchItem(parentId)
+            else { return }
+            
+            Router.shared.to(parent)
+        }
     }
-
 }
