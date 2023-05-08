@@ -49,6 +49,10 @@ extension String {
         let itemId = /item\?id=[0-9]+/
         let digits = /[0-9]+/
         
+        if let id = Int(self) {
+            return id
+        }
+        
         if let match = self.firstMatch(of: itemId),
            let idMatch = String(match.0).firstMatch(of: digits),
            let id = Int(String(idMatch.0)) {

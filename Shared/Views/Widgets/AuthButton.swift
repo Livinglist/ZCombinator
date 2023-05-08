@@ -17,8 +17,8 @@ extension HomeView {
                         Label(auth.username.orEmpty, systemImage: "person")
                     }
                 } else if let username = auth.username {
-                    NavigationLink {
-                        ProfileView(id: username)
+                    Button {
+                        Router.shared.to(.profile(username))
                     } label: {
                         Label(auth.username.orEmpty, systemImage: "person")
                     }

@@ -19,8 +19,8 @@ struct ProfileView: View {
                 Section {
                     DetailedRow(title: "Created at", detail: user.createdAt.orEmpty)
                     DetailedRow(title: "Karma", detail: String(user.karma.orZero))
-                    NavigationLink {
-                        SubmissionView(ids: profileStore.user?.submitted ?? [Int]())
+                    Button {
+                        Router.shared.to(.submission(profileStore.user?.submitted ?? [Int]()))
                     } label: {
                         Text("Submissions")
                     }

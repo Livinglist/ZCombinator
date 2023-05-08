@@ -7,6 +7,7 @@ struct HomeView: View {
     @EnvironmentObject private var auth: Authentication
     @StateObject private var storyStore = StoryStore()
     @ObservedObject private var settings = Settings.shared
+    @ObservedObject private var router = Router.shared
     
     @State private var showLoginDialog = Bool()
     @State private var showLogoutDialog = Bool()
@@ -25,22 +26,19 @@ struct HomeView: View {
     @State private var showUnfavoriteToast = Bool()
     private static var handledUrl: URL? = nil
     
-    @State private var path = NavigationPath()
-
-    
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack(path: $router.path) {
             List {
-                NavigationLink {
-                    PinView()
+                Button {
+                    router.to(Destination.pin)
                 } label: {
                     Label("Pins", systemImage: "pin")
                 }
                 .listRowSeparator(.hidden)
 
+
                 ForEach(storyStore.stories) { story in
                     ItemRow(item: story,
-                            useLink: false,
                             showFlagToast: $showFlagToast,
                             showUpvoteToast: $showUpvoteToast,
                             showDownvoteToast: $showDownvoteToast,
@@ -53,31 +51,31 @@ struct HomeView: View {
                     }
                 }
             }
-            .navigationDestination(for: Comment.self) { story in
-                ItemView(item: story, level: 0)
+            .navigationDestination(for: Comment.self) { cmt in
+                ItemView(item: cmt, level: 0)
             }
             .navigationDestination(for: Story.self) { story in
                 ItemView(item: story, level: 0)
             }
+            .navigationDestination(for: Destination.self) { val in val.toView() }
             .listStyle(.plain)
             .refreshable {
                 await storyStore.refresh()
             }
             .toolbar {
                 ToolbarItem {
-                    NavigationLink {
-                        SearchView()
+                    Button {
+                        router.to(Destination.search)
                     } label: {
                         Label(String(), systemImage: "magnifyingglass")
                     }
                 }
                 ToolbarItem {
-                    NavigationLink {
-                        FavView()
+                    Button {
+                        router.to(Destination.fav)
                     } label: {
                         Label(String(), systemImage: "heart")
                     }
-
                 }
                 ToolbarItem {
                     Menu {
@@ -176,7 +174,7 @@ struct HomeView: View {
                 Task {
                     let story = await StoriesRepository.shared.fetchStory(id)
                     guard let story = story else { return }
-                    path.append(story)
+                    router.to(story)
                 }
             }
         })
@@ -190,7 +188,7 @@ struct HomeView: View {
                         return
                     }
                     
-                    path.append(item)
+                    router.to(item)
                 }
                 return .handled
             } else {

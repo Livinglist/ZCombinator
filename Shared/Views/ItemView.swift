@@ -205,11 +205,11 @@ struct ItemView: View {
         let item = itemStore.item ?? item
         
         HStack {
-            if let authoer = item.by {
-                NavigationLink {
-                    ProfileView(id: authoer)
+            if let author = item.by {
+                Button {
+                    Router.shared.to(.profile(author))
                 } label: {
-                    Text(authoer)
+                    Text(author)
                         .borderedFootnote()
                         .foregroundColor(getColor(level: level))
                 }

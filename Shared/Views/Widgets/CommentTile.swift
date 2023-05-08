@@ -207,11 +207,11 @@ extension ItemView {
         @ViewBuilder
         var nameRow: some View {
             HStack {
-                if let authoer = comment.by {
-                    NavigationLink {
-                        ProfileView(id: authoer)
+                if let author = comment.by {
+                    Button {
+                        Router.shared.to(.profile(author))
                     } label: {
-                        Text(authoer)
+                        Text(author)
                             .borderedFootnote()
                             .foregroundColor(getColor(level: level))
                     }
