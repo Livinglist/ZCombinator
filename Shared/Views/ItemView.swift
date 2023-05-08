@@ -161,7 +161,7 @@ struct ItemView: View {
                                 await itemStore.loadKids(of: comment)
                             }
                         }.padding(.trailing, 4)
-                    }.id(UUID())
+                    }
                 }
                 Spacer().frame(height: 60)
                 if itemStore.status == Status.loaded {
