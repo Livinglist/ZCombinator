@@ -49,7 +49,6 @@ class ShareViewController: SLComposeServiceViewController {
     }
     
     private func dismissWithError() {
-        print("[ERROR] Error loading data!")
         let alert = UIAlertController(title: "Error", message: "Error loading data", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Error", style: .cancel) { _ in

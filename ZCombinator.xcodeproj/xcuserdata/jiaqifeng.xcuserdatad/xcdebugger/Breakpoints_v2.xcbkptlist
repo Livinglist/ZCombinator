@@ -183,17 +183,81 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B37413E0-F4B4-44E0-A2F0-CB886C0C0824"
-            shouldBeEnabled = "Yes"
+            uuid = "8BA20401-9BCD-4CEF-ADC9-E3039464DE54"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Shared/ZCombinatorApp.swift"
+            filePath = "Packages/HackerNewsKit/Sources/HackerNewsKit/Models/User.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
-            landmarkName = "close()"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "init(id:about:created:delay:karma:submitted:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "65D5ABA5-E186-484F-8080-019C9FF62038"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Models/SubmissionStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "fetchSubmissions(ids:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "580E58A3-5072-416A-B235-2D6F5632755F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Models/SubmissionStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "fetchSubmissions(ids:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "580E58A3-5072-416A-B235-2D6F5632755F - 998c78d10ff7e34e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for ZCombinator.SubmissionView.SubmissionStore.fetchSubmissions(ids: Swift.Array&lt;Swift.Int&gt;) async -&gt; ()"
+                  moduleName = "ZCombinator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jiaqifeng/Dev/ZCombinator/Shared/Models/SubmissionStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "600">
+               </Location>
+               <Location
+                  uuid = "580E58A3-5072-416A-B235-2D6F5632755F - 553c196442307c78"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (HackerNewsKit.Item) -&gt; () in ZCombinator.SubmissionView.SubmissionStore.fetchSubmissions(ids: Swift.Array&lt;Swift.Int&gt;) async -&gt; ()"
+                  moduleName = "ZCombinator"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jiaqifeng/Dev/ZCombinator/Shared/Models/SubmissionStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "20"
+                  endingLineNumber = "20"
+                  offsetFromSymbolStart = "32">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

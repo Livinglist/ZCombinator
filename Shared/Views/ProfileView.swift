@@ -1,24 +1,40 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject private var auth: Authentication
     @StateObject var profileStore = ProfileStore()
+    @State var showLogoutDialog = Bool()
+    
     let id: String
     
     var body: some View {
         List {
             if let user = profileStore.user {
                 Section {
-                    DetailedRow(title: "Created at", detail: user.createdAt.orEmpty)
-                    DetailedRow(title: "Karma", detail: String(user.karma.orZero))
-                } header: {
-                    Text("Stats")
-                }
-
-                
-                Section {
                     Text(user.about.orEmpty.markdowned)
                 } header: {
                     Text("About")
+                }
+                
+                Section {
+                    DetailedRow(title: "Created at", detail: user.createdAt.orEmpty)
+                    DetailedRow(title: "Karma", detail: String(user.karma.orZero))
+                    NavigationLink {
+                        SubmissionView(ids: profileStore.user?.submitted ?? [Int]())
+                    } label: {
+                        Text("Submissions")
+                    }
+                } header: {
+                    Text("Stats")
+                }
+                
+                if auth.loggedIn && auth.username == id {
+                    Button {
+                        showLogoutDialog = true
+                    } label: {
+                        Label("Log Out", systemImage: "rectangle.portrait.and.arrow.forward")
+                            .foregroundColor(.red)
+                    }
                 }
             }
         }
@@ -32,6 +48,15 @@ struct ProfileView: View {
                 }
             }
         }
+        .alert("Logout", isPresented: $showLogoutDialog, actions: {
+            Button("Logout", role: .destructive, action: {
+                HapticFeedbackService.shared.success()
+                auth.logOut()
+            })
+            Button("Cancel", role: .cancel, action: {})
+        }, message: {
+            Text("Do you want to log out as \(auth.username.orEmpty)?")
+        })
     }
 }
 

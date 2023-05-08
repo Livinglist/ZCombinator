@@ -1,4 +1,5 @@
 import SwiftUI
+import HackerNewsKit
 
 extension HomeView {
     struct AuthButton: View {
@@ -9,10 +10,18 @@ extension HomeView {
         
         var body: some View {
             if auth.loggedIn {
-                Button {
-                    showLogoutDialog = true
-                } label: {
-                    Label(auth.username.orEmpty, systemImage: "person")
+                if auth.user == User() {
+                    Button {
+                        showLogoutDialog = true
+                    } label: {
+                        Label(auth.username.orEmpty, systemImage: "person")
+                    }
+                } else if let username = auth.username {
+                    NavigationLink {
+                        ProfileView(id: username)
+                    } label: {
+                        Label(auth.username.orEmpty, systemImage: "person")
+                    }
                 }
             } else {
                 Button {

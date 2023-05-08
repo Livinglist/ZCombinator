@@ -44,6 +44,8 @@
 		E54D06FB2A01AF0400F3E57B /* FavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D06FA2A01AF0400F3E57B /* FavView.swift */; };
 		E54D06FE2A01AF1100F3E57B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D06FD2A01AF1100F3E57B /* Settings.swift */; };
 		E54D07012A01BB2D00F3E57B /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54D07002A01BB2D00F3E57B /* UserDefaultWrapper.swift */; };
+		E55322F92A08D13F005B93D0 /* SubmissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55322F82A08D13F005B93D0 /* SubmissionView.swift */; };
+		E55322FB2A08D17A005B93D0 /* SubmissionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55322FA2A08D17A005B93D0 /* SubmissionStore.swift */; };
 		E55CF5C72A01D33300C6B80C /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55CF5C62A01D33300C6B80C /* CheckBox.swift */; };
 		E5687FAD289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
 		E5687FAF289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
@@ -170,6 +172,8 @@
 		E54D06FA2A01AF0400F3E57B /* FavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavView.swift; sourceTree = "<group>"; };
 		E54D06FD2A01AF1100F3E57B /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		E54D07002A01BB2D00F3E57B /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
+		E55322F82A08D13F005B93D0 /* SubmissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionView.swift; sourceTree = "<group>"; };
+		E55322FA2A08D17A005B93D0 /* SubmissionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionStore.swift; sourceTree = "<group>"; };
 		E55CF5C62A01D33300C6B80C /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		E5687FAC289E194A00901F1F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		E57640312A0302A10075F5D1 /* FlagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagButton.swift; sourceTree = "<group>"; };
@@ -338,6 +342,7 @@
 				E514FC422A02EBD400BEFC14 /* SearchStore.swift */,
 				E57640352A0313B30075F5D1 /* PinStore.swift */,
 				E5C7B97F2A0887F400CA6066 /* ProfileStore.swift */,
+				E55322FA2A08D17A005B93D0 /* SubmissionStore.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 				E514FC402A02EB8E00BEFC14 /* SearchView.swift */,
 				E57640372A0313C80075F5D1 /* PinView.swift */,
 				E5C7B97D2A0887D600CA6066 /* ProfileView.swift */,
+				E55322F82A08D13F005B93D0 /* SubmissionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -696,6 +702,7 @@
 				E5EF2CE1289C782A00AA5290 /* WebView.swift in Sources */,
 				E504A0402A02269A0090AFAB /* DownvoteButton.swift in Sources */,
 				E5C7B9802A0887F400CA6066 /* ProfileStore.swift in Sources */,
+				E55322F92A08D13F005B93D0 /* SubmissionView.swift in Sources */,
 				E5EF2CF3289CA58100AA5290 /* View+Modifiers.swift in Sources */,
 				E504A03D2A0226080090AFAB /* UpvoteButton.swift in Sources */,
 				E57640342A030B2F0075F5D1 /* DebouncedObject.swift in Sources */,
@@ -731,6 +738,7 @@
 				E5C7B97C2A08706000CA6066 /* View+GetColor.swift in Sources */,
 				E54B014329FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */,
 				E5E048D3289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */,
+				E55322FB2A08D17A005B93D0 /* SubmissionStore.swift in Sources */,
 				E54D06FB2A01AF0400F3E57B /* FavView.swift in Sources */,
 				E50FB9F72886738D00AA325C /* HomeView.swift in Sources */,
 				E514FC3A2A02C45E00BEFC14 /* Int+OrZero.swift in Sources */,
@@ -951,7 +959,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -989,7 +997,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
