@@ -114,10 +114,12 @@ public class StoriesRepository {
             switch type {
             case "story":
                 let story = try? JSONDecoder().decode(Story.self, from: data)
-                return story
+                let filteredText = story?.text.htmlStripped.withExtraLineBreak
+                return story?.copyWith(text: filteredText)
             case "comment":
                 let comment = try? JSONDecoder().decode(Comment.self, from: data)
-                return comment
+                let filteredText = comment?.text.htmlStripped.withExtraLineBreak
+                return comment?.copyWith(text: filteredText)
             default:
                 return nil
             }
