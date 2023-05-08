@@ -170,7 +170,6 @@ struct HomeView: View {
             await storyStore.fetchStories()
         }
         .onOpenURL(perform: { url in
-            print(url)
             if let id = url.absoluteString.itemId {
                 Task {
                     let story = await StoriesRepository.shared.fetchStory(id)
