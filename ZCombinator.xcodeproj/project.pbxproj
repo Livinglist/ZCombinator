@@ -53,6 +53,8 @@
 		E57640342A030B2F0075F5D1 /* DebouncedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640332A030B2F0075F5D1 /* DebouncedObject.swift */; };
 		E57640362A0313B30075F5D1 /* PinStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640352A0313B30075F5D1 /* PinStore.swift */; };
 		E57640382A0313C80075F5D1 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640372A0313C80075F5D1 /* PinView.swift */; };
+		E5C7B97A2A086C9A00CA6066 /* CommentTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B9792A086C9A00CA6066 /* CommentTile.swift */; };
+		E5C7B97C2A08706000CA6066 /* View+GetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B97B2A08706000CA6066 /* View+GetColor.swift */; };
 		E5E048D0289F69D700702733 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048CF289F69D700702733 /* AuthButton.swift */; };
 		E5E048D3289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */; };
 		E5E048D6289F72D700702733 /* View+ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */; };
@@ -148,6 +150,8 @@
 		E57640332A030B2F0075F5D1 /* DebouncedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebouncedObject.swift; sourceTree = "<group>"; };
 		E57640352A0313B30075F5D1 /* PinStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinStore.swift; sourceTree = "<group>"; };
 		E57640372A0313C80075F5D1 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
+		E5C7B9792A086C9A00CA6066 /* CommentTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTile.swift; sourceTree = "<group>"; };
+		E5C7B97B2A08706000CA6066 /* View+GetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GetColor.swift"; sourceTree = "<group>"; };
 		E5E048CF289F69D700702733 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
 		E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ConditionalModifier.swift"; sourceTree = "<group>"; };
@@ -335,6 +339,7 @@
 				E5EF2CE0289C782A00AA5290 /* WebView.swift */,
 				E55CF5C62A01D33300C6B80C /* CheckBox.swift */,
 				E504A0422A0227F80090AFAB /* ShareMenu.swift */,
+				E5C7B9792A086C9A00CA6066 /* CommentTile.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 				E5E048D8289F737700702733 /* BoolExtension.swift */,
 				E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */,
 				E514FC392A02C45E00BEFC14 /* Int+OrZero.swift */,
+				E5C7B97B2A08706000CA6066 /* View+GetColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -567,12 +573,14 @@
 				E504A0432A0227F80090AFAB /* ShareMenu.swift in Sources */,
 				E5EF2CD8289C777A00AA5290 /* ContextMenu.swift in Sources */,
 				E5E048D0289F69D700702733 /* AuthButton.swift in Sources */,
+				E5C7B97A2A086C9A00CA6066 /* CommentTile.swift in Sources */,
 				E5EF2CD5289C773000AA5290 /* View+ContextMenu.swift in Sources */,
 				E54D07012A01BB2D00F3E57B /* UserDefaultWrapper.swift in Sources */,
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
 				E57640322A0302A10075F5D1 /* FlagButton.swift in Sources */,
 				E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */,
 				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
+				E5C7B97C2A08706000CA6066 /* View+GetColor.swift in Sources */,
 				E54B014329FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */,
 				E5E048D3289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */,
 				E54D06FB2A01AF0400F3E57B /* FavView.swift in Sources */,
@@ -749,7 +757,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -786,7 +794,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
