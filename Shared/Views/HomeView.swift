@@ -172,20 +172,16 @@ struct HomeView: View {
             await storyStore.fetchStories()
         }
         .onOpenURL(perform: { url in
-            guard let id = Int(url.absoluteString) else { return }
-            Task {
-                let story = await StoriesRepository.shared.fetchStory(id)
-                guard let story = story else { return }
-                path.append(story)
+            if let id = url.absoluteString.itemId {
+                Task {
+                    let story = await StoriesRepository.shared.fetchStory(id)
+                    guard let story = story else { return }
+                    path.append(story)
+                }
             }
         })
         .environment(\.openURL, OpenURLAction { url in
-            let itemId = /item\?id=[0-9]+/
-            let digits = /[0-9]+/
-                        
-            if let match = url.absoluteString.firstMatch(of: itemId),
-               let idMatch = String(match.0).firstMatch(of: digits),
-               let id = Int(String(idMatch.0)) {
+            if let id = url.absoluteString.itemId {
                 Task {
                     let item = await StoriesRepository.shared.fetchItem(id)
                     guard let item = item else {

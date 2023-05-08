@@ -44,6 +44,19 @@ extension String {
         guard let data = self.data(using: .utf8, allowLossyConversion: false) else { return nil }
         return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
+    
+    var itemId: Int? {
+        let itemId = /item\?id=[0-9]+/
+        let digits = /[0-9]+/
+        
+        if let match = self.firstMatch(of: itemId),
+           let idMatch = String(match.0).firstMatch(of: digits),
+           let id = Int(String(idMatch.0)) {
+            return id
+        }
+        
+        return nil
+    }
 }
 
 extension Optional where Wrapped == String {
