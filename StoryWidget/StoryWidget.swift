@@ -45,15 +45,16 @@ struct StoryWidgetView : View {
     var body: some View {
         switch family {
         case .accessoryRectangular:
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(story.shortMetadata)
-                        .font(.caption)
-                    Text(story.title.orEmpty)
-                        .font(.caption).fontWeight(.bold)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .topLeading)
-                    Spacer(minLength: 0)
+            VStack(alignment: .leading, spacing: 0) {
+                Text(story.shortMetadata)
+                    .font(.caption)
+                Text(story.title.orEmpty)
+                    .font(.caption).fontWeight(.bold)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                Spacer(minLength: 0)
             }
+            .widgetURL(URL(string: "\(story.id)"))
         default:
             HStack {
                 VStack {
