@@ -104,7 +104,7 @@ extension ItemView {
         var textView: some View {
             if comment.text.isNotNullOrEmpty {
                 Text(comment.text.orEmpty.markdowned)
-                    .font(.body)
+                    .font(.callout)
                     .textSelection(.enabled)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: .infinity, alignment: .leading)
