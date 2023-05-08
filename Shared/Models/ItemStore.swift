@@ -22,11 +22,9 @@ extension ItemView {
                     comments.append(comment.copyWith(level: level + 1))
                 }
                 
-                withAnimation {
-                    self.kids.insert(contentsOf: comments, at: parentIndex + 1)
-                    self.loadingItem = nil
-                    self.loadedItems.insert(cmt.id)
-                }
+                self.kids.insert(contentsOf: comments, at: parentIndex + 1)
+                self.loadingItem = nil
+                self.loadedItems.insert(cmt.id)
             }
         }
         
