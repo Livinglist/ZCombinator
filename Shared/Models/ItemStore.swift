@@ -42,16 +42,13 @@ extension ItemView {
                 let item = await StoriesRepository.shared.fetchItem(id)
                 
                 if let item = item, let kids = item.kids {
-                    print(kids)
                     self.item = item
                     
                     var comments = [Comment]()
                     
                     await StoriesRepository.shared.fetchComments(ids: kids) { comment in
-                        print(comment)
                         comments.append(comment.copyWith(level: 0))
                     }
-                    print(comments)
                     
                     
                     withAnimation {

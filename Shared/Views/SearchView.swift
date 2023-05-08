@@ -37,9 +37,10 @@ struct SearchView: View {
                 }
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
         .listStyle(.plain)
-        .searchable(text: $debounceObject.text, placement: .navigationBarDrawer(displayMode: .always))
+        .searchable(text: $debounceObject.text, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search Hacker News")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Search")
         .toast(isPresenting: $showFlagToast) {
             AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
         }

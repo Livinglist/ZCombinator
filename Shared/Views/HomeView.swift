@@ -24,10 +24,12 @@ struct HomeView: View {
     @State private var showFavoriteToast = Bool()
     @State private var showUnfavoriteToast = Bool()
     private static var handledUrl: URL? = nil
+    
+    @State private var path = NavigationPath()
 
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             List {
                 NavigationLink {
                     PinView()
@@ -38,6 +40,7 @@ struct HomeView: View {
 
                 ForEach(storyStore.stories) { story in
                     ItemRow(item: story,
+                            useLink: false,
                             showFlagToast: $showFlagToast,
                             showUpvoteToast: $showUpvoteToast,
                             showDownvoteToast: $showDownvoteToast,
@@ -49,6 +52,12 @@ struct HomeView: View {
                         storyStore.onStoryRowAppear(story)
                     }
                 }
+            }
+            .navigationDestination(for: Comment.self) { story in
+                ItemView(item: story, level: 0)
+            }
+            .navigationDestination(for: Story.self) { story in
+                ItemView(item: story, level: 0)
             }
             .listStyle(.plain)
             .refreshable {
@@ -97,7 +106,6 @@ struct HomeView: View {
                 }
             }
             .navigationTitle(storyStore.storyType.rawValue.uppercased())
-            Text("Select a story")
         }
         .tint(.orange)
         .toast(isPresenting: $showFlagToast) {
@@ -163,10 +171,39 @@ struct HomeView: View {
         .task {
             await storyStore.fetchStories()
         }
+        .onOpenURL(perform: { url in
+            guard let id = Int(url.absoluteString) else { return }
+            Task {
+                let story = await StoriesRepository.shared.fetchStory(id)
+                guard let story = story else { return }
+                path.append(story)
+            }
+        })
         .environment(\.openURL, OpenURLAction { url in
-            Self.handledUrl = url
-            showUrlSheet = true
-            return .handled
+            let itemId = /item\?id=[0-9]+/
+            let digits = /[0-9]+/
+                        
+            if let match = url.absoluteString.firstMatch(of: itemId),
+               let idMatch = String(match.0).firstMatch(of: digits),
+               let id = Int(String(idMatch.0)) {
+                Task {
+                    let item = await StoriesRepository.shared.fetchItem(id)
+                    guard let item = item else {
+                        Self.handledUrl = url
+                        showUrlSheet = true
+                        return
+                    }
+                    
+                    print(path)
+                    
+                    path.append(item)
+                }
+                return .handled
+            } else {
+                Self.handledUrl = url
+                showUrlSheet = true
+                return .handled
+            }
         })
     }
 }
