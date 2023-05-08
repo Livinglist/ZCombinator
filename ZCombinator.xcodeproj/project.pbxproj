@@ -50,6 +50,8 @@
 		E5687FAD289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
 		E5687FAF289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
 		E5687FB0289E194A00901F1F /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5687FAC289E194A00901F1F /* TextView.swift */; };
+		E5689EF12A09558B00F6CC48 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5689EF02A09558B00F6CC48 /* Router.swift */; };
+		E5689EF32A0956B600F6CC48 /* Destination.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5689EF22A0956B600F6CC48 /* Destination.swift */; };
 		E56C06C0288679E900D4E685 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E56C06BF288679E900D4E685 /* Alamofire */; };
 		E57640322A0302A10075F5D1 /* FlagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640312A0302A10075F5D1 /* FlagButton.swift */; };
 		E57640342A030B2F0075F5D1 /* DebouncedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640332A030B2F0075F5D1 /* DebouncedObject.swift */; };
@@ -176,6 +178,8 @@
 		E55322FA2A08D17A005B93D0 /* SubmissionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmissionStore.swift; sourceTree = "<group>"; };
 		E55CF5C62A01D33300C6B80C /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
 		E5687FAC289E194A00901F1F /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		E5689EF02A09558B00F6CC48 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		E5689EF22A0956B600F6CC48 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
 		E57640312A0302A10075F5D1 /* FlagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagButton.swift; sourceTree = "<group>"; };
 		E57640332A030B2F0075F5D1 /* DebouncedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebouncedObject.swift; sourceTree = "<group>"; };
 		E57640352A0313B30075F5D1 /* PinStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinStore.swift; sourceTree = "<group>"; };
@@ -343,6 +347,8 @@
 				E57640352A0313B30075F5D1 /* PinStore.swift */,
 				E5C7B97F2A0887F400CA6066 /* ProfileStore.swift */,
 				E55322FA2A08D17A005B93D0 /* SubmissionStore.swift */,
+				E5689EF02A09558B00F6CC48 /* Router.swift */,
+				E5689EF22A0956B600F6CC48 /* Destination.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -700,6 +706,7 @@
 				E5E048DC289F86D400702733 /* ReplyView.swift in Sources */,
 				E52134C028877C06005CFB77 /* ItemRow.swift in Sources */,
 				E5EF2CE1289C782A00AA5290 /* WebView.swift in Sources */,
+				E5689EF12A09558B00F6CC48 /* Router.swift in Sources */,
 				E504A0402A02269A0090AFAB /* DownvoteButton.swift in Sources */,
 				E5C7B9802A0887F400CA6066 /* ProfileStore.swift in Sources */,
 				E55322F92A08D13F005B93D0 /* SubmissionView.swift in Sources */,
@@ -715,6 +722,7 @@
 				E514FC452A02FEF100BEFC14 /* PinButton.swift in Sources */,
 				E5E048D6289F72D700702733 /* View+ConditionalModifier.swift in Sources */,
 				E514FC3F2A02CA6000BEFC14 /* Status.swift in Sources */,
+				E5689EF32A0956B600F6CC48 /* Destination.swift in Sources */,
 				E5EF2CDB289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
 				E504A0362A01F79B0090AFAB /* FavStore.swift in Sources */,
 				E5EF2CCB289C6F8C00AA5290 /* StringExtension.swift in Sources */,

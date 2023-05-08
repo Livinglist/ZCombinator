@@ -8,7 +8,6 @@ struct ItemRow: View {
     let item: any Item
     let url: URL?
     let isPinnedStory: Bool
-    let useLink: Bool
 
     @EnvironmentObject var auth: Authentication
 
@@ -25,7 +24,6 @@ struct ItemRow: View {
 
     init(item: any Item,
          isPinnedStory: Bool = false,
-         useLink: Bool = true,
          showFlagToast: Binding<Bool>,
          showUpvoteToast: Binding<Bool>,
          showDownvoteToast: Binding<Bool>,
@@ -34,31 +32,11 @@ struct ItemRow: View {
         self.item = item
         self.url = URL(string: item.url ?? "https://news.ycombinator.com/item?id=\(item.id)")
         self.isPinnedStory = isPinnedStory
-        self.useLink = useLink
         self._showFlagToast = showFlagToast
         self._showUpvoteToast = showUpvoteToast
         self._showDownvoteToast = showDownvoteToast
         self._showFavoriteToast = showFavoriteToast
         self._showUnfavoriteToast = showUnfavoriteToast
-    }
-
-    @ViewBuilder
-    var navigationLink: some View {
-        if item is Story, item.isJobWithUrl {
-            EmptyView()
-        } else if useLink {
-            NavigationLink(
-                destination: {
-                    ItemView(item: item)
-                },
-                label: {
-                    EmptyView()
-                })
-        } else {
-            NavigationLink(value: item) {
-                EmptyView()
-            }
-        }
     }
 
     @ViewBuilder
@@ -87,11 +65,12 @@ struct ItemRow: View {
 
     var body: some View {
         ZStack {
-            navigationLink
             Button(
                 action: {
                     if item.isJobWithUrl {
                         showSafari = true
+                    } else {
+                        Router.shared.to(item)
                     }
                 },
                 label: {
