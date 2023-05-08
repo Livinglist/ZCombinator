@@ -140,17 +140,19 @@ struct ItemView: View {
                                 .padding(.leading, 12)
                                 .padding(.bottom, 6)
                             Text(item.text.orEmpty.markdowned)
-                                .font(.body)
+                                .font(.callout)
                                 .padding(.leading, 8)
                                 .padding(.bottom, 6)
                         }
                     }
                 } else if item is Comment {
-                    Text(item.text.orEmpty.markdowned)
-                        .font(.body)
-                        .padding(.leading, 8)
-                        .padding(.bottom, 6)
-                        .frame(alignment: .leading)
+                    VStack(spacing: 0) {
+                        Text(item.text.orEmpty.markdowned)
+                            .font(.callout)
+                            .padding(.top, 6)
+                            .padding(.leading, 8)
+                            .padding(.bottom, 6)
+                    }
                 }
                 if itemStore.status == .loading {
                     LoadingIndicator().padding(.top, 100)
