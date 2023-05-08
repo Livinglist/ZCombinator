@@ -55,6 +55,8 @@
 		E57640382A0313C80075F5D1 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640372A0313C80075F5D1 /* PinView.swift */; };
 		E5C7B97A2A086C9A00CA6066 /* CommentTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B9792A086C9A00CA6066 /* CommentTile.swift */; };
 		E5C7B97C2A08706000CA6066 /* View+GetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B97B2A08706000CA6066 /* View+GetColor.swift */; };
+		E5C7B97E2A0887D600CA6066 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B97D2A0887D600CA6066 /* ProfileView.swift */; };
+		E5C7B9802A0887F400CA6066 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B97F2A0887F400CA6066 /* ProfileStore.swift */; };
 		E5E048D0289F69D700702733 /* AuthButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048CF289F69D700702733 /* AuthButton.swift */; };
 		E5E048D3289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */; };
 		E5E048D6289F72D700702733 /* View+ConditionalModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */; };
@@ -152,6 +154,8 @@
 		E57640372A0313C80075F5D1 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		E5C7B9792A086C9A00CA6066 /* CommentTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTile.swift; sourceTree = "<group>"; };
 		E5C7B97B2A08706000CA6066 /* View+GetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GetColor.swift"; sourceTree = "<group>"; };
+		E5C7B97D2A0887D600CA6066 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		E5C7B97F2A0887F400CA6066 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
 		E5E048CF289F69D700702733 /* AuthButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthButton.swift; sourceTree = "<group>"; };
 		E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+KeyWindow.swift"; sourceTree = "<group>"; };
 		E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ConditionalModifier.swift"; sourceTree = "<group>"; };
@@ -277,6 +281,7 @@
 				E504A0352A01F79B0090AFAB /* FavStore.swift */,
 				E514FC422A02EBD400BEFC14 /* SearchStore.swift */,
 				E57640352A0313B30075F5D1 /* PinStore.swift */,
+				E5C7B97F2A0887F400CA6066 /* ProfileStore.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -290,6 +295,7 @@
 				E54D06FA2A01AF0400F3E57B /* FavView.swift */,
 				E514FC402A02EB8E00BEFC14 /* SearchView.swift */,
 				E57640372A0313C80075F5D1 /* PinView.swift */,
+				E5C7B97D2A0887D600CA6066 /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -549,6 +555,7 @@
 				E52134C028877C06005CFB77 /* ItemRow.swift in Sources */,
 				E5EF2CE1289C782A00AA5290 /* WebView.swift in Sources */,
 				E504A0402A02269A0090AFAB /* DownvoteButton.swift in Sources */,
+				E5C7B9802A0887F400CA6066 /* ProfileStore.swift in Sources */,
 				E5EF2CF3289CA58100AA5290 /* View+Modifiers.swift in Sources */,
 				E504A03D2A0226080090AFAB /* UpvoteButton.swift in Sources */,
 				E57640342A030B2F0075F5D1 /* DebouncedObject.swift in Sources */,
@@ -576,6 +583,7 @@
 				E5C7B97A2A086C9A00CA6066 /* CommentTile.swift in Sources */,
 				E5EF2CD5289C773000AA5290 /* View+ContextMenu.swift in Sources */,
 				E54D07012A01BB2D00F3E57B /* UserDefaultWrapper.swift in Sources */,
+				E5C7B97E2A0887D600CA6066 /* ProfileView.swift in Sources */,
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
 				E57640322A0302A10075F5D1 /* FlagButton.swift in Sources */,
 				E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */,
