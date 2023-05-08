@@ -207,9 +207,16 @@ extension ItemView {
         @ViewBuilder
         var nameRow: some View {
             HStack {
-                Text(comment.by.orEmpty)
-                    .borderedFootnote()
-                    .foregroundColor(getColor(level: level))
+                if let authoer = comment.by {
+                    NavigationLink {
+                        ProfileView(id: authoer)
+                    } label: {
+                        Text(authoer)
+                            .borderedFootnote()
+                            .foregroundColor(getColor(level: level))
+                    }
+                }
+
                 if let karma = comment.score {
                     Text("\(karma) karma")
                         .borderedFootnote()

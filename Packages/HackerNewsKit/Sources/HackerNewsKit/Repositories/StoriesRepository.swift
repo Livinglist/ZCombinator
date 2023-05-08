@@ -131,10 +131,11 @@ public class StoriesRepository {
     public func fetchUser(_ id: String) async -> User? {
         let response = await AF.request("\(self.baseUrl)/user/\(id).json").serializingString().response
         
-        if let data = response.data {
-            let user = try? JSONDecoder().decode(User.self, from: data)
+        if let data = response.data,
+           let user = try? JSONDecoder().decode(User.self, from: data) {
+            let filteredText = user.about.orEmpty.htmlStripped.withExtraLineBreak
             
-            return user
+            return user.copyWith(about: filteredText)
         } else {
             return nil
         }

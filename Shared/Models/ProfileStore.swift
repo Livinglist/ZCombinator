@@ -1,11 +1,20 @@
 import SwiftUI
+import HackerNewsKit
 
 extension ProfileView {
+    @MainActor
     class ProfileStore: ObservableObject {
-        @Published user: User?
+        @Published var user: User?
+        @Published var status: Status = .idle
         
-        func fetchUser(id: Int) async {
+        func fetchUser(id: String) async {
+            self.status = .loading
+            let user = await StoriesRepository.shared.fetchUser(id)
             
+            if let user = user {
+                self.user = user
+                self.status = .loaded
+            }
         }
     }
 }

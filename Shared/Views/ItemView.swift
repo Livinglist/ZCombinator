@@ -205,9 +205,16 @@ struct ItemView: View {
         let item = itemStore.item ?? item
         
         HStack {
-            Text(item.by.orEmpty)
-                .borderedFootnote()
-                .foregroundColor(getColor())
+            if let authoer = item.by {
+                NavigationLink {
+                    ProfileView(id: authoer)
+                } label: {
+                    Text(authoer)
+                        .borderedFootnote()
+                        .foregroundColor(getColor(level: level))
+                }
+            }
+            
             if let karma = item.score {
                 Text("\(karma) karma")
                     .borderedFootnote()
