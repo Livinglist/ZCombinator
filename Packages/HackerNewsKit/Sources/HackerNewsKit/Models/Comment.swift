@@ -1,4 +1,4 @@
-public struct Comment : Item {
+public struct Comment: Item {
     public let id: Int
     public let parent: Int?
     public let title: String?
@@ -10,6 +10,7 @@ public struct Comment : Item {
     public let descendants: Int?
     public let time: Int
     public let kids: [Int]?
+    public let level: Int?
     public var metadata: String? {
         if let count = kids?.count, count != 0 {
             return "\(count) cmts | \(timeAgo) by \(by.orEmpty)"
@@ -17,9 +18,9 @@ public struct Comment : Item {
             return "\(timeAgo) by \(by.orEmpty)"
         }
     }
-    
-    
-    init(id: Int, parent: Int?, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
+
+
+    init(id: Int, parent: Int?, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int](), level: Int? = 0) {
         self.id = id
         self.parent = parent
         self.title = title
@@ -31,14 +32,15 @@ public struct Comment : Item {
         self.descendants = descendants
         self.time = time
         self.kids = kids
+        self.level = level
     }
-    
+
     // Empty initializer
     init() {
         self.init(id: 0, parent: 0, title: "", text: "", url: "", type: "", by: "", score: 0, descendants: 0, time: 0)
     }
-    
-    func copyWith(text: String?) -> Comment {
-        Comment(id: id, parent: parent, title: title, text: text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int]())
+
+    public func copyWith(text: String? = nil, level: Int? = nil) -> Comment {
+        Comment(id: id, parent: parent, title: title, text: text ?? self.text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int](), level: level ?? self.level)
     }
 }

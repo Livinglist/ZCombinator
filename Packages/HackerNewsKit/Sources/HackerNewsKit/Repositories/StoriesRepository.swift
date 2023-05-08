@@ -8,7 +8,7 @@ public class StoriesRepository {
     
     private init() {}
     
-    // MARK: - Stories related.
+    // MARK: - Story related.
     
     public func fetchAllStories(from storyType: StoryType, onStoryFetched: @escaping (Story) -> Void) async -> Void {
         let storyIds = await fetchStoryIds(from: storyType)
@@ -41,28 +41,6 @@ public class StoriesRepository {
         }
     }
     
-    public func fetchItems(ids: [Int], filtered: Bool = true, onItemFetched: @escaping (any Item) -> Void) async -> Void {
-        for id in ids {
-            let item = await fetchItem(id)
-            
-            guard let item = item else { continue }
-            
-            if var story = item as? Story {
-                if filtered {
-                    let filteredText = story.text.htmlStripped.withExtraLineBreak
-                    story = story.copyWith(text: filteredText)
-                }
-                onItemFetched(story)
-            } else if var cmt = item as? Comment {
-                if filtered {
-                    let filteredText = cmt.text.htmlStripped.withExtraLineBreak
-                    cmt = cmt.copyWith(text: filteredText)
-                }
-                onItemFetched(cmt)
-            }
-        }
-    }
-    
     public func fetchStory(_ id: Int) async -> Story?{
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
 
@@ -75,7 +53,7 @@ public class StoriesRepository {
         }
     }
     
-    // MARK: - Comments related.
+    // MARK: - Comment related.
     
     public func fetchComments(ids: [Int], filtered: Bool = true, onCommentFetched: @escaping (Comment) -> Void) async -> Void {
         for id in ids {
@@ -102,6 +80,30 @@ public class StoriesRepository {
         }
     }
     
+    // MARK: - Item related.
+    
+    public func fetchItems(ids: [Int], filtered: Bool = true, onItemFetched: @escaping (any Item) -> Void) async -> Void {
+        for id in ids {
+            let item = await fetchItem(id)
+            
+            guard let item = item else { continue }
+            
+            if var story = item as? Story {
+                if filtered {
+                    let filteredText = story.text.htmlStripped.withExtraLineBreak
+                    story = story.copyWith(text: filteredText)
+                }
+                onItemFetched(story)
+            } else if var cmt = item as? Comment {
+                if filtered {
+                    let filteredText = cmt.text.htmlStripped.withExtraLineBreak
+                    cmt = cmt.copyWith(text: filteredText)
+                }
+                onItemFetched(cmt)
+            }
+        }
+    }
+    
     public func fetchItem(_ id: Int) async -> (any Item)? {
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
 
@@ -119,6 +121,21 @@ public class StoriesRepository {
             default:
                 return nil
             }
+        } else {
+            return nil
+        }
+    }
+    
+    // MARK: - User related.
+    
+    public func fetchUser(_ id: String) async -> User? {
+        let response = await AF.request("\(self.baseUrl)/user/\(id).json").serializingString().response
+        
+        if let data = response.data,
+           let user = try? JSONDecoder().decode(User.self, from: data) {
+            let filteredText = user.about.orEmpty.htmlStripped.withExtraLineBreak
+            
+            return user.copyWith(about: filteredText)
         } else {
             return nil
         }

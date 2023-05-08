@@ -54,18 +54,8 @@ struct ItemView: View {
             .onAppear {
                 if itemStore.item == nil {
                     itemStore.item = item
-                    if level == 0 {
-                        // Items from search resuls don't contain kids,
-                        // so we force a refresh to fetch the data.
-                        if let kids = item.kids, kids.isEmpty && item.descendants != 0 {
-                            Task {
-                                await itemStore.refresh()
-                            }
-                        } else {
-                            Task {
-                                await itemStore.loadKids()
-                            }
-                        }
+                    Task {
+                        await itemStore.refresh()
                     }
                 }
             }
@@ -121,7 +111,7 @@ struct ItemView: View {
     }
 
     @ViewBuilder
-    var rootView: some View {
+    var mainItemView: some View {
         ScrollView {
             VStack(spacing: 0) {
                 nameRow
@@ -166,8 +156,11 @@ struct ItemView: View {
                 }
                 VStack(spacing: 0) {
                     ForEach(itemStore.kids) { comment in
-                        ItemView(item: comment, level: level + 1)
-                            .padding(.trailing, 4)
+                        CommentTile(comment: comment, itemStore: itemStore) {
+                            Task {
+                                await itemStore.loadKids(of: comment)
+                            }
+                        }.padding(.trailing, 4)
                     }.id(UUID())
                 }
                 Spacer().frame(height: 60)
@@ -208,146 +201,34 @@ struct ItemView: View {
     }
 
     @ViewBuilder
-    var nodeView: some View {
-        ZStack {
-            if level > 1 {
-                HStack {
-                    getColor(level: level)
-                        .frame(width: 1)
-                    Spacer()
-                }
-            }
-            VStack(spacing: 0) {
-                VStack(spacing: 0) {
-                    nameRow.padding(.bottom, 4)
-                    if isCollapsed {
-                        Button {
-                            HapticFeedbackService.shared.ultralight()
-                            withAnimation {
-                                isCollapsed.toggle()
-                            }
-                        } label: {
-                            Text("Collapsed")
-                                .font(.footnote.weight(.bold))
-                                .foregroundColor(getColor(level: level))
-                        }
-
-                    } else {
-                        textView.padding(.bottom, 3)
-                            .toast(isPresenting: $showFlagToast) {
-                                AlertToast(type: .regular, title: "Flagged")
-                            }
-                            .toast(isPresenting: $showUpvoteToast) {
-                                AlertToast(type: .regular, title: "Upvoted")
-                            }
-                            .toast(isPresenting: $showDownvoteToast) {
-                                AlertToast(type: .regular, title: "Downvoted")
-                            }
-                            .toast(isPresenting: $showReplyToast) {
-                                AlertToast(type: .regular, title: "Replied")
-                            }
-                            .toast(isPresenting: $showFavoriteToast) {
-                                AlertToast(type: .regular, title: "Added")
-                            }
-                    }
-                    if itemStore.status == Status.loading {
-                        LoadingIndicator(color: getColor(level: level))
-                            .padding(.top, 14)
-                            .padding(.bottom, 10)
-                    } else if isCollapsed == false && itemStore.status != Status.loaded && item.kids.isNotNullOrEmpty {
-                        Button {
-                            HapticFeedbackService.shared.light()
-                            Task {
-                                await itemStore.loadKids()
-                            }
-                        } label: {
-                            Text("Load \(item.kids.countOrZero) \(item.kids.isMoreThanOne ? "replies" : "reply")")
-                                .font(.footnote.weight(.bold))
-                                .foregroundColor(getColor(level: level))
-                        }
-                            .buttonStyle(.bordered)
-                            .buttonBorderShape(.capsule)
-                            .padding(.top, 6)
-                    }
-                }
-                .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
-                .background(Color(UIColor.systemBackground))
-                .contextMenu {
-                    UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
-                    DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
-                    FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
-                    PinButton(id: item.id)
-                    Button {
-                        showReplySheet = true
-                    } label: {
-                        Label("Reply", systemImage: "plus.message")
-                    }
-                        .disabled(!auth.loggedIn)
-                    Divider()
-                    FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
-                    Divider()
-                    ShareMenu(item: item)
-                    Button {
-                        showHNSheet = true
-                    } label: {
-                        Label("View on Hacker News", systemImage: "safari")
-                    }
-                }
-                .onTapGesture {
-                    HapticFeedbackService.shared.ultralight()
-                    withAnimation {
-                        isCollapsed.toggle()
-                    }
-                }
-                if isCollapsed == false {
-                    VStack(spacing: 0) {
-                        ForEach(itemStore.kids) { comment in
-                            ItemView(item: comment, level: level + 1)
-                        }
-                        .id(UUID())
-                    }
-                    .buttonStyle(PlainButtonStyle())
-                }
-                Spacer()
-            }
-            .frame(alignment: .leading)
-            .padding(.leading, 6)
-        }
-        .frame(maxWidth: .infinity)
-        .frame(alignment: .leading)
-    }
-
-    @ViewBuilder
-    var mainItemView: some View {
-        if level == 0 {
-            rootView
-        } else {
-            nodeView
-        }
-    }
-
-    @ViewBuilder
     var nameRow: some View {
         let item = itemStore.item ?? item
         
         HStack {
-            Text(item.by.orEmpty)
-                .borderedFootnote()
-                .foregroundColor(getColor(level: level))
+            if let authoer = item.by {
+                NavigationLink {
+                    ProfileView(id: authoer)
+                } label: {
+                    Text(authoer)
+                        .borderedFootnote()
+                        .foregroundColor(getColor(level: level))
+                }
+            }
+            
             if let karma = item.score {
                 Text("\(karma) karma")
                     .borderedFootnote()
-                    .foregroundColor(getColor(level: level))
+                    .foregroundColor(getColor())
             }
             if let descendants = item.descendants {
                 Text("\(descendants) comment\(descendants <= 1 ? "" : "s")")
                     .borderedFootnote()
-                    .foregroundColor(getColor(level: level))
+                    .foregroundColor(getColor())
             }
             Spacer()
             Text(item.timeAgo)
                 .borderedFootnote()
-                .foregroundColor(getColor(level: level))
+                .foregroundColor(getColor())
                 .padding(.trailing, 2)
         }
     }
@@ -370,46 +251,5 @@ struct ItemView: View {
                 HapticFeedbackService.shared.error()
             }
         }
-    }
-
-    private func getColor(level: Int) -> Color {
-        var level = level
-        let initialLevel = level
-
-        if let color = colors[initialLevel] {
-            return color
-        }
-
-        while level >= 10 {
-            level = level - 10
-        }
-
-        let r = 255
-        var g = level * 40 < 255 ? 152 : (level * 20).clamped(to: 0...255)
-        var b = (level * 40).clamped(to: 0...255)
-
-        if (g == 255 && b == 255) {
-            g = (level * 30 - 255).clamped(to: 0...255)
-            b = (level * 40 - 255).clamped(to: 0...255)
-        }
-
-        let color = Color.init(
-            red: Double(r) / 255,
-            green: Double(g) / 255,
-            blue: Double(b) / 255,
-            opacity: 1
-        )
-
-        colors[initialLevel] = color
-
-        return color
-    }
-}
-
-var colors = [Int: Color]()
-
-struct ItemVew_Previews: PreviewProvider {
-    static var previews: some View {
-        EmptyView()
     }
 }

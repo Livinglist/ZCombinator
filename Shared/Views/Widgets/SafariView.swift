@@ -16,7 +16,6 @@ private struct SafariBaseView: UIViewControllerRepresentable {
     let url: URL
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<SafariBaseView>) -> SFSafariViewController {
-        let c = SFSafariViewController.Configuration.init()
         let controller = SFSafariViewController(url: url)
         controller.preferredControlTintColor = .orange
         return controller
