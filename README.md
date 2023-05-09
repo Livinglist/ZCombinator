@@ -2,13 +2,15 @@
 
 Another [Hacker News](https://news.ycombinator.com/) client made with SwiftUI.
 
-Features:
-- Log in using Hacker News account
-- Reply to stories/comments
-- Vote on stories/comments
-- Add stories/comments to your HN favorites
-- Collapse threads
-- Story widget.
+- [x] Log in using Hacker News account.
+- [x] Reply to stories/comments.
+- [x] Vote on stories/comments.
+- [x] Add stories/comments to your pins or HN favorites.
+- [x] View other users' profiles and submissions.
+- [x] Comment folding.
+- [x] Home Screen and Lock Screen widget.
+- [x] Share Extension.
+- [x] Action Extension.
 
 <p align="center">
   <img width="240" alt="01" src="Resources/Screenshots/iphone-1.png">
