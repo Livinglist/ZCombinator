@@ -16,35 +16,23 @@ struct ItemRow: View {
     @State private var showReplySheet: Bool = Bool()
     @State private var showFlagDialog: Bool = Bool()
     @GestureState private var isDetectingPress = Bool()
-    @Binding private var showFlagToast: Bool
-    @Binding private var showUpvoteToast: Bool
-    @Binding private var showDownvoteToast: Bool
-    @Binding private var showFavoriteToast: Bool
-    @Binding private var showUnfavoriteToast: Bool
-
+    @Binding private var actionPerformed: Action
+    
     init(item: any Item,
          isPinnedStory: Bool = false,
-         showFlagToast: Binding<Bool>,
-         showUpvoteToast: Binding<Bool>,
-         showDownvoteToast: Binding<Bool>,
-         showFavoriteToast: Binding<Bool>,
-         showUnfavoriteToast: Binding<Bool>) {
+         actionPerformed: Binding<Action>) {
         self.item = item
         self.url = URL(string: item.url ?? "https://news.ycombinator.com/item?id=\(item.id)")
         self.isPinnedStory = isPinnedStory
-        self._showFlagToast = showFlagToast
-        self._showUpvoteToast = showUpvoteToast
-        self._showDownvoteToast = showDownvoteToast
-        self._showFavoriteToast = showFavoriteToast
-        self._showUnfavoriteToast = showUnfavoriteToast
+        self._actionPerformed = actionPerformed
     }
 
     @ViewBuilder
     var menu: some View {
         Menu {
-            UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
-            DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
-            FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
+            UpvoteButton(id: item.id, actionPerformed: $actionPerformed)
+            DownvoteButton(id: item.id, actionPerformed: $actionPerformed)
+            FavButton(id: item.id, actionPerformed: $actionPerformed)
             PinButton(id: item.id)
             Divider()
             FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
@@ -158,51 +146,6 @@ struct ItemRow: View {
             }
         }
     }
-
-    private func onUpvote() {
-        Task {
-            let res = await auth.upvote(item.id)
-
-            if res {
-                showUpvoteToast = true
-                HapticFeedbackService.shared.success()
-            } else {
-                HapticFeedbackService.shared.error()
-            }
-        }
-    }
-
-    private func onDownvote() {
-        Task {
-            let res = await auth.downvote(item.id)
-
-            if res {
-                showDownvoteToast = true
-                HapticFeedbackService.shared.success()
-            } else {
-                HapticFeedbackService.shared.error()
-            }
-        }
-    }
-
-    private func onFavorite() {
-        let id = item.id
-        let isFav = settings.favList.contains(id)
-        if isFav {
-            Task {
-                _ = await auth.unfavorite(id)
-                showUnfavoriteToast = true
-                HapticFeedbackService.shared.success()
-            }
-        } else {
-            Task {
-                _ = await auth.favorite(id)
-                showFavoriteToast = true
-                HapticFeedbackService.shared.success()
-            }
-        }
-        settings.onFavToggle(id)
-    }
     
     private func onPin() {
         settings.onPinToggle(item.id)
@@ -214,7 +157,7 @@ struct ItemRow: View {
             let res = await AuthRepository.shared.flag(item.id)
 
             if res {
-                showFlagToast = true
+                actionPerformed = .flag
                 HapticFeedbackService.shared.success()
             } else {
                 HapticFeedbackService.shared.error()

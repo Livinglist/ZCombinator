@@ -4,7 +4,7 @@ struct UpvoteButton: View {
     @EnvironmentObject var auth: Authentication
     
     let id: Int
-    var showUpvoteToast: Binding<Bool>
+    var actionPerformed: Binding<Action>
     
     var body: some View {
         Button {
@@ -20,7 +20,7 @@ struct UpvoteButton: View {
             let res = await auth.upvote(id)
             
             if res {
-                showUpvoteToast.wrappedValue = true
+                actionPerformed.wrappedValue = .upvote
                 HapticFeedbackService.shared.success()
             } else {
                 HapticFeedbackService.shared.error()

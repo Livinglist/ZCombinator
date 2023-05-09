@@ -1,4 +1,3 @@
-import AlertToast
 import SwiftUI
 import WebKit
 import HackerNewsKit
@@ -12,12 +11,7 @@ struct ItemView: View {
     @State private var showUrlSheet = Bool()
     @State private var showReplySheet = Bool()
     @State private var showFlagDialog = Bool()
-    @State private var showFlagToast = Bool()
-    @State private var showUpvoteToast = Bool()
-    @State private var showDownvoteToast = Bool()
-    @State private var showReplyToast = Bool()
-    @State private var showFavoriteToast = Bool()
-    @State private var showUnfavoriteToast = Bool()
+    @State private var actionPerformed: Action = .none
     private static var handledUrl: URL? = nil
 
     let level: Int
@@ -31,6 +25,7 @@ struct ItemView: View {
 
     var body: some View {
         mainItemView
+            .withToast(actionPerformed: $actionPerformed)
             .sheet(isPresented: $showHNSheet) {
                 if let url = URL(string: item.itemUrl) {
                     SafariView(url: url)
@@ -42,7 +37,7 @@ struct ItemView: View {
                 }
             }
             .sheet(isPresented: $showReplySheet) {
-                ReplyView(showReplyToast: $showReplyToast, replyingTo: item)
+                ReplyView(actionPerformed: $actionPerformed, replyingTo: item)
             }
             .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
                 Button("Flag", role: .destructive) {
@@ -63,9 +58,9 @@ struct ItemView: View {
 
     var menu: some View {
         Menu {
-            UpvoteButton(id: item.id, showUpvoteToast: $showUpvoteToast)
-            DownvoteButton(id: item.id, showDownvoteToast: $showDownvoteToast)
-            FavButton(id: item.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
+            UpvoteButton(id: item.id, actionPerformed: $actionPerformed)
+            DownvoteButton(id: item.id, actionPerformed: $actionPerformed)
+            FavButton(id: item.id, actionPerformed: $actionPerformed)
             PinButton(id: item.id)
             Button {
                 showReplySheet = true
@@ -87,6 +82,7 @@ struct ItemView: View {
                 .foregroundColor(.orange)
         }
     }
+
 
     @ViewBuilder
     var textView: some View {
@@ -174,24 +170,6 @@ struct ItemView: View {
                 }
             }
         }
-        .toast(isPresenting: $showFlagToast) {
-            AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
-        }
-        .toast(isPresenting: $showUpvoteToast) {
-            AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvoted")
-        }
-        .toast(isPresenting: $showDownvoteToast) {
-            AlertToast(type: .systemImage("hand.thumbsdown.fill", .gray), title: "Downvoted")
-        }
-        .toast(isPresenting: $showReplyToast) {
-            AlertToast(type: .systemImage("arrowshape.turn.up.left.circle.fill", .gray), title: "Replied")
-        }
-        .toast(isPresenting: $showUnfavoriteToast, alert: {
-                AlertToast(type: .systemImage("heart.slash", .gray), title: "Removed")
-            })
-        .toast(isPresenting: $showFavoriteToast) {
-            AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
-        }
         .toolbar {
             if let item = item as? Comment {
                 ToolbarItem {
@@ -260,7 +238,7 @@ struct ItemView: View {
             let res = await AuthRepository.shared.flag(item.id)
 
             if res {
-                showFlagToast = true
+                actionPerformed = .flag
                 HapticFeedbackService.shared.success()
             } else {
                 HapticFeedbackService.shared.error()

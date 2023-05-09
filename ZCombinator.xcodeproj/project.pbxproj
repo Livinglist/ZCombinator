@@ -57,6 +57,8 @@
 		E57640342A030B2F0075F5D1 /* DebouncedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640332A030B2F0075F5D1 /* DebouncedObject.swift */; };
 		E57640362A0313B30075F5D1 /* PinStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640352A0313B30075F5D1 /* PinStore.swift */; };
 		E57640382A0313C80075F5D1 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57640372A0313C80075F5D1 /* PinView.swift */; };
+		E580A3692A0A215E0025AD83 /* ToastContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580A3682A0A215E0025AD83 /* ToastContainer.swift */; };
+		E59425802A0AC2EF00469020 /* View+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E594257F2A0AC2EF00469020 /* View+Toast.swift */; };
 		E5A2CEB62A08AF0300D683C6 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A2CEB52A08AF0300D683C6 /* UniformTypeIdentifiers.framework */; };
 		E5A2CEB92A08AF0300D683C6 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5A2CEB82A08AF0300D683C6 /* Media.xcassets */; };
 		E5A2CEBB2A08AF0300D683C6 /* ActionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2CEBA2A08AF0300D683C6 /* ActionViewController.swift */; };
@@ -84,7 +86,7 @@
 		E5EF2CE1289C782A00AA5290 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CE0289C782A00AA5290 /* WebView.swift */; };
 		E5EF2CE4289C783F00AA5290 /* CustomText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CE3289C783F00AA5290 /* CustomText.swift */; };
 		E5EF2CE7289C789300AA5290 /* ItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CE6289C789300AA5290 /* ItemStore.swift */; };
-		E5EF2CF3289CA58100AA5290 /* View+Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CF2289CA58100AA5290 /* View+Modifiers.swift */; };
+		E5EF2CF3289CA58100AA5290 /* View+BorderedFootnote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF2CF2289CA58100AA5290 /* View+BorderedFootnote.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +186,8 @@
 		E57640332A030B2F0075F5D1 /* DebouncedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebouncedObject.swift; sourceTree = "<group>"; };
 		E57640352A0313B30075F5D1 /* PinStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinStore.swift; sourceTree = "<group>"; };
 		E57640372A0313C80075F5D1 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
+		E580A3682A0A215E0025AD83 /* ToastContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastContainer.swift; sourceTree = "<group>"; };
+		E594257F2A0AC2EF00469020 /* View+Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Toast.swift"; sourceTree = "<group>"; };
 		E5A2CEB42A08AF0300D683C6 /* ActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5A2CEB52A08AF0300D683C6 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 		E5A2CEB82A08AF0300D683C6 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -215,7 +219,7 @@
 		E5EF2CE0289C782A00AA5290 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		E5EF2CE3289C783F00AA5290 /* CustomText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomText.swift; sourceTree = "<group>"; };
 		E5EF2CE6289C789300AA5290 /* ItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStore.swift; sourceTree = "<group>"; };
-		E5EF2CF2289CA58100AA5290 /* View+Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Modifiers.swift"; sourceTree = "<group>"; };
+		E5EF2CF2289CA58100AA5290 /* View+BorderedFootnote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BorderedFootnote.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -415,6 +419,7 @@
 				E55CF5C62A01D33300C6B80C /* CheckBox.swift */,
 				E504A0422A0227F80090AFAB /* ShareMenu.swift */,
 				E5C7B9792A086C9A00CA6066 /* CommentTile.swift */,
+				E580A3682A0A215E0025AD83 /* ToastContainer.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -448,13 +453,14 @@
 				E5EF2CCD289C71CC00AA5290 /* ArrayExtension.swift */,
 				E5EF2CD1289C771200AA5290 /* Comparable+Clamped.swift */,
 				E5EF2CD4289C773000AA5290 /* View+ContextMenu.swift */,
-				E5EF2CF2289CA58100AA5290 /* View+Modifiers.swift */,
+				E5EF2CF2289CA58100AA5290 /* View+BorderedFootnote.swift */,
 				E5E048D2289F6DA000702733 /* UIApplication+KeyWindow.swift */,
 				E5E048D5289F72D700702733 /* View+ConditionalModifier.swift */,
 				E5E048D8289F737700702733 /* BoolExtension.swift */,
 				E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */,
 				E514FC392A02C45E00BEFC14 /* Int+OrZero.swift */,
 				E5C7B97B2A08706000CA6066 /* View+GetColor.swift */,
+				E594257F2A0AC2EF00469020 /* View+Toast.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -710,7 +716,7 @@
 				E504A0402A02269A0090AFAB /* DownvoteButton.swift in Sources */,
 				E5C7B9802A0887F400CA6066 /* ProfileStore.swift in Sources */,
 				E55322F92A08D13F005B93D0 /* SubmissionView.swift in Sources */,
-				E5EF2CF3289CA58100AA5290 /* View+Modifiers.swift in Sources */,
+				E5EF2CF3289CA58100AA5290 /* View+BorderedFootnote.swift in Sources */,
 				E504A03D2A0226080090AFAB /* UpvoteButton.swift in Sources */,
 				E57640342A030B2F0075F5D1 /* DebouncedObject.swift in Sources */,
 				E53CA981289E3979009FDAE6 /* Constants.swift in Sources */,
@@ -753,8 +759,10 @@
 				E500F96B289266EF00080EAF /* LinkView.swift in Sources */,
 				E504A0392A0223A30090AFAB /* FavButton.swift in Sources */,
 				E51C9DA3289F2EF4001EA8E8 /* Authentication.swift in Sources */,
+				E59425802A0AC2EF00469020 /* View+Toast.swift in Sources */,
 				E5EF2CC7289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */,
 				E500F9682892659B00080EAF /* StoryStore.swift in Sources */,
+				E580A3692A0A215E0025AD83 /* ToastContainer.swift in Sources */,
 				E54D06FE2A01AF1100F3E57B /* Settings.swift in Sources */,
 				E514FC432A02EBD400BEFC14 /* SearchStore.swift in Sources */,
 			);
@@ -967,7 +975,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -984,7 +992,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.7;
+				MARKETING_VERSION = 0.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
@@ -1005,7 +1013,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1022,7 +1030,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.7;
+				MARKETING_VERSION = 0.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;

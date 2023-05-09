@@ -1,4 +1,3 @@
-import AlertToast
 import SwiftUI
 import WebKit
 import HackerNewsKit
@@ -10,16 +9,9 @@ extension ItemView {
         
         @State private var isCollapsed = Bool()
         @State private var showHNSheet = Bool()
-        @State private var showUrlSheet = Bool()
         @State private var showReplySheet = Bool()
         @State private var showFlagDialog = Bool()
-        @State private var showFlagToast = Bool()
-        @State private var showUpvoteToast = Bool()
-        @State private var showDownvoteToast = Bool()
-        @State private var showReplyToast = Bool()
-        @State private var showFavoriteToast = Bool()
-        @State private var showUnfavoriteToast = Bool()
-        private static var handledUrl: URL? = nil
+        @State private var actionPerformed: Action = .none
         
         let level: Int
         let comment: Comment
@@ -55,13 +47,8 @@ extension ItemView {
                         SafariView(url: url)
                     }
                 }
-                .sheet(isPresented: $showUrlSheet) {
-                    if let url = Self.handledUrl {
-                        SafariView(url: url)
-                    }
-                }
                 .sheet(isPresented: $showReplySheet) {
-                    ReplyView(showReplyToast: $showReplyToast, replyingTo: comment)
+                    ReplyView(actionPerformed: $actionPerformed, replyingTo: comment)
                 }
                 .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
                     Button("Flag", role: .destructive) {
@@ -75,9 +62,9 @@ extension ItemView {
         @ViewBuilder
         var menu: some View {
             Menu {
-                UpvoteButton(id: comment.id, showUpvoteToast: $showUpvoteToast)
-                DownvoteButton(id: comment.id, showDownvoteToast: $showDownvoteToast)
-                FavButton(id: comment.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
+                UpvoteButton(id: comment.id, actionPerformed: $actionPerformed)
+                DownvoteButton(id: comment.id, actionPerformed: $actionPerformed)
+                FavButton(id: comment.id, actionPerformed: $actionPerformed)
                 PinButton(id: comment.id)
                 Button {
                     showReplySheet = true
@@ -136,21 +123,7 @@ extension ItemView {
                         
                     } else {
                         textView
-                            .toast(isPresenting: $showFlagToast) {
-                                AlertToast(type: .regular, title: "Flagged")
-                            }
-                            .toast(isPresenting: $showUpvoteToast) {
-                                AlertToast(type: .regular, title: "Upvoted")
-                            }
-                            .toast(isPresenting: $showDownvoteToast) {
-                                AlertToast(type: .regular, title: "Downvoted")
-                            }
-                            .toast(isPresenting: $showReplyToast) {
-                                AlertToast(type: .regular, title: "Replied")
-                            }
-                            .toast(isPresenting: $showFavoriteToast) {
-                                AlertToast(type: .regular, title: "Added")
-                            }
+                            .withPlainToast(actionPerformed: $actionPerformed)
                     }
                     if itemStore.loadingItem == comment.id {
                         LoadingIndicator().padding(.top, 16).padding(.bottom, 8)
@@ -172,9 +145,9 @@ extension ItemView {
                 .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
                 .background(Color(UIColor.systemBackground))
                 .contextMenu {
-                    UpvoteButton(id: comment.id, showUpvoteToast: $showUpvoteToast)
-                    DownvoteButton(id: comment.id, showDownvoteToast: $showDownvoteToast)
-                    FavButton(id: comment.id, showUnfavoriteToast: $showUnfavoriteToast, showFavoriteToast: $showFavoriteToast)
+                    UpvoteButton(id: comment.id, actionPerformed: $actionPerformed)
+                    DownvoteButton(id: comment.id, actionPerformed: $actionPerformed)
+                    FavButton(id: comment.id, actionPerformed: $actionPerformed)
                     PinButton(id: comment.id)
                     Button {
                         showReplySheet = true
@@ -240,7 +213,7 @@ extension ItemView {
                 let res = await AuthRepository.shared.flag(comment.id)
                 
                 if res {
-                    showFlagToast = true
+                    actionPerformed = .flag
                     HapticFeedbackService.shared.success()
                 } else {
                     HapticFeedbackService.shared.error()

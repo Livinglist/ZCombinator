@@ -1,4 +1,3 @@
-import AlertToast
 import SwiftUI
 import CoreData
 import HackerNewsKit
@@ -18,12 +17,7 @@ struct HomeView: View {
     @State private var password = String()
     @State private var shouldRememberMe = Bool()
     
-    @State private var showFlagToast = Bool()
-    @State private var showUpvoteToast = Bool()
-    @State private var showDownvoteToast = Bool()
-    @State private var showLoginToast = Bool()
-    @State private var showFavoriteToast = Bool()
-    @State private var showUnfavoriteToast = Bool()
+    @State private var actionPerformed: Action = .none
     private static var handledUrl: URL? = nil
     
     var body: some View {
@@ -33,14 +27,10 @@ struct HomeView: View {
                     Label("Pins", systemImage: "pin")
                 }
                 .listRowSeparator(.hidden)
-
+                
                 ForEach(storyStore.stories) { story in
                     ItemRow(item: story,
-                            showFlagToast: $showFlagToast,
-                            showUpvoteToast: $showUpvoteToast,
-                            showDownvoteToast: $showDownvoteToast,
-                            showFavoriteToast: $showFavoriteToast,
-                            showUnfavoriteToast: $showUnfavoriteToast)
+                            actionPerformed: $actionPerformed)
                     .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                     .listRowSeparator(.hidden)
                     .onAppear {
@@ -102,25 +92,8 @@ struct HomeView: View {
             }
             .navigationTitle(storyStore.storyType.rawValue.uppercased())
         }
+        .withToast(actionPerformed: $actionPerformed)
         .tint(.orange)
-        .toast(isPresenting: $showFlagToast) {
-            AlertToast(type: .systemImage("flag.fill", .gray), title: "Flagged")
-        }
-        .toast(isPresenting: $showUpvoteToast) {
-            AlertToast(type: .systemImage("hand.thumbsup.fill", .gray), title: "Upvoted")
-        }
-        .toast(isPresenting: $showDownvoteToast) {
-            AlertToast(type: .systemImage("hand.thumbsdown.fill", .gray), title: "Downvoted")
-        }
-        .toast(isPresenting: $showLoginToast, alert: {
-            AlertToast(type: .systemImage("person.badge.shield.checkmark.fill", .gray), title: "Welcome")
-        })
-        .toast(isPresenting: $showUnfavoriteToast, alert: {
-            AlertToast(type: .systemImage("heart.slash", .gray), title: "Removed")
-        })
-        .toast(isPresenting: $showFavoriteToast, alert: {
-            AlertToast(type: .systemImage("heart.fill", .gray), title: "Added")
-        })
         .sheet(isPresented: $showAboutSheet, content: {
             SafariView(url: Constants.githubUrl)
         })
@@ -144,7 +117,7 @@ struct HomeView: View {
                     
                     if res {
                         HapticFeedbackService.shared.success()
-                        showLoginToast = true
+                        actionPerformed = .login
                     } else {
                         HapticFeedbackService.shared.error()
                     }

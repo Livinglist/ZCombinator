@@ -5,8 +5,7 @@ struct FavButton: View {
     @ObservedObject private var settings = Settings.shared
     
     let id: Int
-    var showUnfavoriteToast: Binding<Bool>
-    var showFavoriteToast: Binding<Bool>
+    var actionPerformed: Binding<Action>
     
     var body: some View {
         Button {
@@ -25,13 +24,13 @@ struct FavButton: View {
         if isFav {
             Task {
                 _ = await auth.unfavorite(id)
-                showUnfavoriteToast.wrappedValue = true
+                actionPerformed.wrappedValue = .unfavorite
                 HapticFeedbackService.shared.success()
             }
         } else {
             Task {
                 _ = await auth.favorite(id)
-                showFavoriteToast.wrappedValue = true
+                actionPerformed.wrappedValue = .favorite
                 HapticFeedbackService.shared.success()
             }
         }
