@@ -8,8 +8,13 @@ struct ReplyView: View {
     @State private var text: String = String()
     @FocusState private var focusState: Bool
     
-    @Binding var showReplyToast: Bool
+    @Binding var actionPerformed: Action
     let replyingTo: any Item
+    
+    init(actionPerformed: Binding<Action>, replyingTo: any Item) {
+        self._actionPerformed = actionPerformed
+        self.replyingTo = replyingTo
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -24,7 +29,7 @@ struct ReplyView: View {
                         let res = await auth.reply(to: replyingTo.id, with: text)
                         
                         if res {
-                            showReplyToast = true
+                            actionPerformed = .reply
                             HapticFeedbackService.shared.success()
                         } else {
                             HapticFeedbackService.shared.error()
