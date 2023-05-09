@@ -24,9 +24,8 @@ struct ItemView: View {
     }
 
     var body: some View {
-        ToastContainer(actionPerformed: $actionPerformed) {
-            mainItemView
-        }
+        mainItemView
+            .withToast(actionPerformed: $actionPerformed)
             .sheet(isPresented: $showHNSheet) {
                 if let url = URL(string: item.itemUrl) {
                     SafariView(url: url)
