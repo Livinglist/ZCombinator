@@ -44,9 +44,10 @@ public class StoriesRepository {
     public func fetchStory(_ id: Int) async -> Story?{
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
 
-        if let data = response.data {
-            let story = try? JSONDecoder().decode(Story.self, from: data)
-            
+        if let data = response.data,
+           var story = try? JSONDecoder().decode(Story.self, from: data) {
+            let filteredText = story.text.htmlStripped.withExtraLineBreak
+            story = story.copyWith(text: filteredText)
             return story
         } else {
             return nil
