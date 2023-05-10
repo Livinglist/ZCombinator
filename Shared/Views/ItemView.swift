@@ -4,6 +4,7 @@ import HackerNewsKit
 
 struct ItemView: View {
     @EnvironmentObject var auth: Authentication
+    @Environment(\.dismiss) var dismiss
 
     @StateObject var itemStore = ItemStore()
     @State private var isCollapsed = Bool()
@@ -31,13 +32,40 @@ struct ItemView: View {
                     SafariView(url: url)
                 }
             }
-            .sheet(isPresented: $showUrlSheet) {
+            .sheet(isPresented: $showUrlSheet, onDismiss: {
+                print("")
+                showUrlSheet = false
+            }) {
                 if let url = Self.handledUrl {
-                    SafariView(url: url)
+                    SafariView(url: url, dragDismissable: false)
                 }
             }
+            .environment(\.openURL, OpenURLAction { url in
+                if let id = url.absoluteString.itemId {
+                    Task {
+                        let item = await StoriesRepository.shared.fetchItem(id)
+                        guard let item = item else {
+                            Self.handledUrl = url
+                            showUrlSheet = true
+                            return
+                        }
+                        
+                        Router.shared.to(item)
+                    }
+                } else {
+                    if showUrlSheet {
+                        Router.shared.to(.url(url))
+                    } else {
+                        Self.handledUrl = url
+                        showUrlSheet = true
+                    }
+                }
+                return .handled
+            })
             .sheet(isPresented: $showReplySheet) {
                 ReplyView(actionPerformed: $actionPerformed, replyingTo: item)
+                    .presentationDetents([.large, .height(100)])
+                    .presentationBackgroundInteraction(.enabled)
             }
             .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
                 Button("Flag", role: .destructive) {
@@ -78,7 +106,11 @@ struct ItemView: View {
                 CopyButton(text: text, actionPerformed: $actionPerformed)
             }
             Button {
-                showHNSheet = true
+                if showUrlSheet, let url = URL(string: item.itemUrl) {
+                    Router.shared.to(.url(url))
+                } else {
+                    showHNSheet = true
+                }
             } label: {
                 Label("View on Hacker News", systemImage: "safari")
             }
