@@ -94,6 +94,14 @@ extension ItemView {
                     } else {
                         textView
                             .withPlainToast(actionPerformed: $actionPerformed)
+                            .onTapGesture {
+                                if !isCollapsed {
+                                    HapticFeedbackService.shared.ultralight()
+                                    withAnimation {
+                                        isCollapsed.toggle()
+                                    }
+                                }
+                            }
                     }
                     if itemStore.loadingItem == comment.id {
                         LoadingIndicator().padding(.top, 16).padding(.bottom, 8)
@@ -106,6 +114,7 @@ extension ItemView {
                             Text("Load \(comment.kids.countOrZero) \(comment.kids.isMoreThanOne ? "replies" : "reply")")
                                 .font(.footnote.weight(.bold))
                                 .foregroundColor(getColor(level: level))
+                                .frame(width: 200)
                         }
                         .buttonStyle(.bordered)
                         .buttonBorderShape(.capsule)
@@ -140,9 +149,11 @@ extension ItemView {
                     }
                 }
                 .onTapGesture {
-                    HapticFeedbackService.shared.ultralight()
-                    withAnimation {
-                        isCollapsed.toggle()
+                    if isCollapsed {
+                        HapticFeedbackService.shared.ultralight()
+                        withAnimation {
+                            isCollapsed.toggle()
+                        }
                     }
                 }
                 Spacer()
