@@ -114,7 +114,7 @@ extension ItemView {
                             Text("Load \(comment.kids.countOrZero) \(comment.kids.isMoreThanOne ? "replies" : "reply")")
                                 .font(.footnote.weight(.bold))
                                 .foregroundColor(getColor(level: level))
-                                .frame(width: 200)
+                                .frame(width: 140)
                         }
                         .buttonStyle(.bordered)
                         .buttonBorderShape(.capsule)
