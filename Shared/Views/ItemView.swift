@@ -32,10 +32,7 @@ struct ItemView: View {
                     SafariView(url: url)
                 }
             }
-            .sheet(isPresented: $showUrlSheet, onDismiss: {
-                print("")
-                showUrlSheet = false
-            }) {
+            .sheet(isPresented: $showUrlSheet) {
                 if let url = Self.handledUrl {
                     SafariView(url: url, dragDismissable: false)
                 }
@@ -49,7 +46,6 @@ struct ItemView: View {
                             showUrlSheet = true
                             return
                         }
-                        
                         Router.shared.to(item)
                     }
                 } else {
