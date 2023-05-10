@@ -6,6 +6,7 @@ enum Destination: Hashable {
     case search
     case submission([Int])
     case profile(String)
+    case url(URL)
 
     @ViewBuilder
     func toView() -> some View {
@@ -20,6 +21,9 @@ enum Destination: Hashable {
             SubmissionView(ids: ids)
         case let .profile(username):
             ProfileView(id: username)
+        case let .url(url):
+            WebView(url: url)
+                .ignoresSafeArea(.all)
         }
     }
 }
