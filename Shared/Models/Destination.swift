@@ -1,4 +1,5 @@
 import SwiftUI
+import HackerNewsKit
 
 enum Destination: Hashable {
     case pin
@@ -7,6 +8,8 @@ enum Destination: Hashable {
     case submission([Int])
     case profile(String)
     case url(URL)
+    case replyComment(Comment)
+    case replyStory(Story)
 
     @ViewBuilder
     func toView() -> some View {
@@ -23,7 +26,10 @@ enum Destination: Hashable {
             ProfileView(id: username)
         case let .url(url):
             WebView(url: url)
-                .ignoresSafeArea(.all)
+        case let .replyComment(cmt):
+            ReplyView(replyingTo: cmt)
+        case let .replyStory(story):
+            ReplyView(replyingTo: story)
         }
     }
 }

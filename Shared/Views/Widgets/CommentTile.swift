@@ -6,10 +6,8 @@ extension ItemView {
     struct CommentTile: View {
         @EnvironmentObject var auth: Authentication
         @ObservedObject var itemStore: ItemStore
-        
+
         @State private var isCollapsed = Bool()
-        @State private var showHNSheet = Bool()
-        @State private var showReplySheet = Bool()
         @State private var showFlagDialog = Bool()
         @State private var actionPerformed: Action = .none
         
@@ -17,10 +15,18 @@ extension ItemView {
         let comment: Comment
         let settings = Settings.shared
         let onLoadMore: () -> Void
+        let onShowHNSheet: () -> Void
+        let onShowReplySheet: () -> Void
         
-        init(comment: Comment, itemStore: ItemStore, onLoadMore: @escaping () -> Void) {
+        init(comment: Comment,
+             itemStore: ItemStore,
+             onShowHNSheet: @escaping () -> Void,
+             onShowReplySheet: @escaping () -> Void,
+             onLoadMore: @escaping () -> Void) {
             self.level = comment.level ?? 0
             self.comment = comment
+            self.onShowHNSheet = onShowHNSheet
+            self.onShowReplySheet = onShowReplySheet
             self.onLoadMore = onLoadMore
             self.itemStore = itemStore
         }
@@ -41,14 +47,6 @@ extension ItemView {
                     }
                     
                     return AnyView(wrappedView)
-                }
-                .sheet(isPresented: $showHNSheet) {
-                    if let url = URL(string: comment.itemUrl) {
-                        SafariView(url: url)
-                    }
-                }
-                .sheet(isPresented: $showReplySheet) {
-                    ReplyView(actionPerformed: $actionPerformed, replyingTo: comment)
                 }
                 .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
                     Button("Flag", role: .destructive) {
@@ -125,7 +123,7 @@ extension ItemView {
                         PinButton(id: comment.id)
                     }
                     Button {
-                        showReplySheet = true
+                        onShowReplySheet()
                     } label: {
                         Label("Reply", systemImage: "plus.message")
                     }
@@ -136,7 +134,7 @@ extension ItemView {
                     ShareMenu(item: comment)
                     CopyButton(text: comment.text.orEmpty, actionPerformed: $actionPerformed)
                     Button {
-                        showHNSheet = true
+                        onShowHNSheet()
                     } label: {
                         Label("View on Hacker News", systemImage: "safari")
                     }
