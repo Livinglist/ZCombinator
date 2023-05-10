@@ -23,7 +23,6 @@ enum Destination: Hashable {
             ProfileView(id: username)
         case let .url(url):
             WebView(url: url)
-                .ignoresSafeArea(.all)
         }
     }
 }

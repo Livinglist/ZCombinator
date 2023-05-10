@@ -30,18 +30,20 @@ struct SafariView: View {
     }
 }
 
-private struct SafariBaseView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = SFSafariViewController
-    
-    let url: URL
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<SafariBaseView>) -> SFSafariViewController {
-        let controller = SFSafariViewController(url: url)
-        controller.preferredControlTintColor = .orange
-        controller.dismissButtonStyle = .close
-        return controller
-    }
-
-    func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariBaseView>) {
+extension SafariView {
+    fileprivate struct SafariBaseView: UIViewControllerRepresentable {
+        typealias UIViewControllerType = SFSafariViewController
+        
+        let url: URL
+        
+        func makeUIViewController(context: UIViewControllerRepresentableContext<SafariBaseView>) -> SFSafariViewController {
+            let controller = SFSafariViewController(url: url)
+            controller.preferredControlTintColor = .orange
+            controller.dismissButtonStyle = .close
+            return controller
+        }
+        
+        func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariBaseView>) {
+        }
     }
 }

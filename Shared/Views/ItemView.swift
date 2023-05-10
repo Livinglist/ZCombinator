@@ -4,7 +4,6 @@ import HackerNewsKit
 
 struct ItemView: View {
     @EnvironmentObject var auth: Authentication
-    @Environment(\.dismiss) var dismiss
 
     @StateObject var itemStore = ItemStore()
     @State private var isCollapsed = Bool()
