@@ -9,7 +9,9 @@ extension ItemView {
         @Published var status: Status = .idle
         @Published var item: (any Item)?
         @Published var loadingItem: Int?
-        @Published var loadedItems: Set<Int> = Set<Int>()
+        @Published var loadedItems = Set<Int>()
+        @Published var collapsed = Set<Int>()
+        @Published var hidden = Set<Int>()
         
         func loadKids(of cmt: Comment) async {
             if let parentIndex = kids.firstIndex(of: cmt),
@@ -70,6 +72,44 @@ extension ItemView {
             else { return }
             
             Router.shared.to(parent)
+        }
+        
+        func collapse(cmt: Comment) {
+            collapsed.insert(cmt.id)
+            
+            hide(cmt: cmt)
+        }
+        
+        func uncollapse(cmt: Comment) {
+            collapsed.remove(cmt.id)
+            
+            unhide(cmt: cmt)
+        }
+        
+        func hide(cmt: Comment) {
+            guard let kids = cmt.kids else { return }
+            
+            for childId in kids {
+                let child = self.kids.first { $0.id == childId }
+                guard let child = child else {
+                    continue
+                }
+                hidden.insert(childId)
+                hide(cmt: child)
+            }
+        }
+        
+        func unhide(cmt: Comment) {
+            guard let kids = cmt.kids else { return }
+            
+            for childId in kids {
+                let child = self.kids.first { $0.id == childId }
+                guard let child = child else {
+                    continue
+                }
+                hidden.remove(childId)
+                unhide(cmt: child)
+            }
         }
     }
 }

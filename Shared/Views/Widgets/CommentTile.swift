@@ -7,7 +7,6 @@ extension ItemView {
         @EnvironmentObject var auth: Authentication
         @ObservedObject var itemStore: ItemStore
 
-        @State private var isCollapsed = Bool()
         @State private var showFlagDialog = Bool()
         @State private var actionPerformed: Action = .none
         
@@ -31,30 +30,38 @@ extension ItemView {
             self.itemStore = itemStore
         }
         
+        var isCollapsed: Bool {
+            itemStore.collapsed.contains(comment.id)
+        }
+        
         var body: some View {
-            mainView
-                .if(level > 0) { view -> AnyView in
-                    var wrappedView = AnyView(view)
-                    for i in (1...level).reversed() {
-                        wrappedView = AnyView(
-                            wrappedView
-                            
-                                .overlay(Rectangle().frame(width: 1, height: nil, alignment: .leading)
-                                    .foregroundColor(getColor(level: i)), alignment: .leading)
-                                .padding(.leading, 6)
-                            
-                        )
+            if itemStore.hidden.contains(comment.id) {
+                EmptyView()
+            } else {
+                mainView
+                    .if(level > 0) { view -> AnyView in
+                        var wrappedView = AnyView(view)
+                        for i in (1...level).reversed() {
+                            wrappedView = AnyView(
+                                wrappedView
+                                
+                                    .overlay(Rectangle().frame(width: 1, height: nil, alignment: .leading)
+                                        .foregroundColor(getColor(level: i)), alignment: .leading)
+                                    .padding(.leading, 6)
+                                
+                            )
+                        }
+                        
+                        return AnyView(wrappedView)
                     }
-                    
-                    return AnyView(wrappedView)
-                }
-                .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
-                    Button("Flag", role: .destructive) {
-                        onFlagTap()
+                    .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
+                        Button("Flag", role: .destructive) {
+                            onFlagTap()
+                        }
+                    } message: {
+                        Text("Flag the post by \(comment.by.orEmpty)?")
                     }
-                } message: {
-                    Text("Flag the post by \(comment.by.orEmpty)?")
-                }
+            }
         }
         
         @ViewBuilder
@@ -80,17 +87,9 @@ extension ItemView {
                 VStack(spacing: 0) {
                     nameRow.padding(.bottom, 4)
                     if isCollapsed {
-                        Button {
-                            HapticFeedbackService.shared.ultralight()
-                            withAnimation {
-                                isCollapsed.toggle()
-                            }
-                        } label: {
-                            Text("Collapsed")
-                                .font(.footnote.weight(.bold))
-                                .foregroundColor(getColor(level: level))
-                        }
-                        
+                        Text("Collapsed")
+                            .font(.footnote.weight(.bold))
+                            .foregroundColor(getColor(level: level))
                     } else {
                         textView
                             .withPlainToast(actionPerformed: $actionPerformed)
@@ -98,7 +97,7 @@ extension ItemView {
                                 if !isCollapsed {
                                     HapticFeedbackService.shared.ultralight()
                                     withAnimation {
-                                        isCollapsed.toggle()
+                                        itemStore.collapse(cmt: comment)
                                     }
                                 }
                             }
@@ -152,7 +151,7 @@ extension ItemView {
                     if isCollapsed {
                         HapticFeedbackService.shared.ultralight()
                         withAnimation {
-                            isCollapsed.toggle()
+                            itemStore.uncollapse(cmt: comment)
                         }
                     }
                 }
