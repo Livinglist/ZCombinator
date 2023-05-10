@@ -107,8 +107,11 @@ extension ItemView {
                 guard let child = child else {
                     continue
                 }
+                
                 hidden.remove(childId)
-                unhide(cmt: child)
+                if collapsed.contains(childId) == false {
+                    unhide(cmt: child)
+                }
             }
         }
     }
