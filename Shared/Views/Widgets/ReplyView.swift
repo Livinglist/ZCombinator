@@ -8,11 +8,11 @@ struct ReplyView: View {
     @State private var text: String = String()
     @FocusState private var focusState: Bool
     
-    @Binding var actionPerformed: Action
+    var actionPerformed: Binding<Action>?
     let replyingTo: any Item
     
-    init(actionPerformed: Binding<Action>, replyingTo: any Item) {
-        self._actionPerformed = actionPerformed
+    init(actionPerformed: Binding<Action>? = nil, replyingTo: any Item) {
+        self.actionPerformed = actionPerformed
         self.replyingTo = replyingTo
     }
     
@@ -29,7 +29,7 @@ struct ReplyView: View {
                         let res = await auth.reply(to: replyingTo.id, with: text)
                         
                         if res {
-                            actionPerformed = .reply
+                            actionPerformed?.wrappedValue = .reply
                             HapticFeedbackService.shared.success()
                         } else {
                             HapticFeedbackService.shared.error()

@@ -4,7 +4,7 @@ import HackerNewsKit
 
 struct ItemView: View {
     @EnvironmentObject var auth: Authentication
-
+    
     @StateObject var itemStore = ItemStore()
     @State private var isCollapsed = Bool()
     @State private var showHNSheet = Bool()
@@ -12,22 +12,24 @@ struct ItemView: View {
     @State private var showReplySheet = Bool()
     @State private var showFlagDialog = Bool()
     @State private var actionPerformed: Action = .none
-    private static var handledUrl: URL? = nil
-
+    static private var handledUrl: URL? = nil
+    static private var hnSheetTarget: (any Item)? = nil
+    static private var replySheetTarget: (any Item)? = nil
+    
     let level: Int
     let item: any Item
     let settings = Settings.shared
-
+    
     init(item: any Item, level: Int = 0) {
         self.level = level
         self.item = item
     }
-
+    
     var body: some View {
         mainItemView
             .withToast(actionPerformed: $actionPerformed)
             .sheet(isPresented: $showHNSheet) {
-                if let url = URL(string: item.itemUrl) {
+                if let target = Self.hnSheetTarget, let url = URL(string: target.itemUrl) {
                     SafariView(url: url)
                 }
             }
@@ -58,9 +60,9 @@ struct ItemView: View {
                 return .handled
             })
             .sheet(isPresented: $showReplySheet) {
-                ReplyView(actionPerformed: $actionPerformed, replyingTo: item)
-                    .presentationDetents([.large, .height(100)])
-                    .presentationBackgroundInteraction(.enabled)
+                if let target = Self.replySheetTarget {
+                    ReplyView(actionPerformed: $actionPerformed, replyingTo: target)
+                }
             }
             .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
                 Button("Flag", role: .destructive) {
@@ -78,7 +80,7 @@ struct ItemView: View {
                 }
             }
     }
-
+    
     var menu: some View {
         Menu {
             Group {
@@ -88,7 +90,7 @@ struct ItemView: View {
                 PinButton(id: item.id)
             }
             Button {
-                showReplySheet = true
+                onReplyTap(item: item)
             } label: {
                 Label("Reply", systemImage: "plus.message")
             }
@@ -101,11 +103,7 @@ struct ItemView: View {
                 CopyButton(text: text, actionPerformed: $actionPerformed)
             }
             Button {
-                if showUrlSheet, let url = URL(string: item.itemUrl) {
-                    Router.shared.to(.url(url))
-                } else {
-                    showHNSheet = true
-                }
+                onViewOnHackerNewsTap(item: item)
             } label: {
                 Label("View on Hacker News", systemImage: "safari")
             }
@@ -114,7 +112,7 @@ struct ItemView: View {
                 .foregroundColor(.orange)
         }
     }
-
+    
     @ViewBuilder
     var mainItemView: some View {
         ScrollView {
@@ -164,7 +162,11 @@ struct ItemView: View {
                 }
                 VStack(spacing: 0) {
                     ForEach(itemStore.kids) { comment in
-                        CommentTile(comment: comment, itemStore: itemStore) {
+                        CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
+                            onViewOnHackerNewsTap(item: comment)
+                        }, onShowReplySheet: {
+                            onReplyTap(item: comment)
+                        }) {
                             Task {
                                 await itemStore.loadKids(of: comment)
                             }
@@ -201,7 +203,7 @@ struct ItemView: View {
             await itemStore.refresh()
         }
     }
-
+    
     @ViewBuilder
     var nameRow: some View {
         let item = itemStore.item ?? item
@@ -232,6 +234,28 @@ struct ItemView: View {
                 .borderedFootnote()
                 .foregroundColor(getColor())
                 .padding(.trailing, 2)
+        }
+    }
+    
+    private func onViewOnHackerNewsTap(item: any Item) {
+        if showUrlSheet, let url = URL(string: item.itemUrl) {
+            Router.shared.to(.url(url))
+        } else {
+            Self.hnSheetTarget = item
+            showHNSheet = true
+        }
+    }
+    
+    private func onReplyTap(item: any Item) {
+        if showUrlSheet {
+            if let cmt = item as? Comment {
+                Router.shared.to(.replyComment(cmt))
+            } else if let story = item as? Story {
+                Router.shared.to(.replyStory(story))
+            }
+        } else {
+            Self.replySheetTarget = item
+            showReplySheet = true
         }
     }
 
