@@ -13,14 +13,20 @@ struct SafariView: View {
     }
     
     var body: some View {
-        SafariBaseView(url: url)
-            .ignoresSafeArea(.all)
-            .if(!dragDismissable) { view in
-                view
-                    .presentationDetents([.height(100), .large], selection: $presentationDetent)
-                    .presentationBackgroundInteraction(.enabled)
-                    .interactiveDismissDisabled()
-            }
+        ZStack(alignment: .top) {
+            SafariBaseView(url: url)
+            // Workaround for increasing the size of draggable area.
+            Color
+                .white.opacity(0.001)
+                .frame(width: 150, height: 50)
+        }
+        .ignoresSafeArea(.all)
+        .if(!dragDismissable) { view in
+            view
+                .presentationDetents([.height(100), .large], selection: $presentationDetent)
+                .presentationBackgroundInteraction(.enabled)
+                .interactiveDismissDisabled()
+        }
     }
 }
 
