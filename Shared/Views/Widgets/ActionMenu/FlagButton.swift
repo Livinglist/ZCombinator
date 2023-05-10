@@ -4,7 +4,7 @@ struct FlagButton: View {
     @EnvironmentObject var auth: Authentication
     
     let id: Int
-    var showFlagDialog: Binding<Bool>
+    let showFlagDialog: Binding<Bool>
     
     var body: some View {
         Button {

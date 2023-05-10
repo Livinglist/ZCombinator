@@ -29,9 +29,9 @@ extension FavView {
         
         func fetchStories() async {
             self.currentPage = 0
-            
+
             var items = [any Item]()
-            let range = 0..<min(10, favIds.count)
+            let range = 0..<min(pageSize, favIds.count)
             await StoriesRepository.shared.fetchItems(ids: Array(favIds[range])) { item in
                 items.append(item)
             }

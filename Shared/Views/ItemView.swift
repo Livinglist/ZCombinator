@@ -58,10 +58,12 @@ struct ItemView: View {
 
     var menu: some View {
         Menu {
-            UpvoteButton(id: item.id, actionPerformed: $actionPerformed)
-            DownvoteButton(id: item.id, actionPerformed: $actionPerformed)
-            FavButton(id: item.id, actionPerformed: $actionPerformed)
-            PinButton(id: item.id)
+            Group {
+                UpvoteButton(id: item.id, actionPerformed: $actionPerformed)
+                DownvoteButton(id: item.id, actionPerformed: $actionPerformed)
+                FavButton(id: item.id, actionPerformed: $actionPerformed)
+                PinButton(id: item.id)
+            }
             Button {
                 showReplySheet = true
             } label: {
@@ -72,6 +74,9 @@ struct ItemView: View {
             FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
             Divider()
             ShareMenu(item: item)
+            if let text = item.text, text.isNotEmpty {
+                CopyButton(text: text, actionPerformed: $actionPerformed)
+            }
             Button {
                 showHNSheet = true
             } label: {
@@ -80,29 +85,6 @@ struct ItemView: View {
         } label: {
             Label("", systemImage: "ellipsis")
                 .foregroundColor(.orange)
-        }
-    }
-
-
-    @ViewBuilder
-    var textView: some View {
-        if item is Story {
-            Text(item.title.orEmpty)
-                .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 0))
-        } else if item is Comment {
-            if item.text.isNotNullOrEmpty {
-                Text(item.text.orEmpty.markdowned)
-                    .font(.system(size: 16))
-                    .textSelection(.enabled)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.leading, 4)
-            } else {
-                Text("deleted")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-                    .padding(.top, 6)
-            }
         }
     }
 
@@ -225,13 +207,6 @@ struct ItemView: View {
                 .padding(.trailing, 2)
         }
     }
-    
-    private func fetchStoryAndComments() {
-        Task {
-            await itemStore.refresh()
-        }
-    }
-
 
     private func onFlagTap() {
         Task {

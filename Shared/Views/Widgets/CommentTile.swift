@@ -60,34 +60,6 @@ extension ItemView {
         }
         
         @ViewBuilder
-        var menu: some View {
-            Menu {
-                UpvoteButton(id: comment.id, actionPerformed: $actionPerformed)
-                DownvoteButton(id: comment.id, actionPerformed: $actionPerformed)
-                FavButton(id: comment.id, actionPerformed: $actionPerformed)
-                PinButton(id: comment.id)
-                Button {
-                    showReplySheet = true
-                } label: {
-                    Label("Reply", systemImage: "plus.message")
-                }
-                .disabled(!auth.loggedIn)
-                Divider()
-                FlagButton(id: comment.id, showFlagDialog: $showFlagDialog)
-                Divider()
-                ShareMenu(item: comment)
-                Button {
-                    showHNSheet = true
-                } label: {
-                    Label("View on Hacker News", systemImage: "safari")
-                }
-            } label: {
-                Label("", systemImage: "ellipsis")
-                    .foregroundColor(.orange)
-            }
-        }
-        
-        @ViewBuilder
         var textView: some View {
             if comment.text.isNotNullOrEmpty {
                 Text(comment.text.orEmpty.markdowned)
@@ -145,10 +117,13 @@ extension ItemView {
                 .padding(EdgeInsets(top: 6, leading: 0, bottom: 0, trailing: 0))
                 .background(Color(UIColor.systemBackground))
                 .contextMenu {
-                    UpvoteButton(id: comment.id, actionPerformed: $actionPerformed)
-                    DownvoteButton(id: comment.id, actionPerformed: $actionPerformed)
-                    FavButton(id: comment.id, actionPerformed: $actionPerformed)
-                    PinButton(id: comment.id)
+                    // Wrap these in group cuz there's a limit of 10 items in func params.
+                    Group {
+                        UpvoteButton(id: comment.id, actionPerformed: $actionPerformed)
+                        DownvoteButton(id: comment.id, actionPerformed: $actionPerformed)
+                        FavButton(id: comment.id, actionPerformed: $actionPerformed)
+                        PinButton(id: comment.id)
+                    }
                     Button {
                         showReplySheet = true
                     } label: {
@@ -159,6 +134,7 @@ extension ItemView {
                     FlagButton(id: comment.id, showFlagDialog: $showFlagDialog)
                     Divider()
                     ShareMenu(item: comment)
+                    CopyButton(text: comment.text.orEmpty, actionPerformed: $actionPerformed)
                     Button {
                         showHNSheet = true
                     } label: {

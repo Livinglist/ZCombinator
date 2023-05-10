@@ -16,7 +16,11 @@ public class Authentication: ObservableObject {
             
             guard let username = username else { return }
             
-            self.user = await AuthRepository.shared.fetchUser(username) ?? User(id: username)
+            let user = await AuthRepository.shared.fetchUser(username) ?? User(id: username)
+            
+            DispatchQueue.main.async {
+                self.user = user
+            }
         }
     }
     

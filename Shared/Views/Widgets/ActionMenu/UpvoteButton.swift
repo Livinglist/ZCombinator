@@ -4,7 +4,7 @@ struct UpvoteButton: View {
     @EnvironmentObject var auth: Authentication
     
     let id: Int
-    var actionPerformed: Binding<Action>
+    let actionPerformed: Binding<Action>
     
     var body: some View {
         Button {

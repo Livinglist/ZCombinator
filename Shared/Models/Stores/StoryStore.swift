@@ -20,7 +20,7 @@ extension HomeView {
             self.storyIds = await StoriesRepository.shared.fetchStoryIds(from: self.storyType)
   
             var stories = [Story]()
-            let range = 0..<min(10, storyIds.count)
+            let range = 0..<min(pageSize, storyIds.count)
             await StoriesRepository.shared.fetchStories(ids: Array(storyIds[range])) { story in
                 stories.append(story)
             }

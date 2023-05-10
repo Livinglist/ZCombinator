@@ -5,7 +5,7 @@ struct FavButton: View {
     @ObservedObject private var settings = Settings.shared
     
     let id: Int
-    var actionPerformed: Binding<Action>
+    let actionPerformed: Binding<Action>
     
     var body: some View {
         Button {
