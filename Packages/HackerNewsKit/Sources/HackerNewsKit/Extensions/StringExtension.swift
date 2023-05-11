@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import SwiftSoup
 
 public extension String {
     var isNotEmpty: Bool {
@@ -7,14 +8,49 @@ public extension String {
     }
     
     var htmlStripped: String {
-        guard let data = self.data(using: .unicode),
-              let res = try? NSAttributedString(data: data,
-                                                options: [.documentType: NSAttributedString.DocumentType.html],
-                                                documentAttributes: nil).string else { return self }
-        return res
+        do {
+            let pRegex = try Regex("<p>")
+            let iRegex = try Regex(#"\<i\>(.*?)\<\/i\>"#)
+            let codeRegex = try Regex(#"\<pre\>\<code\>(.*?)\<\/code\>\<\/pre\>"#)
+            let linkRegex = try Regex(#"\<a href=\"(.*?)\".*?\>.*?\<\/a\>"#)
+            let res = try Entities.unescape(self)
+                .replacing(pRegex, with: { match in
+                    "\n"
+                })
+                .replacing(iRegex, with: { match in
+                    if let m = match[1].substring {
+                        let matchedStr = String(m)
+                        return "*${\(matchedStr)}*"
+                    }
+                    return String()
+                })
+                .replacing(codeRegex, with: { match in
+                    if let m = match[1].substring {
+                        let matchedStr = String(m)
+                        return matchedStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                    }
+                    return String()
+                })
+                .replacing(linkRegex, with: { match in
+                    if let m = match[1].substring {
+                        let matchedStr = String(m)
+                        return matchedStr
+                    }
+                    return String()
+                })
+                .withExtraLineBreak
+            return res
+        } catch {
+            return error.localizedDescription
+        }
     }
     
-    var withExtraLineBreak: String {
+    func toJSON() -> Any? {
+        guard let data = self.data(using: .utf8, allowLossyConversion: false) else { return nil }
+        return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+    }
+    
+    private var withExtraLineBreak: String {
         if isEmpty { return self }
         let range = startIndex..<index(endIndex, offsetBy: -1)
         var str = String(replacingOccurrences(of: "\n", with: "\n\n", range: range))
@@ -22,11 +58,6 @@ public extension String {
             str = String(str.dropLast())
         }
         return str
-    }
-    
-    func toJSON() -> Any? {
-        guard let data = self.data(using: .utf8, allowLossyConversion: false) else { return nil }
-        return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
 }
 

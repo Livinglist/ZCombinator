@@ -33,7 +33,7 @@ public class StoriesRepository {
             let story = await fetchStory(id)
             if var story = story {
                 if filtered {
-                    let filteredText = story.text.htmlStripped.withExtraLineBreak
+                    let filteredText = story.text.htmlStripped
                     story = story.copyWith(text: filteredText)
                 }
                 onStoryFetched(story)
@@ -46,7 +46,7 @@ public class StoriesRepository {
 
         if let data = response.data,
            var story = try? JSONDecoder().decode(Story.self, from: data) {
-            let filteredText = story.text.htmlStripped.withExtraLineBreak
+            let filteredText = story.text.htmlStripped
             story = story.copyWith(text: filteredText)
             return story
         } else {
@@ -62,7 +62,7 @@ public class StoriesRepository {
 
             if var comment = comment {
                 if filtered {
-                    let filteredText = comment.text.htmlStripped.withExtraLineBreak
+                    let filteredText = comment.text.htmlStripped
                     comment = comment.copyWith(text: filteredText)
                 }
                 onCommentFetched(comment)
@@ -91,13 +91,13 @@ public class StoriesRepository {
             
             if var story = item as? Story {
                 if filtered {
-                    let filteredText = story.text.htmlStripped.withExtraLineBreak
+                    let filteredText = story.text.htmlStripped
                     story = story.copyWith(text: filteredText)
                 }
                 onItemFetched(story)
             } else if var cmt = item as? Comment {
                 if filtered {
-                    let filteredText = cmt.text.htmlStripped.withExtraLineBreak
+                    let filteredText = cmt.text.htmlStripped
                     cmt = cmt.copyWith(text: filteredText)
                 }
                 onItemFetched(cmt)
@@ -115,11 +115,11 @@ public class StoriesRepository {
             switch type {
             case "story":
                 let story = try? JSONDecoder().decode(Story.self, from: data)
-                let filteredText = story?.text.htmlStripped.withExtraLineBreak
+                let filteredText = story?.text.htmlStripped
                 return story?.copyWith(text: filteredText)
             case "comment":
                 let comment = try? JSONDecoder().decode(Comment.self, from: data)
-                let filteredText = comment?.text.htmlStripped.withExtraLineBreak
+                let filteredText = comment?.text.htmlStripped
                 return comment?.copyWith(text: filteredText)
             default:
                 return nil
@@ -136,7 +136,7 @@ public class StoriesRepository {
         
         if let data = response.data,
            let user = try? JSONDecoder().decode(User.self, from: data) {
-            let filteredText = user.about.orEmpty.htmlStripped.withExtraLineBreak
+            let filteredText = user.about.orEmpty.htmlStripped
             
             return user.copyWith(about: filteredText)
         } else {
