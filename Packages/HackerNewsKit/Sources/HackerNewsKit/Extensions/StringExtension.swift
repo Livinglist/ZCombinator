@@ -12,6 +12,7 @@ public extension String {
             let pRegex = try Regex("<p>")
             let iRegex = try Regex(#"\<i\>(.*?)\<\/i\>"#)
             let codeRegex = try Regex(#"\<pre\>\<code\>(.*?)\<\/code\>\<\/pre\>"#)
+                .dotMatchesNewlines(true)
             let linkRegex = try Regex(#"\<a href=\"(.*?)\".*?\>.*?\<\/a\>"#)
             let res = try Entities.unescape(self)
                 .replacing(pRegex, with: { match in
@@ -27,7 +28,7 @@ public extension String {
                 .replacing(codeRegex, with: { match in
                     if let m = match[1].substring {
                         let matchedStr = String(m)
-                        return matchedStr.trimmingCharacters(in: .whitespacesAndNewlines)
+                        return matchedStr.trimmingCharacters(in: .whitespaces)
                     }
                     return String()
                 })
