@@ -69,6 +69,7 @@
 		E5A2CECF2A08B94200D683C6 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2CECE2A08B94200D683C6 /* ShareViewController.swift */; };
 		E5A2CED22A08B94200D683C6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5A2CED02A08B94200D683C6 /* MainInterface.storyboard */; };
 		E5A2CED62A08B94200D683C6 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E5A2CECC2A08B94200D683C6 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E5BF9E6B2A0CAA5C0030E588 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = E5BF9E6A2A0CAA5C0030E588 /* SwiftSoup */; };
 		E5C7B97A2A086C9A00CA6066 /* CommentTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B9792A086C9A00CA6066 /* CommentTile.swift */; };
 		E5C7B97C2A08706000CA6066 /* View+GetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B97B2A08706000CA6066 /* View+GetColor.swift */; };
 		E5C7B97E2A0887D600CA6066 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B97D2A0887D600CA6066 /* ProfileView.swift */; };
@@ -232,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E514FC3D2A02C61600BEFC14 /* HackerNewsKit in Frameworks */,
+				E5BF9E6B2A0CAA5C0030E588 /* SwiftSoup in Frameworks */,
 				E56C06C0288679E900D4E685 /* Alamofire in Frameworks */,
 				E54B013E29FE302100F7F0A0 /* AlertToast in Frameworks */,
 			);
@@ -514,6 +516,7 @@
 				E56C06BF288679E900D4E685 /* Alamofire */,
 				E54B013D29FE302100F7F0A0 /* AlertToast */,
 				E514FC3C2A02C61600BEFC14 /* HackerNewsKit */,
+				E5BF9E6A2A0CAA5C0030E588 /* SwiftSoup */,
 			);
 			productName = "ZCombinator (iOS)";
 			productReference = E50FB9D22886738D00AA325C /* ZCombinator.app */;
@@ -652,6 +655,7 @@
 			packageReferences = (
 				E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E54B013C29FE302100F7F0A0 /* XCRemoteSwiftPackageReference "AlertToast" */,
+				E5BF9E692A0CAA5C0030E588 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = E50FB9D32886738D00AA325C /* Products */;
 			projectDirPath = "";
@@ -991,7 +995,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1029,7 +1033,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1405,6 +1409,14 @@
 				version = 5.6.2;
 			};
 		};
+		E5BF9E692A0CAA5C0030E588 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1425,6 +1437,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		E5BF9E6A2A0CAA5C0030E588 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E5BF9E692A0CAA5C0030E588 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
 		};
 /* End XCSwiftPackageProductDependency section */
 
