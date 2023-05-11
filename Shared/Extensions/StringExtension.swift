@@ -5,23 +5,6 @@ extension String {
         !isEmpty
     }
     
-    var htmlStripped: String {
-        let res = try? NSAttributedString(data: self.data(using: .unicode)!,
-                                       options: [.documentType: NSAttributedString.DocumentType.html],
-                                       documentAttributes: nil).string
-        return res.orEmpty
-    }
-    
-    var withExtraLineBreak: String {
-        if isEmpty { return self }
-        let range = startIndex..<index(endIndex, offsetBy: -1)
-        var str = String(replacingOccurrences(of: "\n", with: "\n\n", range: range))
-        while str.last?.isWhitespace == true {
-            str = String(str.dropLast())
-        }
-        return str
-    }
-    
     var markdowned: AttributedString {
         // Regex matching URLs.
         let regex = try! NSRegularExpression(pattern: #"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"#)

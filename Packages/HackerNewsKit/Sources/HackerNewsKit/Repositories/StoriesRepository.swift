@@ -12,7 +12,6 @@ public class StoriesRepository {
     
     public func fetchAllStories(from storyType: StoryType, onStoryFetched: @escaping (Story) -> Void) async -> Void {
         let storyIds = await fetchStoryIds(from: storyType)
-        
         for id in storyIds {
             let story = await self.fetchStory(id)
             if let story = story {
@@ -28,14 +27,10 @@ public class StoriesRepository {
         return storyIds ?? [Int]()
     }
     
-    public func fetchStories(ids: [Int], filtered: Bool = true, onStoryFetched: @escaping (Story) -> Void) async -> Void {
+    public func fetchStories(ids: [Int], onStoryFetched: @escaping (Story) -> Void) async -> Void {
         for id in ids {
             let story = await fetchStory(id)
-            if var story = story {
-                if filtered {
-                    let filteredText = story.text.htmlStripped
-                    story = story.copyWith(text: filteredText)
-                }
+            if let story = story {
                 onStoryFetched(story)
             }
         }
@@ -43,11 +38,10 @@ public class StoriesRepository {
     
     public func fetchStory(_ id: Int) async -> Story?{
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
-
         if let data = response.data,
            var story = try? JSONDecoder().decode(Story.self, from: data) {
-            let filteredText = story.text.htmlStripped
-            story = story.copyWith(text: filteredText)
+            let formattedText = story.text.htmlStripped
+            story = story.copyWith(text: formattedText)
             return story
         } else {
             return nil
@@ -56,25 +50,21 @@ public class StoriesRepository {
     
     // MARK: - Comment related.
     
-    public func fetchComments(ids: [Int], filtered: Bool = true, onCommentFetched: @escaping (Comment) -> Void) async -> Void {
+    public func fetchComments(ids: [Int], onCommentFetched: @escaping (Comment) -> Void) async -> Void {
         for id in ids {
             let comment = await fetchComment(id)
-
-            if var comment = comment {
-                if filtered {
-                    let filteredText = comment.text.htmlStripped
-                    comment = comment.copyWith(text: filteredText)
-                }
+            if let comment = comment {
                 onCommentFetched(comment)
             }
         }
     }
     
-    public func fetchComment(_ id: Int) async -> Comment?{
+    public func fetchComment(_ id: Int) async -> Comment? {
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
-        
-        if let data = response.data {
-            let comment = try? JSONDecoder().decode(Comment.self, from: data)
+        if let data = response.data,
+           var comment = try? JSONDecoder().decode(Comment.self, from: data) {
+            let formattedText = comment.text.htmlStripped
+            comment = comment.copyWith(text: formattedText)
             return comment
         } else {
             return nil
@@ -86,20 +76,10 @@ public class StoriesRepository {
     public func fetchItems(ids: [Int], filtered: Bool = true, onItemFetched: @escaping (any Item) -> Void) async -> Void {
         for id in ids {
             let item = await fetchItem(id)
-            
             guard let item = item else { continue }
-            
-            if var story = item as? Story {
-                if filtered {
-                    let filteredText = story.text.htmlStripped
-                    story = story.copyWith(text: filteredText)
-                }
+            if let story = item as? Story {
                 onItemFetched(story)
-            } else if var cmt = item as? Comment {
-                if filtered {
-                    let filteredText = cmt.text.htmlStripped
-                    cmt = cmt.copyWith(text: filteredText)
-                }
+            } else if let cmt = item as? Comment {
                 onItemFetched(cmt)
             }
         }
@@ -107,7 +87,6 @@ public class StoriesRepository {
     
     public func fetchItem(_ id: Int) async -> (any Item)? {
         let response = await AF.request("\(self.baseUrl)item/\(id).json").serializingString().response
-
         if let data = response.data,
            let result = try? response.result.get(),
            let map = result.toJSON() as? [String: AnyObject],
@@ -115,12 +94,12 @@ public class StoriesRepository {
             switch type {
             case "story":
                 let story = try? JSONDecoder().decode(Story.self, from: data)
-                let filteredText = story?.text.htmlStripped
-                return story?.copyWith(text: filteredText)
+                let formattedText = story?.text.htmlStripped
+                return story?.copyWith(text: formattedText)
             case "comment":
                 let comment = try? JSONDecoder().decode(Comment.self, from: data)
-                let filteredText = comment?.text.htmlStripped
-                return comment?.copyWith(text: filteredText)
+                let formattedText = comment?.text.htmlStripped
+                return comment?.copyWith(text: formattedText)
             default:
                 return nil
             }
@@ -133,12 +112,10 @@ public class StoriesRepository {
     
     public func fetchUser(_ id: String) async -> User? {
         let response = await AF.request("\(self.baseUrl)/user/\(id).json").serializingString().response
-        
         if let data = response.data,
            let user = try? JSONDecoder().decode(User.self, from: data) {
-            let filteredText = user.about.orEmpty.htmlStripped
-            
-            return user.copyWith(about: filteredText)
+            let formattedText = user.about.orEmpty.htmlStripped
+            return user.copyWith(about: formattedText)
         } else {
             return nil
         }
