@@ -37,10 +37,12 @@ extension ItemView {
         func refresh() async -> Void {
             if let id = self.item?.id {
                 withAnimation {
-                    self.loadingItem = nil
-                    self.loadedItems = Set<Int>()
                     self.kids.removeAll()
                 }
+                self.loadingItem = nil
+                self.loadedItems.removeAll()
+                self.collapsed.removeAll()
+                self.hidden.removeAll()
                 self.status = .loading
                 
                 if let item = await StoriesRepository.shared.fetchItem(id),
