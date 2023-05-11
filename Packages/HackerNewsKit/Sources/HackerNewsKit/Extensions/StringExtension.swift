@@ -20,7 +20,7 @@ public extension String {
                 .replacing(iRegex, with: { match in
                     if let m = match[1].substring {
                         let matchedStr = String(m)
-                        return "*${\(matchedStr)}*"
+                        return "*\(matchedStr)*"
                     }
                     return String()
                 })
