@@ -23,7 +23,7 @@ struct ZCombinatorApp: App {
             default: break
             }
         }
-        .backgroundTask(.appRefresh(Constants.Notification.backgroundTaskId)) {
+        .backgroundTask(.appRefresh(Constants.AppNotification.backgroundTaskId)) {
             await notification.fetchAllReplies()
         }
     }

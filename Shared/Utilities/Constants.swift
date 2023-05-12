@@ -17,7 +17,7 @@ struct Constants {
         static let pinListKey = "pinList"
     }
     
-    struct Notification {
+    struct AppNotification {
         static let lastItemPushedKey = "lastItemPushed"
         static let lastFetchedAtKey = "lastFetchedAt"
         static let backgroundTaskId = "fetchReplies"

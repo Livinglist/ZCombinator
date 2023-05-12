@@ -18,14 +18,14 @@ class AppNotification {
     private init() { }
     
     func scheduleFetching() {
-        let request = BGAppRefreshTaskRequest(identifier: Constants.Notification.backgroundTaskId)
+        let request = BGAppRefreshTaskRequest(identifier: Constants.AppNotification.backgroundTaskId)
         request.earliestBeginDate = nil
         try? BGTaskScheduler.shared.submit(request)
     }
     
     func fetchAllReplies() async {
-        let lastPushedKey = Constants.Notification.lastItemPushedKey
-        let lastFetchedKey = Constants.Notification.lastFetchedAtKey
+        let lastPushedKey = Constants.AppNotification.lastItemPushedKey
+        let lastFetchedKey = Constants.AppNotification.lastFetchedAtKey
         let lastPushedItemId = UserDefaults.standard.integer(forKey: lastPushedKey)
         let lastFetchedAt = UserDefaults.standard.integer(forKey: lastFetchedKey)
         let isFirstTime = lastFetchedAt == 0
@@ -57,10 +57,10 @@ class AppNotification {
         
         if !isFirstTime && latestSubmittedItemId > lastPushedItemId {
             await push(id: latestSubmittedItemId)
-            UserDefaults.standard.set(latestSubmittedItemId, forKey: Constants.Notification.lastItemPushedKey)
+            UserDefaults.standard.set(latestSubmittedItemId, forKey: Constants.AppNotification.lastItemPushedKey)
         }
         
-        UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: Constants.Notification.lastFetchedAtKey)
+        UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: Constants.AppNotification.lastFetchedAtKey)
     }
     
     func push(id: Int) async {
