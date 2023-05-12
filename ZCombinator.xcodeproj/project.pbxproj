@@ -37,6 +37,7 @@
 		E52C17772A02427E00282117 /* StoryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C17762A02427E00282117 /* StoryWidget.swift */; };
 		E52C17792A02427F00282117 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E52C17782A02427F00282117 /* Assets.xcassets */; };
 		E52C177D2A02427F00282117 /* StoryWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E52C176E2A02427D00282117 /* StoryWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E53650132A0DA7E4001CBFEF /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53650122A0DA7E4001CBFEF /* AppNotification.swift */; };
 		E53CA981289E3979009FDAE6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA980289E3979009FDAE6 /* Constants.swift */; };
 		E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */; };
 		E54B013E29FE302100F7F0A0 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = E54B013D29FE302100F7F0A0 /* AlertToast */; };
@@ -173,6 +174,7 @@
 		E52C17782A02427F00282117 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E52C177A2A02427F00282117 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E52C17852A0247AE00282117 /* HackerNewsKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = HackerNewsKit; sourceTree = "<group>"; };
+		E53650122A0DA7E4001CBFEF /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		E53CA980289E3979009FDAE6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShareSheet.swift"; sourceTree = "<group>"; };
 		E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackService.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				E5689EF02A09558B00F6CC48 /* Router.swift */,
 				E5689EF22A0956B600F6CC48 /* Destination.swift */,
 				E57E0D392A0B086A00E13963 /* Action.swift */,
+				E53650122A0DA7E4001CBFEF /* AppNotification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -782,6 +785,7 @@
 				E59425802A0AC2EF00469020 /* View+Toast.swift in Sources */,
 				E5EF2CC7289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */,
 				E500F9682892659B00080EAF /* StoryStore.swift in Sources */,
+				E53650132A0DA7E4001CBFEF /* AppNotification.swift in Sources */,
 				E580A3692A0A215E0025AD83 /* ToastContainer.swift in Sources */,
 				E54D06FE2A01AF1100F3E57B /* Settings.swift in Sources */,
 				E514FC432A02EBD400BEFC14 /* SearchStore.swift in Sources */,
@@ -995,7 +999,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1012,7 +1016,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.9;
+				MARKETING_VERSION = 0.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
@@ -1033,7 +1037,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1050,7 +1054,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.9;
+				MARKETING_VERSION = 0.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;

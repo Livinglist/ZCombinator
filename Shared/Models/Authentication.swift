@@ -6,7 +6,9 @@ public class Authentication: ObservableObject {
     @Published var loggedIn = Bool()
     @Published var user: User?
     
-    init(){
+    static let shared = Authentication()
+    
+    private init() {
         Task {
             let loggedIn = AuthRepository.shared.loggedIn
             let username = AuthRepository.shared.username

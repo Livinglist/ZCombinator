@@ -87,7 +87,7 @@ struct ItemView: View {
                 UpvoteButton(id: item.id, actionPerformed: $actionPerformed)
                 DownvoteButton(id: item.id, actionPerformed: $actionPerformed)
                 FavButton(id: item.id, actionPerformed: $actionPerformed)
-                PinButton(id: item.id)
+                PinButton(id: item.id, actionPerformed: $actionPerformed)
             }
             Button {
                 onReplyTap(item: item)
