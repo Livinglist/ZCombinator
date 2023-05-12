@@ -1016,7 +1016,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.10;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
@@ -1054,7 +1054,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.10;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
