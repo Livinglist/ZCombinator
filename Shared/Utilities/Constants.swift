@@ -16,4 +16,11 @@ struct Constants {
         static let favListKey = "favList"
         static let pinListKey = "pinList"
     }
+    
+    struct Notification {
+        static let lastItemPushedKey = "lastItemPushed"
+        static let lastFetchedAtKey = "lastFetchedAt"
+        static let backgroundTaskId = "fetchReplies"
+        static let id = "com.jiaqi.zcombinator.notification"
+    }
 }

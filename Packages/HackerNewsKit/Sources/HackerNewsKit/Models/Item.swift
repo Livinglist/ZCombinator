@@ -16,6 +16,11 @@ public protocol Item: Codable, Identifiable, Hashable {
 }
 
 public extension Item {
+    var createdAtDate: Date {
+        let date = Date(timeIntervalSince1970: Double(time))
+        return date
+    }
+    
     var createdAt: String {
         let date = Date(timeIntervalSince1970: Double(time))
         let dateFormatter = DateFormatter()

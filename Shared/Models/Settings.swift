@@ -1,10 +1,10 @@
 import Foundation
 
 class Settings: ObservableObject {
-    static let shared = Settings()
-    
     @Published var favList = Array<Int>()
     @Published var pinList = Array<Int>()
+    
+    static let shared = Settings()
 
     private init() {
         if let favList = UserDefaults.standard.array(forKey: Constants.UserDefaults.favListKey) as? [Int] {
