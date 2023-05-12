@@ -11,6 +11,7 @@ Another [Hacker News](https://news.ycombinator.com/) client made with SwiftUI.
 - [x] Home Screen and Lock Screen widget.
 - [x] Share Extension.
 - [x] Action Extension.
+- [x] Notification on new replies.
 
 <p align="center">
   <img width="240" alt="01" src="Resources/Screenshots/iphone-1.png">
