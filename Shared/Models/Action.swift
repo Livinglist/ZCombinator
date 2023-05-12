@@ -5,6 +5,8 @@ enum Action: Equatable {
     case downvote
     case favorite
     case unfavorite
+    case pin
+    case unpin
     case login
     case reply
     case copy
@@ -22,6 +24,10 @@ enum Action: Equatable {
             return "heart.fill"
         case .unfavorite:
             return "heart.slash"
+        case .pin:
+            return "pin.fill"
+        case .unpin:
+            return "pin.slash"
         case .login:
             return "person.badge.shield.checkmark.fill"
         case .reply:
@@ -45,6 +51,10 @@ enum Action: Equatable {
             return "Added"
         case .unfavorite:
             return "Removed"
+        case .pin:
+            return "Pinned"
+        case .unpin:
+            return "Unpinned"
         case .login:
             return "Welcome"
         case .reply:

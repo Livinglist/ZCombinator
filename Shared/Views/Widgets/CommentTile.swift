@@ -128,7 +128,7 @@ extension ItemView {
                         UpvoteButton(id: comment.id, actionPerformed: $actionPerformed)
                         DownvoteButton(id: comment.id, actionPerformed: $actionPerformed)
                         FavButton(id: comment.id, actionPerformed: $actionPerformed)
-                        PinButton(id: comment.id)
+                        PinButton(id: comment.id, actionPerformed: $actionPerformed)
                     }
                     Button {
                         onShowReplySheet()

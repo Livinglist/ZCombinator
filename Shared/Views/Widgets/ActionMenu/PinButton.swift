@@ -4,6 +4,7 @@ struct PinButton: View {
     @ObservedObject private var settings = Settings.shared
     
     let id: Int
+    let actionPerformed: Binding<Action>
     
     var body: some View {
         Button {
@@ -18,7 +19,13 @@ struct PinButton: View {
     }
     
     private func onPin() {
+        let isPinned = settings.pinList.contains(id)
+        if isPinned {
+            actionPerformed.wrappedValue = .unpin
+        } else {
+            actionPerformed.wrappedValue = .pin
+        }
+        HapticFeedbackService.shared.success()
         settings.onPinToggle(id)
-        HapticFeedbackService.shared.light()
     }
 }

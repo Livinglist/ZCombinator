@@ -64,11 +64,7 @@ class AppNotification {
     }
     
     func push(id: Int) async {
-        guard let item = await repo.fetchItem(id) else {
-            print("item is nil")
-            return
-            
-        }
+        guard let item = await repo.fetchItem(id) else { return }
         let diff = Calendar.current.numberOfDaysBetween(item.createdAtDate, and: .now)
         
         // If a reply is more than 5 days old, we don't push it.
