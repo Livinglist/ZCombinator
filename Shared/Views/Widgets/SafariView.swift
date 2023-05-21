@@ -6,6 +6,16 @@ struct SafariView: View {
     
     let url: URL
     let dragDismissable: Bool
+    let heights: Set<PresentationDetent> = [
+        .height(100),
+        .fraction(0.3),
+        .fraction(0.4),
+        .fraction(0.5),
+        .fraction(0.6),
+        .fraction(0.7),
+        .fraction(0.8),
+        .large
+    ]
     
     init(url: URL, dragDismissable: Bool = true) {
         self.url = url
@@ -25,7 +35,7 @@ struct SafariView: View {
                     .frame(width: 150, height: 50)
             }
             .ignoresSafeArea(.all)
-            .presentationDetents([.height(100), .large], selection: $presentationDetent)
+            .presentationDetents(heights, selection: $presentationDetent)
             .presentationBackgroundInteraction(.enabled)
             .interactiveDismissDisabled()
         }
