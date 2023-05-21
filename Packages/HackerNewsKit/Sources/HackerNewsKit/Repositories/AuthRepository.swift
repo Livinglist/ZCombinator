@@ -12,7 +12,7 @@ public class AuthRepository {
         kSecAttrServer: "news.ycombinator.com",
         kSecReturnAttributes: true,
         kSecReturnData: true
-    ] as CFDictionary
+    ] as [CFString : Any] as CFDictionary
     
     private init() {}
     
@@ -80,7 +80,7 @@ public class AuthRepository {
                 kSecClass: kSecClassInternetPassword,
                 kSecReturnData: true,
                 kSecReturnAttributes: true
-            ] as CFDictionary
+            ] as [CFString : Any] as CFDictionary
             
             var ref: AnyObject?
             
@@ -108,7 +108,7 @@ public class AuthRepository {
             kSecAttrServer: server,
             kSecReturnAttributes: true,
             kSecReturnData: true
-        ] as CFDictionary
+        ] as [CFString : Any] as CFDictionary
         
         
         let delStatus = SecItemDelete(query)
