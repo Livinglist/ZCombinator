@@ -6,7 +6,7 @@ import Photos
 class ShareViewController: SLComposeServiceViewController {
     let hostAppBundleIdentifier = "com.jiaqi.ZCombinator"
     var sharedText: [String] = []
-    let urlContentType = kUTTypeURL as String
+    let urlContentType = UTType.url.identifier
 
     override func isContentValid() -> Bool {
         return true

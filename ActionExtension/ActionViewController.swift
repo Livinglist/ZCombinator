@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 
 class ActionViewController: UIViewController {
     let hostAppBundleIdentifier = "com.jiaqi.ZCombinator"
-    let urlContentType = kUTTypeURL as String
+    let urlContentType = UTType.url.identifier
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
@@ -24,7 +24,6 @@ class ActionViewController: UIViewController {
     
     private func handleUrl(content: NSExtensionItem, attachment: NSItemProvider, index: Int) {
         attachment.loadItem(forTypeIdentifier: urlContentType, options: nil) { [weak self] data, error in
-            
             if error == nil, let item = data as? URL, let this = self {
                 this.redirectToHostApp(item)
             } else {
