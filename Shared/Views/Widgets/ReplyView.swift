@@ -2,21 +2,32 @@ import SwiftUI
 import HackerNewsKit
 
 struct ReplyView: View {
-    @EnvironmentObject var auth: Authentication
-    @Environment(\.presentationMode) var presentationMode
-    
+    @EnvironmentObject private var auth: Authentication
+    @Environment(\.presentationMode) private var presentationMode
+    @FocusState private var focusState: FocusField?
+    @State private var presentationDetent: PresentationDetent = .large
     @State private var text: String = String()
-    @FocusState private var focusState: Bool
+    
+    enum FocusField: Hashable {
+      case field
+    }
     
     var actionPerformed: Binding<Action>?
     let replyingTo: any Item
+    let draggable: Bool
+    let heights: Set<PresentationDetent> = [
+        .height(320),
+        .large
+    ]
     
-    init(actionPerformed: Binding<Action>? = nil, replyingTo: any Item) {
+    init(actionPerformed: Binding<Action>? = nil, replyingTo: any Item, draggable: Bool = false) {
         self.actionPerformed = actionPerformed
         self.replyingTo = replyingTo
+        self.draggable = draggable
     }
     
-    var body: some View {
+    @ViewBuilder
+    var mainView: some View {
         VStack(spacing: 0) {
             HStack {
                 Button("Cancel", role: .cancel) {
@@ -51,8 +62,29 @@ struct ReplyView: View {
                 .lineLimit(10...100)
                 .textFieldStyle(.roundedBorder)
                 .padding(.horizontal, 12)
-                .focused($focusState)
+                .focused($focusState, equals: .field)
+                .task {
+                    focusState = .field
+                }
             Spacer()
+        }
+    }
+    
+    var body: some View {
+        if draggable {
+            ZStack(alignment: .top) {
+                mainView
+                // Workaround for increasing the size of draggable area.
+                Color
+                    .white.opacity(0.001)
+                    .frame(width: 150, height: 50)
+            }
+            .ignoresSafeArea(.all)
+            .presentationDetents(heights, selection: $presentationDetent)
+            .presentationBackgroundInteraction(.enabled)
+            .interactiveDismissDisabled()
+        } else {
+            mainView
         }
     }
 }

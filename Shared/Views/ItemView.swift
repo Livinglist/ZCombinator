@@ -3,10 +3,8 @@ import WebKit
 import HackerNewsKit
 
 struct ItemView: View {
-    @EnvironmentObject var auth: Authentication
-    
-    @StateObject var itemStore = ItemStore()
-    @State private var isCollapsed = Bool()
+    @EnvironmentObject private var auth: Authentication
+    @StateObject private var itemStore = ItemStore()
     @State private var showHNSheet = Bool()
     @State private var showUrlSheet = Bool()
     @State private var showReplySheet = Bool()
@@ -35,7 +33,7 @@ struct ItemView: View {
             }
             .sheet(isPresented: $showUrlSheet) {
                 if let url = Self.handledUrl {
-                    SafariView(url: url, dragDismissable: false)
+                    SafariView(url: url, draggable: true)
                 }
             }
             .environment(\.openURL, OpenURLAction { url in
@@ -61,7 +59,10 @@ struct ItemView: View {
             })
             .sheet(isPresented: $showReplySheet) {
                 if let target = Self.replySheetTarget {
-                    ReplyView(actionPerformed: $actionPerformed, replyingTo: target)
+                    ReplyView(actionPerformed: $actionPerformed,
+                              replyingTo: target,
+                              draggable: true
+                    )
                 }
             }
             .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
