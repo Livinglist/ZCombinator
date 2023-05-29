@@ -20,8 +20,36 @@ extension SearchView {
     class SearchStore: ObservableObject {
         @Published var results = [any Item]()
         @Published var status: Status = .idle
-        private var params: SearchParams? = nil
+        @Published var params: SearchParams? = nil
         private var page: Int = 0
+        
+        func onTap<Filter: SearchFilter>(filter: Filter) {
+            var updatedFilters = Array(params?.filters ?? [any SearchFilter]())
+            
+            if let i = updatedFilters.firstIndex(where: { $0 is Filter }) {
+                updatedFilters.remove(at: i)
+            } else {
+                updatedFilters.append(filter)
+            }
+   
+            withAnimation {
+                if params != nil {
+                    self.params = params?.copyWith(filters: updatedFilters)
+                } else {
+                    self.params = SearchParams(page: 0, query: "", sorted: false, filters: updatedFilters)
+                }
+            }
+        }
+        
+        func get<T: SearchFilter>() -> T? {
+            let filter = params?.filters.first(where: { filter in
+                filter is T
+            })
+            if let filter = filter as? T {
+                return filter
+            }
+            return nil
+        }
 
         func search(query: String, filter: Filter) async {
             self.status = .loading

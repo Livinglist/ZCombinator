@@ -4,13 +4,32 @@ import Combine
 import HackerNewsKit
 
 struct SearchView: View {
-    @StateObject var searchStore = SearchStore()
-    @StateObject var debounceObject = DebounceObject()
+    @StateObject private var searchStore = SearchStore()
+    @StateObject private var debounceObject = DebounceObject()
     @State private var actionPerformed: Action = .none
     @State private var filter: Filter = .story
+    @State private var date: Date = Date()
     
     var body: some View {
         List {
+            HStack {
+                Chip(selected: searchStore.params?.filters.contains(where: { filter in
+                    filter is CommentFilter
+                }) ?? false, label: "comment") {
+                    searchStore.onTap(filter: CommentFilter())
+                }
+                Chip(selected: searchStore.params?.filters.contains(where: { filter in
+                    filter is StoryFilter
+                }) ?? false, label: "story") {
+                    searchStore.onTap(filter: StoryFilter())
+                }
+                DateTimeRangeChip(selected: searchStore.params?.filters.contains(where: { filter in
+                    filter is DateRangeFilter
+                }) ?? false, label: "date")
+                DatePicker(selection: $date, in: ...Date(), displayedComponents: [.date]) {
+                    EmptyView()
+                }
+            }
             Picker("Type", selection: $filter) {
                 ForEach(Filter.allCases, id: \.self) {
                     Text($0.rawValue.capitalized)
