@@ -1,6 +1,6 @@
 import Foundation
 
-enum Filter: Equatable {
+public enum SearchFilter: Equatable, Hashable {
     case story
     case comment
     case dateRange(Date, Date)
@@ -21,52 +21,17 @@ enum Filter: Equatable {
             }
         }
     }
-}
-
-public protocol SearchFilter: Equatable {
-    var query: String { get }
-}
-
-public class StoryFilter: SearchFilter {
-    public let query: String = "story"
-
-    public init() { }
     
-    public static func == (lhs: StoryFilter, rhs: StoryFilter) -> Bool {
-        lhs.query == rhs.query
-    }
-}
-
-public class CommentFilter: SearchFilter {
-    public let query: String = "comment"
-
-    public init() { }
-    
-    public static func == (lhs: CommentFilter, rhs: CommentFilter) -> Bool {
-        lhs.query == rhs.query
-    }
-}
-
-public class DateRangeFilter: SearchFilter {
-    public let startDate: Date
-    public let endDate: Date
-    
-    public init(startDate: Date, endDate: Date) {
-        self.startDate = startDate
-        self.endDate = endDate
-    }
-    
-    public var query: String {
-        let startTimestamp = startDate.timeIntervalSince1970
-        let endTimestamp = endDate.timeIntervalSince1970
-        if startTimestamp != endTimestamp {
-            return "created_at_i>=\(startTimestamp), created_at_i<=\(endTimestamp)"
-        } else {
-            return "created_at_i=\(startTimestamp)"
+    var isNumericFilter: Bool {
+        switch(self){
+        case .story, .comment:
+            return false
+        case .dateRange:
+            return true
         }
     }
     
-    public static func == (lhs: DateRangeFilter, rhs: DateRangeFilter) -> Bool {
-        lhs.startDate == rhs.startDate && lhs.endDate == rhs.endDate
+    var isTagFilter: Bool {
+        !isNumericFilter
     }
 }
