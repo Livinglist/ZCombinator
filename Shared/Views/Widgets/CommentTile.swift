@@ -7,12 +7,12 @@ extension ItemView {
         @EnvironmentObject var auth: Authentication
         @ObservedObject var itemStore: ItemStore
 
-        @State private var showFlagDialog = Bool()
+        @State private var showFlagDialog: Bool = .init()
         @State private var actionPerformed: Action = .none
         
         let level: Int
         let comment: Comment
-        let settings = Settings.shared
+        let settings: Settings = .shared
         let onLoadMore: () -> Void
         let onShowHNSheet: () -> Void
         let onShowReplySheet: () -> Void

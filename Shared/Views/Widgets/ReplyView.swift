@@ -6,7 +6,7 @@ struct ReplyView: View {
     @Environment(\.presentationMode) private var presentationMode
     @FocusState private var focusState: FocusField?
     @State private var presentationDetent: PresentationDetent = .large
-    @State private var text: String = String()
+    @State private var text: String = .init()
     
     enum FocusField: Hashable {
       case field

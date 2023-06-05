@@ -12,12 +12,23 @@ public enum SearchFilter: Equatable, Hashable {
         case .comment:
             return "comment"
         case .dateRange(let startDate, let endDate):
-            let startTimestamp = startDate.timeIntervalSince1970
-            let endTimestamp = endDate.timeIntervalSince1970
+            let startTimestamp = Int(startDate.timeIntervalSince1970.rounded())
+            let endTimestamp = Int(endDate.timeIntervalSince1970.rounded())
+            
             if startTimestamp != endTimestamp {
-                return "created_at_i>=\(startTimestamp), created_at_i<=\(endTimestamp)"
+                return "created_at_i>=\(startTimestamp),created_at_i<=\(endTimestamp)"
             } else {
-                return "created_at_i=\(startTimestamp)"
+                let updatedStartDate = Calendar.current.date(
+                    byAdding: .hour,
+                    value: -24,
+                    to: startDate)
+                let updatedStartTimestamp = updatedStartDate?.timeIntervalSince1970
+                
+                if let updatedStartTimestamp = updatedStartTimestamp?.rounded() {
+                    return "created_at_i>=\(Int(updatedStartTimestamp)),created_at_i<=\(endTimestamp)"
+                }
+                
+                return .init()
             }
         }
     }

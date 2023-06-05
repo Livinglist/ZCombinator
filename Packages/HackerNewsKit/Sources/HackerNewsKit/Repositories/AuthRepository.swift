@@ -3,7 +3,7 @@ import Alamofire
 import Security
 
 public class AuthRepository {
-    public static let shared = AuthRepository()
+    public static let shared: AuthRepository = .init()
     
     private let server: String = "news.ycombinator.com"
     private let baseUrl: String = "https://news.ycombinator.com"

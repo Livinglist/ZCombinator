@@ -4,12 +4,11 @@ import Combine
 import HackerNewsKit
 
 struct SearchView: View {
-    @StateObject private var searchStore = SearchStore()
-    @StateObject private var debounceObject = DebounceObject()
+    @StateObject private var searchStore: SearchStore = .init()
+    @StateObject private var debounceObject: DebounceObject = .init()
     @State private var actionPerformed: Action = .none
-    @State private var startDate: Date = Date()
-    @State private var endDate: Date = Date()
-    @State private var useDateRange: Bool = Bool()
+    @State private var startDate: Date = .init()
+    @State private var endDate: Date = .init()
     
     var body: some View {
         List {
@@ -23,22 +22,19 @@ struct SearchView: View {
                 Chip(selected: searchStore.contains(.story), label: "story") {
                     searchStore.onTap(filter: .story)
                 }
-                Chip(selected: useDateRange, label: "date") {
-                    useDateRange.toggle()
+                Chip(selected: searchStore.containsDateRange, label: "date") {
+                    searchStore.onDateRangeToggle(.dateRange(startDate, endDate))
                 }
             }
             .listRowSeparator(.hidden)
-            if useDateRange {
-                HStack {
-                    Text("from")
+            if searchStore.containsDateRange {
+                VStack {
                     DatePicker(selection: $startDate, in: ...Date(), displayedComponents: [.date]) {
-                        EmptyView()
+                        Text("from")
                     }
-                    Text("to")
                     DatePicker(selection: $endDate, in: ...Date(), displayedComponents: [.date]) {
-                        EmptyView()
+                        Text("to")
                     }
-                    Spacer()
                 }
                 .listRowSeparator(.hidden)
             }
@@ -58,14 +54,12 @@ struct SearchView: View {
         .withToast(actionPerformed: $actionPerformed)
         .onChange(of: debounceObject.debouncedText) { text in
             if text.isEmpty { return }
-            Task {
-                await searchStore.search(query: text)
-            }
-        }.onChange(of: searchStore.params) { filter in
-            if debounceObject.debouncedText.isEmpty { return }
-            Task {
-                await searchStore.search(query: debounceObject.debouncedText)
-            }
+            searchStore.onQueryUpdate(text)
+        }
+        .onChange(of: startDate) { _ in
+            searchStore.onDateRangeUpdate(.dateRange(startDate, endDate))
+        }.onChange(of: endDate) { date in
+            searchStore.onDateRangeUpdate(.dateRange(startDate, endDate))
         }
     }
 }

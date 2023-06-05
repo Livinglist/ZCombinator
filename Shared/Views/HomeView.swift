@@ -4,18 +4,17 @@ import HackerNewsKit
 
 struct HomeView: View {
     @EnvironmentObject private var auth: Authentication
-    @StateObject private var storyStore = StoryStore()
-    @ObservedObject private var settings = Settings.shared
-    @ObservedObject private var router = Router.shared
+    @StateObject private var storyStore: StoryStore = .init()
+    @ObservedObject private var settings: Settings = .shared
+    @ObservedObject private var router: Router = .shared
     
-    @State private var showLoginDialog = Bool()
-    @State private var showLogoutDialog = Bool()
-    @State private var showAboutSheet = Bool()
-    @State private var showUrlSheet = Bool()
+    @State private var showLoginDialog: Bool = .init()
+    @State private var showLogoutDialog: Bool = .init()
+    @State private var showAboutSheet: Bool = .init()
+    @State private var showUrlSheet: Bool = .init()
     
-    @State private var username = String()
-    @State private var password = String()
-    @State private var shouldRememberMe = Bool()
+    @State private var username: String = .init()
+    @State private var password: String = .init()
     
     @State private var actionPerformed: Action = .none
     private static var handledUrl: URL? = nil

@@ -62,7 +62,7 @@ enum Action: Equatable {
         case .copy:
             return "Copied"
         case .none:
-            return String()
+            return .init()
         }
     }
 }

@@ -3,10 +3,10 @@ import HackerNewsKit
 
 public class Authentication: ObservableObject {
     @Published var username: String?
-    @Published var loggedIn = Bool()
+    @Published var loggedIn: Bool = .init()
     @Published var user: User?
     
-    static let shared = Authentication()
+    static let shared: Authentication = .init()
     
     private init() {
         Task {

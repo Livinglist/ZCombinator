@@ -25,7 +25,7 @@ struct PreviewContextView<Content: View>: UIViewRepresentable {
         return view
     }
     
-    func updateUIView(_ uiView: UIView, context: Context) { }
+    func updateUIView(_ uiView: UIView, context: Context) {}
     
     func makeCoordinator() -> Coordinator {
         return Coordinator(menu: self.menu, didCommitView: self.didCommitView)
@@ -58,7 +58,7 @@ struct PreviewContextViewModifier<V: View>: ViewModifier {
     let menu: PreviewContextMenu<V>
     @Environment(\.presentationMode) var mode
     
-    @State var isActive: Bool = Bool()
+    @State var isActive: Bool = .init()
     
     func body(content: Content) -> some View {
         content.overlay(PreviewContextView(menu: menu, didCommitView: { self.isActive = true }))

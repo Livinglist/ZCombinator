@@ -5,7 +5,7 @@ import HackerNewsKit
 extension ItemView {
     @MainActor
     class ItemStore : ObservableObject {
-        @Published var kids = [Comment]()
+        @Published var kids: [Comment] = .init()
         @Published var status: Status = .idle
         @Published var item: (any Item)?
         @Published var loadingItem: Int?

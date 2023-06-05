@@ -6,8 +6,8 @@ import UserNotifications
 struct ZCombinatorApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.scenePhase) private var phase
-    let auth = Authentication.shared
-    let notification = AppNotification.shared
+    let auth: Authentication = .shared
+    let notification: AppNotification = .shared
 
     var body: some Scene {
         WindowGroup {

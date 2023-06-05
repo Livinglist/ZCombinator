@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct FavView: View {
-    @StateObject var favStore = FavStore()
+    @StateObject var favStore: FavStore = .init()
     @State private var actionPerformed: Action = .none
-    private let settings = Settings.shared
+    private let settings: Settings = .shared
     
     var body: some View {
         if settings.favList.isEmpty {

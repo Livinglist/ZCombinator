@@ -2,8 +2,8 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject private var auth: Authentication
-    @StateObject var profileStore = ProfileStore()
-    @State var showLogoutDialog = Bool()
+    @StateObject var profileStore: ProfileStore = .init()
+    @State var showLogoutDialog: Bool = .init()
     
     let id: String
     

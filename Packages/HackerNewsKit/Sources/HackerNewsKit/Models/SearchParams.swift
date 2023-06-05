@@ -13,7 +13,7 @@ public class SearchParams: Equatable {
         if sorted {
             buffer.append("search_by_date?query=\(encodedQuery)")
         } else {
-            buffer.append("search?query=?query=\(encodedQuery)")
+            buffer.append("search?query=\(encodedQuery)")
         }
         
         if !filters.isEmpty {

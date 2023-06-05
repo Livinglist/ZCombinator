@@ -4,8 +4,8 @@ import Foundation
 import SwiftUI
 
 struct DateTimeRangeChip: View {
-    @State private var showDatePicker = Bool()
-    @State private var date: Date = Date()
+    @State private var showDatePicker: Bool = .init()
+    @State private var date: Date = .init()
     
     let selected: Bool
     let label: String
