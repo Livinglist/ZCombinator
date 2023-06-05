@@ -4,18 +4,18 @@ import UniformTypeIdentifiers
 import HackerNewsKit
 
 struct ItemRow: View {
-    let settings = Settings.shared
+    let settings: Settings = .shared
     let item: any Item
     let url: URL?
     let isPinnedStory: Bool
 
     @EnvironmentObject var auth: Authentication
 
-    @State private var showSafari: Bool = Bool()
-    @State private var showHNSheet: Bool = Bool()
-    @State private var showReplySheet: Bool = Bool()
-    @State private var showFlagDialog: Bool = Bool()
-    @GestureState private var isDetectingPress = Bool()
+    @State private var showSafari: Bool = .init()
+    @State private var showHNSheet: Bool = .init()
+    @State private var showReplySheet: Bool = .init()
+    @State private var showFlagDialog: Bool = .init()
+    @GestureState private var isDetectingPress: Bool = .init()
     @Binding private var actionPerformed: Action
     
     init(item: any Item,

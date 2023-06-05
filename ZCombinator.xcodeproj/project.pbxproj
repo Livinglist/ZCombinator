@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E15D742F2A21F6C7007C888A /* Chip.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15D742E2A21F6C7007C888A /* Chip.swift */; };
+		E15D74312A220100007C888A /* DateRangeChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15D74302A220100007C888A /* DateRangeChip.swift */; };
 		E500F9682892659B00080EAF /* StoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500F9672892659B00080EAF /* StoryStore.swift */; };
 		E500F96B289266EF00080EAF /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E500F96A289266EF00080EAF /* LinkView.swift */; };
 		E504A0362A01F79B0090AFAB /* FavStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E504A0352A01F79B0090AFAB /* FavStore.swift */; };
@@ -141,6 +143,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E15D742E2A21F6C7007C888A /* Chip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chip.swift; sourceTree = "<group>"; };
+		E15D74302A220100007C888A /* DateRangeChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeChip.swift; sourceTree = "<group>"; };
 		E500F9672892659B00080EAF /* StoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryStore.swift; sourceTree = "<group>"; };
 		E500F96A289266EF00080EAF /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		E504A0352A01F79B0090AFAB /* FavStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavStore.swift; sourceTree = "<group>"; };
@@ -283,6 +287,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E15D742C2A21F6AC007C888A /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				E15D742D2A21F6B5007C888A /* Widgets */,
+				E514FC402A02EB8E00BEFC14 /* SearchView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		E15D742D2A21F6B5007C888A /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				E15D742E2A21F6C7007C888A /* Chip.swift */,
+				E15D74302A220100007C888A /* DateRangeChip.swift */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
 		E504A03B2A0225EF0090AFAB /* ActionMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,11 +387,11 @@
 		E50FBA0C288673A100AA325C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E15D742C2A21F6AC007C888A /* Search */,
 				E54B013529FC952400F7F0A0 /* Widgets */,
 				E52134C228877ED7005CFB77 /* ItemView.swift */,
 				E50FB9CB2886738B00AA325C /* HomeView.swift */,
 				E54D06FA2A01AF0400F3E57B /* FavView.swift */,
-				E514FC402A02EB8E00BEFC14 /* SearchView.swift */,
 				E57640372A0313C80075F5D1 /* PinView.swift */,
 				E5C7B97D2A0887D600CA6066 /* ProfileView.swift */,
 				E55322F82A08D13F005B93D0 /* SubmissionView.swift */,
@@ -777,11 +799,13 @@
 				E5E048D3289F6DA000702733 /* UIApplication+KeyWindow.swift in Sources */,
 				E55322FB2A08D17A005B93D0 /* SubmissionStore.swift in Sources */,
 				E54D06FB2A01AF0400F3E57B /* FavView.swift in Sources */,
+				E15D74312A220100007C888A /* DateRangeChip.swift in Sources */,
 				E50FB9F72886738D00AA325C /* HomeView.swift in Sources */,
 				E514FC3A2A02C45E00BEFC14 /* Int+OrZero.swift in Sources */,
 				E500F96B289266EF00080EAF /* LinkView.swift in Sources */,
 				E504A0392A0223A30090AFAB /* FavButton.swift in Sources */,
 				E51C9DA3289F2EF4001EA8E8 /* Authentication.swift in Sources */,
+				E15D742F2A21F6C7007C888A /* Chip.swift in Sources */,
 				E59425802A0AC2EF00469020 /* View+Toast.swift in Sources */,
 				E5EF2CC7289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */,
 				E500F9682892659B00080EAF /* StoryStore.swift in Sources */,
@@ -1016,7 +1040,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
@@ -1054,7 +1078,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
@@ -1156,7 +1180,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StoryWidget/Info.plist;
@@ -1168,7 +1192,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.StoryWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1186,7 +1210,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StoryWidget/Info.plist;
@@ -1198,7 +1222,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.StoryWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1229,7 +1253,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.ActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1259,7 +1283,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.ActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1288,7 +1312,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1316,7 +1340,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

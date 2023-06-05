@@ -2,7 +2,7 @@ import SwiftUI
 import AlertToast
 
 struct ToastContainer<Content: View>: View {
-    @State private var showToast = Bool()
+    @State private var showToast: Bool = .init()
     @Binding private var actionPerformed: Action
 
     let content: Content

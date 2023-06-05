@@ -9,23 +9,23 @@ public struct User: Decodable, Equatable {
     public let submitted: [Int]?
     
     public init() {
-        self.id = String()
-        self.about = String()
-        self.created = Int()
-        self.delay = Int()
-        self.karma = Int()
-        self.submitted = [Int]()
+        self.id = .init()
+        self.about = .init()
+        self.created = .init()
+        self.delay = .init()
+        self.karma = .init()
+        self.submitted = .init()
     }
     
     /// If a user does not have any activity, the user endpoint will not return anything.
     /// in that case, we create a user with only username.
     public init(id: String) {
         self.id = id
-        self.about = String()
-        self.created = Int()
-        self.delay = Int()
-        self.karma = Int()
-        self.submitted = [Int]()
+        self.about = .init()
+        self.created = .init()
+        self.delay = .init()
+        self.karma = .init()
+        self.submitted = .init()
     }
     
     init(id: String?, about: String?, created: Int?, delay: Int?, karma: Int?, submitted: [Int]?) {

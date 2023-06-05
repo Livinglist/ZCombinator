@@ -4,8 +4,8 @@ import Combine
 import HackerNewsKit
 
 struct SubmissionView: View {
-    @StateObject var submissionStore = SubmissionStore()
-    @StateObject var debounceObject = DebounceObject()
+    @StateObject var submissionStore: SubmissionStore = .init()
+    @StateObject var debounceObject: DebounceObject = .init()
     @State private var actionPerformed: Action = .none
     
     let ids: [Int]

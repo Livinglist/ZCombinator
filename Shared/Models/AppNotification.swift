@@ -10,12 +10,12 @@ private extension Calendar {
 }
 
 class AppNotification {
-    private let auth = Authentication.shared
-    private let repo = StoriesRepository.shared
+    private let auth: Authentication = .shared
+    private let repo: StoriesRepository = .shared
     
-    static let shared = AppNotification()
+    static let shared: AppNotification = .init()
     
-    private init() { }
+    private init() {}
     
     func scheduleFetching() {
         let request = BGAppRefreshTaskRequest(identifier: Constants.AppNotification.backgroundTaskId)

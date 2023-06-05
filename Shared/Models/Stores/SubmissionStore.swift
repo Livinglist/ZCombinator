@@ -4,12 +4,12 @@ import HackerNewsKit
 extension SubmissionView {
     @MainActor
     class SubmissionStore: ObservableObject {
-        @Published var submitted = [any Item]()
+        @Published var submitted: [any Item] = .init()
         @Published var status: Status = .idle
         
         private var currentPage: Int = 0
         private let pageSize: Int = 10
-        var ids: [Int] = [Int]()
+        var ids: [Int] = .init()
         
         func fetchSubmissions(ids: [Int]) async {
             self.ids = ids

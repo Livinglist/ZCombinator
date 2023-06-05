@@ -5,7 +5,7 @@ struct SafariView: View {
     @State var presentationDetent: PresentationDetent = .large
     
     let url: URL
-    let dragDismissable: Bool
+    let draggable: Bool
     let heights: Set<PresentationDetent> = [
         .height(100),
         .fraction(0.3),
@@ -17,16 +17,13 @@ struct SafariView: View {
         .large
     ]
     
-    init(url: URL, dragDismissable: Bool = true) {
+    init(url: URL, draggable: Bool = false) {
         self.url = url
-        self.dragDismissable = dragDismissable
+        self.draggable = draggable
     }
     
     var body: some View {
-        if dragDismissable {
-            SafariBaseView(url: url)
-                .ignoresSafeArea(.all)
-        } else {
+        if draggable {
             ZStack(alignment: .top) {
                 SafariBaseView(url: url)
                 // Workaround for increasing the size of draggable area.
@@ -38,6 +35,9 @@ struct SafariView: View {
             .presentationDetents(heights, selection: $presentationDetent)
             .presentationBackgroundInteraction(.enabled)
             .interactiveDismissDisabled()
+        } else {
+            SafariBaseView(url: url)
+                .ignoresSafeArea(.all)
         }
     }
 }

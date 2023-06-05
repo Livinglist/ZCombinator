@@ -6,10 +6,10 @@ import HackerNewsKit
 extension FavView {
     @MainActor
     class FavStore: ObservableObject {
-        @Published var items = [any Item]()
+        @Published var items: [any Item] = .init()
         @Published var status: Status = .idle
         
-        private let settingsStore = Settings.shared
+        private let settingsStore: Settings = .shared
         private let pageSize: Int = 10
         private var currentPage: Int = 0
         private var cancellable: AnyCancellable?

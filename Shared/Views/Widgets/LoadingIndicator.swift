@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct LoadingIndicator: View {
-    @State private var shouldAnimate = Bool()
+    @State private var shouldAnimate: Bool = .init()
     let size: CGFloat = 12
     let color: Color
     
