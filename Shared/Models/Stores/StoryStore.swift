@@ -12,7 +12,7 @@ extension HomeView {
 
         private let pageSize: Int = 10
         private var currentPage: Int = 0
-        private var storyIds: [Int] = [Int]()
+        private var storyIds: [Int] = .init()
 
         func fetchStories() async {
             self.status = .loading
