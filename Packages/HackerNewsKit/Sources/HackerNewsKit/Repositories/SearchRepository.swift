@@ -9,7 +9,8 @@ public class SearchRepository {
     private let baseUrl = "https://hn.algolia.com/api/v1/"
     
     public func search(params: SearchParams, onItemFetched: @escaping (any Item) -> Void) async -> Void {
-        guard let urlStr = "\(baseUrl)\(params.filteredQuery)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
+        guard let urlStr = "\(baseUrl)\(params.filteredQuery)"
+                .addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
               let url = URL(string: urlStr) else { return }
         let response = await AF.request(url).serializingString().response
         

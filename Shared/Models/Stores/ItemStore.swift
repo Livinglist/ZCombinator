@@ -9,9 +9,9 @@ extension ItemView {
         @Published var status: Status = .idle
         @Published var item: (any Item)?
         @Published var loadingItem: Int?
-        @Published var loadedItems = Set<Int>()
-        @Published var collapsed = Set<Int>()
-        @Published var hidden = Set<Int>()
+        @Published var loadedItems: Set<Int> = .init()
+        @Published var collapsed: Set<Int> = .init()
+        @Published var hidden: Set<Int> = .init()
         
         func loadKids(of cmt: Comment) async {
             if let parentIndex = kids.firstIndex(of: cmt),
@@ -35,6 +35,8 @@ extension ItemView {
         }
         
         func refresh() async -> Void {
+            if status.isLoading { return }
+            
             if let id = self.item?.id {
                 withAnimation {
                     self.kids.removeAll()
@@ -49,22 +51,17 @@ extension ItemView {
                    let kids = item.kids {
                     self.item = item
                     
-                    var comments = [Comment]()
-                    
                     await StoriesRepository.shared.fetchComments(ids: kids) { comment in
-                        comments.append(comment.copyWith(level: 0))
-                    }
-                    
-                    
-                    withAnimation {
-                        self.kids.append(contentsOf: comments)
-                        self.status = .loaded
-                    }
-                } else {
-                    withAnimation {
-                        self.status = .loaded
+                        DispatchQueue.main.async {
+                            withAnimation {
+                                self.status = .backgroundLoading
+                                self.kids.append(comment.copyWith(level: 0))
+                            }
+                        }
                     }
                 }
+                
+                self.status = .loaded
             }
         }
         
@@ -79,17 +76,17 @@ extension ItemView {
         func collapse(cmt: Comment) {
             collapsed.insert(cmt.id)
             
-            hide(cmt: cmt)
+            hide(kidsOf: cmt)
         }
         
         func uncollapse(cmt: Comment) {
             collapsed.remove(cmt.id)
             
-            unhide(cmt: cmt)
+            unhide(kidsOf: cmt)
         }
         
-        func hide(cmt: Comment) {
-            guard let kids = cmt.kids else { return }
+        func hide(kidsOf parent: Comment) {
+            guard let kids = parent.kids else { return }
             
             for childId in kids {
                 let child = self.kids.first { $0.id == childId }
@@ -97,12 +94,12 @@ extension ItemView {
                     continue
                 }
                 hidden.insert(childId)
-                hide(cmt: child)
+                hide(kidsOf: child)
             }
         }
         
-        func unhide(cmt: Comment) {
-            guard let kids = cmt.kids else { return }
+        func unhide(kidsOf parent: Comment) {
+            guard let kids = parent.kids else { return }
             
             for childId in kids {
                 let child = self.kids.first { $0.id == childId }
@@ -112,7 +109,7 @@ extension ItemView {
                 
                 hidden.remove(childId)
                 if collapsed.contains(childId) == false {
-                    unhide(cmt: child)
+                    unhide(kidsOf: child)
                 }
             }
         }
