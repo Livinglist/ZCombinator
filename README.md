@@ -30,10 +30,10 @@ Another [Hacker News](https://news.ycombinator.com/) client made with SwiftUI.
   <img width="240" alt="11" src="Resources/Screenshots/extra2-5.png">
   <img width="240" alt="12" src="Resources/Screenshots/extra2-6.png">
   
-  <img width="180" alt="ipad01" src="Resources/Screenshots/ipad-1.png">
-  <img width="180" alt="ipad02" src="Resources/Screenshots/ipad-2.png">
-  <img width="180" alt="ipad03" src="Resources/Screenshots/ipad-3.png">
-  <img width="180" alt="ipad04" src="Resources/Screenshots/ipad-4.png">
+  <img width="360" alt="ipad01" src="Resources/Screenshots/ipad-1.png">
+  <img width="360" alt="ipad02" src="Resources/Screenshots/ipad-2.png">
+  <img width="360" alt="ipad03" src="Resources/Screenshots/ipad-3.png">
+  <img width="360" alt="ipad04" src="Resources/Screenshots/ipad-4.png">
 </p>
 
 
