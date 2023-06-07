@@ -8,12 +8,11 @@ public class SearchParams: Equatable {
     
     public var filteredQuery: String {
         var buffer = String()
-        guard let encodedQuery = URLComponents(string: query)?.string.orEmpty else { return String() }
         
         if sorted {
-            buffer.append("search_by_date?query=\(encodedQuery)")
+            buffer.append("search_by_date?query=\(query)")
         } else {
-            buffer.append("search?query=\(encodedQuery)")
+            buffer.append("search?query=\(query)")
         }
         
         if !filters.isEmpty {
