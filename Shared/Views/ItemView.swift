@@ -162,7 +162,7 @@ struct ItemView: View {
                 if itemStore.status == .loading {
                     LoadingIndicator().padding(.top, 100)
                 }
-                VStack(spacing: 0) {
+                LazyVStack(spacing: 0) {
                     ForEach(itemStore.kids) { comment in
                         CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
                             onViewOnHackerNewsTap(item: comment)
