@@ -54,8 +54,15 @@ struct HomeView: View {
                 Label("Pins", systemImage: "pin")
             }
             .listRowSeparator(.hidden)
-
             
+            if storyStore.status.isLoading {
+                HStack {
+                    Spacer()
+                    LoadingIndicator()
+                    Spacer()
+                }
+            }
+
             ForEach(storyStore.stories) { story in
                 ItemRow(item: story,
                         actionPerformed: $actionPerformed)
