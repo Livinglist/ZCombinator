@@ -45,7 +45,7 @@ class ActionViewController: UIViewController {
     }
     
     private func redirectToHostApp(_ item: URL) {
-        let url = URL(string: "ShareMedia://\(item)")
+        let url = URL(string: "ZCShareMedia://\(item)")
         var responder = self as UIResponder?
         let selectorOpenURL = sel_registerName("openURL:")
         

@@ -13,7 +13,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>ShareMedia</string>
+				<string>ZCShareMedia</string>
 			</array>
 		</dict>
 	</array>
