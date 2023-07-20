@@ -227,7 +227,7 @@ struct ItemView: View {
                     .foregroundColor(getColor())
             }
             if let descendants = item.descendants {
-                Text("\(descendants) comment\(descendants <= 1 ? "" : "s")")
+                Text("\(descendants) cmt\(descendants <= 1 ? "" : "s")")
                     .borderedFootnote()
                     .foregroundColor(getColor())
             }
