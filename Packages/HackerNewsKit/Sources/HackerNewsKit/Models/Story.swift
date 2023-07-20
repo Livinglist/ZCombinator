@@ -24,7 +24,7 @@ public struct Story: Item {
         if isJob {
             return "\(timeAgo) by \(by.orEmpty)"
         } else {
-            return "\(score.orZero) pts | \(descendants.orZero) cmts | \(timeAgo) by \(by.orEmpty)"
+            return "\(score.orZero) pt\(score.orZero > 1 ? "s":"") | \(descendants.orZero) cmt\(descendants.orZero > 1 ? "s":"") | \(timeAgo) by \(by.orEmpty)"
         }
     }
 

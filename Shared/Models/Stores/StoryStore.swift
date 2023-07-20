@@ -14,8 +14,8 @@ extension HomeView {
         private var currentPage: Int = 0
         private var storyIds: [Int] = .init()
 
-        func fetchStories() async {
-            self.status = .loading
+        func fetchStories(status: Status = .loading) async {
+            self.status = status
             self.currentPage = 0
             self.storyIds = await StoriesRepository.shared.fetchStoryIds(from: self.storyType)
   
@@ -32,7 +32,7 @@ extension HomeView {
         }
         
         func refresh() async -> Void {
-            await fetchStories()
+            await fetchStories(status: .refreshing)
         }
         
         func loadMore() async {

@@ -4,6 +4,7 @@ public enum Status {
     case loading
     // Loading with no loading indicator.
     case backgroundLoading
+    case refreshing
     case loaded
     case error
     

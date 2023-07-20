@@ -110,7 +110,7 @@ extension ItemView {
                             
                             onLoadMore()
                         } label: {
-                            Text("Load \(comment.kids.countOrZero) \(comment.kids.isMoreThanOne ? "replies" : "reply")")
+                            Text("\(comment.kids.countOrZero) \(comment.kids.isMoreThanOne ? "replies" : "reply")")
                                 .font(.footnote.weight(.bold))
                                 .foregroundColor(getColor(level: level))
                                 .frame(width: 140)
@@ -180,7 +180,7 @@ extension ItemView {
                         .foregroundColor(getColor(level: level))
                 }
                 if let descendants = comment.descendants {
-                    Text("\(descendants) comment\(descendants <= 1 ? "" : "s")")
+                    Text("\(descendants) cmt\(descendants <= 1 ? "" : "s")")
                         .borderedFootnote()
                         .foregroundColor(getColor(level: level))
                 }
