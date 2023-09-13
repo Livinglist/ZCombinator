@@ -125,7 +125,7 @@ struct ItemView: View {
                 if let url = URL(string: item.url.orEmpty) {
                     ZStack {
                         LinkView(url: url, title: item.title.orEmpty)
-                            .padding()
+                            .padding(.horizontal)
                             .allowsHitTesting(false)
                         Color.clear
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -161,8 +161,8 @@ struct ItemView: View {
             if itemStore.status == .loading {
                 LoadingIndicator().padding(.top, 100)
             }
-            LazyVStack(spacing: 0) {
-                ForEach(itemStore.kids, id: \.self) { comment in
+            VStack(spacing: 0) {
+                ForEach(itemStore.kids) { comment in
                     CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
                         onViewOnHackerNewsTap(item: comment)
                     }, onShowReplySheet: {
@@ -175,6 +175,7 @@ struct ItemView: View {
                     .padding(.trailing, 4)
                 }
             }
+            .animation(.spring(), value: itemStore.kids)
             Spacer().frame(height: 60)
             if itemStore.status == Status.loaded {
                 Text(Constants.happyFace)
