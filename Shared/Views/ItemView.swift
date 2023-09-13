@@ -140,22 +140,18 @@ struct ItemView: View {
                         Text(item.title.orEmpty)
                             .multilineTextAlignment(.center)
                             .fontWeight(.semibold)
-                            .padding(.top, 6)
                             .padding(.leading, 12)
-                            .padding(.bottom, 6)
+                            .padding(.bottom, 4)
                         Text(item.text.orEmpty.markdowned)
                             .font(.callout)
                             .padding(.leading, 8)
-                            .padding(.bottom, 6)
                     }
                 }
             } else if item is Comment {
                 VStack(spacing: 0) {
                     Text(item.text.orEmpty.markdowned)
                         .font(.callout)
-                        .padding(.top, 6)
-                        .padding(.leading, 8)
-                        .padding(.bottom, 6)
+                        .padding(.leading, 2)
                 }
             }
             if itemStore.status == .loading {
