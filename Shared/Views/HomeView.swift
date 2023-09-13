@@ -58,9 +58,10 @@ struct HomeView: View {
             if storyStore.status.isLoading {
                 HStack {
                     Spacer()
-                    LoadingIndicator()
+                    LoadingIndicator().frame(height: 200)
                     Spacer()
                 }
+                .listRowSeparator(.hidden)
             }
 
             ForEach(storyStore.stories) { story in
