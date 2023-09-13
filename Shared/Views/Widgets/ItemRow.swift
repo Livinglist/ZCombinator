@@ -77,7 +77,7 @@ struct ItemRow: View {
                                         .font(.footnote)
                                         .foregroundColor(.orange)
                                 } else if let text = item.text {
-                                    Text(text)
+                                    Text(text.replacingOccurrences(of: "\n", with: " "))
                                         .font(.footnote)
                                         .lineLimit(2)
                                         .foregroundColor(.gray)

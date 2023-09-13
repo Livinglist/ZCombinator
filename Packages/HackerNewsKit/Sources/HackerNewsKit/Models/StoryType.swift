@@ -25,6 +25,15 @@ public enum StoryType: String, Equatable, CaseIterable, AppEnum {
         }
     }
     
+    public var label: String {
+        switch self {
+        case .jobs:
+            return "jobs"
+        default:
+            return self.rawValue
+        }
+    }
+    
     public static var typeDisplayRepresentation: TypeDisplayRepresentation = "Story Type"
     public static var caseDisplayRepresentations: [StoryType : DisplayRepresentation] = [
         .top: "Top",

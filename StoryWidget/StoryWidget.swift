@@ -31,9 +31,9 @@ struct StoryWidgetView : View {
                         .multilineTextAlignment(.leading)
                     if let text = story.text, text.isNotEmpty {
                         HStack {
-                            Text(text)
+                            Text(text.replacingOccurrences(of: "\n", with: " "))
                                 .font(.footnote)
-                                .lineLimit(2)
+                                .lineLimit(3)
                                 .foregroundColor(.gray)
                             Spacer()
                         }

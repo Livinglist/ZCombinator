@@ -103,7 +103,7 @@ struct HomeView: View {
                                 await storyStore.fetchStories()
                             }
                         } label: {
-                            Label("\(storyType.rawValue.uppercased())", systemImage: storyType.iconName)
+                            Label("\(storyType.label.capitalized)", systemImage: storyType.iconName)
                         }
                     }
                     Divider()
@@ -119,7 +119,7 @@ struct HomeView: View {
                 }
             }
         }
-        .navigationTitle(storyStore.storyType.rawValue.uppercased())
+        .navigationTitle(storyStore.storyType.label.uppercased())
     }
     
     @ViewBuilder
