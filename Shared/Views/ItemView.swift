@@ -148,10 +148,11 @@ struct ItemView: View {
                     }
                 }
             } else if item is Comment {
-                VStack(spacing: 0) {
+                HStack {
                     Text(item.text.orEmpty.markdowned)
                         .font(.callout)
                         .padding(.leading, 8)
+                    Spacer()
                 }
             }
             if itemStore.status == .loading {

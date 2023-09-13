@@ -403,7 +403,7 @@
 			isa = PBXGroup;
 			children = (
 				E15D742C2A21F6AC007C888A /* Search */,
-				E54B013529FC952400F7F0A0 /* Widgets */,
+				E54B013529FC952400F7F0A0 /* Components */,
 				E52134C228877ED7005CFB77 /* ItemView.swift */,
 				E50FB9CB2886738B00AA325C /* HomeView.swift */,
 				E54D06FA2A01AF0400F3E57B /* FavView.swift */,
@@ -448,7 +448,7 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
-		E54B013529FC952400F7F0A0 /* Widgets */ = {
+		E54B013529FC952400F7F0A0 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				E504A03B2A0225EF0090AFAB /* ActionMenu */,
@@ -468,7 +468,7 @@
 				E5C7B9792A086C9A00CA6066 /* CommentTile.swift */,
 				E580A3682A0A215E0025AD83 /* ToastContainer.swift */,
 			);
-			path = Widgets;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		E5A2CEB72A08AF0300D683C6 /* ActionExtension */ = {
@@ -1053,7 +1053,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1091,7 +1091,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
