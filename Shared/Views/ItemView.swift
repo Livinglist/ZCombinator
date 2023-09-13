@@ -162,18 +162,17 @@ struct ItemView: View {
                 if itemStore.status == .loading {
                     LoadingIndicator().padding(.top, 100)
                 }
-                LazyVStack(spacing: 0) {
-                    ForEach(itemStore.kids) { comment in
-                        CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
-                            onViewOnHackerNewsTap(item: comment)
-                        }, onShowReplySheet: {
-                            onReplyTap(item: comment)
-                        }) {
-                            Task {
-                                await itemStore.loadKids(of: comment)
-                            }
-                        }.padding(.trailing, 4)
+                ForEach(itemStore.kids) { comment in
+                    CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
+                        onViewOnHackerNewsTap(item: comment)
+                    }, onShowReplySheet: {
+                        onReplyTap(item: comment)
+                    }) {
+                        Task {
+                            await itemStore.loadKids(of: comment)
+                        }
                     }
+                    .padding(.trailing, 4)
                 }
                 Spacer().frame(height: 60)
                 if itemStore.status == Status.loaded {

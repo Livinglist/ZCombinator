@@ -23,13 +23,14 @@ struct ToastContainer<Content: View>: View {
                     title: actionPerformed.title
                 )
             }
-            .onChange(of: actionPerformed) { val in
-                if val != .none {
+            .onChange(of: actionPerformed) { _, newValue in
+                if newValue != .none {
                     showToast = true
                 }
-            }.onChange(of: showToast) { val in
+            }
+            .onChange(of: showToast) { _, newValue in
                 // Reset action after displaying the toast.
-                if !val {
+                if !newValue {
                     actionPerformed = .none
                 }
             }
