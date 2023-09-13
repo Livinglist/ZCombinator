@@ -151,7 +151,7 @@ struct ItemView: View {
                 VStack(spacing: 0) {
                     Text(item.text.orEmpty.markdowned)
                         .font(.callout)
-                        .padding(.leading, 2)
+                        .padding(.leading, 8)
                 }
             }
             if itemStore.status == .loading {
