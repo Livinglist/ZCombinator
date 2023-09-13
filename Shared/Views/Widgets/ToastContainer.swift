@@ -15,6 +15,7 @@ struct ToastContainer<Content: View>: View {
     }
     
     var body: some View {
+        
         content
             .toast(isPresenting: $showToast) {
                 AlertToast(

@@ -27,6 +27,13 @@ public class StoriesRepository {
         return storyIds ?? [Int]()
     }
     
+    public func fetchStoryIds(from storyType: String) async -> [Int] {
+        let response =  await AF.request("\(self.baseUrl)\(storyType)stories.json").serializingString().response
+        guard response.data != nil else { return [Int]() }
+        let storyIds = try? JSONDecoder().decode([Int].self, from: response.data!)
+        return storyIds ?? [Int]()
+    }
+    
     public func fetchStories(ids: [Int], onStoryFetched: @escaping (Story) -> Void) async -> Void {
         for id in ids {
             let story = await fetchStory(id)

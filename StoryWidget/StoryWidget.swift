@@ -7,6 +7,7 @@ struct StoryWidgetView : View {
     @Environment(\.widgetFamily) var family
     @Environment(\.showsWidgetContainerBackground) var showsWidgetContainerBackground
     var story: Story
+    var source: StorySource
 
     var body: some View {
         switch family {
@@ -24,17 +25,10 @@ struct StoryWidgetView : View {
         default:
             HStack {
                 VStack {
-                    if showsWidgetContainerBackground {
-                        Text(story.title.orEmpty)
-                            .font(family == .systemSmall ? .system(size: 14) : .body)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .multilineTextAlignment(.leading)
-                    } else {
-                        Text("story.title.orEmpty testsedsfsdfsefsefsefsefsefsefsefsefsdfsefsefs")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .lineLimit(3)
-                            .multilineTextAlignment(.leading)
-                    }
+                    Text(story.title.orEmpty)
+                        .font(family == .systemSmall ? .system(size: 14) : .body)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .multilineTextAlignment(.leading)
                     if let text = story.text, text.isNotEmpty {
                         HStack {
                             Text(text)
@@ -48,15 +42,15 @@ struct StoryWidgetView : View {
                     HStack {
                         if let url = story.readableUrl {
                             Text(url)
-                                .font(family == .systemSmall ? .system(size: 10) : .footnote)
+                                .font(family == .systemSmall ? .system(size: 8) : .footnote)
                                 .foregroundColor(.orange)
                         }
                         Spacer()
                     }
                     Divider().frame(maxWidth: .infinity)
                     HStack(alignment: .center) {
-                        Text(story.metadata.orEmpty)
-                            .font(family == .systemSmall ? .system(size: 10) : .caption)
+                        Text("\(source.rawValue.uppercased()) | \(story.metadata.orEmpty)")
+                            .font(family == .systemSmall ? showsWidgetContainerBackground ? .system(size: 10) : .system(size: 8) : .caption)
                             .padding(.top, showsWidgetContainerBackground ? 2 : .zero)
                         Spacer()
                     }
@@ -79,7 +73,7 @@ struct StoryWidget: Widget {
             kind: kind,
             intent: SelectStoryTypeIntent.self,
             provider: StoryTimelineProvider()) { entry in
-                StoryWidgetView(story: entry.story)
+                StoryWidgetView(story: entry.story, source: entry.source)
         }
         .supportedFamilies([.systemSmall, .systemMedium, .accessoryRectangular])
         .configurationDisplayName("Story on Hacker News")

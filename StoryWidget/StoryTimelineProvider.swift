@@ -3,11 +3,11 @@ import HackerNewsKit
 
 struct StoryTimelineProvider: AppIntentTimelineProvider {
     func snapshot(for configuration: SelectStoryTypeIntent, in context: Context) async -> StoryEntry {
-        let ids = await StoriesRepository.shared.fetchStoryIds(from: .top)
+        let ids = await StoriesRepository.shared.fetchStoryIds(from: configuration.source.rawValue)
         guard let first = ids.first else { return .errorPlaceholder }
         let story = await StoriesRepository.shared.fetchStory(first)
         guard let story = story else { return .errorPlaceholder }
-        let entry = StoryEntry(date: Date(), story: story)
+        let entry = StoryEntry(date: Date(), story: story, source: configuration.source)
         return entry
     }
     
@@ -23,11 +23,11 @@ struct StoryTimelineProvider: AppIntentTimelineProvider {
             descendants: 24,
             time: Int(Date().timeIntervalSince1970)
         )
-        return StoryEntry(date: Date(), story: story)
+        return StoryEntry(date: Date(), story: story, source: .top)
     }
     
     func timeline(for configuration: SelectStoryTypeIntent, in context: Context) async -> Timeline<StoryEntry> {
-        let ids = await StoriesRepository.shared.fetchStoryIds(from: .top)
+        let ids = await StoriesRepository.shared.fetchStoryIds(from: configuration.source.rawValue)
         guard let first = ids.first else {
             return Timeline(entries: [.errorPlaceholder], policy: .atEnd)
         }
@@ -35,7 +35,7 @@ struct StoryTimelineProvider: AppIntentTimelineProvider {
         guard let story = story else {
             return Timeline(entries: [.errorPlaceholder], policy: .atEnd)
         }
-        let entry = StoryEntry(date: Date(), story: story)
+        let entry = StoryEntry(date: Date(), story: story, source: configuration.source)
         
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         return timeline
