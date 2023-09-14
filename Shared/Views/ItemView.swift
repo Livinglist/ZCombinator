@@ -172,7 +172,6 @@ struct ItemView: View {
                     .padding(.trailing, 4)
                 }
             }
-            .animation(.spring(), value: itemStore.kids)
             Spacer().frame(height: 60)
             if itemStore.status == Status.loaded {
                 Text(Constants.happyFace)
