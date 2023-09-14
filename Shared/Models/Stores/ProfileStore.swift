@@ -8,12 +8,12 @@ extension ProfileView {
         @Published var status: Status = .idle
         
         func fetchUser(id: String) async {
-            self.status = .loading
+            self.status = .inProgress
             let user = await StoriesRepository.shared.fetchUser(id)
             
             if let user = user {
                 self.user = user
-                self.status = .loaded
+                self.status = .completed
             }
         }
     }

@@ -5,16 +5,19 @@ import HackerNewsKit
 extension ItemView {
     @MainActor
     class ItemStore : ObservableObject {
-        @Published var kids: [Comment] = .init()
+        @Published var comments: [Comment] = .init()
         @Published var status: Status = .idle
         @Published var item: (any Item)?
         @Published var loadingItem: Int?
-        @Published var loadedItems: Set<Int> = .init()
+        
+        /// Stores ids of loaded comments, including both root and child comments.
+        @Published var loadedCommentIds: Set<Int> = .init()
         @Published var collapsed: Set<Int> = .init()
         @Published var hidden: Set<Int> = .init()
         
+        /// Load child comments of a comment.
         func loadKids(of cmt: Comment) async {
-            if let parentIndex = kids.firstIndex(of: cmt),
+            if let parentIndex = comments.firstIndex(of: cmt),
                let kids = cmt.kids,
                let level = cmt.level,
                loadingItem == nil {
@@ -28,8 +31,8 @@ extension ItemView {
                 
                 withAnimation {
                     self.loadingItem = nil
-                    self.loadedItems.insert(cmt.id)
-                    self.kids.insert(contentsOf: comments, at: parentIndex + 1)
+                    self.loadedCommentIds.insert(cmt.id)
+                    self.comments.insert(contentsOf: comments, at: parentIndex + 1)
                 }
             }
         }
@@ -39,13 +42,13 @@ extension ItemView {
             
             if let id = self.item?.id {
                 withAnimation {
-                    self.kids.removeAll()
+                    self.comments.removeAll()
                 }
                 self.loadingItem = nil
-                self.loadedItems.removeAll()
+                self.loadedCommentIds.removeAll()
                 self.collapsed.removeAll()
                 self.hidden.removeAll()
-                self.status = .loading
+                self.status = .inProgress
                 
                 if let item = await StoriesRepository.shared.fetchItem(id),
                    let kids = item.kids {
@@ -55,13 +58,13 @@ extension ItemView {
                         DispatchQueue.main.async {
                             withAnimation {
                                 self.status = .backgroundLoading
-                                self.kids.append(comment.copyWith(level: 0))
+                                self.comments.append(comment.copyWith(level: 0))
                             }
                         }
                     }
                 }
                 
-                self.status = .loaded
+                self.status = .completed
             }
         }
         
@@ -85,11 +88,11 @@ extension ItemView {
             unhide(kidsOf: cmt)
         }
         
-        func hide(kidsOf parent: Comment) {
+        private func hide(kidsOf parent: Comment) {
             guard let kids = parent.kids else { return }
             
             for childId in kids {
-                let child = self.kids.first { $0.id == childId }
+                let child = self.comments.first { $0.id == childId }
                 guard let child = child else {
                     continue
                 }
@@ -98,11 +101,11 @@ extension ItemView {
             }
         }
         
-        func unhide(kidsOf parent: Comment) {
+        private func unhide(kidsOf parent: Comment) {
             guard let kids = parent.kids else { return }
             
             for childId in kids {
-                let child = self.kids.first { $0.id == childId }
+                let child = self.comments.first { $0.id == childId }
                 guard let child = child else {
                     continue
                 }

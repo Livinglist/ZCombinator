@@ -38,7 +38,7 @@ extension FavView {
             
             DispatchQueue.main.async {
                 withAnimation {
-                    self.status = .loaded
+                    self.status = .completed
                     self.items = items
                 }
             }
@@ -65,7 +65,7 @@ extension FavView {
             
             DispatchQueue.main.async {
                 withAnimation {
-                    self.status = .loaded
+                    self.status = .completed
                     self.items.append(contentsOf: items)
                 }
             }

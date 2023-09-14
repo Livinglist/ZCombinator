@@ -121,6 +121,7 @@ struct ItemView: View {
             nameRow
                 .padding(.leading, 6)
                 .padding(.trailing, 4)
+                .padding(.top, 6)
             if item is Story {
                 if let url = URL(string: item.url.orEmpty) {
                     ZStack {
@@ -155,11 +156,11 @@ struct ItemView: View {
                     Spacer()
                 }
             }
-            if itemStore.status == .loading {
+            if itemStore.status == .inProgress {
                 LoadingIndicator().padding(.top, 100)
             }
             VStack(spacing: 0) {
-                ForEach(itemStore.kids) { comment in
+                ForEach(itemStore.comments) { comment in
                     CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
                         onViewOnHackerNewsTap(item: comment)
                     }, onShowReplySheet: {
@@ -173,7 +174,7 @@ struct ItemView: View {
                 }
             }
             Spacer().frame(height: 60)
-            if itemStore.status == Status.loaded {
+            if itemStore.status == Status.completed {
                 Text(Constants.happyFace)
                     .foregroundColor(.gray)
                     .padding(.bottom, 40)
@@ -189,16 +190,29 @@ struct ItemView: View {
                     } label: {
                         Image(systemName: "backward.circle")
                     }
-                    
                 }
             }
             ToolbarItem {
                 menu
             }
         }
+        .overlay {
+            if itemStore.status.isLoading {
+                VStack {
+                    ProgressView(value: Double(itemStore.comments.count), total: Double(item.kids?.count ?? item.descendants ?? 1))
+                    Spacer()
+                }
+            } else {
+                EmptyView()
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
         .refreshable {
-            await itemStore.refresh()
+            // Wrapped around in Task so that the default refresh indicator
+            // doesn't wait for refresh() to complete.
+            Task {
+                await itemStore.refresh()
+            }
         }
     }
     
