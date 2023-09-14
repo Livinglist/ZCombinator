@@ -58,18 +58,19 @@ struct HomeView: View {
             if storyStore.status.isLoading {
                 HStack {
                     Spacer()
-                    LoadingIndicator()
+                    LoadingIndicator().frame(height: 200)
                     Spacer()
                 }
-            }
-
-            ForEach(storyStore.stories) { story in
-                ItemRow(item: story,
-                        actionPerformed: $actionPerformed)
-                .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                 .listRowSeparator(.hidden)
-                .onAppear {
-                    storyStore.onStoryRowAppear(story)
+            } else {
+                ForEach(storyStore.stories) { story in
+                    ItemRow(item: story,
+                            actionPerformed: $actionPerformed)
+                    .listRowInsets(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
+                    .listRowSeparator(.hidden)
+                    .onAppear {
+                        storyStore.onStoryRowAppear(story)
+                    }
                 }
             }
         }
@@ -102,7 +103,7 @@ struct HomeView: View {
                                 await storyStore.fetchStories()
                             }
                         } label: {
-                            Label("\(storyType.rawValue.uppercased())", systemImage: storyType.iconName)
+                            Label("\(storyType.label.capitalized)", systemImage: storyType.iconName)
                         }
                     }
                     Divider()
@@ -118,7 +119,7 @@ struct HomeView: View {
                 }
             }
         }
-        .navigationTitle(storyStore.storyType.rawValue.uppercased())
+        .navigationTitle(storyStore.storyType.label.uppercased())
     }
     
     @ViewBuilder

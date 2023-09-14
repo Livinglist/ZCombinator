@@ -1,4 +1,6 @@
-public enum StoryType: String, Equatable, CaseIterable {
+import AppIntents
+
+public enum StoryType: String, Equatable, CaseIterable, AppEnum {
     case top = "top"
     case best = "best"
     case new = "new"
@@ -22,4 +24,23 @@ public enum StoryType: String, Equatable, CaseIterable {
             return "briefcase"
         }
     }
+    
+    public var label: String {
+        switch self {
+        case .jobs:
+            return "jobs"
+        default:
+            return self.rawValue
+        }
+    }
+    
+    public static var typeDisplayRepresentation: TypeDisplayRepresentation = "Story Type"
+    public static var caseDisplayRepresentations: [StoryType : DisplayRepresentation] = [
+        .top: "Top",
+        .best: "Best",
+        .new: "New",
+        .ask: "Ask HN",
+        .show: "Show HN",
+        .jobs: "YC Jobs"
+    ]
 }

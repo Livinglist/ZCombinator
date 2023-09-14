@@ -17,7 +17,7 @@ struct ZCombinatorApp: App {
                     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
                 }
         }
-        .onChange(of: phase) { newPhase in
+        .onChange(of: phase) { _, newPhase in
             switch newPhase {
             case .background: notification.scheduleFetching()
             default: break

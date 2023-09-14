@@ -30,6 +30,8 @@
 		E514FC432A02EBD400BEFC14 /* SearchStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514FC422A02EBD400BEFC14 /* SearchStore.swift */; };
 		E514FC452A02FEF100BEFC14 /* PinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514FC442A02FEF100BEFC14 /* PinButton.swift */; };
 		E51C9DA3289F2EF4001EA8E8 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51C9DA2289F2EF4001EA8E8 /* Authentication.swift */; };
+		E51CCDEA2AB178CA00F522BD /* StorySource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51CCDE92AB178CA00F522BD /* StorySource.swift */; };
+		E51CCDEB2AB178CA00F522BD /* StorySource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51CCDE92AB178CA00F522BD /* StorySource.swift */; };
 		E52134C028877C06005CFB77 /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134BF28877C06005CFB77 /* ItemRow.swift */; };
 		E52134C328877ED7005CFB77 /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134C228877ED7005CFB77 /* ItemView.swift */; };
 		E526555F2887E28800D0B79A /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E526555E2887E28800D0B79A /* SafariView.swift */; };
@@ -41,6 +43,14 @@
 		E52C177D2A02427F00282117 /* StoryWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E52C176E2A02427D00282117 /* StoryWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E53650132A0DA7E4001CBFEF /* AppNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53650122A0DA7E4001CBFEF /* AppNotification.swift */; };
 		E53CA981289E3979009FDAE6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53CA980289E3979009FDAE6 /* Constants.swift */; };
+		E5448BFD2AB1241800737F18 /* StoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5448BFC2AB1241800737F18 /* StoryEntry.swift */; };
+		E5448BFE2AB1241800737F18 /* StoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5448BFC2AB1241800737F18 /* StoryEntry.swift */; };
+		E5448C002AB1244500737F18 /* SelectStoryTypeIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5448BFF2AB1244500737F18 /* SelectStoryTypeIntent.swift */; };
+		E5448C012AB1244500737F18 /* SelectStoryTypeIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5448BFF2AB1244500737F18 /* SelectStoryTypeIntent.swift */; };
+		E5448C032AB1246F00737F18 /* Timeline+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5448C022AB1246F00737F18 /* Timeline+Placeholder.swift */; };
+		E5448C042AB1246F00737F18 /* Timeline+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5448C022AB1246F00737F18 /* Timeline+Placeholder.swift */; };
+		E5448C062AB1249A00737F18 /* StoryTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5448C052AB1249A00737F18 /* StoryTimelineProvider.swift */; };
+		E5448C072AB1249A00737F18 /* StoryTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5448C052AB1249A00737F18 /* StoryTimelineProvider.swift */; };
 		E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */; };
 		E54B013E29FE302100F7F0A0 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = E54B013D29FE302100F7F0A0 /* AlertToast */; };
 		E54B014329FE33FE00F7F0A0 /* HapticFeedbackService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */; };
@@ -167,6 +177,7 @@
 		E514FC422A02EBD400BEFC14 /* SearchStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStore.swift; sourceTree = "<group>"; };
 		E514FC442A02FEF100BEFC14 /* PinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinButton.swift; sourceTree = "<group>"; };
 		E51C9DA2289F2EF4001EA8E8 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		E51CCDE92AB178CA00F522BD /* StorySource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorySource.swift; sourceTree = "<group>"; };
 		E52134BF28877C06005CFB77 /* ItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRow.swift; sourceTree = "<group>"; };
 		E52134C228877ED7005CFB77 /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
 		E526555E2887E28800D0B79A /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
@@ -180,6 +191,10 @@
 		E52C17852A0247AE00282117 /* HackerNewsKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = HackerNewsKit; sourceTree = "<group>"; };
 		E53650122A0DA7E4001CBFEF /* AppNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNotification.swift; sourceTree = "<group>"; };
 		E53CA980289E3979009FDAE6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E5448BFC2AB1241800737F18 /* StoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryEntry.swift; sourceTree = "<group>"; };
+		E5448BFF2AB1244500737F18 /* SelectStoryTypeIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectStoryTypeIntent.swift; sourceTree = "<group>"; };
+		E5448C022AB1246F00737F18 /* Timeline+Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Timeline+Placeholder.swift"; sourceTree = "<group>"; };
+		E5448C052AB1249A00737F18 /* StoryTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTimelineProvider.swift; sourceTree = "<group>"; };
 		E54B013929FC9FB500F7F0A0 /* View+ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShareSheet.swift"; sourceTree = "<group>"; };
 		E54B014229FE33FE00F7F0A0 /* HapticFeedbackService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedbackService.swift; sourceTree = "<group>"; };
 		E54D06FA2A01AF0400F3E57B /* FavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavView.swift; sourceTree = "<group>"; };
@@ -388,7 +403,7 @@
 			isa = PBXGroup;
 			children = (
 				E15D742C2A21F6AC007C888A /* Search */,
-				E54B013529FC952400F7F0A0 /* Widgets */,
+				E54B013529FC952400F7F0A0 /* Components */,
 				E52134C228877ED7005CFB77 /* ItemView.swift */,
 				E50FB9CB2886738B00AA325C /* HomeView.swift */,
 				E54D06FA2A01AF0400F3E57B /* FavView.swift */,
@@ -416,6 +431,11 @@
 				E52C17762A02427E00282117 /* StoryWidget.swift */,
 				E52C17782A02427F00282117 /* Assets.xcassets */,
 				E52C177A2A02427F00282117 /* Info.plist */,
+				E5448BFC2AB1241800737F18 /* StoryEntry.swift */,
+				E5448BFF2AB1244500737F18 /* SelectStoryTypeIntent.swift */,
+				E5448C022AB1246F00737F18 /* Timeline+Placeholder.swift */,
+				E5448C052AB1249A00737F18 /* StoryTimelineProvider.swift */,
+				E51CCDE92AB178CA00F522BD /* StorySource.swift */,
 			);
 			path = StoryWidget;
 			sourceTree = "<group>";
@@ -428,7 +448,7 @@
 			path = Packages;
 			sourceTree = "<group>";
 		};
-		E54B013529FC952400F7F0A0 /* Widgets */ = {
+		E54B013529FC952400F7F0A0 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				E504A03B2A0225EF0090AFAB /* ActionMenu */,
@@ -448,7 +468,7 @@
 				E5C7B9792A086C9A00CA6066 /* CommentTile.swift */,
 				E580A3682A0A215E0025AD83 /* ToastContainer.swift */,
 			);
-			path = Widgets;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		E5A2CEB72A08AF0300D683C6 /* ActionExtension */ = {
@@ -752,6 +772,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5EF2CE7289C789300AA5290 /* ItemStore.swift in Sources */,
+				E5448C032AB1246F00737F18 /* Timeline+Placeholder.swift in Sources */,
 				E5E048DC289F86D400702733 /* ReplyView.swift in Sources */,
 				E52134C028877C06005CFB77 /* ItemRow.swift in Sources */,
 				E5EF2CE1289C782A00AA5290 /* WebView.swift in Sources */,
@@ -762,6 +783,7 @@
 				E5EF2CF3289CA58100AA5290 /* View+BorderedFootnote.swift in Sources */,
 				E504A03D2A0226080090AFAB /* UpvoteButton.swift in Sources */,
 				E57640342A030B2F0075F5D1 /* DebouncedObject.swift in Sources */,
+				E5448C002AB1244500737F18 /* SelectStoryTypeIntent.swift in Sources */,
 				E53CA981289E3979009FDAE6 /* Constants.swift in Sources */,
 				E57640382A0313C80075F5D1 /* PinView.swift in Sources */,
 				E57E0D3A2A0B086A00E13963 /* Action.swift in Sources */,
@@ -788,6 +810,7 @@
 				E5E048D0289F69D700702733 /* AuthButton.swift in Sources */,
 				E5C7B97A2A086C9A00CA6066 /* CommentTile.swift in Sources */,
 				E5EF2CD5289C773000AA5290 /* View+ContextMenu.swift in Sources */,
+				E5448C062AB1249A00737F18 /* StoryTimelineProvider.swift in Sources */,
 				E54D07012A01BB2D00F3E57B /* UserDefaultWrapper.swift in Sources */,
 				E5C7B97E2A0887D600CA6066 /* ProfileView.swift in Sources */,
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
@@ -808,7 +831,9 @@
 				E15D742F2A21F6C7007C888A /* Chip.swift in Sources */,
 				E59425802A0AC2EF00469020 /* View+Toast.swift in Sources */,
 				E5EF2CC7289C6CFF00AA5290 /* LoadingIndicator.swift in Sources */,
+				E51CCDEA2AB178CA00F522BD /* StorySource.swift in Sources */,
 				E500F9682892659B00080EAF /* StoryStore.swift in Sources */,
+				E5448BFD2AB1241800737F18 /* StoryEntry.swift in Sources */,
 				E53650132A0DA7E4001CBFEF /* AppNotification.swift in Sources */,
 				E580A3692A0A215E0025AD83 /* ToastContainer.swift in Sources */,
 				E54D06FE2A01AF1100F3E57B /* Settings.swift in Sources */,
@@ -839,7 +864,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E52C17752A02427E00282117 /* StoryWidgetBundle.swift in Sources */,
+				E5448C042AB1246F00737F18 /* Timeline+Placeholder.swift in Sources */,
+				E51CCDEB2AB178CA00F522BD /* StorySource.swift in Sources */,
+				E5448BFE2AB1241800737F18 /* StoryEntry.swift in Sources */,
+				E5448C072AB1249A00737F18 /* StoryTimelineProvider.swift in Sources */,
 				E52C17772A02427E00282117 /* StoryWidget.swift in Sources */,
+				E5448C012AB1244500737F18 /* SelectStoryTypeIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1023,7 +1053,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1035,12 +1065,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
@@ -1061,7 +1091,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1073,12 +1103,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
@@ -1100,7 +1130,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jiaqi.Tests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1120,7 +1150,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jiaqi.Tests-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1186,7 +1216,7 @@
 				INFOPLIST_FILE = StoryWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StoryWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1216,7 +1246,7 @@
 				INFOPLIST_FILE = StoryWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StoryWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1247,7 +1277,7 @@
 				INFOPLIST_FILE = ActionExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Open in Z Combinator";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1277,7 +1307,7 @@
 				INFOPLIST_FILE = ActionExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Open in Z Combinator";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1306,7 +1336,7 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1334,7 +1364,7 @@
 				INFOPLIST_FILE = ShareExtension/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ShareExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

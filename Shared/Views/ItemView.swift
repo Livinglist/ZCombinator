@@ -118,69 +118,65 @@ struct ItemView: View {
     @ViewBuilder
     var mainItemView: some View {
         ScrollView {
-            VStack(spacing: 0) {
-                nameRow
-                    .padding(.leading, 6)
-                    .padding(.trailing, 4)
-                if item is Story {
-                    if let url = URL(string: item.url.orEmpty) {
-                        ZStack {
-                            LinkView(url: url, title: item.title.orEmpty)
-                                .padding()
-                                .allowsHitTesting(false)
-                            Color.clear
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    Self.handledUrl = url
-                                    showUrlSheet = true
-                                }
-                        }
-                    } else {
-                        VStack(spacing: 0) {
-                            Text(item.title.orEmpty)
-                                .multilineTextAlignment(.center)
-                                .fontWeight(.semibold)
-                                .padding(.top, 6)
-                                .padding(.leading, 12)
-                                .padding(.bottom, 6)
-                            Text(item.text.orEmpty.markdowned)
-                                .font(.callout)
-                                .padding(.leading, 8)
-                                .padding(.bottom, 6)
-                        }
+            nameRow
+                .padding(.leading, 6)
+                .padding(.trailing, 4)
+            if item is Story {
+                if let url = URL(string: item.url.orEmpty) {
+                    ZStack {
+                        LinkView(url: url, title: item.title.orEmpty)
+                            .padding(.horizontal)
+                            .allowsHitTesting(false)
+                        Color.clear
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                Self.handledUrl = url
+                                showUrlSheet = true
+                            }
                     }
-                } else if item is Comment {
+                } else {
                     VStack(spacing: 0) {
+                        Text(item.title.orEmpty)
+                            .multilineTextAlignment(.center)
+                            .fontWeight(.semibold)
+                            .padding(.leading, 12)
+                            .padding(.bottom, 4)
                         Text(item.text.orEmpty.markdowned)
                             .font(.callout)
-                            .padding(.top, 6)
                             .padding(.leading, 8)
-                            .padding(.bottom, 6)
                     }
                 }
-                if itemStore.status == .loading {
-                    LoadingIndicator().padding(.top, 100)
+            } else if item is Comment {
+                HStack {
+                    Text(item.text.orEmpty.markdowned)
+                        .font(.callout)
+                        .padding(.leading, 8)
+                    Spacer()
                 }
-                LazyVStack(spacing: 0) {
-                    ForEach(itemStore.kids) { comment in
-                        CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
-                            onViewOnHackerNewsTap(item: comment)
-                        }, onShowReplySheet: {
-                            onReplyTap(item: comment)
-                        }) {
-                            Task {
-                                await itemStore.loadKids(of: comment)
-                            }
-                        }.padding(.trailing, 4)
+            }
+            if itemStore.status == .loading {
+                LoadingIndicator().padding(.top, 100)
+            }
+            VStack(spacing: 0) {
+                ForEach(itemStore.kids) { comment in
+                    CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
+                        onViewOnHackerNewsTap(item: comment)
+                    }, onShowReplySheet: {
+                        onReplyTap(item: comment)
+                    }) {
+                        Task {
+                            await itemStore.loadKids(of: comment)
+                        }
                     }
+                    .padding(.trailing, 4)
                 }
-                Spacer().frame(height: 60)
-                if itemStore.status == Status.loaded {
-                    Text(Constants.happyFace)
-                        .foregroundColor(.gray)
-                        .padding(.bottom, 40)
-                }
+            }
+            Spacer().frame(height: 60)
+            if itemStore.status == Status.loaded {
+                Text(Constants.happyFace)
+                    .foregroundColor(.gray)
+                    .padding(.bottom, 40)
             }
         }
         .toolbar {

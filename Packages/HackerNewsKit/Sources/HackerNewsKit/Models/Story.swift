@@ -28,7 +28,7 @@ public struct Story: Item {
         }
     }
 
-    public init(id: Int, parent: Int? = nil, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int]()) {
+    public init(id: Int, parent: Int? = nil, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int]? = [Int]()) {
         self.id = id
         self.parent = parent
         self.title = title
@@ -44,10 +44,45 @@ public struct Story: Item {
 
     // Empty initializer
     public init() {
-        self.init(id: 0, parent: 0, title: "", text: "", url: "", type: "", by: "", score: 0, descendants: 0, time: 0)
+        self.init(
+            id: 0,
+            parent: 0,
+            title: "",
+            text: "",
+            url: "",
+            type: "",
+            by: "",
+            score: 0,
+            descendants: 0,
+            time: 0
+        )
     }
 
     func copyWith(text: String?) -> Story {
-        Story(id: id, parent: parent, title: title, text: text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int]())
+        .init(
+            id: id,
+            parent: parent,
+            title: title,
+            text: text,
+            url: url,
+            type: type,
+            by: by,
+            score: score,
+            descendants: descendants,
+            time: time,
+            kids: kids
+        )
     }
+    
+    public static let errorPlaceholder: Story = .init(
+        id: 0,
+        title: "Something went wrong...",
+        text: nil,
+        url: "retrying...",
+        type: nil,
+        by: nil,
+        score: nil,
+        descendants: nil,
+        time: 0
+    )
 }
