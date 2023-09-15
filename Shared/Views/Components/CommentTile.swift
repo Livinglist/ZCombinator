@@ -44,7 +44,6 @@ extension ItemView {
                         for i in (1...level).reversed() {
                             wrappedView = AnyView(
                                 wrappedView
-                                
                                     .overlay(Rectangle().frame(width: 1, height: nil, alignment: .leading)
                                         .foregroundColor(getColor(level: i)), alignment: .leading)
                                     .padding(.leading, 6)
@@ -104,7 +103,7 @@ extension ItemView {
                     }
                     if itemStore.loadingItem == comment.id {
                         LoadingIndicator().padding(.top, 16).padding(.bottom, 8)
-                    } else if itemStore.loadedItems.contains(comment.id) == false && isCollapsed == false && comment.kids.isNotNullOrEmpty {
+                    } else if itemStore.loadedCommentIds.contains(comment.id) == false && isCollapsed == false && comment.kids.isNotNullOrEmpty {
                         Button {
                             HapticFeedbackService.shared.light()
                             

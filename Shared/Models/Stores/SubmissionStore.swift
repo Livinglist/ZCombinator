@@ -13,7 +13,7 @@ extension SubmissionView {
         
         func fetchSubmissions(ids: [Int]) async {
             self.ids = ids
-            self.status = .loading
+            self.status = .inProgress
             
             let startIndex = min(currentPage * pageSize, ids.count)
             let endIndex = min(startIndex + pageSize, ids.count)
@@ -24,7 +24,7 @@ extension SubmissionView {
             }
             
             withAnimation {
-                self.status = .loaded
+                self.status = .completed
                 self.submitted.append(contentsOf: items)
             }
         }
@@ -34,7 +34,7 @@ extension SubmissionView {
                 return
             }
             
-            self.status = .loading
+            self.status = .inProgress
             
             currentPage = currentPage + 1
             
@@ -47,7 +47,7 @@ extension SubmissionView {
             }
             
             withAnimation {
-                self.status = .loaded
+                self.status = .completed
                 self.submitted.append(contentsOf: items)
             }
         }

@@ -94,7 +94,7 @@ extension SearchView {
 
         func search(isLoadingMore: Bool) async {
             if params.query.isEmpty { return }
-            self.status = .loading
+            self.status = .inProgress
             var results = [any Item]()
             
             if isLoadingMore {
@@ -107,7 +107,7 @@ extension SearchView {
 
             withAnimation {
                 self.results = results
-                self.status = .loaded
+                self.status = .completed
             }
         }
 

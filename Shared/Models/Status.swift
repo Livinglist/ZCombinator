@@ -1,16 +1,16 @@
 public enum Status {
     case idle
-    // Loading with visible loading indicator.
-    case loading
-    // Loading with no loading indicator.
+    /// Loading with visible loading indicator.
+    case inProgress
+    /// Loading with no loading indicator.
     case backgroundLoading
     case refreshing
-    case loaded
+    case completed
     case error
     
     var isLoading: Bool {
         switch self {
-        case .loading, .backgroundLoading: return true
+        case .inProgress, .backgroundLoading: return true
         default: return false
         }
     }

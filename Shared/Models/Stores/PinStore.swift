@@ -32,7 +32,7 @@ extension PinView {
             }
             
             withAnimation {
-                self.status = .loaded
+                self.status = .completed
                 self.pinnedItems = items
             }
         }
