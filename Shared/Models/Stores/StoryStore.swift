@@ -13,35 +13,48 @@ extension HomeView {
         private let pageSize: Int = 10
         private var currentPage: Int = 0
         private var storyIds: [Int] = .init()
+        
+        let isOnline = false
 
         func fetchStories(status: Status = .inProgress) async {
             self.status = status
             self.currentPage = 0
             self.storyIds = await StoriesRepository.shared.fetchStoryIds(from: self.storyType)
-  
-            var stories = [Story]()
-            let range = 0..<min(pageSize, storyIds.count)
-            await StoriesRepository.shared.fetchStories(ids: Array(storyIds[range])) { story in
-                stories.append(story)
+            
+            if isOnline {
+                var stories = [Story]()
+                let range = 0..<min(pageSize, storyIds.count)
+                await StoriesRepository.shared.fetchStories(ids: Array(storyIds[range])) { story in
+                    stories.append(story)
+                }
+                
+                self.status = .completed
+                withAnimation {
+                    self.stories = stories
+                }
             }
- 
-            self.status = .completed
-            withAnimation {
-                self.stories = stories
+            else {
+                let stories = OfflineRepository.shared.fetchAllStories(from: storyType)
+                withAnimation {
+                    self.stories = stories
+                }
             }
         }
         
         func refresh() async -> Void {
+            if !isOnline { return }
+            
             await fetchStories(status: .refreshing)
         }
         
         func loadMore() async {
+            if !isOnline { return }
+            
             if stories.count == storyIds.count {
                 return
             }
             
             currentPage = currentPage + 1
-            
             
             let startIndex = min(currentPage * pageSize, storyIds.count)
             let endIndex = min(startIndex + pageSize, storyIds.count)

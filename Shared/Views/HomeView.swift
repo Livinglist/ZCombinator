@@ -113,6 +113,13 @@ struct HomeView: View {
                     } label: {
                         Label("About", systemImage: "")
                     }
+                    Button {
+                        Task {
+                            await OfflineRepository.shared.downloadAllStories(from: .top)
+                        }
+                    } label: {
+                        Label("About", systemImage: "")
+                    }
                 } label: {
                     Label("Add Item", systemImage: "list.bullet")
                         .foregroundColor(.orange)
