@@ -6,12 +6,12 @@ import HackerNewsKit
 class StoryWrapper {
     @Attribute(.unique) let id: Int
     let story: Story
-    let storyType: String
+    let storyType: StoryType
     
     init(_ story: Story, storyType: StoryType) {
         self.id = story.id
         self.story = story
-        self.storyType = storyType.rawValue
+        self.storyType = storyType
     }
 }
 

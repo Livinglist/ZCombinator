@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -74,6 +74,7 @@
 		E57E0D3C2A0B08E800E13963 /* CopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E0D3B2A0B08E800E13963 /* CopyButton.swift */; };
 		E57E2F302AB3C30C00AFB9C8 /* StoryWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E2F2F2AB3C30C00AFB9C8 /* StoryWrapper.swift */; };
 		E57E2F322AB3C51900AFB9C8 /* OfflineRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E2F312AB3C51900AFB9C8 /* OfflineRepository.swift */; };
+		E57E2F362AB3E81C00AFB9C8 /* HackerNewsKit in Frameworks */ = {isa = PBXBuildFile; productRef = E57E2F352AB3E81C00AFB9C8 /* HackerNewsKit */; };
 		E580A3692A0A215E0025AD83 /* ToastContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580A3682A0A215E0025AD83 /* ToastContainer.swift */; };
 		E59425802A0AC2EF00469020 /* View+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = E594257F2A0AC2EF00469020 /* View+Toast.swift */; };
 		E5A2CEB62A08AF0300D683C6 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A2CEB52A08AF0300D683C6 /* UniformTypeIdentifiers.framework */; };
@@ -257,6 +258,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E57E2F362AB3E81C00AFB9C8 /* HackerNewsKit in Frameworks */,
 				E514FC3D2A02C61600BEFC14 /* HackerNewsKit in Frameworks */,
 				E5BF9E6B2A0CAA5C0030E588 /* SwiftSoup in Frameworks */,
 				E56C06C0288679E900D4E685 /* Alamofire in Frameworks */,
@@ -576,6 +578,7 @@
 				E54B013D29FE302100F7F0A0 /* AlertToast */,
 				E514FC3C2A02C61600BEFC14 /* HackerNewsKit */,
 				E5BF9E6A2A0CAA5C0030E588 /* SwiftSoup */,
+				E57E2F352AB3E81C00AFB9C8 /* HackerNewsKit */,
 			);
 			productName = "ZCombinator (iOS)";
 			productReference = E50FB9D22886738D00AA325C /* ZCombinator.app */;
@@ -715,6 +718,7 @@
 				E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E54B013C29FE302100F7F0A0 /* XCRemoteSwiftPackageReference "AlertToast" */,
 				E5BF9E692A0CAA5C0030E588 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				E57E2F342AB3E81C00AFB9C8 /* XCLocalSwiftPackageReference "Packages/HackerNewsKit" */,
 			);
 			productRefGroup = E50FB9D32886738D00AA325C /* Products */;
 			projectDirPath = "";
@@ -1466,6 +1470,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		E57E2F342AB3E81C00AFB9C8 /* XCLocalSwiftPackageReference "Packages/HackerNewsKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/HackerNewsKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		E54B013C29FE302100F7F0A0 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1511,6 +1522,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E56C06BE288679E900D4E685 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		E57E2F352AB3E81C00AFB9C8 /* HackerNewsKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HackerNewsKit;
 		};
 		E5BF9E6A2A0CAA5C0030E588 /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

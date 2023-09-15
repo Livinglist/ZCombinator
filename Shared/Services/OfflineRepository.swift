@@ -22,8 +22,8 @@ public class OfflineRepository {
     // MARK: - Story related.
     
     public func downloadAllStories(from storyType: StoryType) async -> Void {
-//        try? container.mainContext.delete(model: ItemWrapper<Story>.self)
-//        try? modelContext.delete(model: ItemWrapper<Comment>.self)
+        try? container.mainContext.delete(model: StoryWrapper.self)
+        try? container.mainContext.delete(model: CommentWrapper.self)
         
         let context = container.mainContext
         var stories = [Story]()
@@ -47,6 +47,7 @@ public class OfflineRepository {
             comments.append(comment)
         })
         
+        try? context.save()
         for comment in comments {
             await downloadChildComments(of: comment)
         }
@@ -55,7 +56,7 @@ public class OfflineRepository {
     public func fetchAllStories(from storyType: StoryType) -> [Story] {
         let context = container.mainContext
         let descriptor = FetchDescriptor<StoryWrapper>(
-            predicate: #Predicate { $0.storyType == storyType.rawValue }
+            predicate: #Predicate { $0.storyType == storyType }
         )
         if let stories = try? context.fetch(descriptor) {
             return stories.map { $0.story }
@@ -72,7 +73,7 @@ public class OfflineRepository {
         return [Int]()
     }
     
-    public func fetchStory(_ id: Int) async -> Story?{
+    public func fetchStory(_ id: Int) async -> Story? {
         let context = container.mainContext
         var descriptor = FetchDescriptor<StoryWrapper>(
             predicate: #Predicate { $0.id == id }
