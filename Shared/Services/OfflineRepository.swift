@@ -93,29 +93,11 @@ public class OfflineRepository: ObservableObject {
     }
     
     public func fetchAllStories(from storyType: StoryType) -> [Story] {
-        return stories[storyType] ?? [Story]()
-    }
-    
-    public func fetchStoryIds(from storyType: StoryType) async -> [Int] {
-        return [Int]()
-    }
-    
-    public func fetchStoryIds(from storyType: String) async -> [Int] {
-        return [Int]()
-    }
-    
-    public func fetchStory(_ id: Int) async -> Story? {
-        return nil
-//        let context = container.mainContext
-//        var descriptor = FetchDescriptor<StoryCollection>(
-//            predicate: #Predicate { $0.id == id }
-//        )
-//        descriptor.fetchLimit = 1
-//        if let results = try? context.fetch(descriptor) {
-//            return results.first?.story
-//        } else {
-//            return nil
-//        }
+        guard let stories = stories[storyType] else { return [Story]() }
+        let storiesWithCommentsDownloaded = stories.filter { story in
+            comments[story.id].isNotNullOrEmpty
+        }
+        return storiesWithCommentsDownloaded
     }
     
     // MARK: - Comment related.
