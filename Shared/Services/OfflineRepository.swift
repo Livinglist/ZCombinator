@@ -48,20 +48,24 @@ public class OfflineRepository: ObservableObject {
     public func downloadAllStories(from storyType: StoryType) async -> Void {
         isDownloading = true
         
-        try? container.mainContext.delete(model: StoryCollection.self)
-        try? container.mainContext.delete(model: CommentWrapper.self)
-        
         let context = container.mainContext
-        var stories = [Story]()
+        var fetchedStories = [Story]()
+        var storedStories = [Story]()
+        
+        try? context.delete(model: StoryCollection.self)
+        try? context.delete(model: CommentWrapper.self)
         
         await storiesRepository.fetchAllStories(from: storyType) { story in
-            stories.append(story)
+            fetchedStories.append(story)
         }
         
-        context.insert(StoryCollection(stories, storyType: storyType))
+        context.insert(StoryCollection(fetchedStories, storyType: storyType))
         
-        for story in stories {
+        for story in fetchedStories {
             await downloadChildComments(of: story, level: 0)
+            storedStories.append(story)
+            try? context.delete(model: StoryCollection.self)
+            context.insert(StoryCollection(storedStories, storyType: storyType))
             completionCount = completionCount + 1
         }
         
