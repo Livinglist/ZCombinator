@@ -28,7 +28,7 @@ public class OfflineRepository: ObservableObject {
         descriptor.fetchLimit = 1
         if let results = try? context.fetch(descriptor) {
             stories = results.first?.stories ?? [Story]()
-            print(stories)
+            //print(stories)
         } else {
             print("no story")
         }
@@ -39,9 +39,9 @@ public class OfflineRepository: ObservableObject {
             let allComments = results.map { $0.comment }
             
             for cmt in allComments {
-                var existingCmts = comments[cmt.parent ?? 0] ?? [Comment]()
-                existingCmts.append(cmt)
-                comments[cmt.parent ?? 0] = existingCmts
+                var existingCmts = comments[cmt.first?.parent ?? 0] ?? [Comment]()
+                existingCmts.append(cmt.first!)
+                comments[cmt.first?.parent ?? 0] = existingCmts
             }
             
             print(comments)
@@ -130,7 +130,7 @@ public class OfflineRepository: ObservableObject {
         )
         descriptor.fetchLimit = 1
         if let results = try? context.fetch(descriptor) {
-            return results.first?.comment
+            return results.first?.comment.first!
         } else {
             return nil
         }

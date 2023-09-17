@@ -1,4 +1,5 @@
 import Foundation
+import Combine
 import SwiftUI
 import HackerNewsKit
 
@@ -16,8 +17,10 @@ extension ItemView {
         @Published var hidden: Set<Int> = .init()
         @Published var isConnectedToNetwork: Bool = true
         
+        private var cancellable: AnyCancellable?
+        
         init() {
-            _ = NetworkMonitor.shared.networkStatus.sink { isConnected in
+            cancellable = NetworkMonitor.shared.networkStatus.sink { isConnected in
                 self.isConnectedToNetwork = isConnected
             }
         }

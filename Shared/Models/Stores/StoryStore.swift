@@ -14,9 +14,10 @@ extension HomeView {
         private let pageSize: Int = 10
         private var currentPage: Int = 0
         private var storyIds: [Int] = .init()
+        private var cancellable: AnyCancellable?
         
         init() {
-            _ = NetworkMonitor.shared.networkStatus.sink { isConnected in
+            cancellable = NetworkMonitor.shared.networkStatus.sink { isConnected in
                 self.isConnectedToNetwork = isConnected
             }
         }
