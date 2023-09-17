@@ -11,10 +11,17 @@ import HackerNewsKit
 public class OfflineRepository: ObservableObject {
     @Published var isDownloading = false
     @Published var completionCount = 0
+    lazy var lastFetchedAt = {
+        guard let date = UserDefaults.standard.object(forKey: lastDownloadAtKey) as? Date else { return "" }
+        let df = DateFormatter()
+        df.dateFormat = "MM/dd/yyyy HH:mm"
+        return df.string(from: date)
+    }()
     
     private let storiesRepository = StoriesRepository.shared
     private let container = try! ModelContainer(for: StoryCollection.self, CommentCollection.self)
     private let downloadOrder = [StoryType.top, .ask, .best]
+    private let lastDownloadAtKey = "lastDownloadedAt"
     private var stories = [StoryType: [Story]]()
     private var comments = [Int: [Comment]]()
     
@@ -45,6 +52,8 @@ public class OfflineRepository: ObservableObject {
     
     public func downloadAllStories() async -> Void {
         isDownloading = true
+        
+        UserDefaults.standard.set(Date.now, forKey: lastDownloadAtKey)
         
         let context = container.mainContext
         var completedStoryId = Set<Int>()
