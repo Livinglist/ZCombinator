@@ -3,7 +3,7 @@ import SwiftData
 import HackerNewsKit
 
 @Model
-class CommentWrapper {
+class CommentCollection {
     @Attribute(.unique) let id: Int
     let comment: Comment
     

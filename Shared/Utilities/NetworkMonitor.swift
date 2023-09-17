@@ -2,7 +2,7 @@ import Network
 import Combine
 
 final class NetworkMonitor {
-    let networkStatus = PassthroughSubject<Bool, Never>()
+    let networkStatus = CurrentValueSubject<Bool, Never>(true)
     var onWifi = true
     var onCellular = true
     
