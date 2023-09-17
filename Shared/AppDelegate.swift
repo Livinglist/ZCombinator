@@ -18,7 +18,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 task.setTaskCompleted(success: true)
             }
             
-            self.scheduleBackgroundDownload()
+            OfflineRepository.shared.scheduleBackgroundDownload()
         }
     }
     
@@ -37,24 +37,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     private func configureUserNotifications() {
         UNUserNotificationCenter.current().delegate = self
     }
-    
-    func scheduleBackgroundDownload() {
-        let downloadTask = BGProcessingTaskRequest(identifier: Constants.Download.backgroundTaskId)
-        // Set earliestBeginDate to be 1 hr from now.
-        downloadTask.earliestBeginDate = Date(timeIntervalSinceNow: 3600)
-        downloadTask.requiresNetworkConnectivity = true
-        downloadTask.requiresExternalPower = true
-        do {
-            try BGTaskScheduler.shared.submit(downloadTask)
-        } catch {
-            debugPrint("Unable to submit task: \(error.localizedDescription)")
-        }
-    }
 }
 
 class SceneDelegate: NSObject, UIWindowSceneDelegate {
     func sceneDidEnterBackground(_ scene: UIScene) {
-        (UIApplication.shared.delegate as! AppDelegate).scheduleBackgroundDownload()
+        OfflineRepository.shared.scheduleBackgroundDownload()
     }
 }
 
