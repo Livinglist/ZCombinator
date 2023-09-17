@@ -84,14 +84,14 @@ struct HomeView: View {
                 Button {
                     router.to(Destination.search)
                 } label: {
-                    Label(String(), systemImage: "magnifyingglass")
+                    Image(systemName: "magnifyingglass")
                 }
             }
             ToolbarItem {
                 Button {
                     router.to(Destination.fav)
                 } label: {
-                    Label(String(), systemImage: "heart")
+                    Image(systemName: "heart")
                 }
             }
             ToolbarItem {
@@ -106,11 +106,12 @@ struct HomeView: View {
                         } label: {
                             Label("\(storyType.label.capitalized)", systemImage: storyType.iconName)
                         }
+                        .disabled(!storyStore.isConnectedToNetwork && !storyType.isDownloadable)
                     }
                     Divider()
                     Button {
                         Task {
-                            await OfflineRepository.shared.downloadAllStories(from: .top)
+                            await OfflineRepository.shared.downloadAllStories()
                         }
                     } label: {
                         if offlineRepository.isDownloading {

@@ -35,6 +35,15 @@ public enum StoryType: String, Equatable, CaseIterable, AppEnum, Codable {
         }
     }
     
+    public var isDownloadable: Bool {
+        switch self {
+        case .top, .ask, .best:
+            return true
+        default:
+            return false
+        }
+    }
+    
     public static var typeDisplayRepresentation: TypeDisplayRepresentation = "Story Type"
     public static var caseDisplayRepresentations: [StoryType : DisplayRepresentation] = [
         .top: "Top",
