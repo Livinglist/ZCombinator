@@ -8,10 +8,11 @@ Another [Hacker News](https://news.ycombinator.com/) client made with SwiftUI.
 - [x] Add stories/comments to your pins or HN favorites.
 - [x] View other users' profiles and submissions.
 - [x] Comment folding.
-- [x] Home Screen and Lock Screen widget.
+- [x] Configurable Home Screen and Lock Screen widget.
 - [x] Share Extension.
 - [x] Action Extension.
 - [x] Notification on new replies.
+- [x] Offline mode.
 
 <p align="center">
   <img width="240" alt="01" src="Resources/Screenshots/iphone-1.png">
