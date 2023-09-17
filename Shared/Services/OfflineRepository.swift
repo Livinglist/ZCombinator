@@ -80,7 +80,7 @@ public class OfflineRepository: ObservableObject {
         var comments = [Comment]()
         
         await storiesRepository.fetchComments(ids: item.kids ?? [Int](), onCommentFetched: { comment in
-            context.insert(CommentWrapper(comment.filled(level: level)))
+            context.insert(CommentWrapper(comment.copyWith(level: level)))
             comments.append(comment)
         })
         

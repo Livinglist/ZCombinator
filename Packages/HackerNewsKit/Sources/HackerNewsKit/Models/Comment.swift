@@ -39,4 +39,19 @@ public struct Comment: Item {
     init() {
         self.init(id: 0, parent: 0, title: "", text: "", url: "", type: "", by: "", score: 0, descendants: 0, time: 0)
     }
+
+    public func copyWith(text: String? = nil, level: Int? = nil) -> Comment {
+        Comment(id: id, 
+                parent: parent, 
+                title: title,
+                text: text ?? self.text,
+                url: url,
+                type: type,
+                by: by,
+                score: score,
+                descendants: descendants,
+                time: time,
+                kids: kids ?? [Int](),
+                level: level ?? self.level)
+    }
 }
