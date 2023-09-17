@@ -111,6 +111,7 @@ struct HomeView: View {
                     Divider()
                     Button {
                         Task {
+                            HapticFeedbackService.shared.light()
                             await OfflineRepository.shared.downloadAllStories()
                         }
                     } label: {
