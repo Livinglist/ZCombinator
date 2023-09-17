@@ -108,26 +108,32 @@ struct HomeView: View {
                         }
                     }
                     Divider()
-                    AuthButton(showLoginDialog: $showLoginDialog, showLogoutDialog: $showLogoutDialog)
-                    Button {
-                        showAboutSheet = true
-                    } label: {
-                        Label("About", systemImage: "")
-                    }
                     Button {
                         Task {
                             await OfflineRepository.shared.downloadAllStories(from: .top)
                         }
                     } label: {
-                        Label("Download all stories", systemImage: "")
+                        if offlineRepository.isDownloading {
+                            Text("Download in progress")
+                            Text("\(offlineRepository.completionCount) completed")
+                        } else {
+                            Label("Download All Stories", systemImage: "square.and.arrow.down")
+                        }
+                    }
+                    .disabled(offlineRepository.isDownloading)
+                    Divider()
+                    AuthButton(showLoginDialog: $showLoginDialog, showLogoutDialog: $showLogoutDialog)
+                    Button {
+                        showAboutSheet = true
+                    } label: {
+                        Text("About")
                     }
                 } label: {
                     if offlineRepository.isDownloading {
                         ProgressView()
                             .progressViewStyle(.circular)
                     } else {
-                        Label("Add Item", systemImage: "list.bullet")
-                            .foregroundColor(.orange)
+                        Image(systemName: "list.bullet")
                     }
                 }
             }

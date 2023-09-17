@@ -110,7 +110,7 @@ struct ItemView: View {
                 Label("View on Hacker News", systemImage: "safari")
             }
         } label: {
-            Label("", systemImage: "ellipsis")
+            Image(systemName: "ellipsis")
                 .foregroundColor(.orange)
         }
     }

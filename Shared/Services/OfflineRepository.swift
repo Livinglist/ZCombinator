@@ -11,6 +11,7 @@ import HackerNewsKit
 @MainActor
 public class OfflineRepository: ObservableObject {
     @Published var isDownloading = false
+    @Published var completionCount = 0
     
     private let storiesRepository = StoriesRepository.shared
     private let container = try! ModelContainer(for: StoryCollection.self, CommentWrapper.self)
@@ -68,6 +69,7 @@ public class OfflineRepository: ObservableObject {
         
         for story in stories {
             await downloadChildComments(of: story)
+            completionCount = completionCount + 1
         }
         
         isDownloading = false

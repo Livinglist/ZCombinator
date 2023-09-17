@@ -315,19 +315,19 @@
 		E15D742C2A21F6AC007C888A /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				E15D742D2A21F6B5007C888A /* Widgets */,
+				E15D742D2A21F6B5007C888A /* Components */,
 				E514FC402A02EB8E00BEFC14 /* SearchView.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
 		};
-		E15D742D2A21F6B5007C888A /* Widgets */ = {
+		E15D742D2A21F6B5007C888A /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				E15D742E2A21F6C7007C888A /* Chip.swift */,
 				E15D74302A220100007C888A /* DateRangeChip.swift */,
 			);
-			path = Widgets;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		E504A03B2A0225EF0090AFAB /* ActionMenu */ = {
