@@ -47,6 +47,7 @@ struct ItemRow: View {
             Image(systemName: "ellipsis")
                 .padding(.leading)
                 .padding(.bottom, 12)
+                .padding(.trailing)
                 .foregroundColor(.orange)
         }
     }
@@ -96,7 +97,7 @@ struct ItemRow: View {
                                     Button {
                                         onPin()
                                     } label: {
-                                        Image(systemName: "pin.fill")
+                                        Label(String(), systemImage: "pin.fill")
                                             .rotationEffect(Angle(degrees: 45))
                                             .transformEffect(.init(translationX: 0, y: 5))
                                     }

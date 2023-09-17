@@ -118,7 +118,7 @@ struct HomeView: View {
                             Text("Download in progress")
                             Text("\(offlineRepository.completionCount) completed")
                         } else {
-                            Label("Download All Stories", systemImage: "square.and.arrow.down")
+                            Label("Download all stories", systemImage: "square.and.arrow.down")
                         }
                     }
                     .disabled(offlineRepository.isDownloading)

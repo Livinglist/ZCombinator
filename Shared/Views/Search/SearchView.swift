@@ -52,13 +52,13 @@ struct SearchView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Search")
         .withToast(actionPerformed: $actionPerformed)
-        .onChange(of: debounceObject.debouncedText) { text in
+        .onChange(of: debounceObject.debouncedText) { _, text in
             if text.isEmpty { return }
             searchStore.onQueryUpdate(text)
         }
-        .onChange(of: startDate) { _ in
+        .onChange(of: startDate) { _, _ in
             searchStore.onDateRangeUpdate(.dateRange(startDate, endDate))
-        }.onChange(of: endDate) { date in
+        }.onChange(of: endDate) { _, date in
             searchStore.onDateRangeUpdate(.dateRange(startDate, endDate))
         }
     }
