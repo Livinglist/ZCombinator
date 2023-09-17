@@ -16,7 +16,6 @@ extension HomeView {
         private var storyIds: [Int] = .init()
         
         init() {
-            print("\(NetworkMonitor.shared.networkStatus.values)")
             _ = NetworkMonitor.shared.networkStatus.sink { isConnected in
                 self.isConnectedToNetwork = isConnected
             }

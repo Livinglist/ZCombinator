@@ -87,7 +87,7 @@
 		E5A2CED62A08B94200D683C6 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E5A2CECC2A08B94200D683C6 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E5BF9E6B2A0CAA5C0030E588 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = E5BF9E6A2A0CAA5C0030E588 /* SwiftSoup */; };
 		E5C448DB2AB6B17A006C023B /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C448DA2AB6B17A006C023B /* NetworkMonitor.swift */; };
-		E5C448DD2AB6B1A0006C023B /* CommentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C448DC2AB6B1A0006C023B /* CommentCollection.swift */; };
+		E5C448E02AB6CD64006C023B /* CommentWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C448DF2AB6CD64006C023B /* CommentWrapper.swift */; };
 		E5C7B97A2A086C9A00CA6066 /* CommentTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B9792A086C9A00CA6066 /* CommentTile.swift */; };
 		E5C7B97C2A08706000CA6066 /* View+GetColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B97B2A08706000CA6066 /* View+GetColor.swift */; };
 		E5C7B97E2A0887D600CA6066 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7B97D2A0887D600CA6066 /* ProfileView.swift */; };
@@ -234,7 +234,7 @@
 		E5A2CED12A08B94200D683C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E5A2CED32A08B94200D683C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5C448DA2AB6B17A006C023B /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
-		E5C448DC2AB6B1A0006C023B /* CommentCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollection.swift; sourceTree = "<group>"; };
+		E5C448DF2AB6CD64006C023B /* CommentWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentWrapper.swift; sourceTree = "<group>"; };
 		E5C7B9792A086C9A00CA6066 /* CommentTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTile.swift; sourceTree = "<group>"; };
 		E5C7B97B2A08706000CA6066 /* View+GetColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+GetColor.swift"; sourceTree = "<group>"; };
 		E5C7B97D2A0887D600CA6066 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -403,7 +403,7 @@
 				E5689EF22A0956B600F6CC48 /* Destination.swift */,
 				E57E0D392A0B086A00E13963 /* Action.swift */,
 				E57E2F2F2AB3C30C00AFB9C8 /* StoryCollection.swift */,
-				E5C448DC2AB6B1A0006C023B /* CommentCollection.swift */,
+				E5C448DF2AB6CD64006C023B /* CommentWrapper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -838,10 +838,10 @@
 				E5C7B97A2A086C9A00CA6066 /* CommentTile.swift in Sources */,
 				E5EF2CD5289C773000AA5290 /* View+ContextMenu.swift in Sources */,
 				E5448C062AB1249A00737F18 /* StoryTimelineProvider.swift in Sources */,
+				E5C448E02AB6CD64006C023B /* CommentWrapper.swift in Sources */,
 				E54D07012A01BB2D00F3E57B /* UserDefaultWrapper.swift in Sources */,
 				E5C7B97E2A0887D600CA6066 /* ProfileView.swift in Sources */,
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
-				E5C448DD2AB6B1A0006C023B /* CommentCollection.swift in Sources */,
 				E57640322A0302A10075F5D1 /* FlagButton.swift in Sources */,
 				E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */,
 				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
