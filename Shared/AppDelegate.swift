@@ -40,8 +40,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     func scheduleBackgroundDownload() {
         let downloadTask = BGProcessingTaskRequest(identifier: Constants.Download.backgroundTaskId)
-        // Set earliestBeginDate to be 6 hrs from now.
-        downloadTask.earliestBeginDate = Date(timeIntervalSinceNow: 21600)
+        // Set earliestBeginDate to be 1 hr from now.
+        downloadTask.earliestBeginDate = Date(timeIntervalSinceNow: 3600)
         downloadTask.requiresNetworkConnectivity = true
         downloadTask.requiresExternalPower = true
         do {
