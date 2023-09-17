@@ -7,6 +7,7 @@ struct HomeView: View {
     @StateObject private var storyStore: StoryStore = .init()
     @ObservedObject private var settings: Settings = .shared
     @ObservedObject private var router: Router = .shared
+    @ObservedObject private var offlineRepository: OfflineRepository = .shared
     
     @State private var showLoginDialog: Bool = .init()
     @State private var showLogoutDialog: Bool = .init()
@@ -118,11 +119,16 @@ struct HomeView: View {
                             await OfflineRepository.shared.downloadAllStories(from: .top)
                         }
                     } label: {
-                        Label("About", systemImage: "")
+                        Label("Download all stories", systemImage: "")
                     }
                 } label: {
-                    Label("Add Item", systemImage: "list.bullet")
-                        .foregroundColor(.orange)
+                    if offlineRepository.isDownloading {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                    } else {
+                        Label("Add Item", systemImage: "list.bullet")
+                            .foregroundColor(.orange)
+                    }
                 }
             }
         }

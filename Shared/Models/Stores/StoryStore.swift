@@ -9,19 +9,24 @@ extension HomeView {
         @Published var storyType: StoryType = .top
         @Published var stories: [Story] = .init()
         @Published var status: Status = .idle
+        @Published var isConnectedToNetwork: Bool = true
 
         private let pageSize: Int = 10
         private var currentPage: Int = 0
         private var storyIds: [Int] = .init()
         
-        let isOnline = false
+        init() {
+            _ = NetworkMonitor.shared.networkStatus.sink { isConnected in
+                self.isConnectedToNetwork = isConnected
+            }
+        }
 
         func fetchStories(status: Status = .inProgress) async {
             self.status = status
             self.currentPage = 0
             self.storyIds = await StoriesRepository.shared.fetchStoryIds(from: self.storyType)
             
-            if isOnline {
+            if isConnectedToNetwork {
                 var stories = [Story]()
                 let range = 0..<min(pageSize, storyIds.count)
                 await StoriesRepository.shared.fetchStories(ids: Array(storyIds[range])) { story in
@@ -35,6 +40,7 @@ extension HomeView {
             }
             else {
                 let stories = OfflineRepository.shared.fetchAllStories(from: storyType)
+                self.status = .completed
                 withAnimation {
                     self.stories = stories
                 }
@@ -42,13 +48,13 @@ extension HomeView {
         }
         
         func refresh() async -> Void {
-            if !isOnline { return }
+            if !isConnectedToNetwork { return }
             
             await fetchStories(status: .refreshing)
         }
         
         func loadMore() async {
-            if !isOnline { return }
+            if !isConnectedToNetwork { return }
             
             if stories.count == storyIds.count {
                 return

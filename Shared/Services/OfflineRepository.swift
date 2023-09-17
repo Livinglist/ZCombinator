@@ -9,33 +9,68 @@ import HackerNewsKit
 ///
 
 @MainActor
-public class OfflineRepository {
+public class OfflineRepository: ObservableObject {
+    @Published var isDownloading = false
+    
+    private let storiesRepository = StoriesRepository.shared
+    private let container = try! ModelContainer(for: StoryCollection.self, CommentWrapper.self)
+    private var stories = [Story]()
+    private var comments = [Int: [Comment]]()
+    
     public static let shared: OfflineRepository = .init()
     
-    private let baseUrl: String = "https://hacker-news.firebaseio.com/v0/"
-    
-    private init() {}
-    
-    let storiesRepository = StoriesRepository.shared
-    let container = try! ModelContainer(for: StoryWrapper.self, CommentWrapper.self)
+    private init() {
+        let context = container.mainContext
+        
+        // Fetch all cached stories.
+        var descriptor = FetchDescriptor<StoryCollection>()
+        descriptor.fetchLimit = 1
+        if let results = try? context.fetch(descriptor) {
+            stories = results.first?.stories ?? [Story]()
+            print(stories)
+        } else {
+            print("no story")
+        }
+        
+        // Fetch all cached comments.
+        let cmtDescriptor = FetchDescriptor<CommentWrapper>()
+        if let results = try? context.fetch(cmtDescriptor) {
+            let allComments = results.map { $0.comment }
+            
+            for cmt in allComments {
+                var existingCmts = comments[cmt.parent ?? 0] ?? [Comment]()
+                existingCmts.append(cmt)
+                comments[cmt.parent ?? 0] = existingCmts
+            }
+            
+            print(comments)
+        } else {
+            print("no comment")
+        }
+    }
     
     // MARK: - Story related.
     
     public func downloadAllStories(from storyType: StoryType) async -> Void {
-        try? container.mainContext.delete(model: StoryWrapper.self)
+        isDownloading = true
+        
+        try? container.mainContext.delete(model: StoryCollection.self)
         try? container.mainContext.delete(model: CommentWrapper.self)
         
         let context = container.mainContext
         var stories = [Story]()
         
         await storiesRepository.fetchAllStories(from: storyType) { story in
-            context.insert(StoryWrapper(story, storyType: storyType))
             stories.append(story)
         }
+        
+        context.insert(StoryCollection(stories, storyType: storyType))
         
         for story in stories {
             await downloadChildComments(of: story)
         }
+        
+        isDownloading = false
     }
     
     private func downloadChildComments(of item: any Item) async -> Void {
@@ -48,21 +83,14 @@ public class OfflineRepository {
         })
         
         try? context.save()
+        
         for comment in comments {
             await downloadChildComments(of: comment)
         }
     }
     
     public func fetchAllStories(from storyType: StoryType) -> [Story] {
-        let context = container.mainContext
-        let descriptor = FetchDescriptor<StoryWrapper>(
-            predicate: #Predicate { $0.storyType == storyType }
-        )
-        if let stories = try? context.fetch(descriptor) {
-            return stories.map { $0.story }
-        } else {
-            return [Story]()
-        }
+        return stories
     }
     
     public func fetchStoryIds(from storyType: StoryType) async -> [Int] {
@@ -74,30 +102,23 @@ public class OfflineRepository {
     }
     
     public func fetchStory(_ id: Int) async -> Story? {
-        let context = container.mainContext
-        var descriptor = FetchDescriptor<StoryWrapper>(
-            predicate: #Predicate { $0.id == id }
-        )
-        descriptor.fetchLimit = 1
-        if let results = try? context.fetch(descriptor) {
-            return results.first?.story
-        } else {
-            return nil
-        }
+        return nil
+//        let context = container.mainContext
+//        var descriptor = FetchDescriptor<StoryCollection>(
+//            predicate: #Predicate { $0.id == id }
+//        )
+//        descriptor.fetchLimit = 1
+//        if let results = try? context.fetch(descriptor) {
+//            return results.first?.story
+//        } else {
+//            return nil
+//        }
     }
     
     // MARK: - Comment related.
     
-    public func fetchComments(ids: [Int]) -> [Comment] {
-        let context = container.mainContext
-        var descriptor = FetchDescriptor<CommentWrapper>(
-            predicate: #Predicate { comment in ids.contains { $0 == comment.id } }
-        )
-        if let results = try? context.fetch(descriptor) {
-            return results.map { $0.comment }
-        } else {
-            return [Comment]()
-        }
+    public func fetchComments(of id: Int) -> [Comment] {
+        return comments[id] ?? [Comment]()
     }
     
     public func fetchComment(_ id: Int) -> Comment? {
