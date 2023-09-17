@@ -1,4 +1,5 @@
 import Alamofire
+import Combine
 import Foundation
 import SwiftUI
 import SwiftData
@@ -11,12 +12,14 @@ import HackerNewsKit
 public class OfflineRepository: ObservableObject {
     @Published var isDownloading = false
     @Published var completionCount = 0
+    
     lazy var lastFetchedAt = {
         guard let date = UserDefaults.standard.object(forKey: lastDownloadAtKey) as? Date else { return "" }
         let df = DateFormatter()
         df.dateFormat = "MM/dd/yyyy HH:mm"
         return df.string(from: date)
     }()
+    var isInMemory = false
     
     private let storiesRepository = StoriesRepository.shared
     private let container = try! ModelContainer(for: StoryCollection.self, CommentCollection.self)
@@ -24,10 +27,21 @@ public class OfflineRepository: ObservableObject {
     private let lastDownloadAtKey = "lastDownloadedAt"
     private var stories = [StoryType: [Story]]()
     private var comments = [Int: [Comment]]()
+    private var cancellable: AnyCancellable?
     
     public static let shared: OfflineRepository = .init()
     
-    private init() {
+    init() {
+        cancellable = NetworkMonitor.shared.networkStatus
+            .dropFirst()
+            .sink { isConnected in
+                if let isConnected = isConnected, !self.isInMemory && !isConnected {
+                    self.loadIntoMemory()
+                }
+            }
+    }
+    
+    public func loadIntoMemory() {
         let context = container.mainContext
         
         // Fetch all cached stories.
@@ -46,6 +60,8 @@ public class OfflineRepository: ObservableObject {
                 comments[collection.parentId] = collection.comments
             }
         }
+        
+        isInMemory = true
     }
     
     // MARK: - Story related.

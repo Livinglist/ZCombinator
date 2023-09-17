@@ -17,9 +17,10 @@ extension HomeView {
         private var cancellable: AnyCancellable?
         
         init() {
-            cancellable = NetworkMonitor.shared.networkStatus.sink { isConnected in
-                self.isConnectedToNetwork = isConnected
-            }
+            cancellable = NetworkMonitor.shared.networkStatus
+                .sink { isConnected in
+                    self.isConnectedToNetwork = isConnected ?? false
+                }
         }
 
         func fetchStories(status: Status = .inProgress) async {
