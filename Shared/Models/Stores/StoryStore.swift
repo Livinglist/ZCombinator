@@ -38,8 +38,7 @@ extension HomeView {
                 withAnimation {
                     self.stories = stories
                 }
-            }
-            else {
+            } else {
                 let stories = OfflineRepository.shared.fetchAllStories(from: storyType)
                 self.status = .completed
                 withAnimation {
