@@ -122,7 +122,7 @@ struct HomeView: View {
                             Label("Download all stories", systemImage: "square.and.arrow.down")
                         }
                     }
-                    .disabled(offlineRepository.isDownloading)
+                    .disabled(offlineRepository.isDownloading || !storyStore.isConnectedToNetwork)
                     Divider()
                     AuthButton(showLoginDialog: $showLoginDialog, showLogoutDialog: $showLogoutDialog)
                     Button {
