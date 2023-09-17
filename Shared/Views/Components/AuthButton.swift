@@ -27,7 +27,7 @@ extension HomeView {
                 Button {
                     showLoginDialog = true
                 } label: {
-                    Text("Log In")
+                    Text("Log in")
                 }
             }
         }
