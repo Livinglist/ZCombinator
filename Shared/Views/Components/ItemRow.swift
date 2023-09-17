@@ -44,10 +44,9 @@ struct ItemRow: View {
                 Label("View on Hacker News", systemImage: "safari")
             }
         } label: {
-            Image(systemName: "ellipsis")
+            Label(String(), systemImage: "ellipsis")
                 .padding(.leading)
                 .padding(.bottom, 12)
-                .padding(.trailing)
                 .foregroundColor(.orange)
         }
     }
