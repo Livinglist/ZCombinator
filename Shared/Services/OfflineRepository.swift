@@ -14,7 +14,7 @@ public class OfflineRepository: ObservableObject {
     @Published var completionCount = 0
     
     private let storiesRepository = StoriesRepository.shared
-    private let container = try! ModelContainer(for: StoryCollection.self, CommentWrapper.self)
+    private let container = try! ModelContainer(for: StoryCollection.self, CommentCollection.self)
     private var stories = [Story]()
     private var comments = [Int: [Comment]]()
     
@@ -34,7 +34,7 @@ public class OfflineRepository: ObservableObject {
         }
         
         // Fetch all cached comments.
-        let cmtDescriptor = FetchDescriptor<CommentWrapper>()
+        let cmtDescriptor = FetchDescriptor<CommentCollection>()
         if let results = try? context.fetch(cmtDescriptor) {
             let allComments = results.map { $0.comment }
             
@@ -56,7 +56,7 @@ public class OfflineRepository: ObservableObject {
         isDownloading = true
         
         try? container.mainContext.delete(model: StoryCollection.self)
-        try? container.mainContext.delete(model: CommentWrapper.self)
+        try? container.mainContext.delete(model: CommentCollection.self)
         
         let context = container.mainContext
         var stories = [Story]()
@@ -80,7 +80,7 @@ public class OfflineRepository: ObservableObject {
         var comments = [Comment]()
         
         await storiesRepository.fetchComments(ids: item.kids ?? [Int](), onCommentFetched: { comment in
-            context.insert(CommentWrapper(comment))
+            context.insert(CommentCollection(comment))
             comments.append(comment)
         })
         
@@ -125,7 +125,7 @@ public class OfflineRepository: ObservableObject {
     
     public func fetchComment(_ id: Int) -> Comment? {
         let context = container.mainContext
-        var descriptor = FetchDescriptor<CommentWrapper>(
+        var descriptor = FetchDescriptor<CommentCollection>(
             predicate: #Predicate { $0.id == id }
         )
         descriptor.fetchLimit = 1

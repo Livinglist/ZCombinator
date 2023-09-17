@@ -20,7 +20,7 @@ public struct Comment: Item {
     }
 
 
-    init(id: Int, parent: Int?, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int](), level: Int? = 0) {
+    init(id: Int, parent: Int?, title: String? = nil, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int](), level: Int? = 0) {
         self.id = id
         self.parent = parent
         self.title = title
