@@ -96,7 +96,7 @@ struct ItemRow: View {
                                     Button {
                                         onPin()
                                     } label: {
-                                        Label(String(), systemImage: "pin.fill")
+                                        Image(systemName: "pin.fill")
                                             .rotationEffect(Angle(degrees: 45))
                                             .transformEffect(.init(translationX: 0, y: 5))
                                     }

@@ -7,15 +7,15 @@ import HackerNewsKit
 /// 
 /// For accessing cached stories and comments when the device is offline.
 ///
-
 @MainActor
 public class OfflineRepository: ObservableObject {
     @Published var isDownloading = false
     @Published var completionCount = 0
     
     private let storiesRepository = StoriesRepository.shared
-    private let container = try! ModelContainer(for: StoryCollection.self, CommentWrapper.self)
-    private var stories = [Story]()
+    private let container = try! ModelContainer(for: StoryCollection.self, CommentCollection.self)
+    private let downloadOrder = [StoryType.top, .ask, .best]
+    private var stories = [StoryType: [Story]]()
     private var comments = [Int: [Comment]]()
     
     public static let shared: OfflineRepository = .init()
@@ -25,48 +25,52 @@ public class OfflineRepository: ObservableObject {
         
         // Fetch all cached stories.
         var descriptor = FetchDescriptor<StoryCollection>()
-        descriptor.fetchLimit = 1
+        descriptor.fetchLimit = downloadOrder.count
         if let results = try? context.fetch(descriptor) {
-            stories = results.first?.stories ?? [Story]()
+            for res in results {
+                stories[res.storyType] = res.stories
+            }
         }
         
         // Fetch all cached comments.
-        let cmtDescriptor = FetchDescriptor<CommentWrapper>()
+        let cmtDescriptor = FetchDescriptor<CommentCollection>()
         if let results = try? context.fetch(cmtDescriptor) {
-            let allComments = results.map { $0.comment }
-            
-            for cmt in allComments {
-                var existingCmts = comments[cmt.first?.parent ?? 0] ?? [Comment]()
-                existingCmts.append(cmt.first!)
-                comments[cmt.first?.parent ?? 0] = existingCmts
+            for collection in results {
+                comments[collection.parentId] = collection.comments
             }
         }
     }
     
     // MARK: - Story related.
     
-    public func downloadAllStories(from storyType: StoryType) async -> Void {
+    public func downloadAllStories() async -> Void {
         isDownloading = true
         
         let context = container.mainContext
-        var fetchedStories = [Story]()
-        var storedStories = [Story]()
+        var completedStoryId = Set<Int>()
         
         try? context.delete(model: StoryCollection.self)
-        try? context.delete(model: CommentWrapper.self)
+        try? context.delete(model: CommentCollection.self)
         
-        await storiesRepository.fetchAllStories(from: storyType) { story in
-            fetchedStories.append(story)
-        }
-        
-        context.insert(StoryCollection(fetchedStories, storyType: storyType))
-        
-        for story in fetchedStories {
-            await downloadChildComments(of: story, level: 0)
-            storedStories.append(story)
-            try? context.delete(model: StoryCollection.self)
-            context.insert(StoryCollection(storedStories, storyType: storyType))
-            completionCount = completionCount + 1
+        for storyType in downloadOrder {
+            var stories = [Story]()
+            
+            await storiesRepository.fetchAllStories(from: storyType) { story in
+                stories.append(story)
+            }
+            
+            context.insert(StoryCollection(stories, storyType: storyType))
+            
+            // Fetch comments for each story.
+            for story in stories {
+                // Skip already completed stories to prevent fetching for duplicate comments.
+                if completedStoryId.contains(story.id) { continue }
+                await downloadChildComments(of: story, level: 0)
+                
+                // Update counter for UI.
+                completionCount = completionCount + 1
+                completedStoryId.insert(story.id)
+            }
         }
         
         isDownloading = false
@@ -77,10 +81,10 @@ public class OfflineRepository: ObservableObject {
         var comments = [Comment]()
         
         await storiesRepository.fetchComments(ids: item.kids ?? [Int](), onCommentFetched: { comment in
-            context.insert(CommentWrapper(comment.copyWith(level: level)))
-            comments.append(comment)
+            comments.append(comment.copyWith(level: level))
         })
         
+        context.insert(CommentCollection(comments, parentId: item.id))
         try? context.save()
         
         for comment in comments {
@@ -89,7 +93,7 @@ public class OfflineRepository: ObservableObject {
     }
     
     public func fetchAllStories(from storyType: StoryType) -> [Story] {
-        return stories
+        return stories[storyType] ?? [Story]()
     }
     
     public func fetchStoryIds(from storyType: StoryType) async -> [Int] {
@@ -118,18 +122,5 @@ public class OfflineRepository: ObservableObject {
     
     public func fetchComments(of id: Int) -> [Comment] {
         return comments[id] ?? [Comment]()
-    }
-    
-    public func fetchComment(_ id: Int) -> Comment? {
-        let context = container.mainContext
-        var descriptor = FetchDescriptor<CommentWrapper>(
-            predicate: #Predicate { $0.id == id }
-        )
-        descriptor.fetchLimit = 1
-        if let results = try? context.fetch(descriptor) {
-            return results.first?.comment.first!
-        } else {
-            return nil
-        }
     }
 }
