@@ -1,6 +1,7 @@
 import AppIntents
+import SwiftData
 
-public enum StoryType: String, Equatable, CaseIterable, AppEnum {
+public enum StoryType: String, Equatable, CaseIterable, AppEnum, Codable {
     case top = "top"
     case best = "best"
     case new = "new"

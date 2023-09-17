@@ -101,7 +101,7 @@ extension ItemView {
                                 }
                             }
                     }
-                    if itemStore.loadingItem == comment.id {
+                    if itemStore.loadingItemId == comment.id {
                         LoadingIndicator().padding(.top, 16).padding(.bottom, 8)
                     } else if itemStore.loadedCommentIds.contains(comment.id) == false && isCollapsed == false && comment.kids.isNotNullOrEmpty {
                         Button {

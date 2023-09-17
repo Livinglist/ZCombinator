@@ -7,6 +7,7 @@ struct HomeView: View {
     @StateObject private var storyStore: StoryStore = .init()
     @ObservedObject private var settings: Settings = .shared
     @ObservedObject private var router: Router = .shared
+    @ObservedObject private var offlineRepository: OfflineRepository = .shared
     
     @State private var showLoginDialog: Bool = .init()
     @State private var showLogoutDialog: Bool = .init()
@@ -107,15 +108,33 @@ struct HomeView: View {
                         }
                     }
                     Divider()
+                    Button {
+                        Task {
+                            await OfflineRepository.shared.downloadAllStories(from: .top)
+                        }
+                    } label: {
+                        if offlineRepository.isDownloading {
+                            Text("Download in progress")
+                            Text("\(offlineRepository.completionCount) completed")
+                        } else {
+                            Label("Download All Stories", systemImage: "square.and.arrow.down")
+                        }
+                    }
+                    .disabled(offlineRepository.isDownloading)
+                    Divider()
                     AuthButton(showLoginDialog: $showLoginDialog, showLogoutDialog: $showLogoutDialog)
                     Button {
                         showAboutSheet = true
                     } label: {
-                        Label("About", systemImage: "")
+                        Text("About")
                     }
                 } label: {
-                    Label("Add Item", systemImage: "list.bullet")
-                        .foregroundColor(.orange)
+                    if offlineRepository.isDownloading {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                    } else {
+                        Image(systemName: "list.bullet")
+                    }
                 }
             }
         }

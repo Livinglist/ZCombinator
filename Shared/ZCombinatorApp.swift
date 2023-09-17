@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 import HackerNewsKit
 import UserNotifications
 

@@ -20,7 +20,7 @@ public struct Comment: Item {
     }
 
 
-    init(id: Int, parent: Int?, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int] = [Int](), level: Int? = 0) {
+    init(id: Int, parent: Int?, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int]? = [Int](), level: Int? = 0) {
         self.id = id
         self.parent = parent
         self.title = title
@@ -41,6 +41,17 @@ public struct Comment: Item {
     }
 
     public func copyWith(text: String? = nil, level: Int? = nil) -> Comment {
-        Comment(id: id, parent: parent, title: title, text: text ?? self.text, url: url, type: type, by: by, score: score, descendants: descendants, time: time, kids: kids ?? [Int](), level: level ?? self.level)
+        Comment(id: id, 
+                parent: parent, 
+                title: title,
+                text: text ?? self.text,
+                url: url,
+                type: type,
+                by: by,
+                score: score,
+                descendants: descendants,
+                time: time,
+                kids: kids ?? [Int](),
+                level: level ?? self.level)
     }
 }
