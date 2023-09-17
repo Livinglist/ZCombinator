@@ -14,4 +14,8 @@ public enum Status {
         default: return false
         }
     }
+    
+    var isCompleted: Bool {
+        self == .completed
+    }
 }

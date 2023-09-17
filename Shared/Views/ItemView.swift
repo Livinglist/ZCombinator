@@ -159,18 +159,37 @@ struct ItemView: View {
             if itemStore.status == .inProgress {
                 LoadingIndicator().padding(.top, 100)
             }
-            VStack(spacing: 0) {
-                ForEach(itemStore.comments) { comment in
-                    CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
-                        onViewOnHackerNewsTap(item: comment)
-                    }, onShowReplySheet: {
-                        onReplyTap(item: comment)
-                    }) {
-                        Task {
-                            await itemStore.loadKids(of: comment)
+            // In iOS 17, LazyVStack flitters whenever its contnet is updated.
+            // Here we work around this by switching to VStack once all comments are fetched.
+            if itemStore.status.isCompleted {
+                VStack(spacing: 0) {
+                    ForEach(itemStore.comments) { comment in
+                        CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
+                            onViewOnHackerNewsTap(item: comment)
+                        }, onShowReplySheet: {
+                            onReplyTap(item: comment)
+                        }) {
+                            Task {
+                                await itemStore.loadKids(of: comment)
+                            }
                         }
+                        .padding(.trailing, 4)
                     }
-                    .padding(.trailing, 4)
+                }
+            } else {
+                LazyVStack(spacing: 0) {
+                    ForEach(itemStore.comments) { comment in
+                        CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
+                            onViewOnHackerNewsTap(item: comment)
+                        }, onShowReplySheet: {
+                            onReplyTap(item: comment)
+                        }) {
+                            Task {
+                                await itemStore.loadKids(of: comment)
+                            }
+                        }
+                        .padding(.trailing, 4)
+                    }
                 }
             }
             Spacer().frame(height: 60)
