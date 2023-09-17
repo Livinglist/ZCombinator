@@ -7,7 +7,6 @@ import HackerNewsKit
 /// 
 /// For accessing cached stories and comments when the device is offline.
 ///
-
 @MainActor
 public class OfflineRepository: ObservableObject {
     @Published var isDownloading = false
@@ -62,9 +61,13 @@ public class OfflineRepository: ObservableObject {
             
             context.insert(StoryCollection(stories, storyType: storyType))
             
+            // Fetch comments for each story.
             for story in stories {
+                // Skip already completed stories to prevent fetching for duplicate comments.
                 if completedStoryId.contains(story.id) { continue }
                 await downloadChildComments(of: story, level: 0)
+                
+                // Update counter for UI.
                 completionCount = completionCount + 1
                 completedStoryId.insert(story.id)
             }
