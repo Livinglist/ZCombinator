@@ -4,7 +4,8 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.jiaqi.ZCombinator.download</string>
+		<string>download</string>
+		<string>fetchReplies</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>

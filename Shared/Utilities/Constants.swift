@@ -22,4 +22,8 @@ struct Constants {
         static let lastFetchedAtKey = "lastFetchedAt"
         static let backgroundTaskId = "fetchReplies"
     }
+    
+    struct Download {
+        static let backgroundTaskId = "download"
+    }
 }

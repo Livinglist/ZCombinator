@@ -85,6 +85,7 @@
 		E5A2CECF2A08B94200D683C6 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2CECE2A08B94200D683C6 /* ShareViewController.swift */; };
 		E5A2CED22A08B94200D683C6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5A2CED02A08B94200D683C6 /* MainInterface.storyboard */; };
 		E5A2CED62A08B94200D683C6 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E5A2CECC2A08B94200D683C6 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E5B5B91F2AB78748005CE503 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5B91E2AB78748005CE503 /* AppDelegate.swift */; };
 		E5BF9E6B2A0CAA5C0030E588 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = E5BF9E6A2A0CAA5C0030E588 /* SwiftSoup */; };
 		E5C448DB2AB6B17A006C023B /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C448DA2AB6B17A006C023B /* NetworkMonitor.swift */; };
 		E5C448E02AB6CD64006C023B /* CommentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C448DF2AB6CD64006C023B /* CommentCollection.swift */; };
@@ -233,6 +234,7 @@
 		E5A2CECE2A08B94200D683C6 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		E5A2CED12A08B94200D683C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E5A2CED32A08B94200D683C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5B5B91E2AB78748005CE503 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5C448DA2AB6B17A006C023B /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		E5C448DF2AB6CD64006C023B /* CommentCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCollection.swift; sourceTree = "<group>"; };
 		E5C7B9792A086C9A00CA6066 /* CommentTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTile.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 				E50FB9CA2886738B00AA325C /* ZCombinatorApp.swift */,
 				E50FB9CD2886738D00AA325C /* Assets.xcassets */,
 				E50FB9C82886738B00AA325C /* ZCombinator.xcdatamodeld */,
+				E5B5B91E2AB78748005CE503 /* AppDelegate.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -843,6 +846,7 @@
 				E5C7B97E2A0887D600CA6066 /* ProfileView.swift in Sources */,
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
 				E57640322A0302A10075F5D1 /* FlagButton.swift in Sources */,
+				E5B5B91F2AB78748005CE503 /* AppDelegate.swift in Sources */,
 				E54B013A29FC9FB500F7F0A0 /* View+ShareSheet.swift in Sources */,
 				E50FB9F32886738D00AA325C /* ZCombinator.xcdatamodeld in Sources */,
 				E5C7B97C2A08706000CA6066 /* View+GetColor.swift in Sources */,

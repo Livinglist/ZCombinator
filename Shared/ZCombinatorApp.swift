@@ -1,3 +1,5 @@
+import BackgroundTasks
+import Foundation
 import SwiftUI
 import SwiftData
 import HackerNewsKit
@@ -9,6 +11,7 @@ struct ZCombinatorApp: App {
     @Environment(\.scenePhase) private var phase
     let auth: Authentication = .shared
     let notification: AppNotification = .shared
+    let offlineRepository: OfflineRepository = .shared
 
     var body: some Scene {
         WindowGroup {
@@ -26,34 +29,6 @@ struct ZCombinatorApp: App {
         }
         .backgroundTask(.appRefresh(Constants.AppNotification.backgroundTaskId)) {
             await notification.fetchAllReplies()
-        }
-    }
-}
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        UNUserNotificationCenter.current().delegate = self
-        return true
-    }
-    
-    private func configureUserNotifications() {
-        UNUserNotificationCenter.current().delegate = self
-    }
-}
-
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.banner, .sound, .list])
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        Task {
-            let content = response.notification.request.content
-            if let id = Int(content.targetContentIdentifier ?? ""),
-               id != 0,
-               let item = await StoriesRepository.shared.fetchComment(id) {
-                Router.shared.to(item)
-            }
         }
     }
 }
