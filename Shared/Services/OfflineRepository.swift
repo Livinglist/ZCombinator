@@ -28,9 +28,6 @@ public class OfflineRepository: ObservableObject {
         descriptor.fetchLimit = 1
         if let results = try? context.fetch(descriptor) {
             stories = results.first?.stories ?? [Story]()
-            //print(stories)
-        } else {
-            print("no story")
         }
         
         // Fetch all cached comments.
@@ -43,10 +40,6 @@ public class OfflineRepository: ObservableObject {
                 existingCmts.append(cmt.first!)
                 comments[cmt.first?.parent ?? 0] = existingCmts
             }
-            
-            print(comments)
-        } else {
-            print("no comment")
         }
     }
     
