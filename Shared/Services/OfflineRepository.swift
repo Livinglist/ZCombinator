@@ -1,4 +1,6 @@
 import Alamofire
+import BackgroundTasks
+import Combine
 import Foundation
 import SwiftUI
 import SwiftData
@@ -12,15 +14,35 @@ public class OfflineRepository: ObservableObject {
     @Published var isDownloading = false
     @Published var completionCount = 0
     
+    lazy var lastFetchedAt = {
+        guard let date = UserDefaults.standard.object(forKey: lastDownloadAtKey) as? Date else { return "" }
+        let df = DateFormatter()
+        df.dateFormat = "MM/dd/yyyy HH:mm"
+        return df.string(from: date)
+    }()
+    var isInMemory = false
+    
     private let storiesRepository = StoriesRepository.shared
     private let container = try! ModelContainer(for: StoryCollection.self, CommentCollection.self)
     private let downloadOrder = [StoryType.top, .ask, .best]
+    private let lastDownloadAtKey = "lastDownloadedAt"
     private var stories = [StoryType: [Story]]()
     private var comments = [Int: [Comment]]()
+    private var cancellable: AnyCancellable?
     
     public static let shared: OfflineRepository = .init()
     
-    private init() {
+    init() {
+        cancellable = NetworkMonitor.shared.networkStatus
+            .dropFirst()
+            .sink { isConnected in
+                if let isConnected = isConnected, !self.isInMemory && !isConnected {
+                    self.loadIntoMemory()
+                }
+            }
+    }
+    
+    public func loadIntoMemory() {
         let context = container.mainContext
         
         // Fetch all cached stories.
@@ -39,12 +61,29 @@ public class OfflineRepository: ObservableObject {
                 comments[collection.parentId] = collection.comments
             }
         }
+        
+        isInMemory = true
+    }
+    
+    public func scheduleBackgroundDownload() {
+        let downloadTask = BGProcessingTaskRequest(identifier: Constants.Download.backgroundTaskId)
+        // Set earliestBeginDate to be 1 hr from now.
+        downloadTask.earliestBeginDate = Date(timeIntervalSinceNow: 3600)
+        downloadTask.requiresNetworkConnectivity = true
+        downloadTask.requiresExternalPower = true
+        do {
+            try BGTaskScheduler.shared.submit(downloadTask)
+        } catch {
+            debugPrint("Unable to submit task: \(error.localizedDescription)")
+        }
     }
     
     // MARK: - Story related.
     
     public func downloadAllStories() async -> Void {
         isDownloading = true
+        
+        UserDefaults.standard.set(Date.now, forKey: lastDownloadAtKey)
         
         let context = container.mainContext
         var completedStoryId = Set<Int>()
@@ -93,29 +132,11 @@ public class OfflineRepository: ObservableObject {
     }
     
     public func fetchAllStories(from storyType: StoryType) -> [Story] {
-        return stories[storyType] ?? [Story]()
-    }
-    
-    public func fetchStoryIds(from storyType: StoryType) async -> [Int] {
-        return [Int]()
-    }
-    
-    public func fetchStoryIds(from storyType: String) async -> [Int] {
-        return [Int]()
-    }
-    
-    public func fetchStory(_ id: Int) async -> Story? {
-        return nil
-//        let context = container.mainContext
-//        var descriptor = FetchDescriptor<StoryCollection>(
-//            predicate: #Predicate { $0.id == id }
-//        )
-//        descriptor.fetchLimit = 1
-//        if let results = try? context.fetch(descriptor) {
-//            return results.first?.story
-//        } else {
-//            return nil
-//        }
+        guard let stories = stories[storyType] else { return [Story]() }
+        let storiesWithCommentsDownloaded = stories.filter { story in
+            comments[story.id].isNotNullOrEmpty
+        }
+        return storiesWithCommentsDownloaded
     }
     
     // MARK: - Comment related.

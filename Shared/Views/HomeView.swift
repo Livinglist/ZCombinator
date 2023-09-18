@@ -120,9 +120,12 @@ struct HomeView: View {
                             Text("\(offlineRepository.completionCount) completed")
                         } else {
                             Label("Download all stories", systemImage: "square.and.arrow.down")
+                            if offlineRepository.lastFetchedAt.isNotEmpty {
+                                Text("last downloaded at \(offlineRepository.lastFetchedAt)")
+                            }
                         }
                     }
-                    .disabled(offlineRepository.isDownloading)
+                    .disabled(offlineRepository.isDownloading || !storyStore.isConnectedToNetwork)
                     Divider()
                     AuthButton(showLoginDialog: $showLoginDialog, showLogoutDialog: $showLogoutDialog)
                     Button {

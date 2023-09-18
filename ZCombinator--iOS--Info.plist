@@ -4,6 +4,7 @@
 <dict>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
+		<string>download</string>
 		<string>fetchReplies</string>
 	</array>
 	<key>CFBundleURLTypes</key>
