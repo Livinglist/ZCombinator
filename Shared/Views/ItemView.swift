@@ -216,9 +216,9 @@ struct ItemView: View {
             }
         }
         .overlay {
-            if itemStore.status.isLoading {
+            if itemStore.status.isLoading, let total = item.kids?.count, total != 0 {
                 VStack {
-                    ProgressView(value: Double(itemStore.comments.count), total: Double(item.kids?.count ?? item.descendants ?? 1))
+                    ProgressView(value: Double(itemStore.comments.count), total: Double(total))
                     Spacer()
                 }
             } else {
