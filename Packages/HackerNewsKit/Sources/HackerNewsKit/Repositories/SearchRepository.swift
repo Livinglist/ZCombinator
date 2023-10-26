@@ -21,20 +21,19 @@ public class SearchRepository {
         
         for hit in hits {
             guard let hit = hit as? [String: AnyObject],
-                  let by = hit["author"] as? String? ?? "",
-                  let title = hit["title"] as? String? ?? "",
-                  let createdAt = hit["created_at_i"] as? Int? ?? 0,
-                  let score = hit["points"] as? Int? ?? 0,
-                  let descendants = hit["num_comments"] as? Int? ?? 0,
-                  let url = hit["url"] as? String? ?? "",
-                  let idStr = hit["objectID"] as? String? ?? "",
+                  let idStr = hit["objectID"] as? String,
                   let id = Int(idStr)
             else { continue }
+            let by = hit["author"] as? String ?? ""
+            let title = hit["title"] as? String ?? ""
+            let createdAt = hit["created_at_i"] as? Int ?? 0
+            let score = hit["points"] as? Int ?? 0
+            let descendants = hit["num_comments"] as? Int ?? 0
+            let url = hit["url"] as? String ?? ""
             
             if title.isEmpty {
-                guard let text = hit["comment_text"] as? String? ?? "",
-                      let parentId = hit["parent_id"] as? Int? ?? 0
-                else { return }
+                guard let text = hit["comment_text"] as? String else { return }
+                let parentId = hit["parent_id"] as? Int ?? 0
                 let formattedText = text.htmlStripped
                 let cmt = Comment(id: id,
                                   parent: parentId,
@@ -48,7 +47,7 @@ public class SearchRepository {
                                   time: createdAt)
                 onItemFetched(cmt)
             } else {
-                guard let text = hit["story_text"] as? String? ?? "" else { return }
+                let text = hit["story_text"] as? String ?? ""
                 let formattedText = text.htmlStripped
                 let story = Story(id: id,
                                   parent: nil,
