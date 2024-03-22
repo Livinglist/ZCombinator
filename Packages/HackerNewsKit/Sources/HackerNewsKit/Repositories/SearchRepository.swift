@@ -39,8 +39,6 @@ public class SearchRepository {
                                   parent: parentId,
                                   text: formattedText,
                                   by: by,
-                                  score: nil,
-                                  descendants: nil,
                                   time: createdAt)
                 onItemFetched(cmt)
             } else {
@@ -53,7 +51,6 @@ public class SearchRepository {
                                   title: title,
                                   text: formattedText,
                                   url: url,
-                                  type: "story",
                                   by: by,
                                   score: score,
                                   descendants: descendants,

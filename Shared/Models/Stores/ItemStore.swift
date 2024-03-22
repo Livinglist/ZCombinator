@@ -15,7 +15,11 @@ extension ItemView {
         @Published var loadedCommentIds: Set<Int> = .init()
         @Published var collapsed: Set<Int> = .init()
         @Published var hidden: Set<Int> = .init()
-        @Published var isConnectedToNetwork: Bool = true
+        @Published var isConnectedToNetwork: Bool = true {
+            didSet {
+                isRecursivelyFetching = isConnectedToNetwork
+            }
+        }
         @Published var isRecursivelyFetching: Bool = true
         
         private var networkStatusCancellable: AnyCancellable?

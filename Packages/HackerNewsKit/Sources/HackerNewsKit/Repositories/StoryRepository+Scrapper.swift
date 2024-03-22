@@ -116,8 +116,6 @@ extension StoryRepository {
                                   parent: parentId,
                                   text: parsedText,
                                   by: cmtAuthor,
-                                  score: nil,
-                                  descendants: nil,
                                   time: Int(timestamp),
                                   level: indent)
                 

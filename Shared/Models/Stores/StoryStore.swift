@@ -40,10 +40,10 @@ extension HomeView {
                     self.stories = stories
                 }
             } else {
-                let stories = OfflineRepository.shared.fetchAllStories(from: storyType)
+                let cachedStories = OfflineRepository.shared.fetchAllStories(from: storyType)
                 self.status = .completed
                 withAnimation {
-                    self.stories = stories
+                    self.stories = cachedStories
                 }
             }
         }

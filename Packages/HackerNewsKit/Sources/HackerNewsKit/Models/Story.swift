@@ -28,18 +28,18 @@ public struct Story: Item {
         }
     }
 
-    public init(id: Int, parent: Int? = nil, title: String?, text: String?, url: String?, type: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int]? = [Int]()) {
+    public init(id: Int, parent: Int? = nil, title: String?, text: String?, url: String?, by: String?, score: Int?, descendants: Int?, time: Int, kids: [Int]? = [Int]()) {
         self.id = id
         self.parent = parent
         self.title = title
         self.text = text
         self.url = url
-        self.type = type
         self.score = score
         self.by = by
         self.descendants = descendants
         self.time = time
         self.kids = kids
+        self.type = "story"
     }
 
     // Empty initializer
@@ -50,7 +50,6 @@ public struct Story: Item {
             title: "",
             text: "",
             url: "",
-            type: "",
             by: "",
             score: 0,
             descendants: 0,
@@ -65,7 +64,6 @@ public struct Story: Item {
             title: title,
             text: text,
             url: url,
-            type: type,
             by: by,
             score: score,
             descendants: descendants,
@@ -79,7 +77,6 @@ public struct Story: Item {
         title: "Something went wrong...",
         text: nil,
         url: "retrying...",
-        type: nil,
         by: nil,
         score: nil,
         descendants: nil,

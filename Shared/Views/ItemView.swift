@@ -194,19 +194,23 @@ struct ItemView: View {
                     }
                 }
             }
-            ToolbarItem {
-                Button {
-                    if !itemStore.status.isLoading {
-                        withAnimation {
-                            itemStore.isRecursivelyFetching.toggle()
+            
+            if itemStore.isConnectedToNetwork {
+                ToolbarItem {
+                    Button {
+                        if !itemStore.status.isLoading {
+                            withAnimation {
+                                itemStore.isRecursivelyFetching.toggle()
+                            }
+                            Task { await itemStore.refresh() }
                         }
-                        Task { await itemStore.refresh() }
+                    } label: {
+                        Image(systemName: itemStore.isRecursivelyFetching ? "list.bullet" : "list.bullet.indent")
+                            .foregroundColor(itemStore.status.isLoading ? .gray : .orange)
                     }
-                } label: {
-                    Image(systemName: itemStore.isRecursivelyFetching ? "list.bullet" : "list.bullet.indent")
-                        .foregroundColor(itemStore.status.isLoading ? .gray : .orange)
                 }
             }
+
             ToolbarItem {
                 menu
             }
