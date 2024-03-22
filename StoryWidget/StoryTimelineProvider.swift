@@ -3,9 +3,9 @@ import HackerNewsKit
 
 struct StoryTimelineProvider: AppIntentTimelineProvider {
     func snapshot(for configuration: SelectStoryTypeIntent, in context: Context) async -> StoryEntry {
-        let ids = await StoriesRepository.shared.fetchStoryIds(from: configuration.source.rawValue)
+        let ids = await StoryRepository.shared.fetchStoryIds(from: configuration.source.rawValue)
         guard let first = ids.first else { return .errorPlaceholder }
-        let story = await StoriesRepository.shared.fetchStory(first)
+        let story = await StoryRepository.shared.fetchStory(first)
         guard let story = story else { return .errorPlaceholder }
         let entry = StoryEntry(date: Date(), story: story, source: configuration.source)
         return entry
@@ -17,7 +17,6 @@ struct StoryTimelineProvider: AppIntentTimelineProvider {
             title: "This is a placeholder story",
             text: "text",
             url: "",
-            type: "",
             by: "Z Combinator",
             score: 100,
             descendants: 24,
@@ -27,11 +26,11 @@ struct StoryTimelineProvider: AppIntentTimelineProvider {
     }
     
     func timeline(for configuration: SelectStoryTypeIntent, in context: Context) async -> Timeline<StoryEntry> {
-        let ids = await StoriesRepository.shared.fetchStoryIds(from: configuration.source.rawValue)
+        let ids = await StoryRepository.shared.fetchStoryIds(from: configuration.source.rawValue)
         guard let first = ids.first else {
             return Timeline(entries: [.errorPlaceholder], policy: .atEnd)
         }
-        let story = await StoriesRepository.shared.fetchStory(first)
+        let story = await StoryRepository.shared.fetchStory(first)
         guard let story = story else {
             return Timeline(entries: [.errorPlaceholder], policy: .atEnd)
         }

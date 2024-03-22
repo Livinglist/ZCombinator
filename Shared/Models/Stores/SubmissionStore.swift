@@ -19,7 +19,7 @@ extension SubmissionView {
             let endIndex = min(startIndex + pageSize, ids.count)
             var items = [any Item]()
             
-            await StoriesRepository.shared.fetchItems(ids: Array(ids[startIndex..<endIndex])) { item in
+            await StoryRepository.shared.fetchItems(ids: Array(ids[startIndex..<endIndex])) { item in
                 items.append(item)
             }
             
@@ -42,7 +42,7 @@ extension SubmissionView {
             let endIndex = min(startIndex + pageSize, ids.count)
             var items = [any Item]()
             
-            await StoriesRepository.shared.fetchItems(ids: Array(ids[startIndex..<endIndex])) { item in
+            await StoryRepository.shared.fetchItems(ids: Array(ids[startIndex..<endIndex])) { item in
                 items.append(item)
             }
             

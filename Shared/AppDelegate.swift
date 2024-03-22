@@ -55,7 +55,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             let content = response.notification.request.content
             if let id = Int(content.targetContentIdentifier ?? ""),
                id != 0,
-               let item = await StoriesRepository.shared.fetchComment(id) {
+               let item = await StoryRepository.shared.fetchComment(id) {
                 Router.shared.to(item)
             }
         }

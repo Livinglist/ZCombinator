@@ -1,8 +1,8 @@
 import Foundation
 import Alamofire
 
-public class StoriesRepository {
-    public static let shared: StoriesRepository = .init()
+public class StoryRepository {
+    public static let shared: StoryRepository = .init()
     
     private let baseUrl: String = "https://hacker-news.firebaseio.com/v0/"
     

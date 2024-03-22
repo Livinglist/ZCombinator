@@ -22,7 +22,7 @@ public class OfflineRepository: ObservableObject {
     }()
     var isInMemory = false
     
-    private let storiesRepository = StoriesRepository.shared
+    private let storyRepository = StoryRepository.shared
     private let container = try! ModelContainer(for: StoryCollection.self, CommentCollection.self)
     private let downloadOrder = [StoryType.top, .ask, .best]
     private let lastDownloadAtKey = "lastDownloadedAt"
@@ -94,7 +94,7 @@ public class OfflineRepository: ObservableObject {
         for storyType in downloadOrder {
             var stories = [Story]()
             
-            await storiesRepository.fetchAllStories(from: storyType) { story in
+            await storyRepository.fetchAllStories(from: storyType) { story in
                 stories.append(story)
             }
             
@@ -119,7 +119,7 @@ public class OfflineRepository: ObservableObject {
         let context = container.mainContext
         var comments = [Comment]()
         
-        await storiesRepository.fetchComments(ids: item.kids ?? [Int](), onCommentFetched: { comment in
+        await storyRepository.fetchComments(ids: item.kids ?? [Int](), onCommentFetched: { comment in
             comments.append(comment.copyWith(level: level))
         })
         

@@ -26,12 +26,12 @@ extension HomeView {
         func fetchStories(status: Status = .inProgress) async {
             self.status = status
             self.currentPage = 0
-            self.storyIds = await StoriesRepository.shared.fetchStoryIds(from: self.storyType)
+            self.storyIds = await StoryRepository.shared.fetchStoryIds(from: self.storyType)
             
             if isConnectedToNetwork {
                 var stories = [Story]()
                 let range = 0..<min(pageSize, storyIds.count)
-                await StoriesRepository.shared.fetchStories(ids: Array(storyIds[range])) { story in
+                await StoryRepository.shared.fetchStories(ids: Array(storyIds[range])) { story in
                     stories.append(story)
                 }
                 
@@ -40,10 +40,10 @@ extension HomeView {
                     self.stories = stories
                 }
             } else {
-                let stories = OfflineRepository.shared.fetchAllStories(from: storyType)
+                let cachedStories = OfflineRepository.shared.fetchAllStories(from: storyType)
                 self.status = .completed
                 withAnimation {
-                    self.stories = stories
+                    self.stories = cachedStories
                 }
             }
         }
@@ -67,7 +67,7 @@ extension HomeView {
             let endIndex = min(startIndex + pageSize, storyIds.count)
             var stories = [Story]()
             
-            await StoriesRepository.shared.fetchStories(ids: Array(storyIds[startIndex..<endIndex])) { story in
+            await StoryRepository.shared.fetchStories(ids: Array(storyIds[startIndex..<endIndex])) { story in
                 stories.append(story)
             }
             

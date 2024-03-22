@@ -21,41 +21,36 @@ public class SearchRepository {
         
         for hit in hits {
             guard let hit = hit as? [String: AnyObject],
-                  let by = hit["author"] as? String? ?? "",
-                  let title = hit["title"] as? String? ?? "",
-                  let createdAt = hit["created_at_i"] as? Int? ?? 0,
-                  let score = hit["points"] as? Int? ?? 0,
-                  let descendants = hit["num_comments"] as? Int? ?? 0,
-                  let url = hit["url"] as? String? ?? "",
-                  let idStr = hit["objectID"] as? String? ?? "",
+                  let by = hit["author"] as? String,
+                  let createdAt = hit["created_at_i"] as? Int,
+                  let idStr = hit["objectID"] as? String,
                   let id = Int(idStr)
             else { continue }
             
-            if title.isEmpty {
+            let url = hit["url"] as? String
+            let title = hit["title"] as? String
+            
+            if title?.isEmpty ?? true {
                 guard let text = hit["comment_text"] as? String? ?? "",
                       let parentId = hit["parent_id"] as? Int? ?? 0
                 else { return }
                 let formattedText = text.htmlStripped
                 let cmt = Comment(id: id,
                                   parent: parentId,
-                                  title: title,
                                   text: formattedText,
-                                  url: url,
-                                  type: "comment",
                                   by: by,
-                                  score: score,
-                                  descendants: descendants,
                                   time: createdAt)
                 onItemFetched(cmt)
             } else {
-                guard let text = hit["story_text"] as? String? ?? "" else { return }
+                let text = hit["story_text"] as? String? ?? ""
                 let formattedText = text.htmlStripped
+                let score = hit["points"] as? Int
+                let descendants = hit["num_comments"] as? Int
                 let story = Story(id: id,
                                   parent: nil,
                                   title: title,
                                   text: formattedText,
                                   url: url,
-                                  type: "story",
                                   by: by,
                                   score: score,
                                   descendants: descendants,
