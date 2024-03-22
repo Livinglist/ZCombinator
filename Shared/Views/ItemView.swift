@@ -40,7 +40,7 @@ struct ItemView: View {
             .environment(\.openURL, OpenURLAction { url in
                 if let id = url.absoluteString.itemId {
                     Task {
-                        let item = await StoriesRepository.shared.fetchItem(id)
+                        let item = await StoryRepository.shared.fetchItem(id)
                         guard let item = item else {
                             Self.handledUrl = url
                             showUrlSheet = true
@@ -161,35 +161,18 @@ struct ItemView: View {
             }
             // In iOS 17, LazyVStack flitters whenever its contnet is updated.
             // Here we work around this by switching to VStack once all comments are fetched.
-            if itemStore.status.isCompleted {
-                VStack(spacing: 0) {
-                    ForEach(itemStore.comments) { comment in
-                        CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
-                            onViewOnHackerNewsTap(item: comment)
-                        }, onShowReplySheet: {
-                            onReplyTap(item: comment)
-                        }) {
-                            Task {
-                                await itemStore.loadKids(of: comment)
-                            }
+            LazyVStack(spacing: 0) {
+                ForEach(itemStore.comments, id: \.id) { comment in
+                    CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
+                        onViewOnHackerNewsTap(item: comment)
+                    }, onShowReplySheet: {
+                        onReplyTap(item: comment)
+                    }) {
+                        Task {
+                            await itemStore.loadKids(of: comment)
                         }
-                        .padding(.trailing, 4)
                     }
-                }
-            } else {
-                LazyVStack(spacing: 0) {
-                    ForEach(itemStore.comments) { comment in
-                        CommentTile(comment: comment, itemStore: itemStore, onShowHNSheet: {
-                            onViewOnHackerNewsTap(item: comment)
-                        }, onShowReplySheet: {
-                            onReplyTap(item: comment)
-                        }) {
-                            Task {
-                                await itemStore.loadKids(of: comment)
-                            }
-                        }
-                        .padding(.trailing, 4)
-                    }
+                    .padding(.trailing, 4)
                 }
             }
             Spacer().frame(height: 60)
@@ -212,11 +195,24 @@ struct ItemView: View {
                 }
             }
             ToolbarItem {
+                Button {
+                    if !itemStore.status.isLoading {
+                        withAnimation {
+                            itemStore.isRecursivelyFetching.toggle()
+                        }
+                        Task { await itemStore.refresh() }
+                    }
+                } label: {
+                    Image(systemName: itemStore.isRecursivelyFetching ? "list.bullet" : "list.bullet.indent")
+                        .foregroundColor(itemStore.status.isLoading ? .gray : .orange)
+                }
+            }
+            ToolbarItem {
                 menu
             }
         }
         .overlay {
-            if itemStore.status.isLoading, let total = item.kids?.count, total != 0 {
+            if !itemStore.isRecursivelyFetching && itemStore.status.isLoading, let total = item.kids?.count, total != 0 {
                 VStack {
                     ProgressView(value: Double(itemStore.comments.count), total: Double(total))
                     Spacer()

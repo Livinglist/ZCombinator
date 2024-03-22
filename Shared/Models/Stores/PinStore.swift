@@ -27,7 +27,7 @@ extension PinView {
         func fetchPinnedStories() async {
             var items = [any Item]()
             
-            await StoriesRepository.shared.fetchItems(ids: pinnedIds) { item in
+            await StoryRepository.shared.fetchItems(ids: pinnedIds) { item in
                 items.append(item)
             }
             

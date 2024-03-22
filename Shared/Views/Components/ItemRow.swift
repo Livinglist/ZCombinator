@@ -86,7 +86,7 @@ struct ItemRow: View {
                             }.padding(item is Comment ? [.horizontal, .top] : [.horizontal])
                             Divider().frame(maxWidth: .infinity)
                             HStack(alignment: .center) {
-                                Text(item.metadata.orEmpty)
+                                Text(item.metadata)
                                     .font(.caption)
                                     .padding(.top, 6)
                                     .padding(.leading)

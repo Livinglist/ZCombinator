@@ -11,7 +11,7 @@ private extension Calendar {
 
 class AppNotification {
     private let auth: Authentication = .shared
-    private let repo: StoriesRepository = .shared
+    private let repo: StoryRepository = .shared
     
     static let shared: AppNotification = .init()
     

@@ -214,7 +214,7 @@ struct HomeView: View {
             .onOpenURL(perform: { url in
                 if let id = url.absoluteString.itemId {
                     Task {
-                        let story = await StoriesRepository.shared.fetchStory(id)
+                        let story = await StoryRepository.shared.fetchStory(id)
                         guard let story = story else { return }
                         router.to(story)
                     }
@@ -223,7 +223,7 @@ struct HomeView: View {
             .environment(\.openURL, OpenURLAction { url in
                 if let id = url.absoluteString.itemId {
                     Task {
-                        let item = await StoriesRepository.shared.fetchItem(id)
+                        let item = await StoryRepository.shared.fetchItem(id)
                         guard let item = item else {
                             Self.handledUrl = url
                             showUrlSheet = true

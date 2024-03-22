@@ -9,7 +9,7 @@ extension ProfileView {
         
         func fetchUser(id: String) async {
             self.status = .inProgress
-            let user = await StoriesRepository.shared.fetchUser(id)
+            let user = await StoryRepository.shared.fetchUser(id)
             
             if let user = user {
                 self.user = user

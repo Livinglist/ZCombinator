@@ -16,11 +16,12 @@ extension ItemView {
         @Published var collapsed: Set<Int> = .init()
         @Published var hidden: Set<Int> = .init()
         @Published var isConnectedToNetwork: Bool = true
+        @Published var isRecursivelyFetching: Bool = true
         
-        private var cancellable: AnyCancellable?
+        private var networkStatusCancellable: AnyCancellable?
         
         init() {
-            cancellable = NetworkMonitor.shared.networkStatus
+            networkStatusCancellable = NetworkMonitor.shared.networkStatus
                 .sink { isConnected in
                 self.isConnectedToNetwork = isConnected ?? false
             }
@@ -37,7 +38,7 @@ extension ItemView {
                 var comments = [Comment]()
                 
                 if isConnectedToNetwork {
-                    await StoriesRepository.shared.fetchComments(ids: kids) { comment in
+                    await StoryRepository.shared.fetchComments(ids: kids) { comment in
                         comments.append(comment.copyWith(level: level + 1))
                     }
                 } else if let id = loadingItemId {
@@ -53,13 +54,13 @@ extension ItemView {
         }
         
         func refresh() async -> Void {
-            guard let id = self.item?.id else { return }
-            
-            if status.isLoading { return }
+            guard let item = self.item, !status.isLoading else { return }
+            let id = item.id
             
             withAnimation {
                 self.comments.removeAll()
             }
+            
             self.loadingItemId = nil
             self.loadedCommentIds.removeAll()
             self.collapsed.removeAll()
@@ -67,47 +68,93 @@ extension ItemView {
             self.status = .inProgress
             
             if isConnectedToNetwork {
-                if let item = await StoriesRepository.shared.fetchItem(id),
-                   let kids = item.kids {
-                    self.item = item
-                    
-                    await StoriesRepository.shared.fetchComments(ids: kids) { comment in
-                        DispatchQueue.main.async {
-                            withAnimation {
-                                self.status = .backgroundLoading
-                                self.comments.append(comment.copyWith(level: 0))
+                if isRecursivelyFetching {
+                    await StoryRepository.shared.fetchCommentsRecursively(from: item) { [self] comment in
+                        DispatchQueue.main.async { [self] in
+                            if let comment = comment {
+                                self.comments.append(comment)
+                            } else {
+                                self.status = .completed
                             }
                         }
                     }
+                } else {
+                    if let item = await StoryRepository.shared.fetchItem(id),
+                       let kids = item.kids {
+                        self.item = item
+                        
+                        await StoryRepository.shared.fetchComments(ids: kids) { comment in
+                            DispatchQueue.main.async {
+                                withAnimation {
+                                    self.status = .backgroundLoading
+                                    self.comments.append(comment.copyWith(level: 0))
+                                }
+                            }
+                        }
+                    }
+                    self.status = .completed
                 }
             } else {
                 // We don't need to refresh in offline mode
                 if !self.comments.isEmpty { self.status = .completed }
                 let cmts = OfflineRepository.shared.fetchComments(of: id)
                 self.comments = cmts
+                self.status = .completed
             }
-            
-            self.status = .completed
         }
         
         func fetchParent(of cmt: Comment) async {
             guard let parentId = cmt.parent,
-                  let parent = await StoriesRepository.shared.fetchItem(parentId)
+                  let parent = await StoryRepository.shared.fetchItem(parentId)
             else { return }
             
             Router.shared.to(parent)
         }
         
         func collapse(cmt: Comment) {
-            collapsed.insert(cmt.id)
-            
-            hide(kidsOf: cmt)
+            if isRecursivelyFetching {
+                collapsed.insert(cmt.id)
+                guard var index = comments.firstIndex(of: cmt),
+                      let level = cmt.level
+                else { return }
+                
+                index = min(index + 1, comments.count - 1)
+                for c in comments[index..<comments.count] {
+                    if let cLevel = c.level, cLevel > level {
+                        collapsed.remove(c.id)
+                        hidden.insert(c.id)
+                    } else {
+                        return
+                    }
+                }
+            } else {
+                collapsed.insert(cmt.id)
+                
+                hide(kidsOf: cmt)
+            }
         }
         
         func uncollapse(cmt: Comment) {
-            collapsed.remove(cmt.id)
-            
-            unhide(kidsOf: cmt)
+            if isRecursivelyFetching {
+                collapsed.remove(cmt.id)
+                guard var index = comments.firstIndex(of: cmt),
+                      let level = cmt.level
+                else { return }
+                
+                index = min(index + 1, comments.count - 1)
+                for c in comments[index..<comments.count] {
+                    if let cLevel = c.level, cLevel > level {
+                        collapsed.remove(c.id)
+                        hidden.remove(c.id)
+                    } else {
+                        return
+                    }
+                }
+            } else {
+                collapsed.remove(cmt.id)
+                
+                unhide(kidsOf: cmt)
+            }
         }
         
         private func hide(kidsOf parent: Comment) {

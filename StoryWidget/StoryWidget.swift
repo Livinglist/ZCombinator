@@ -49,7 +49,7 @@ struct StoryWidgetView : View {
                     }
                     Divider().frame(maxWidth: .infinity)
                     HStack(alignment: .center) {
-                        Text("\(source.rawValue.uppercased()) | \(story.metadata.orEmpty)")
+                        Text("\(source.rawValue.uppercased()) | \(story.metadata)")
                             .font(family == .systemSmall ? showsWidgetContainerBackground ? .system(size: 10) : .system(size: 8) : .caption)
                             .padding(.top, showsWidgetContainerBackground ? 2 : .zero)
                         Spacer()

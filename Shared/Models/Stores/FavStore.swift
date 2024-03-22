@@ -32,7 +32,7 @@ extension FavView {
 
             var items = [any Item]()
             let range = 0..<min(pageSize, favIds.count)
-            await StoriesRepository.shared.fetchItems(ids: Array(favIds[range])) { item in
+            await StoryRepository.shared.fetchItems(ids: Array(favIds[range])) { item in
                 items.append(item)
             }
             
@@ -59,7 +59,7 @@ extension FavView {
             let endIndex = min(startIndex + pageSize, favIds.count)
             var items = [any Item]()
             
-            await StoriesRepository.shared.fetchItems(ids: Array(favIds[startIndex..<endIndex])) { item in
+            await StoryRepository.shared.fetchItems(ids: Array(favIds[startIndex..<endIndex])) { item in
                 items.append(item)
             }
             

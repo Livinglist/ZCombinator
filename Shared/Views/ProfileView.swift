@@ -11,7 +11,17 @@ struct ProfileView: View {
         List {
             if let user = profileStore.user {
                 Section {
-                    Text(user.about.orEmpty.markdowned)
+                    if let about = user.about, about.isNotEmpty {
+                        Text(about.markdowned)
+                    } else {
+                        HStack {
+                            Spacer()
+                            Text("Nothing here...")
+                                .font(.footnote)
+                                .foregroundStyle(.gray)
+                            Spacer()
+                        }
+                    }
                 } header: {
                     Text("About")
                 }

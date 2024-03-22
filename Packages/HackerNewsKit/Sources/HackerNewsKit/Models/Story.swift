@@ -20,7 +20,7 @@ public struct Story: Item {
     public let descendants: Int?
     public let time: Int
     public let kids: [Int]?
-    public var metadata: String? {
+    public var metadata: String {
         if isJob {
             return "\(timeAgo) by \(by.orEmpty)"
         } else {
