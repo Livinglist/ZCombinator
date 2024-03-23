@@ -18,6 +18,7 @@ extension HomeView {
         
         init() {
             cancellable = NetworkMonitor.shared.networkStatus
+                .receive(on: RunLoop.main)
                 .sink { isConnected in
                     self.isConnectedToNetwork = isConnected ?? false
                 }
@@ -71,11 +72,9 @@ extension HomeView {
                 stories.append(story)
             }
             
-            DispatchQueue.main.async {
-                withAnimation {
-                    self.status = .completed
-                    self.stories.append(contentsOf: stories)
-                }
+            withAnimation {
+                self.status = .completed
+                self.stories.append(contentsOf: stories)
             }
         }
         

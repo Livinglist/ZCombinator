@@ -155,6 +155,7 @@ extension StoryRepository {
             let replyRegex = try Regex(#"\<div class="reply"\>(.*?)\<\/div\>"#).dotMatchesNewlines()
             let spanRegex = try Regex(#"\<span class="(.*?)"\>(.*?)\<\/span\>"#).dotMatchesNewlines()
             let pRegex = try Regex(#"\<p\>(.*?)\<\/p\>"#).dotMatchesNewlines()
+            let codeRegex = try Regex(#"\<pre\>\<code\>(.*?)\<\/code\>\<\/pre\>"#).dotMatchesNewlines()
             let linkRegex = try Regex(#"\<a href=\"(.*?)\".*?\>.*?\<\/a\>"#)
             let iRegex = try Regex(#"\<i\>(.*?)\<\/i\>"#)
             let res = try Entities.unescape(html)
@@ -183,10 +184,17 @@ extension StoryRepository {
                 .replacing(iRegex) { match in
                     if let m = match[1].substring {
                         let matchedStr = String(m)
-                        return "*\(matchedStr)*"
+                        return "**\(matchedStr)**"
                     }
                     return String()
                 }
+                .replacing(codeRegex, with: { match in
+                    if let m = match[1].substring {
+                        let matchedStr = String(m)
+                        return "```\n" + matchedStr.replacing("\n", with: "``` \n ``` \n") + "\n```\n"
+                    }
+                    return String()
+                })
             return res.trimmingCharacters(in: .whitespacesAndNewlines)
         } catch {
             return error.localizedDescription

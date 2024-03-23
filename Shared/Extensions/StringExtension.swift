@@ -7,7 +7,10 @@ extension String {
     
     var markdowned: AttributedString {
         // Regex matching URLs.
-        let regex = try! NSRegularExpression(pattern: #"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"#)
+        guard let regex = try? NSRegularExpression(pattern: #"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)"#)
+        else {
+            return AttributedString(stringLiteral: self)
+        }
         let range = NSRange(location: 0, length: self.utf16.count)
         let matches = regex.matches(in: self, range: range)
         var str = self
@@ -19,8 +22,12 @@ extension String {
             str = str.replacingOccurrences(of: matchedString, with: "[\(display)](\(matchedString))")
         }
         
-        return try! AttributedString(
-            markdown: str, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace))
+        if let attributedString = try? AttributedString(
+            markdown: str, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace)) {
+            return attributedString
+        } else {
+            return AttributedString(stringLiteral: self)
+        }
     }
     
     func toJSON() -> Any? {
