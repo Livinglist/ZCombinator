@@ -10,6 +10,7 @@ extension ItemView {
         @Published var status: Status = .idle
         @Published var item: (any Item)?
         @Published var loadingItemId: Int?
+        @Published var actionPerformed: Action = .none
         
         /// Stores ids of loaded comments, including both root and child comments.
         @Published var loadedCommentIds: Set<Int> = .init()
@@ -17,7 +18,9 @@ extension ItemView {
         @Published var hidden: Set<Int> = .init()
         @Published var isConnectedToNetwork: Bool = true {
             didSet {
-                isRecursivelyFetching = isConnectedToNetwork
+                if !isConnectedToNetwork && isRecursivelyFetching {
+                    isRecursivelyFetching = false
+                }
             }
         }
         @Published var isRecursivelyFetching: Bool = true
@@ -26,6 +29,8 @@ extension ItemView {
         
         init() {
             networkStatusCancellable = NetworkMonitor.shared.networkStatus
+                .receive(on: RunLoop.main)
+                .removeDuplicates()
                 .sink { isConnected in
                 self.isConnectedToNetwork = isConnected ?? false
             }
@@ -73,9 +78,10 @@ extension ItemView {
             
             if isConnectedToNetwork {
                 if isRecursivelyFetching {
-                    await StoryRepository.shared.fetchCommentsRecursively(from: item) { [self] comment in
-                        DispatchQueue.main.async { [self] in
+                    await StoryRepository.shared.fetchCommentsRecursively(from: item) { comment in
+                        DispatchQueue.main.async {
                             if let comment = comment {
+                                self.status = .backgroundLoading
                                 self.comments.append(comment)
                             } else {
                                 self.status = .completed

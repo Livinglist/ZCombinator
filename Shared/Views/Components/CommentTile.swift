@@ -6,9 +6,8 @@ extension ItemView {
     struct CommentTile: View {
         @EnvironmentObject var auth: Authentication
         @ObservedObject var itemStore: ItemStore
-
+        
         @State private var showFlagDialog: Bool = .init()
-        @State private var actionPerformed: Action = .none
         
         let level: Int
         let comment: Comment
@@ -91,7 +90,6 @@ extension ItemView {
                             .foregroundColor(getColor(level: level))
                     } else {
                         textView
-                            .withPlainToast(actionPerformed: $actionPerformed)
                             .onTapGesture {
                                 if !isCollapsed {
                                     HapticFeedbackService.shared.ultralight()
@@ -124,10 +122,10 @@ extension ItemView {
                 .contextMenu {
                     // Wrap these in group cuz there's a limit of 10 items in func params.
                     Group {
-                        UpvoteButton(id: comment.id, actionPerformed: $actionPerformed)
-                        DownvoteButton(id: comment.id, actionPerformed: $actionPerformed)
-                        FavButton(id: comment.id, actionPerformed: $actionPerformed)
-                        PinButton(id: comment.id, actionPerformed: $actionPerformed)
+                        UpvoteButton(id: comment.id, actionPerformed: $itemStore.actionPerformed)
+                        DownvoteButton(id: comment.id, actionPerformed: $itemStore.actionPerformed)
+                        FavButton(id: comment.id, actionPerformed: $itemStore.actionPerformed)
+                        PinButton(id: comment.id, actionPerformed: $itemStore.actionPerformed)
                     }
                     Button {
                         onShowReplySheet()
@@ -139,7 +137,7 @@ extension ItemView {
                     FlagButton(id: comment.id, showFlagDialog: $showFlagDialog)
                     Divider()
                     ShareMenu(item: comment)
-                    CopyButton(text: comment.text.orEmpty, actionPerformed: $actionPerformed)
+                    CopyButton(text: comment.text.orEmpty, actionPerformed: $itemStore.actionPerformed)
                     Button {
                         onShowHNSheet()
                     } label: {
@@ -196,7 +194,7 @@ extension ItemView {
                 let res = await AuthRepository.shared.flag(comment.id)
                 
                 if res {
-                    actionPerformed = .flag
+                    itemStore.actionPerformed = .flag
                     HapticFeedbackService.shared.success()
                 } else {
                     HapticFeedbackService.shared.error()

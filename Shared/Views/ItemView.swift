@@ -9,7 +9,6 @@ struct ItemView: View {
     @State private var showUrlSheet: Bool = .init()
     @State private var showReplySheet: Bool = .init()
     @State private var showFlagDialog: Bool = .init()
-    @State private var actionPerformed: Action = .none
     static private var handledUrl: URL? = nil
     static private var hnSheetTarget: (any Item)? = nil
     static private var replySheetTarget: (any Item)? = nil
@@ -26,7 +25,7 @@ struct ItemView: View {
     
     var body: some View {
         mainItemView
-            .withToast(actionPerformed: $actionPerformed)
+            .withToast(actionPerformed: $itemStore.actionPerformed)
             .sheet(isPresented: $showHNSheet) {
                 if let target = Self.hnSheetTarget, let url = URL(string: target.itemUrl) {
                     SafariView(url: url)
@@ -60,7 +59,7 @@ struct ItemView: View {
             })
             .sheet(isPresented: $showReplySheet) {
                 if let target = Self.replySheetTarget {
-                    ReplyView(actionPerformed: $actionPerformed,
+                    ReplyView(actionPerformed: $itemStore.actionPerformed,
                               replyingTo: target,
                               draggable: true
                     )
@@ -73,12 +72,10 @@ struct ItemView: View {
             } message: {
                 Text("Flag the post by \(item.by.orEmpty)?")
             }
-            .onAppear {
+            .task {
                 if itemStore.item == nil {
                     itemStore.item = item
-                    Task {
-                        await itemStore.refresh()
-                    }
+                    await itemStore.refresh()
                 }
             }
     }
@@ -86,10 +83,10 @@ struct ItemView: View {
     var menu: some View {
         Menu {
             Group {
-                UpvoteButton(id: item.id, actionPerformed: $actionPerformed)
-                DownvoteButton(id: item.id, actionPerformed: $actionPerformed)
-                FavButton(id: item.id, actionPerformed: $actionPerformed)
-                PinButton(id: item.id, actionPerformed: $actionPerformed)
+                UpvoteButton(id: item.id, actionPerformed: $itemStore.actionPerformed)
+                DownvoteButton(id: item.id, actionPerformed: $itemStore.actionPerformed)
+                FavButton(id: item.id, actionPerformed: $itemStore.actionPerformed)
+                PinButton(id: item.id, actionPerformed: $itemStore.actionPerformed)
             }
             Button {
                 onReplyTap(item: item)
@@ -102,7 +99,7 @@ struct ItemView: View {
             Divider()
             ShareMenu(item: item)
             if let text = item.text, text.isNotEmpty {
-                CopyButton(text: text, actionPerformed: $actionPerformed)
+                CopyButton(text: text, actionPerformed: $itemStore.actionPerformed)
             }
             Button {
                 onViewOnHackerNewsTap(item: item)
@@ -295,7 +292,7 @@ struct ItemView: View {
             let res = await AuthRepository.shared.flag(item.id)
 
             if res {
-                actionPerformed = .flag
+                itemStore.actionPerformed = .flag
                 HapticFeedbackService.shared.success()
             } else {
                 HapticFeedbackService.shared.error()

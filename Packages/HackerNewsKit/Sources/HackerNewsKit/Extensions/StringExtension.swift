@@ -21,14 +21,7 @@ public extension String {
                 .replacing(iRegex, with: { match in
                     if let m = match[1].substring {
                         let matchedStr = String(m)
-                        return "*\(matchedStr)*"
-                    }
-                    return String()
-                })
-                .replacing(codeRegex, with: { match in
-                    if let m = match[1].substring {
-                        let matchedStr = String(m)
-                        return matchedStr.trimmingCharacters(in: .whitespaces)
+                        return "**\(matchedStr)**"
                     }
                     return String()
                 })
@@ -40,6 +33,13 @@ public extension String {
                     return String()
                 })
                 .withExtraLineBreak
+                .replacing(codeRegex, with: { match in
+                    if let m = match[1].substring {
+                        let matchedStr = String(m)
+                        return "```" + String(matchedStr.replacing("\n\n", with: "``` \n ``` \n").dropLast(1)) + "```"
+                    }
+                    return String()
+                })
             return res
         } catch {
             return error.localizedDescription
