@@ -7,8 +7,6 @@ extension ItemView {
         @EnvironmentObject var auth: Authentication
         @ObservedObject var itemStore: ItemStore
         
-        @State private var showFlagDialog: Bool = .init()
-        
         let level: Int
         let comment: Comment
         let settings: Settings = .shared
@@ -52,7 +50,7 @@ extension ItemView {
                         
                         return AnyView(wrappedView)
                     }
-                    .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
+                    .confirmationDialog("Are you sure?", isPresented: $itemStore.showFlagDialog) {
                         Button("Flag", role: .destructive) {
                             onFlagTap()
                         }
@@ -134,7 +132,7 @@ extension ItemView {
                     }
                     .disabled(!auth.loggedIn)
                     Divider()
-                    FlagButton(id: comment.id, showFlagDialog: $showFlagDialog)
+                    FlagButton(id: comment.id, showFlagDialog: $itemStore.showFlagDialog)
                     Divider()
                     ShareMenu(item: comment)
                     CopyButton(text: comment.text.orEmpty, actionPerformed: $itemStore.actionPerformed)
@@ -191,7 +189,7 @@ extension ItemView {
         
         private func onFlagTap() {
             Task {
-                let res = await AuthRepository.shared.flag(comment.id)
+                let res = await auth.flag(comment.id)
                 
                 if res {
                     itemStore.actionPerformed = .flag
