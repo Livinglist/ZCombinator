@@ -71,7 +71,7 @@ struct ItemView: View {
                     flag()
                 }
             } message: {
-                Text("Flag the post by \(flaggingItem?.by.orEmpty ?? "")?")
+                Text("Flag the post by \(flaggingItem?.by.orEmpty ?? item.by.orEmpty)?")
             }
             .task {
                 if itemStore.item == nil {
@@ -292,7 +292,7 @@ struct ItemView: View {
     }
 
     private func flag() {
-        guard let id = flaggingItem?.id else { return }
+        let id = flaggingItem?.id ?? item.id
         Task {
             let res = await auth.flag(id)
 
