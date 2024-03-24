@@ -13,17 +13,20 @@ extension ItemView {
         let onLoadMore: () -> Void
         let onShowHNSheet: () -> Void
         let onShowReplySheet: () -> Void
-        
+        let onFlag: () -> Void
+
         init(comment: Comment,
              itemStore: ItemStore,
              onShowHNSheet: @escaping () -> Void,
              onShowReplySheet: @escaping () -> Void,
-             onLoadMore: @escaping () -> Void) {
+             onLoadMore: @escaping () -> Void,
+             onFlag: @escaping () -> Void) {
             self.level = comment.level ?? 0
             self.comment = comment
             self.onShowHNSheet = onShowHNSheet
             self.onShowReplySheet = onShowReplySheet
             self.onLoadMore = onLoadMore
+            self.onFlag = onFlag
             self.itemStore = itemStore
         }
         
@@ -49,13 +52,6 @@ extension ItemView {
                         }
                         
                         return AnyView(wrappedView)
-                    }
-                    .confirmationDialog("Are you sure?", isPresented: $itemStore.showFlagDialog) {
-                        Button("Flag", role: .destructive) {
-                            onFlagTap()
-                        }
-                    } message: {
-                        Text("Flag the post by \(comment.by.orEmpty)?")
                     }
             }
         }
@@ -132,7 +128,12 @@ extension ItemView {
                     }
                     .disabled(!auth.loggedIn)
                     Divider()
-                    FlagButton(id: comment.id, showFlagDialog: $itemStore.showFlagDialog)
+                    Button {
+                        onFlag()
+                    } label: {
+                        Label("Flag", systemImage: "flag")
+                    }
+                    .disabled(!auth.loggedIn)
                     Divider()
                     ShareMenu(item: comment)
                     CopyButton(text: comment.text.orEmpty, actionPerformed: $itemStore.actionPerformed)

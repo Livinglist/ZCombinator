@@ -9,10 +9,11 @@ struct ItemView: View {
     @State private var showUrlSheet: Bool = .init()
     @State private var showReplySheet: Bool = .init()
     @State private var showFlagDialog: Bool = .init()
+    @State private var flaggingItem: (any Item)?
     static private var handledUrl: URL? = nil
     static private var hnSheetTarget: (any Item)? = nil
     static private var replySheetTarget: (any Item)? = nil
-    
+
     let settings: Settings = .shared
     
     let level: Int
@@ -67,10 +68,10 @@ struct ItemView: View {
             }
             .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
                 Button("Flag", role: .destructive) {
-                    onFlagTap()
+                    flag()
                 }
             } message: {
-                Text("Flag the post by \(item.by.orEmpty)?")
+                Text("Flag the post by \(flaggingItem?.by.orEmpty ?? "")?")
             }
             .task {
                 if itemStore.item == nil {
@@ -168,6 +169,9 @@ struct ItemView: View {
                         Task {
                             await itemStore.loadKids(of: comment)
                         }
+                    } onFlag: {
+                        flaggingItem = comment
+                        showFlagDialog = true
                     }
                     .padding(.trailing, 4)
                 }
@@ -287,9 +291,10 @@ struct ItemView: View {
         }
     }
 
-    private func onFlagTap() {
+    private func flag() {
+        guard let id = flaggingItem?.id else { return }
         Task {
-            let res = await auth.flag(item.id)
+            let res = await auth.flag(id)
 
             if res {
                 itemStore.actionPerformed = .flag
