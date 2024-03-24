@@ -10,6 +10,8 @@ enum Action: Equatable {
     case login
     case reply
     case copy
+    case lazyFetching
+    case eagerFetching
     case none
     
     var systemImage: String {
@@ -34,6 +36,10 @@ enum Action: Equatable {
             return "arrowshape.turn.up.left.circle.fill"
         case .copy:
             return "doc.on.doc.fill"
+        case .lazyFetching:
+            return "list.bullet"
+        case .eagerFetching:
+            return "list.bullet.indent"
         case .none:
             return String()
         }
@@ -61,6 +67,10 @@ enum Action: Equatable {
             return "Replied"
         case .copy:
             return "Copied"
+        case .lazyFetching:
+            return "Lazy Fetching"
+        case .eagerFetching:
+            return "Eager Fetching"
         case .none:
             return .init()
         }
