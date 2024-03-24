@@ -45,7 +45,11 @@ public class Authentication: ObservableObject {
         self.loggedIn = false
         self.username = nil
     }
-    
+
+    func flag(_ id: Int) async -> Bool {
+        return await AuthRepository.shared.flag(id)
+    }
+
     func upvote(_ id: Int) async -> Bool {
         return await AuthRepository.shared.upvote(id)
     }

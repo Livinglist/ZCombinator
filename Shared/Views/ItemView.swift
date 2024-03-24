@@ -289,7 +289,7 @@ struct ItemView: View {
 
     private func onFlagTap() {
         Task {
-            let res = await AuthRepository.shared.flag(item.id)
+            let res = await auth.flag(item.id)
 
             if res {
                 itemStore.actionPerformed = .flag

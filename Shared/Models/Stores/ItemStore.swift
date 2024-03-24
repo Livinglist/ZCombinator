@@ -11,7 +11,9 @@ extension ItemView {
         @Published var item: (any Item)?
         @Published var loadingItemId: Int?
         @Published var actionPerformed: Action = .none
-        
+        @Published var showFlagDialog: Bool = .init()
+
+
         /// Stores ids of loaded comments, including both root and child comments.
         @Published var loadedCommentIds: Set<Int> = .init()
         @Published var collapsed: Set<Int> = .init()
