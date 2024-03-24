@@ -23,8 +23,13 @@ extension ItemView {
                 }
             }
         }
-        @Published var isRecursivelyFetching: Bool = true
-        
+        @Published var isRecursivelyFetching: Bool = true {
+            didSet {
+                actionPerformed = isRecursivelyFetching ? .eagerFetching : .lazyFetching
+                HapticFeedbackService.shared.success()
+            }
+        }
+
         private var networkStatusCancellable: AnyCancellable?
         
         init() {
@@ -82,7 +87,15 @@ extension ItemView {
                         DispatchQueue.main.async {
                             if let comment = comment {
                                 self.status = .backgroundLoading
-                                self.comments.append(comment)
+
+                                if self.comments.count < 5 {
+                                    withAnimation {
+                                        self.comments.append(comment)
+                                    }
+                                } else {
+                                    self.comments.append(comment)
+                                }
+
                             } else {
                                 self.status = .completed
                             }
