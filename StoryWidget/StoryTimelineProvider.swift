@@ -17,6 +17,7 @@ struct StoryTimelineProvider: AppIntentTimelineProvider {
             title: "This is a placeholder story",
             text: "text",
             url: "",
+            type: "story",
             by: "Z Combinator",
             score: 100,
             descendants: 24,

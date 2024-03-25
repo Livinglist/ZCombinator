@@ -94,7 +94,7 @@ struct ItemView: View {
             } label: {
                 Label(Action.reply.label, systemImage: Action.reply.icon)
             }
-            .disabled(!auth.loggedIn)
+            .disabled(!auth.loggedIn || item.isJob)
             Divider()
             FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
             Divider()
@@ -262,10 +262,13 @@ struct ItemView: View {
                     .foregroundColor(getColor())
             }
             Spacer()
-            Text(item.timeAgo)
+            Text(itemStore.timeDisplay == .timeAgo ? item.timeAgo : item.formattedTime)
                 .borderedFootnote()
                 .foregroundColor(getColor())
                 .padding(.trailing, 2)
+                .onTapGesture {
+                    itemStore.timeDisplay.toggle()
+                }
         }
     }
     

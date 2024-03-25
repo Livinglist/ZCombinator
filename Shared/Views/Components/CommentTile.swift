@@ -181,10 +181,13 @@ extension ItemView {
                         .foregroundColor(getColor(level: level))
                 }
                 Spacer()
-                Text(comment.timeAgo)
+                Text(itemStore.timeDisplay == .timeAgo ? comment.timeAgo : comment.formattedTime)
                     .borderedFootnote()
                     .foregroundColor(getColor(level: level))
                     .padding(.trailing, 2)
+                    .onTapGesture {
+                        itemStore.timeDisplay.toggle()
+                    }
             }
         }
         

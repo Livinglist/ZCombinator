@@ -4,6 +4,21 @@ import SwiftUI
 import HackerNewsKit
 
 extension ItemView {
+    enum TimeDisplay {
+        case timeAgo
+        case dateTime
+
+        mutating func toggle() {
+            if self == .timeAgo {
+                self = .dateTime
+            } else {
+                self = .timeAgo
+            }
+        }
+    }
+}
+
+extension ItemView {
     @MainActor
     class ItemStore : ObservableObject {
         @Published var comments: [Comment] = .init()
@@ -11,6 +26,7 @@ extension ItemView {
         @Published var item: (any Item)?
         @Published var loadingItemId: Int?
         @Published var actionPerformed: Action = .none
+        @Published var timeDisplay: TimeDisplay = .timeAgo
 
         /// Stores ids of loaded comments, including both root and child comments.
         @Published var loadedCommentIds: Set<Int> = .init()

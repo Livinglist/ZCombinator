@@ -32,7 +32,11 @@ public extension Item {
         let date = Date(timeIntervalSince1970: Double(time))
         return date.timeAgoString
     }
-    
+
+    var formattedTime: String {
+        Date(timeIntervalSince1970: Double(time)).formatted()
+    }
+
     var itemUrl: String {
         "https://news.ycombinator.com/item?id=\(self.id)"
     }
