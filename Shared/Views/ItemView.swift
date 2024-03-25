@@ -92,9 +92,9 @@ struct ItemView: View {
             Button {
                 onReplyTap(item: item)
             } label: {
-                Label("Reply", systemImage: "plus.message")
+                Label(Action.reply.label, systemImage: Action.reply.icon)
             }
-            .disabled(!auth.loggedIn)
+            .disabled(!auth.loggedIn || item.isJob)
             Divider()
             FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
             Divider()
@@ -206,7 +206,7 @@ struct ItemView: View {
                             Task { await itemStore.refresh() }
                         }
                     } label: {
-                        Image(systemName: itemStore.isRecursivelyFetching ? "list.bullet" : "list.bullet.indent")
+                        Image(systemName: itemStore.isRecursivelyFetching ? Action.lazyFetching.icon : Action.eagerFetching.icon)
                             .foregroundColor(itemStore.status.isLoading ? .gray : .orange)
                     }
                 }
@@ -262,13 +262,20 @@ struct ItemView: View {
                     .foregroundColor(getColor())
             }
             Spacer()
-            Text(item.timeAgo)
+            Text(itemStore.timeDisplay == .timeAgo ? item.timeAgo : item.formattedTime)
                 .borderedFootnote()
                 .foregroundColor(getColor())
                 .padding(.trailing, 2)
+                .onTapGesture {
+                    withAnimation {
+                        itemStore.timeDisplay.toggle()
+                    }
+                }
         }
     }
     
+    /// Show the `item`  inside a web view sheet if there is no web view sheet being displayed,
+    /// otherwise, show the web view inside a new screen.
     private func onViewOnHackerNewsTap(item: any Item) {
         if showUrlSheet, let url = URL(string: item.itemUrl) {
             Router.shared.to(.url(url))
@@ -278,6 +285,8 @@ struct ItemView: View {
         }
     }
     
+    /// Display reply view inside a sheet if there is no web view sheet being displayed,
+    /// otherwise, display the reply view in a new screen.
     private func onReplyTap(item: any Item) {
         if showUrlSheet {
             if let cmt = item as? Comment {

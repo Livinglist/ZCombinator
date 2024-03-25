@@ -124,14 +124,14 @@ extension ItemView {
                     Button {
                         onShowReplySheet()
                     } label: {
-                        Label("Reply", systemImage: "plus.message")
+                        Label(Action.reply.label, systemImage: Action.reply.icon)
                     }
                     .disabled(!auth.loggedIn)
                     Divider()
                     Button {
                         onFlag()
                     } label: {
-                        Label("Flag", systemImage: "flag")
+                        Label(Action.flag.label, systemImage: Action.flag.icon)
                     }
                     .disabled(!auth.loggedIn)
                     Divider()
@@ -181,23 +181,15 @@ extension ItemView {
                         .foregroundColor(getColor(level: level))
                 }
                 Spacer()
-                Text(comment.timeAgo)
+                Text(itemStore.timeDisplay == .timeAgo ? comment.timeAgo : comment.formattedTime)
                     .borderedFootnote()
                     .foregroundColor(getColor(level: level))
                     .padding(.trailing, 2)
-            }
-        }
-        
-        private func onFlagTap() {
-            Task {
-                let res = await auth.flag(comment.id)
-                
-                if res {
-                    itemStore.actionPerformed = .flag
-                    HapticFeedbackService.shared.success()
-                } else {
-                    HapticFeedbackService.shared.error()
-                }
+                    .onTapGesture {
+                        withAnimation {
+                            itemStore.timeDisplay.toggle()
+                        }
+                    }
             }
         }
     }

@@ -10,7 +10,7 @@ struct UpvoteButton: View {
         Button {
             onUpvote()
         } label: {
-            Label("Upvote", systemImage: "hand.thumbsup")
+            Label(Action.upvote.label, systemImage: Action.upvote.icon)
         }
         .disabled(!auth.loggedIn)
     }

@@ -13,8 +13,72 @@ enum Action: Equatable {
     case lazyFetching
     case eagerFetching
     case none
-    
-    var systemImage: String {
+
+    var label: String {
+        switch self {
+        case .flag:
+            return "Flag"
+        case .upvote:
+            return "Upvote"
+        case .downvote:
+            return "Downvote"
+        case .favorite:
+            return "Favorite"
+        case .unfavorite:
+            return "Unfavorite"
+        case .pin:
+            return "Pin"
+        case .unpin:
+            return "Unpin"
+        case .login:
+            return "Log in"
+        case .reply:
+            return "Reply"
+        case .copy:
+            return "Copy"
+        case .lazyFetching:
+            fallthrough
+        case .eagerFetching:
+            fallthrough
+        case .none:
+            return .init()
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .flag:
+            return "flag"
+        case .upvote:
+            return "hand.thumbsup"
+        case .downvote:
+            return "hand.thumbsdown"
+        case .favorite:
+            return "heart"
+        case .unfavorite:
+            return "heart.slash"
+        case .pin:
+            return "pin"
+        case .unpin:
+            return "pin.slash"
+        case .login:
+            return "person"
+        case .reply:
+            return "plus.message"
+        case .copy:
+            return "doc.on.doc"
+        case .lazyFetching:
+            return "line.3.horizontal.circle"
+        case .eagerFetching:
+            return "line.3.horizontal.decrease.circle"
+        case .none:
+            return String()
+        }
+    }
+
+    /// The icon to be displayed in the `Toast`.
+    /// Should always be a system image.
+    var completionIcon: String {
         switch self {
         case .flag:
             return "flag.fill"
@@ -37,15 +101,16 @@ enum Action: Equatable {
         case .copy:
             return "doc.on.doc.fill"
         case .lazyFetching:
-            return "list.bullet"
+            return "line.3.horizontal.circle.fill"
         case .eagerFetching:
-            return "list.bullet.indent"
+            return "line.3.horizontal.decrease.circle.fill"
         case .none:
             return String()
         }
     }
-    
-    var title: String {
+
+    /// The label to be displayed in the `Toast`.
+    var completionLabel: String {
         switch self {
         case .flag:
             return "Flagged"

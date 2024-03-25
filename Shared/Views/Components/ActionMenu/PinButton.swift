@@ -11,9 +11,9 @@ struct PinButton: View {
             onPin()
         } label: {
             if settings.pinList.contains(id) {
-                Label("Unpin", systemImage: "pin.slash")
+                Label(Action.unpin.label, systemImage: Action.unpin.icon)
             } else {
-                Label("Pin", systemImage: "pin")
+                Label(Action.pin.label, systemImage: Action.pin.icon)
             }
         }
     }

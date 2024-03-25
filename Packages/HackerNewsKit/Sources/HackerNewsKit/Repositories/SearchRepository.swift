@@ -51,6 +51,7 @@ public class SearchRepository {
                                   title: title,
                                   text: formattedText,
                                   url: url,
+                                  type: "story",
                                   by: by,
                                   score: score,
                                   descendants: descendants,

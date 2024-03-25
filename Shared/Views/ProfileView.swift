@@ -40,7 +40,7 @@ struct ProfileView: View {
                     Button {
                         showLogoutDialog = true
                     } label: {
-                        Label("Log Out", systemImage: "rectangle.portrait.and.arrow.forward")
+                        Label("Log out", systemImage: "rectangle.portrait.and.arrow.forward")
                             .foregroundColor(.red)
                     }
                 }
@@ -57,7 +57,7 @@ struct ProfileView: View {
             }
         }
         .alert("Logout", isPresented: $showLogoutDialog, actions: {
-            Button("Logout", role: .destructive, action: {
+            Button("Log out", role: .destructive, action: {
                 HapticFeedbackService.shared.success()
                 auth.logOut()
             })

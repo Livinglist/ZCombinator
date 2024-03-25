@@ -104,7 +104,7 @@ struct HomeView: View {
                                 await storyStore.fetchStories()
                             }
                         } label: {
-                            Label("\(storyType.label.capitalized)", systemImage: storyType.iconName)
+                            Label("\(storyType.label.capitalized)", systemImage: storyType.icon)
                         }
                         .disabled(!storyStore.isConnectedToNetwork && !storyType.isDownloadable)
                     }
@@ -127,7 +127,7 @@ struct HomeView: View {
                     }
                     .disabled(offlineRepository.isDownloading || !storyStore.isConnectedToNetwork)
                     Divider()
-                    AuthButton(showLoginDialog: $showLoginDialog, showLogoutDialog: $showLogoutDialog)
+                    AuthButton(showLoginDialog: $showLoginDialog)
                     Button {
                         showAboutSheet = true
                     } label: {
@@ -177,7 +177,7 @@ struct HomeView: View {
                     .autocorrectionDisabled(true)
                     .textInputAutocapitalization(.never)
                 SecureField("Password", text: $password)
-                Button("Login", action: {
+                Button(Action.login.label, action: {
                     guard username.isNotEmpty && password.isNotEmpty else {
                         HapticFeedbackService.shared.error()
                         return
@@ -198,15 +198,6 @@ struct HomeView: View {
                 Button("Cancel", role: .cancel, action: {})
             }, message: {
                 Text("Please enter your username and password.")
-            })
-            .alert("Logout", isPresented: $showLogoutDialog, actions: {
-                Button("Logout", role: .destructive, action: {
-                    HapticFeedbackService.shared.success()
-                    auth.logOut()
-                })
-                Button("Cancel", role: .cancel, action: {})
-            }, message: {
-                Text("Do you want to log out as \(auth.username.orEmpty)?")
             })
             .task {
                 await storyStore.fetchStories()
