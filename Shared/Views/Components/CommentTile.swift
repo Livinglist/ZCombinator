@@ -124,14 +124,14 @@ extension ItemView {
                     Button {
                         onShowReplySheet()
                     } label: {
-                        Label("Reply", systemImage: "plus.message")
+                        Label(Action.reply.label, systemImage: Action.reply.icon)
                     }
                     .disabled(!auth.loggedIn)
                     Divider()
                     Button {
                         onFlag()
                     } label: {
-                        Label("Flag", systemImage: "flag")
+                        Label(Action.flag.label, systemImage: Action.flag.icon)
                     }
                     .disabled(!auth.loggedIn)
                     Divider()

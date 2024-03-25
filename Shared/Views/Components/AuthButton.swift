@@ -14,20 +14,20 @@ extension HomeView {
                     Button {
                         showLogoutDialog = true
                     } label: {
-                        Label(auth.username.orEmpty, systemImage: "person")
+                        Label(auth.username.orEmpty, systemImage: "person.fill")
                     }
                 } else if let username = auth.username {
                     Button {
                         Router.shared.to(.profile(username))
                     } label: {
-                        Label(auth.username.orEmpty, systemImage: "person")
+                        Label(auth.username.orEmpty, systemImage: "person.fill")
                     }
                 }
             } else {
                 Button {
                     showLoginDialog = true
                 } label: {
-                    Text("Log in")
+                    Label(Action.login.label, systemImage: Action.login.icon)
                 }
             }
         }

@@ -19,8 +19,8 @@ struct ToastContainer<Content: View>: View {
         content
             .toast(isPresenting: $showToast) {
                 AlertToast(
-                    type: withImage ? .systemImage(actionPerformed.systemImage, .gray) : .regular,
-                    title: actionPerformed.title
+                    type: withImage ? .systemImage(actionPerformed.completionIcon, .gray) : .regular,
+                    title: actionPerformed.completionLabel
                 )
             }
             .onChange(of: actionPerformed) { _, newValue in

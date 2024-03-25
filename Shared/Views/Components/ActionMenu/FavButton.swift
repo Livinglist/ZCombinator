@@ -12,9 +12,9 @@ struct FavButton: View {
             onFavorite()
         } label: {
             if settings.favList.contains(id) {
-                Label("Unfavorite", systemImage: "heart.slash")
+                Label(Action.unfavorite.label, systemImage: Action.unfavorite.icon)
             } else {
-                Label("Favorite", systemImage: "heart")
+                Label(Action.favorite.label, systemImage: Action.favorite.icon)
             }
         }
     }

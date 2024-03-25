@@ -104,7 +104,7 @@ struct HomeView: View {
                                 await storyStore.fetchStories()
                             }
                         } label: {
-                            Label("\(storyType.label.capitalized)", systemImage: storyType.iconName)
+                            Label("\(storyType.label.capitalized)", systemImage: storyType.icon)
                         }
                         .disabled(!storyStore.isConnectedToNetwork && !storyType.isDownloadable)
                     }

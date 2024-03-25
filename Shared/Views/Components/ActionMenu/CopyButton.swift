@@ -8,7 +8,7 @@ struct CopyButton: View {
         Button {
             onCopy()
         } label: {
-            Label("Copy", systemImage: "doc.on.doc")
+            Label(Action.copy.label, systemImage: Action.copy.icon)
         }
     }
     

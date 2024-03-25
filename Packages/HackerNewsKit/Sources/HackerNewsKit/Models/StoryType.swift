@@ -9,16 +9,16 @@ public enum StoryType: String, Equatable, CaseIterable, AppEnum, Codable {
     case show = "show"
     case jobs = "job"
     
-    public var iconName: String {
+    public var icon: String {
         switch self {
         case .top:
             return "flame"
         case .best:
-            return "triangle.tophalf.filled"
+            return "medal"
         case .new:
             return "rectangle.dashed"
         case .ask:
-            return "person.fill.questionmark"
+            return "questionmark.bubble"
         case .show:
             return "sparkles.tv"
         case .jobs:
