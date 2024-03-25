@@ -127,7 +127,7 @@ struct HomeView: View {
                     }
                     .disabled(offlineRepository.isDownloading || !storyStore.isConnectedToNetwork)
                     Divider()
-                    AuthButton(showLoginDialog: $showLoginDialog, showLogoutDialog: $showLogoutDialog)
+                    AuthButton(showLoginDialog: $showLoginDialog)
                     Button {
                         showAboutSheet = true
                     } label: {
@@ -177,7 +177,7 @@ struct HomeView: View {
                     .autocorrectionDisabled(true)
                     .textInputAutocapitalization(.never)
                 SecureField("Password", text: $password)
-                Button("Login", action: {
+                Button(Action.login.label, action: {
                     guard username.isNotEmpty && password.isNotEmpty else {
                         HapticFeedbackService.shared.error()
                         return
