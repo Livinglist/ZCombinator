@@ -199,15 +199,6 @@ struct HomeView: View {
             }, message: {
                 Text("Please enter your username and password.")
             })
-            .alert("Logout", isPresented: $showLogoutDialog, actions: {
-                Button("Logout", role: .destructive, action: {
-                    HapticFeedbackService.shared.success()
-                    auth.logOut()
-                })
-                Button("Cancel", role: .cancel, action: {})
-            }, message: {
-                Text("Do you want to log out as \(auth.username.orEmpty)?")
-            })
             .task {
                 await storyStore.fetchStories()
             }

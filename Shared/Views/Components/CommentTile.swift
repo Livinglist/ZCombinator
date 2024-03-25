@@ -186,21 +186,10 @@ extension ItemView {
                     .foregroundColor(getColor(level: level))
                     .padding(.trailing, 2)
                     .onTapGesture {
-                        itemStore.timeDisplay.toggle()
+                        withAnimation {
+                            itemStore.timeDisplay.toggle()
+                        }
                     }
-            }
-        }
-        
-        private func onFlagTap() {
-            Task {
-                let res = await auth.flag(comment.id)
-                
-                if res {
-                    itemStore.actionPerformed = .flag
-                    HapticFeedbackService.shared.success()
-                } else {
-                    HapticFeedbackService.shared.error()
-                }
             }
         }
     }

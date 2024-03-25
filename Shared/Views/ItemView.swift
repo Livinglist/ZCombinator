@@ -267,7 +267,9 @@ struct ItemView: View {
                 .foregroundColor(getColor())
                 .padding(.trailing, 2)
                 .onTapGesture {
-                    itemStore.timeDisplay.toggle()
+                    withAnimation {
+                        itemStore.timeDisplay.toggle()
+                    }
                 }
         }
     }
