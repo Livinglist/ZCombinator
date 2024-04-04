@@ -1,11 +1,11 @@
 import SwiftUI
 import HackerNewsKit
 
-extension HomeView {
+extension Home {
     struct AuthButton: View {
         @EnvironmentObject private var auth: Authentication
         
-        @Binding var showLoginDialog: Bool
+        @Binding var isLoginDialogPresented: Bool
         
         var body: some View {
             if auth.loggedIn, let username = auth.username {
@@ -16,7 +16,7 @@ extension HomeView {
                 }
             } else {
                 Button {
-                    showLoginDialog = true
+                    isLoginDialogPresented = true
                 } label: {
                     Label(Action.login.label, systemImage: Action.login.icon)
                 }

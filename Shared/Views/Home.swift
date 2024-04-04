@@ -2,18 +2,18 @@ import SwiftUI
 import CoreData
 import HackerNewsKit
 
-struct HomeView: View {
+struct Home: View {
     @EnvironmentObject private var auth: Authentication
     @StateObject private var storyStore: StoryStore = .init()
-    @ObservedObject private var settings: Settings = .shared
+    @ObservedObject private var settings: SettingsStore = .shared
     @ObservedObject private var router: Router = .shared
     @ObservedObject private var offlineRepository: OfflineRepository = .shared
     
-    @State private var showLoginDialog: Bool = .init()
-    @State private var showLogoutDialog: Bool = .init()
-    @State private var showAboutSheet: Bool = .init()
-    @State private var showUrlSheet: Bool = .init()
-    
+    @State private var isLoginDialogPresented: Bool = .init()
+    @State private var isAboutSheetPresented: Bool = .init()
+    @State private var isUrlSheetPresented: Bool = .init()
+    @State private var isAbortDownloadAlertPresented: Bool = .init()
+
     @State private var username: String = .init()
     @State private var password: String = .init()
 
@@ -31,10 +31,10 @@ struct HomeView: View {
                 NavigationStack(path: $router.path) {
                     Text("Tap on a story to its comments")
                         .navigationDestination(for: Comment.self) { cmt in
-                            ItemView(item: cmt, level: 0)
+                            Thread(item: cmt, level: 0)
                         }
                         .navigationDestination(for: Story.self) { story in
-                            ItemView(item: story, level: 0)
+                            Thread(item: story, level: 0)
                         }
                         .navigationDestination(for: Destination.self) { val in
                             val.toView()
@@ -62,6 +62,26 @@ struct HomeView: View {
                     LoadingIndicator().frame(height: 200)
                     Spacer()
                 }
+                .listRowSeparator(.hidden)
+            } else if !storyStore.isConnectedToNetwork && !offlineRepository.isOfflineReading && storyStore.stories.isEmpty {
+                HStack {
+                    Spacer()
+                    VStack {
+                        Spacer()
+                        Image(systemName: "exclamationmark.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 36, height: 36)
+                            .foregroundStyle(.orange)
+                            .padding(.bottom, 24)
+                        Text("Not connected to network, you can try entering offline mode from the top right menu.")
+                            .font(.caption)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 48)
+                    }
+                    Spacer()
+                }
+                .frame(height: 240)
                 .listRowSeparator(.hidden)
             } else {
                 ForEach(storyStore.stories) { story in
@@ -106,13 +126,13 @@ struct HomeView: View {
                         } label: {
                             Label("\(storyType.label.capitalized)", systemImage: storyType.icon)
                         }
-                        .disabled(!storyStore.isConnectedToNetwork && !storyType.isDownloadable)
+                        .disabled(offlineRepository.isOfflineReading && !storyType.isDownloadable)
                     }
                     Divider()
                     Button {
                         Task {
                             HapticFeedbackService.shared.light()
-                            await OfflineRepository.shared.downloadAllStories()
+                            await offlineRepository.downloadAllStories()
                         }
                     } label: {
                         if offlineRepository.isDownloading {
@@ -126,10 +146,34 @@ struct HomeView: View {
                         }
                     }
                     .disabled(offlineRepository.isDownloading || !storyStore.isConnectedToNetwork)
+                    if offlineRepository.isDownloading {
+                        Button {
+                            isAbortDownloadAlertPresented = true
+                        } label: {
+                            Text("Abort")
+                        }
+                    } else if offlineRepository.isOfflineReading {
+                        Button {
+                            offlineRepository.isOfflineReading = false
+                        } label: {
+                            Text("Exit Offline Mode")
+                        }
+                    } else {
+                        Button {
+                            offlineRepository.isOfflineReading = true
+                        } label: {
+                            Text("Enter Offline Mode")
+                        }
+                    }
                     Divider()
-                    AuthButton(showLoginDialog: $showLoginDialog)
+                    AuthButton(isLoginDialogPresented: $isLoginDialogPresented)
+                    NavigationLink {
+                        Settings()
+                    } label: {
+                        Text("Settings")
+                    }
                     Button {
-                        showAboutSheet = true
+                        isAboutSheetPresented = true
                     } label: {
                         Text("About")
                     }
@@ -144,6 +188,18 @@ struct HomeView: View {
             }
         }
         .navigationTitle(storyStore.storyType.label.uppercased())
+        .alert("Abort Download", isPresented: $isAbortDownloadAlertPresented) {
+            Button {
+                offlineRepository.abortDownload()
+            } label: {
+                Text("Confirm")
+            }
+            Button(role: .cancel) {
+                offlineRepository.abortDownload()
+            } label: {
+                Text("Confirm")
+            }
+        }
     }
     
     @ViewBuilder
@@ -152,10 +208,10 @@ struct HomeView: View {
             .if(UIDevice.current.userInterfaceIdiom == .phone) { view in
                 view
                     .navigationDestination(for: Comment.self) { cmt in
-                        ItemView(item: cmt, level: 0)
+                        Thread(item: cmt, level: 0)
                     }
                     .navigationDestination(for: Story.self) { story in
-                        ItemView(item: story, level: 0)
+                        Thread(item: story, level: 0)
                     }
                     .navigationDestination(for: Destination.self) { val in val.toView() }
             }
@@ -166,13 +222,13 @@ struct HomeView: View {
             }
             .withToast(actionPerformed: $actionPerformed)
             .tint(.orange)
-            .sheet(isPresented: $showAboutSheet, content: {
+            .sheet(isPresented: $isAboutSheetPresented, content: {
                 SafariView(url: Constants.githubUrl)
             })
-            .sheet(isPresented: $showUrlSheet, content: {
+            .sheet(isPresented: $isUrlSheetPresented, content: {
                 SafariView(url: Self.handledUrl!)
             })
-            .alert("Login", isPresented: $showLoginDialog, actions: {
+            .alert("Login", isPresented: $isLoginDialogPresented, actions: {
                 TextField("Username", text: $username)
                     .autocorrectionDisabled(true)
                     .textInputAutocapitalization(.never)
@@ -217,7 +273,7 @@ struct HomeView: View {
                         let item = await StoryRepository.shared.fetchItem(id)
                         guard let item = item else {
                             Self.handledUrl = url
-                            showUrlSheet = true
+                            isUrlSheetPresented = true
                             return
                         }
                         
@@ -226,7 +282,7 @@ struct HomeView: View {
                     return .handled
                 } else {
                     Self.handledUrl = url
-                    showUrlSheet = true
+                    isUrlSheetPresented = true
                     return .handled
                 }
             })

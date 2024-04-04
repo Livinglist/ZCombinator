@@ -3,7 +3,7 @@ import SwiftUI
 import Combine
 import HackerNewsKit
 
-struct SearchView: View {
+struct Search: View {
     @StateObject private var searchStore: SearchStore = .init()
     @StateObject private var debounceObject: DebounceObject = .init()
     @State private var actionPerformed: Action = .none

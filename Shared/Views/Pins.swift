@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PinView: View {
+struct Pins: View {
     @StateObject var pinStore: PinStore = .init()
     @State private var actionPerformed: Action = .none
     

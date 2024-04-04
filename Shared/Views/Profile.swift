@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ProfileView: View {
+struct Profile: View {
     @EnvironmentObject private var auth: Authentication
     @StateObject var profileStore: ProfileStore = .init()
     @State var showLogoutDialog: Bool = .init()
@@ -68,7 +68,7 @@ struct ProfileView: View {
     }
 }
 
-extension ProfileView {
+extension Profile {
     struct DetailedRow: View {
         let title: String
         var detail: String? = nil

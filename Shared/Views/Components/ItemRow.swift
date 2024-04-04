@@ -4,7 +4,7 @@ import UniformTypeIdentifiers
 import HackerNewsKit
 
 struct ItemRow: View {
-    let settings: Settings = .shared
+    let settings: SettingsStore = .shared
     let item: any Item
     let url: URL?
     let isPinnedStory: Bool

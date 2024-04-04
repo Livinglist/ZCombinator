@@ -3,7 +3,7 @@ import Combine
 import SwiftUI
 import HackerNewsKit
 
-extension ItemView {
+extension Thread {
     enum TimeDisplay {
         case timeAgo
         case dateTime
@@ -18,7 +18,7 @@ extension ItemView {
     }
 }
 
-extension ItemView {
+extension Thread {
     @MainActor
     class ItemStore : ObservableObject {
         @Published var comments: [Comment] = .init()
@@ -32,31 +32,18 @@ extension ItemView {
         @Published var loadedCommentIds: Set<Int> = .init()
         @Published var collapsed: Set<Int> = .init()
         @Published var hidden: Set<Int> = .init()
-        @Published var isConnectedToNetwork: Bool = true {
-            didSet {
-                if !isConnectedToNetwork && isRecursivelyFetching {
-                    isRecursivelyFetching = false
-                }
-            }
-        }
         @Published var isRecursivelyFetching: Bool = true {
             didSet {
+                if OfflineRepository.shared.isOfflineReading {
+                    return
+                }
                 actionPerformed = isRecursivelyFetching ? .eagerFetching : .lazyFetching
                 HapticFeedbackService.shared.success()
             }
         }
 
         private var networkStatusCancellable: AnyCancellable?
-        
-        init() {
-            networkStatusCancellable = NetworkMonitor.shared.networkStatus
-                .receive(on: RunLoop.main)
-                .removeDuplicates()
-                .sink { isConnected in
-                self.isConnectedToNetwork = isConnected ?? false
-            }
-        }
-        
+
         /// Load child comments of a comment.
         func loadKids(of cmt: Comment) async {
             if let parentIndex = comments.firstIndex(of: cmt),
@@ -67,7 +54,7 @@ extension ItemView {
                 
                 var comments = [Comment]()
                 
-                if isConnectedToNetwork {
+                if !OfflineRepository.shared.isOfflineReading {
                     await StoryRepository.shared.fetchComments(ids: kids) { comment in
                         comments.append(comment.copyWith(level: level + 1))
                     }
@@ -97,7 +84,13 @@ extension ItemView {
             self.hidden.removeAll()
             self.status = .inProgress
             
-            if isConnectedToNetwork {
+            if OfflineRepository.shared.isOfflineReading {
+                // We don't need to refresh in offline mode
+                if !self.comments.isEmpty { self.status = .completed }
+                let cmts = OfflineRepository.shared.fetchComments(of: id)
+                self.comments = cmts
+                self.status = .completed
+            } else {
                 if isRecursivelyFetching {
                     await StoryRepository.shared.fetchCommentsRecursively(from: item) { comment in
                         DispatchQueue.main.async {
@@ -121,7 +114,7 @@ extension ItemView {
                     if let item = await StoryRepository.shared.fetchItem(id),
                        let kids = item.kids {
                         self.item = item
-                        
+
                         await StoryRepository.shared.fetchComments(ids: kids) { comment in
                             DispatchQueue.main.async {
                                 withAnimation {
@@ -133,12 +126,6 @@ extension ItemView {
                     }
                     self.status = .completed
                 }
-            } else {
-                // We don't need to refresh in offline mode
-                if !self.comments.isEmpty { self.status = .completed }
-                let cmts = OfflineRepository.shared.fetchComments(of: id)
-                self.comments = cmts
-                self.status = .completed
             }
         }
         

@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PinButton: View {
-    @ObservedObject private var settings: Settings = .shared
+    @ObservedObject private var settings: SettingsStore = .shared
     
     let id: Int
     let actionPerformed: Binding<Action>

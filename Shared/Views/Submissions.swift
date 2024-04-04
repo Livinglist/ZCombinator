@@ -3,7 +3,7 @@ import SwiftUI
 import Combine
 import HackerNewsKit
 
-struct SubmissionView: View {
+struct Submissions: View {
     @StateObject var submissionStore: SubmissionStore = .init()
     @StateObject var debounceObject: DebounceObject = .init()
     @State private var actionPerformed: Action = .none

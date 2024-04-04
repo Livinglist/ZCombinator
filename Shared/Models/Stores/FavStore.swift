@@ -3,16 +3,16 @@ import Combine
 import SwiftUI
 import HackerNewsKit
 
-extension FavView {
+extension Favorites {
     @MainActor
     class FavStore: ObservableObject {
         @Published var items: [any Item] = .init()
         @Published var status: Status = .idle
         
-        private let settingsStore: Settings = .shared
+        private let settingsStore: SettingsStore = .shared
         private let pageSize: Int = 10
         private var currentPage: Int = 0
-        private var cancellable: AnyCancellable?
+        private var favoritesSubscription: AnyCancellable?
         private var favIds: [Int] = [Int]() {
             didSet {
                 Task {
@@ -22,7 +22,7 @@ extension FavView {
         }
         
         init() {
-            cancellable = settingsStore.$favList.sink(receiveValue: { ids in
+            favoritesSubscription = settingsStore.$favList.sink(receiveValue: { ids in
                 self.favIds = Array<Int>(ids.reversed())
             })
         }

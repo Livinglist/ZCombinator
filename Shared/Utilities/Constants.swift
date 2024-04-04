@@ -12,11 +12,6 @@ struct Constants {
         "(¬‿¬)",
     ].randomElement().orEmpty
     
-    struct UserDefaults {
-        static let favListKey = "favList"
-        static let pinListKey = "pinList"
-    }
-    
     struct AppNotification {
         static let lastItemPushedKey = "lastItemPushed"
         static let lastFetchedAtKey = "lastFetchedAt"

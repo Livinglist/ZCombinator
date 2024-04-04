@@ -10,26 +10,29 @@ enum Destination: Hashable {
     case url(URL)
     case replyComment(Comment)
     case replyStory(Story)
+    case settings
 
     @ViewBuilder
     func toView() -> some View {
         switch self {
         case .pin:
-            PinView()
+            Pins()
         case .fav:
-            FavView()
+            Favorites()
         case .search:
-            SearchView()
+            Search()
         case let .submission(ids):
-            SubmissionView(ids: ids)
+            Submissions(ids: ids)
         case let .profile(username):
-            ProfileView(id: username)
+            Profile(id: username)
         case let .url(url):
             WebView(url: url)
         case let .replyComment(cmt):
             ReplyView(replyingTo: cmt)
         case let .replyStory(story):
             ReplyView(replyingTo: story)
+        case .settings:
+            Settings()
         }
     }
 }

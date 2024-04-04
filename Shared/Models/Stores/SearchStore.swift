@@ -1,7 +1,7 @@
 import SwiftUI
 import HackerNewsKit
 
-extension SearchView {
+extension Search {
     @MainActor
     class SearchStore: ObservableObject {
         @Published var results: [any Item] = .init()

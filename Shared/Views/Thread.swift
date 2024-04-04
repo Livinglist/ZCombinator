@@ -2,7 +2,7 @@ import SwiftUI
 import WebKit
 import HackerNewsKit
 
-struct ItemView: View {
+struct Thread: View {
     @EnvironmentObject private var auth: Authentication
     @StateObject private var itemStore: ItemStore = .init()
     @State private var showHNSheet: Bool = .init()
@@ -14,7 +14,7 @@ struct ItemView: View {
     static private var hnSheetTarget: (any Item)? = nil
     static private var replySheetTarget: (any Item)? = nil
 
-    let settings: Settings = .shared
+    let settings: SettingsStore = .shared
     
     let level: Int
     let item: any Item
@@ -196,7 +196,7 @@ struct ItemView: View {
                 }
             }
             
-            if itemStore.isConnectedToNetwork {
+            if !OfflineRepository.shared.isOfflineReading {
                 ToolbarItem {
                     Button {
                         if !itemStore.status.isLoading {

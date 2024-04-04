@@ -1,7 +1,7 @@
 import SwiftUI
 import HackerNewsKit
 
-extension ProfileView {
+extension Profile {
     @MainActor
     class ProfileStore: ObservableObject {
         @Published var user: User?

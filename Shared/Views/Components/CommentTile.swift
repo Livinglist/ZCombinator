@@ -2,14 +2,14 @@ import SwiftUI
 import WebKit
 import HackerNewsKit
 
-extension ItemView {
+extension Thread {
     struct CommentTile: View {
         @EnvironmentObject var auth: Authentication
         @ObservedObject var itemStore: ItemStore
         
         let level: Int
         let comment: Comment
-        let settings: Settings = .shared
+        let settings: SettingsStore = .shared
         let onLoadMore: () -> Void
         let onShowHNSheet: () -> Void
         let onShowReplySheet: () -> Void
