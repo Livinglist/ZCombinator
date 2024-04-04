@@ -4,17 +4,17 @@ import UniformTypeIdentifiers
 import HackerNewsKit
 
 struct ItemRow: View {
-    let settings: Settings = .shared
+    let settings: SettingsStore = .shared
     let item: any Item
     let url: URL?
     let isPinnedStory: Bool
 
     @EnvironmentObject var auth: Authentication
 
-    @State private var showSafari: Bool = .init()
-    @State private var showHNSheet: Bool = .init()
-    @State private var showReplySheet: Bool = .init()
-    @State private var showFlagDialog: Bool = .init()
+    @State private var isSafariSheetPresented: Bool = .init()
+    @State private var isHNSheetPresented: Bool = .init()
+    @State private var isReplySheetPresented: Bool = .init()
+    @State private var isFlagDialogPresented: Bool = .init()
     @GestureState private var isDetectingPress: Bool = .init()
     @Binding private var actionPerformed: Action
     
@@ -35,11 +35,11 @@ struct ItemRow: View {
             FavButton(id: item.id, actionPerformed: $actionPerformed)
             PinButton(id: item.id, actionPerformed: $actionPerformed)
             Divider()
-            FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
+            FlagButton(id: item.id, showFlagDialog: $isFlagDialogPresented)
             Divider()
             ShareMenu(item: item)
             Button {
-                showHNSheet = true
+                isHNSheetPresented = true
             } label: {
                 Label("View on Hacker News", systemImage: "safari")
             }
@@ -56,7 +56,7 @@ struct ItemRow: View {
             Button(
                 action: {
                     if item.isJobWithUrl {
-                        showSafari = true
+                        isSafariSheetPresented = true
                     } else {
                         Router.shared.to(item)
                     }
@@ -117,7 +117,7 @@ struct ItemRow: View {
                     .contextMenu(
                     menuItems: {
                         Button {
-                            showSafari = true
+                            isSafariSheetPresented = true
                         } label: {
                             Label("View in browser", systemImage: "safari")
                         }
@@ -127,19 +127,19 @@ struct ItemRow: View {
                     })
             }
         }
-        .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
+        .confirmationDialog("Are you sure?", isPresented: $isFlagDialogPresented) {
             Button("Flag", role: .destructive) {
                 onFlagTap()
             }
         } message: {
             Text("Flag \"\(item.title.orEmpty)\" by \(item.by.orEmpty)?")
         }
-        .sheet(isPresented: $showHNSheet) {
+        .sheet(isPresented: $isHNSheetPresented) {
             if let url = URL(string: item.itemUrl) {
                 SafariView(url: url)
             }
         }
-        .sheet(isPresented: $showSafari) {
+        .sheet(isPresented: $isSafariSheetPresented) {
             let urlStr = item.url.ifNullOrEmpty(then: item.itemUrl)
             if let url = URL(string: urlStr) {
                 SafariView(url: url)

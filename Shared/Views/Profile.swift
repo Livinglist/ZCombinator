@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct ProfileView: View {
+struct Profile: View {
     @EnvironmentObject private var auth: Authentication
     @StateObject var profileStore: ProfileStore = .init()
-    @State var showLogoutDialog: Bool = .init()
+    @State var isLogoutDialogPresented: Bool = .init()
     
     let id: String
     
@@ -38,7 +38,7 @@ struct ProfileView: View {
                 
                 if auth.loggedIn && auth.username == id {
                     Button {
-                        showLogoutDialog = true
+                        isLogoutDialogPresented = true
                     } label: {
                         Label("Log out", systemImage: "rectangle.portrait.and.arrow.forward")
                             .foregroundColor(.red)
@@ -56,7 +56,7 @@ struct ProfileView: View {
                 }
             }
         }
-        .alert("Logout", isPresented: $showLogoutDialog, actions: {
+        .alert("Logout", isPresented: $isLogoutDialogPresented, actions: {
             Button("Log out", role: .destructive, action: {
                 HapticFeedbackService.shared.success()
                 auth.logOut()
@@ -68,7 +68,7 @@ struct ProfileView: View {
     }
 }
 
-extension ProfileView {
+extension Profile {
     struct DetailedRow: View {
         let title: String
         var detail: String? = nil

@@ -1,7 +1,7 @@
 import SwiftUI
 import HackerNewsKit
 
-extension SubmissionView {
+extension Submissions {
     @MainActor
     class SubmissionStore: ObservableObject {
         @Published var submitted: [any Item] = .init()

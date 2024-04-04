@@ -12,6 +12,13 @@ import HackerNewsKit
 @MainActor
 public class OfflineRepository: ObservableObject {
     @Published var isDownloading = false
+    @Published var isOfflineReading = false {
+        didSet {
+            if !isInMemory {
+                loadIntoMemory()
+            }
+        }
+    }
     @Published var completionCount = 0
     
     lazy var lastFetchedAt = {
@@ -28,15 +35,17 @@ public class OfflineRepository: ObservableObject {
     private let lastDownloadAtKey = "lastDownloadedAt"
     private var stories = [StoryType: [Story]]()
     private var comments = [Int: [Comment]]()
-    private var cancellable: AnyCancellable?
-    
+    private var networkStatusSubscription: AnyCancellable?
+
     public static let shared: OfflineRepository = .init()
     
     init() {
-        cancellable = NetworkMonitor.shared.networkStatus
-            .dropFirst()
+        networkStatusSubscription = NetworkMonitor.shared.networkStatus
+            .receive(on: RunLoop.main)
+            .removeDuplicates()
             .sink { isConnected in
-                if let isConnected = isConnected, !self.isInMemory && !isConnected {
+                guard let isConnected = isConnected else { return }
+                if !isConnected && !self.isInMemory {
                     self.loadIntoMemory()
                 }
             }
@@ -67,8 +76,8 @@ public class OfflineRepository: ObservableObject {
     
     public func scheduleBackgroundDownload() {
         let downloadTask = BGProcessingTaskRequest(identifier: Constants.Download.backgroundTaskId)
-        // Set earliestBeginDate to be 1 hr from now.
-        downloadTask.earliestBeginDate = Date(timeIntervalSinceNow: 3600)
+        // Set earliestBeginDate to be 1 day from now.
+        downloadTask.earliestBeginDate = Date(timeIntervalSinceNow: 86400)
         downloadTask.requiresNetworkConnectivity = true
         downloadTask.requiresExternalPower = true
         do {
@@ -79,8 +88,15 @@ public class OfflineRepository: ObservableObject {
     }
     
     // MARK: - Story related.
-    
+
+    public func abortDownload() -> Void {
+        isDownloading = false
+    }
+
     public func downloadAllStories() async -> Void {
+        let settings = SettingsStore.shared
+        guard settings.isAutomaticDownloadEnabled && (settings.useCellularData || NetworkMonitor.shared.isOnWifi) else { return }
+
         isDownloading = true
         
         UserDefaults.standard.set(Date.now, forKey: lastDownloadAtKey)
@@ -102,6 +118,8 @@ public class OfflineRepository: ObservableObject {
             
             // Fetch comments for each story.
             for story in stories {
+                if !isDownloading { return }
+
                 // Skip already completed stories to prevent fetching for duplicate comments.
                 if completedStoryId.contains(story.id) { continue }
                 await downloadChildComments(of: story, level: 0)

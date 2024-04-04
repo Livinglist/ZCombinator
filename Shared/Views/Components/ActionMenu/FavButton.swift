@@ -2,7 +2,7 @@ import SwiftUI
 
 struct FavButton: View {
     @EnvironmentObject var auth: Authentication
-    @ObservedObject private var settings: Settings = .shared
+    @ObservedObject private var settings: SettingsStore = .shared
     
     let id: Int
     let actionPerformed: Binding<Action>

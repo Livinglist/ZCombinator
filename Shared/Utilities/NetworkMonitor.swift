@@ -1,11 +1,11 @@
 import Network
 import Combine
 
-final class NetworkMonitor {
+final class NetworkMonitor: ObservableObject {
     let networkStatus = CurrentValueSubject<Bool?, Never>(nil)
-    var onWifi = true
-    var onCellular = true
-    
+    @Published var isOnWifi = true
+    @Published var isOnCellular = true
+
     private let pathMonitor = NWPathMonitor()
     private let monitorQueue = DispatchQueue(label: "NetworkMonitor")
     
@@ -16,8 +16,8 @@ final class NetworkMonitor {
             guard let self else { return }
             
             networkStatus.send(path.status == .satisfied)
-            onWifi = path.usesInterfaceType(.wifi)
-            onCellular = path.usesInterfaceType(.cellular)
+            isOnWifi = path.usesInterfaceType(.wifi)
+            isOnCellular = path.usesInterfaceType(.cellular)
         }
         
         pathMonitor.start(queue: monitorQueue)

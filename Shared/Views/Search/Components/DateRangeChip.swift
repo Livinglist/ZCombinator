@@ -4,7 +4,7 @@ import Foundation
 import SwiftUI
 
 struct DateTimeRangeChip: View {
-    @State private var showDatePicker: Bool = .init()
+    @State private var isDatePickerPresented: Bool = .init()
     @State private var date: Date = .init()
     
     let selected: Bool
@@ -26,7 +26,7 @@ struct DateTimeRangeChip: View {
             .buttonStyle(.borderedProminent)
             .buttonBorderShape(.capsule)
             .controlSize(.mini)
-            .sheet(isPresented: $showDatePicker) {
+            .sheet(isPresented: $isDatePickerPresented) {
                 DatePicker(selection: $date, in: ...Date()) {
                     Text("date picker")
                 }
@@ -41,7 +41,7 @@ struct DateTimeRangeChip: View {
             .buttonStyle(.bordered)
             .buttonBorderShape(.capsule)
             .controlSize(.mini)
-            .sheet(isPresented: $showDatePicker) {
+            .sheet(isPresented: $isDatePickerPresented) {
                 DatePicker(selection: $date, in: ...Date(), displayedComponents: [.date]) {
                     Text("date picker")
                 }
@@ -50,6 +50,6 @@ struct DateTimeRangeChip: View {
     }
     
     func onTap() {
-        showDatePicker = true
+        isDatePickerPresented = true
     }
 }

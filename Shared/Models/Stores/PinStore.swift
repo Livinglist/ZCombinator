@@ -3,12 +3,12 @@ import SwiftUI
 import Combine
 import HackerNewsKit
 
-extension PinView {
+extension Pins {
     @MainActor
     class PinStore: ObservableObject {
         @Published var pinnedItems: [any Item] = .init()
         @Published var status: Status = .idle
-        private let settings: Settings = .shared
+        private let settings: SettingsStore = .shared
         private(set) var pinnedIds: [Int] = [Int]() {
             didSet {
                 Task {

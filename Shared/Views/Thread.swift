@@ -2,19 +2,19 @@ import SwiftUI
 import WebKit
 import HackerNewsKit
 
-struct ItemView: View {
+struct Thread: View {
     @EnvironmentObject private var auth: Authentication
     @StateObject private var itemStore: ItemStore = .init()
-    @State private var showHNSheet: Bool = .init()
-    @State private var showUrlSheet: Bool = .init()
-    @State private var showReplySheet: Bool = .init()
-    @State private var showFlagDialog: Bool = .init()
+    @State private var isHNSheetPresented: Bool = .init()
+    @State private var isSafariSheetPresented: Bool = .init()
+    @State private var isReplySheetPresented: Bool = .init()
+    @State private var isFlagDialogPresented: Bool = .init()
     @State private var flaggingItem: (any Item)?
     static private var handledUrl: URL? = nil
     static private var hnSheetTarget: (any Item)? = nil
     static private var replySheetTarget: (any Item)? = nil
 
-    let settings: Settings = .shared
+    let settings: SettingsStore = .shared
     
     let level: Int
     let item: any Item
@@ -27,12 +27,12 @@ struct ItemView: View {
     var body: some View {
         mainItemView
             .withToast(actionPerformed: $itemStore.actionPerformed)
-            .sheet(isPresented: $showHNSheet) {
+            .sheet(isPresented: $isHNSheetPresented) {
                 if let target = Self.hnSheetTarget, let url = URL(string: target.itemUrl) {
                     SafariView(url: url)
                 }
             }
-            .sheet(isPresented: $showUrlSheet) {
+            .sheet(isPresented: $isSafariSheetPresented) {
                 if let url = Self.handledUrl {
                     SafariView(url: url, draggable: true)
                 }
@@ -43,22 +43,22 @@ struct ItemView: View {
                         let item = await StoryRepository.shared.fetchItem(id)
                         guard let item = item else {
                             Self.handledUrl = url
-                            showUrlSheet = true
+                            isSafariSheetPresented = true
                             return
                         }
                         Router.shared.to(item)
                     }
                 } else {
-                    if showUrlSheet {
+                    if isSafariSheetPresented {
                         Router.shared.to(.url(url))
                     } else {
                         Self.handledUrl = url
-                        showUrlSheet = true
+                        isSafariSheetPresented = true
                     }
                 }
                 return .handled
             })
-            .sheet(isPresented: $showReplySheet) {
+            .sheet(isPresented: $isReplySheetPresented) {
                 if let target = Self.replySheetTarget {
                     ReplyView(actionPerformed: $itemStore.actionPerformed,
                               replyingTo: target,
@@ -66,7 +66,7 @@ struct ItemView: View {
                     )
                 }
             }
-            .confirmationDialog("Are you sure?", isPresented: $showFlagDialog) {
+            .confirmationDialog("Are you sure?", isPresented: $isFlagDialogPresented) {
                 Button("Flag", role: .destructive) {
                     flag()
                 }
@@ -96,7 +96,7 @@ struct ItemView: View {
             }
             .disabled(!auth.loggedIn || item.isJob)
             Divider()
-            FlagButton(id: item.id, showFlagDialog: $showFlagDialog)
+            FlagButton(id: item.id, showFlagDialog: $isFlagDialogPresented)
             Divider()
             ShareMenu(item: item)
             if let text = item.text, text.isNotEmpty {
@@ -131,7 +131,7 @@ struct ItemView: View {
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 Self.handledUrl = url
-                                showUrlSheet = true
+                                isSafariSheetPresented = true
                             }
                     }
                 } else {
@@ -171,7 +171,7 @@ struct ItemView: View {
                         }
                     } onFlag: {
                         flaggingItem = comment
-                        showFlagDialog = true
+                        isFlagDialogPresented = true
                     }
                     .padding(.trailing, 4)
                 }
@@ -196,7 +196,7 @@ struct ItemView: View {
                 }
             }
             
-            if itemStore.isConnectedToNetwork {
+            if !OfflineRepository.shared.isOfflineReading {
                 ToolbarItem {
                     Button {
                         if !itemStore.status.isLoading {
@@ -277,18 +277,18 @@ struct ItemView: View {
     /// Show the `item`  inside a web view sheet if there is no web view sheet being displayed,
     /// otherwise, show the web view inside a new screen.
     private func onViewOnHackerNewsTap(item: any Item) {
-        if showUrlSheet, let url = URL(string: item.itemUrl) {
+        if isSafariSheetPresented, let url = URL(string: item.itemUrl) {
             Router.shared.to(.url(url))
         } else {
             Self.hnSheetTarget = item
-            showHNSheet = true
+            isHNSheetPresented = true
         }
     }
     
     /// Display reply view inside a sheet if there is no web view sheet being displayed,
     /// otherwise, display the reply view in a new screen.
     private func onReplyTap(item: any Item) {
-        if showUrlSheet {
+        if isSafariSheetPresented {
             if let cmt = item as? Comment {
                 Router.shared.to(.replyComment(cmt))
             } else if let story = item as? Story {
@@ -296,7 +296,7 @@ struct ItemView: View {
             }
         } else {
             Self.replySheetTarget = item
-            showReplySheet = true
+            isReplySheetPresented = true
         }
     }
 

@@ -2,7 +2,7 @@ import SwiftUI
 import AlertToast
 
 struct ToastContainer<Content: View>: View {
-    @State private var showToast: Bool = .init()
+    @State private var isToastPresented: Bool = .init()
     @Binding private var actionPerformed: Action
 
     let content: Content
@@ -17,7 +17,7 @@ struct ToastContainer<Content: View>: View {
     var body: some View {
         
         content
-            .toast(isPresenting: $showToast) {
+            .toast(isPresenting: $isToastPresented) {
                 AlertToast(
                     type: withImage ? .systemImage(actionPerformed.completionIcon, .gray) : .regular,
                     title: actionPerformed.completionLabel
@@ -25,10 +25,10 @@ struct ToastContainer<Content: View>: View {
             }
             .onChange(of: actionPerformed) { _, newValue in
                 if newValue != .none {
-                    showToast = true
+                    isToastPresented = true
                 }
             }
-            .onChange(of: showToast) { _, newValue in
+            .onChange(of: isToastPresented) { _, newValue in
                 // Reset action after displaying the toast.
                 if !newValue {
                     actionPerformed = .none
