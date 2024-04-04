@@ -3,7 +3,7 @@ import SwiftUI
 struct Profile: View {
     @EnvironmentObject private var auth: Authentication
     @StateObject var profileStore: ProfileStore = .init()
-    @State var showLogoutDialog: Bool = .init()
+    @State var isLogoutDialogPresented: Bool = .init()
     
     let id: String
     
@@ -38,7 +38,7 @@ struct Profile: View {
                 
                 if auth.loggedIn && auth.username == id {
                     Button {
-                        showLogoutDialog = true
+                        isLogoutDialogPresented = true
                     } label: {
                         Label("Log out", systemImage: "rectangle.portrait.and.arrow.forward")
                             .foregroundColor(.red)
@@ -56,7 +56,7 @@ struct Profile: View {
                 }
             }
         }
-        .alert("Logout", isPresented: $showLogoutDialog, actions: {
+        .alert("Logout", isPresented: $isLogoutDialogPresented, actions: {
             Button("Log out", role: .destructive, action: {
                 HapticFeedbackService.shared.success()
                 auth.logOut()
