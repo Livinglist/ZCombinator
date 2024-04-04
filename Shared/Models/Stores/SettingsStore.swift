@@ -24,7 +24,7 @@ enum DownloadFrequency: TimeInterval, Equatable, CaseIterable {
         case .oneDay: return "Every Day"
         case .halfDay: return "Every 12 Hours"
         case .fourHours: return "Every 4 Hours"
-        case .oneHour: return "Every One Hours"
+        case .oneHour: return "Every One Hour"
         }
     }
 }
