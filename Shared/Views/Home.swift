@@ -75,7 +75,7 @@ struct Home: View {
                             .foregroundStyle(.orange)
                             .padding(.bottom, 24)
                         Text("Not connected to network, you can try entering offline mode from the top right menu.")
-                            .font(.caption)
+                            .font(.subheadline)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 48)
                     }

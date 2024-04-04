@@ -8,6 +8,7 @@ fileprivate extension String {
     static let useCellularDataKey = "useCellularData"
     static let downloadFrequencyKey = "downloadFrequency"
     static let defaultStoryTypeKey = "defaultStoryType"
+    static let defaultFetchModeKey = "defaultFetchMode"
 }
 
 enum DownloadFrequency: TimeInterval, Equatable, CaseIterable {
@@ -24,6 +25,18 @@ enum DownloadFrequency: TimeInterval, Equatable, CaseIterable {
         case .halfDay: return "Every 12 Hours"
         case .fourHours: return "Every 4 Hours"
         case .oneHour: return "Every One Hours"
+        }
+    }
+}
+
+enum FetchMode: Int, Equatable, CaseIterable {
+    case eager = 0
+    case lazy = 1
+
+    var label: String {
+        switch self {
+        case .eager: return "Eager"
+        case .lazy: return "Lazy"
         }
     }
 }
@@ -49,6 +62,11 @@ class SettingsStore: ObservableObject {
     @Published var defaultStoryType: StoryType = .top {
         didSet {
             UserDefaults.standard.setValue(defaultStoryType.rawValue, forKey: .defaultStoryTypeKey)
+        }
+    }
+    @Published var defaultFetchMode: FetchMode = .eager {
+        didSet {
+            UserDefaults.standard.setValue(defaultFetchMode.rawValue, forKey: .defaultFetchModeKey)
         }
     }
 
@@ -78,6 +96,11 @@ class SettingsStore: ObservableObject {
         if let defaultStoryTypeRawValue = UserDefaults.standard.string(forKey: .defaultStoryTypeKey),
            let defaultStoryType = StoryType(rawValue: defaultStoryTypeRawValue) {
             self.defaultStoryType = defaultStoryType
+        }
+
+        let defaultFetchModeRawValue = UserDefaults.standard.integer(forKey: .defaultFetchModeKey)
+        if let defaultFetchMode = FetchMode(rawValue: defaultFetchModeRawValue) {
+            self.defaultFetchMode = defaultFetchMode
         }
     }
     

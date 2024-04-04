@@ -7,6 +7,28 @@ struct Settings: View {
     var body: some View {
         List {
             Section {
+                Picker("Default Story Type", selection: $store.defaultStoryType) {
+                    ForEach(StoryType.allCases, id: \.self) { value in
+                        Text(value.label.capitalized)
+                            .tag(value)
+                    }
+                }
+            } footer: {
+                Text("The type of story to be shown on the launch.")
+            }
+
+            Section {
+                Picker("Default Fetch Mode", selection: $store.defaultFetchMode) {
+                    ForEach(FetchMode.allCases, id: \.self) { value in
+                        Text(value.label)
+                            .tag(value)
+                    }
+                }
+            } footer: {
+                Text("Offline mode currently only supports lazy fetching.")
+            }
+
+            Section {
                 Toggle(isOn: $store.isAutomaticDownloadEnabled) {
                     Text("Automatic Download")
                 }
@@ -26,17 +48,6 @@ struct Settings: View {
                 Text("Offline Mode")
             } footer: {
                 Text("The frequency of background task is throttled by the system, therefore download is not guranteed to respect the frequency.")
-            }
-
-            Section {
-                Picker("Default Story Type", selection: $store.defaultStoryType) {
-                    ForEach(StoryType.allCases, id: \.self) { value in
-                        Text(value.label)
-                            .tag(value)
-                    }
-                }
-            } footer: {
-                Text("The type of story to be shown on the launch.")
             }
         }
         .navigationBarTitleDisplayMode(.inline)

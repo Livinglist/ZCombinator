@@ -32,7 +32,7 @@ extension Thread {
         @Published var loadedCommentIds: Set<Int> = .init()
         @Published var collapsed: Set<Int> = .init()
         @Published var hidden: Set<Int> = .init()
-        @Published var isRecursivelyFetching: Bool = true {
+        @Published var isRecursivelyFetching: Bool = SettingsStore.shared.defaultFetchMode == .eager && !OfflineRepository.shared.isOfflineReading {
             didSet {
                 if OfflineRepository.shared.isOfflineReading {
                     return
@@ -41,8 +41,6 @@ extension Thread {
                 HapticFeedbackService.shared.success()
             }
         }
-
-        private var networkStatusCancellable: AnyCancellable?
 
         /// Load child comments of a comment.
         func loadKids(of cmt: Comment) async {
@@ -91,30 +89,29 @@ extension Thread {
                 self.comments = cmts
                 self.status = .completed
             } else {
-                if isRecursivelyFetching {
-                    await StoryRepository.shared.fetchCommentsRecursively(from: item) { comment in
-                        DispatchQueue.main.async {
-                            if let comment = comment {
-                                self.status = .backgroundLoading
+                if let item = await StoryRepository.shared.fetchItem(id),
+                   let kids = item.kids {
+                    self.item = item
+                    if isRecursivelyFetching {
+                        await StoryRepository.shared.fetchCommentsRecursively(from: item) { comment in
+                            DispatchQueue.main.async {
+                                if let comment = comment {
+                                    self.status = .backgroundLoading
 
-                                if self.comments.count < 5 {
-                                    withAnimation {
+                                    if self.comments.count < 5 {
+                                        withAnimation {
+                                            self.comments.append(comment)
+                                        }
+                                    } else {
                                         self.comments.append(comment)
                                     }
-                                } else {
-                                    self.comments.append(comment)
-                                }
 
-                            } else {
-                                self.status = .completed
+                                } else {
+                                    self.status = .completed
+                                }
                             }
                         }
-                    }
-                } else {
-                    if let item = await StoryRepository.shared.fetchItem(id),
-                       let kids = item.kids {
-                        self.item = item
-
+                    } else {
                         await StoryRepository.shared.fetchComments(ids: kids) { comment in
                             DispatchQueue.main.async {
                                 withAnimation {
@@ -124,8 +121,8 @@ extension Thread {
                             }
                         }
                     }
-                    self.status = .completed
                 }
+                self.status = .completed
             }
         }
         
