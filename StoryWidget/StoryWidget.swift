@@ -21,6 +21,9 @@ struct StoryWidgetView : View {
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                 Spacer(minLength: 0)
             }
+            .containerBackground(for: .widget) {
+                Color(UIColor.secondarySystemBackground)
+            }
             .widgetURL(URL(string: "\(story.id)"))
         default:
             HStack {

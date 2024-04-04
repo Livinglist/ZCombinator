@@ -9,13 +9,13 @@ public class Authentication: ObservableObject {
     static let shared: Authentication = .init()
     
     private init() {
+        let loggedIn = AuthRepository.shared.loggedIn
+        let username = AuthRepository.shared.username
+
+        self.loggedIn = loggedIn
+        self.username = username
+
         Task {
-            let loggedIn = AuthRepository.shared.loggedIn
-            let username = AuthRepository.shared.username
-            
-            self.loggedIn = loggedIn
-            self.username = username
-            
             guard let username = username else { return }
             
             let user = await AuthRepository.shared.fetchUser(username) ?? User(id: username)
