@@ -1,6 +1,7 @@
 import Foundation
 import HackerNewsKit
 
+@MainActor
 public class Authentication: ObservableObject {
     @Published var username: String?
     @Published var loggedIn: Bool = .init()

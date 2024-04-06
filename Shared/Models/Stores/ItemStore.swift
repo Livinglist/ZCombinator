@@ -32,7 +32,7 @@ extension Thread {
         @Published var loadedCommentIds: Set<Int> = .init()
         @Published var collapsed: Set<Int> = .init()
         @Published var hidden: Set<Int> = .init()
-        @Published var isRecursivelyFetching: Bool = SettingsStore.shared.defaultFetchMode == .eager && !OfflineRepository.shared.isOfflineReading {
+        @Published var isRecursivelyFetching: Bool = SettingsStore.shared.defaultFetchMode == .eager || OfflineRepository.shared.isOfflineReading {
             didSet {
                 if OfflineRepository.shared.isOfflineReading {
                     return

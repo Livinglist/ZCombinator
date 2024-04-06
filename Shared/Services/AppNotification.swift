@@ -9,6 +9,7 @@ private extension Calendar {
     }
 }
 
+@MainActor
 class AppNotification {
     private let auth: Authentication = .shared
     private let repo: StoryRepository = .shared
@@ -22,7 +23,7 @@ class AppNotification {
         request.earliestBeginDate = nil
         try? BGTaskScheduler.shared.submit(request)
     }
-    
+
     func fetchAllReplies() async {
         let lastPushedKey = Constants.AppNotification.lastItemPushedKey
         let lastFetchedKey = Constants.AppNotification.lastFetchedAtKey
