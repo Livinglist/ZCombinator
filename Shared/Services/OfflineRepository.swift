@@ -160,6 +160,19 @@ public class OfflineRepository: ObservableObject {
     // MARK: - Comment related.
     
     public func fetchComments(of id: Int) -> [Comment] {
-        return comments[id] ?? [Comment]()
+        var results = [Comment]()
+
+        func fetch(_ id: Int, level: Int) {
+            let cmts = comments[id]?.map { $0.copyWith(level: level) } ?? []
+
+            for cmt in cmts {
+                results.append(cmt.copyWith(level: level))
+                fetch(cmt.id, level: level + 1)
+            }
+        }
+
+        fetch(id, level: 0)
+
+        return results
     }
 }
