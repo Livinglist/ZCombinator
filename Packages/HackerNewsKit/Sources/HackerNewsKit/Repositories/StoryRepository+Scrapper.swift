@@ -163,7 +163,7 @@ extension StoryRepository {
                 .replacing(pRegex) { match in
                     if let m = match[1].substring {
                         let matchedStr = String(m)
-                        return "\n\n\(matchedStr)"
+                        return "\n\(matchedStr)"
                     }
                     return String()
                 }
