@@ -17,7 +17,7 @@ public enum FetchError: Error {
 extension StoryRepository {
     fileprivate static let itemBaseUrl = "https://news.ycombinator.com/item?id=";
     fileprivate static let athingComtrSelector = "#hnmain > tbody > tr > td > table > tbody > .athing.comtr";
-    fileprivate static let commentTextSelector = "td > table > tbody > tr > td.default > div.comment";
+    fileprivate static let commentTextSelector = "td > table > tbody > tr > td.default > div.comment > div.commtext";
     fileprivate static let commentHeadSelector = "td > table > tbody > tr > td.default > div > span > a";
     fileprivate static let commentAgeSelector = "td > table > tbody > tr > td.default > div > span > span.age";
     fileprivate static let commentIndentSelector = "td > table > tbody > tr > td.ind";
@@ -163,7 +163,7 @@ extension StoryRepository {
                 .replacing(pRegex) { match in
                     if let m = match[1].substring {
                         let matchedStr = String(m)
-                        return "\n\n\(matchedStr)"
+                        return "\n\(matchedStr)"
                     }
                     return String()
                 }
