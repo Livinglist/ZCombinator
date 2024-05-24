@@ -158,9 +158,8 @@ struct ItemRow: View {
 
             if res {
                 actionPerformed = .flag
-                HapticFeedbackService.shared.success()
             } else {
-                HapticFeedbackService.shared.error()
+                actionPerformed = .failure
             }
         }
     }

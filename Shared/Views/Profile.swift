@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct Profile: View {
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var auth: Authentication
     @StateObject var profileStore: ProfileStore = .init()
     @State var isLogoutDialogPresented: Bool = .init()
@@ -60,6 +61,7 @@ struct Profile: View {
             Button("Log out", role: .destructive, action: {
                 HapticFeedbackService.shared.success()
                 auth.logOut()
+                dismiss()
             })
             Button("Cancel", role: .cancel, action: {})
         }, message: {

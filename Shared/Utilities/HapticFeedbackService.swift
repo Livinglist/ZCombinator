@@ -28,4 +28,8 @@ class HapticFeedbackService {
     func ultralight() -> Void {
         impactGenerator.impactOccurred(intensity: 0.3)
     }
+
+    func trigger(_ feedback: UINotificationFeedbackGenerator.FeedbackType) -> Void {
+        generator.notificationOccurred(feedback)
+    }
 }

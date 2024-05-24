@@ -21,9 +21,8 @@ struct DownvoteButton: View {
             
             if res {
                 actionPerformed.wrappedValue = .downvote
-                HapticFeedbackService.shared.success()
             } else {
-                HapticFeedbackService.shared.error()
+                actionPerformed.wrappedValue = .failure
             }
         }
     }

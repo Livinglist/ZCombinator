@@ -235,8 +235,11 @@ struct Home: View {
                     .textInputAutocapitalization(.never)
                 SecureField("Password", text: $password)
                 Button(Action.login.label, action: {
-                    self.isEulaDialogPresented = true
-                }).foregroundStyle(.orange)
+                    if username.isNotEmpty && password.isNotEmpty {
+                        self.isEulaDialogPresented = true
+                    }
+                })
+                .foregroundStyle(.orange)
                 Button("Cancel", role: .cancel, action: {}).foregroundStyle(.orange)
             }, message: {
                 Text("Please enter your username and password.")
@@ -271,6 +274,7 @@ struct Home: View {
                             Spacer()
 
                             Button {
+                                HapticFeedbackService.shared.ultralight()
                                 self.isEulaDialogPresented = false
 
                                 guard username.isNotEmpty && password.isNotEmpty else {
@@ -282,10 +286,9 @@ struct Home: View {
                                     let res = await auth.logIn(username: username, password: password, shouldRememberMe: true)
 
                                     if res {
-                                        HapticFeedbackService.shared.success()
                                         actionPerformed = .login
                                     } else {
-                                        HapticFeedbackService.shared.error()
+                                        actionPerformed = .failure
                                     }
                                 }
                             } label: {

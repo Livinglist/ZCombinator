@@ -1,4 +1,6 @@
 /// Used for deciding which image or text to be shown in Toast alert.
+
+import UIKit
 enum Action: Equatable {
     case flag
     case upvote
@@ -12,7 +14,19 @@ enum Action: Equatable {
     case copy
     case lazyFetching
     case eagerFetching
+    case failure
     case none
+
+    var feedback: UINotificationFeedbackGenerator.FeedbackType {
+        switch self {
+        case .flag, .upvote, .downvote, .unfavorite, .pin, .unpin, .login, .reply, .copy, .lazyFetching, .eagerFetching:
+            return .success
+        case .failure:
+            return .error
+        default:
+            return .success
+        }
+    }
 
     var label: String {
         switch self {
@@ -36,6 +50,8 @@ enum Action: Equatable {
             return "Reply"
         case .copy:
             return "Copy"
+        case .failure:
+            return .init()
         case .lazyFetching:
             fallthrough
         case .eagerFetching:
@@ -67,12 +83,14 @@ enum Action: Equatable {
             return "plus.message"
         case .copy:
             return "doc.on.doc"
+        case .failure:
+            return .init()
         case .lazyFetching:
             return "line.3.horizontal.circle"
         case .eagerFetching:
             return "line.3.horizontal.decrease.circle"
         case .none:
-            return String()
+            return .init()
         }
     }
 
@@ -100,12 +118,14 @@ enum Action: Equatable {
             return "arrowshape.turn.up.left.circle.fill"
         case .copy:
             return "doc.on.doc.fill"
+        case .failure:
+            return "wrongwaysign"
         case .lazyFetching:
             return "line.3.horizontal.circle.fill"
         case .eagerFetching:
             return "line.3.horizontal.decrease.circle.fill"
         case .none:
-            return String()
+            return .init()
         }
     }
 
@@ -132,6 +152,8 @@ enum Action: Equatable {
             return "Replied"
         case .copy:
             return "Copied"
+        case .failure:
+            return "Error"
         case .lazyFetching:
             return "Lazy Fetching"
         case .eagerFetching:

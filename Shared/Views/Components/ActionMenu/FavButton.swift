@@ -25,13 +25,11 @@ struct FavButton: View {
             Task {
                 _ = await auth.unfavorite(id)
                 actionPerformed.wrappedValue = .unfavorite
-                HapticFeedbackService.shared.success()
             }
         } else {
             Task {
                 _ = await auth.favorite(id)
                 actionPerformed.wrappedValue = .favorite
-                HapticFeedbackService.shared.success()
             }
         }
         settings.onFavToggle(id)

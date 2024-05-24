@@ -38,7 +38,6 @@ extension Thread {
                     return
                 }
                 actionPerformed = isRecursivelyFetching ? .eagerFetching : .lazyFetching
-                HapticFeedbackService.shared.success()
             }
         }
 

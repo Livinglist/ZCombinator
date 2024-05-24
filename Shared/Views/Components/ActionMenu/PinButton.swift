@@ -25,7 +25,6 @@ struct PinButton: View {
         } else {
             actionPerformed.wrappedValue = .pin
         }
-        HapticFeedbackService.shared.success()
         settings.onPinToggle(id)
     }
 }
