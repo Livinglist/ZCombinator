@@ -5,7 +5,9 @@ struct Profile: View {
     @EnvironmentObject private var auth: Authentication
     @StateObject var profileStore: ProfileStore = .init()
     @State var isLogoutDialogPresented: Bool = .init()
-    
+    @State var isBlockDialogPresented: Bool = .init()
+    @State var actionPerformed: Action = .none
+
     let id: String
     
     var body: some View {
@@ -44,6 +46,20 @@ struct Profile: View {
                         Label("Log out", systemImage: "rectangle.portrait.and.arrow.forward")
                             .foregroundColor(.red)
                     }
+                } else if profileStore.isBlocked {
+                    Button {
+                        profileStore.unblock()
+                        actionPerformed = .unblock
+                    } label: {
+                        Label("Unblock", systemImage: "eye")
+                    }
+                } else {
+                    Button {
+                        isBlockDialogPresented = true
+                    } label: {
+                        Label("Block", systemImage: "eye.slash")
+                            .foregroundColor(.red)
+                    }
                 }
             }
         }
@@ -67,6 +83,15 @@ struct Profile: View {
         }, message: {
             Text("Do you want to log out as \(auth.username.orEmpty)?")
         })
+        .confirmationDialog("Are you sure?", isPresented: $isBlockDialogPresented) {
+            Button("Block", role: .destructive) {
+                profileStore.block()
+                actionPerformed = .block
+            }
+        } message: {
+            Text("Block \(id)?")
+        }
+        .withToast(actionPerformed: $actionPerformed)
     }
 }
 

@@ -9,6 +9,8 @@ enum Action: Equatable {
     case unfavorite
     case pin
     case unpin
+    case block
+    case unblock
     case login
     case reply
     case copy
@@ -19,7 +21,19 @@ enum Action: Equatable {
 
     var feedback: UINotificationFeedbackGenerator.FeedbackType {
         switch self {
-        case .flag, .upvote, .downvote, .unfavorite, .pin, .unpin, .login, .reply, .copy, .lazyFetching, .eagerFetching:
+        case .flag, 
+             .upvote,
+             .downvote,
+             .unfavorite,
+             .pin, 
+             .unpin,
+             .block,
+             .unblock,
+             .login,
+             .reply,
+             .copy,
+             .lazyFetching,
+             .eagerFetching:
             return .success
         case .failure:
             return .error
@@ -44,6 +58,10 @@ enum Action: Equatable {
             return "Pin"
         case .unpin:
             return "Unpin"
+        case .block:
+            return "Block"
+        case .unblock:
+            return "Unblock"
         case .login:
             return "Log in"
         case .reply:
@@ -77,6 +95,10 @@ enum Action: Equatable {
             return "pin"
         case .unpin:
             return "pin.slash"
+        case .block:
+            return "eye.slash"
+        case .unblock:
+            return "eye"
         case .login:
             return "person"
         case .reply:
@@ -112,6 +134,10 @@ enum Action: Equatable {
             return "pin.fill"
         case .unpin:
             return "pin.slash"
+        case .block:
+            return "eye.slash"
+        case .unblock:
+            return "eye"
         case .login:
             return "person.badge.shield.checkmark.fill"
         case .reply:
@@ -146,6 +172,10 @@ enum Action: Equatable {
             return "Pinned"
         case .unpin:
             return "Unpinned"
+        case .block:
+            return "Blocked"
+        case .unblock:
+            return "Unblocked"
         case .login:
             return "Welcome"
         case .reply:
