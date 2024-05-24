@@ -6,7 +6,8 @@ extension Thread {
     struct CommentTile: View {
         @EnvironmentObject var auth: Authentication
         @ObservedObject var itemStore: ItemStore
-        
+        @ObservedObject var settingsStore: SettingsStore = .shared
+
         let level: Int
         let comment: Comment
         let settings: SettingsStore = .shared
@@ -33,7 +34,14 @@ extension Thread {
         var isCollapsed: Bool {
             itemStore.collapsed.contains(comment.id)
         }
-        
+
+        var isBlocked: Bool {
+            if let authorId = comment.by {
+                return SettingsStore.shared.blocklist.contains(authorId)
+            }
+            return false
+        }
+
         var body: some View {
             if itemStore.hidden.contains(comment.id) {
                 EmptyView()
@@ -58,7 +66,12 @@ extension Thread {
         
         @ViewBuilder
         var textView: some View {
-            if comment.text.isNotNullOrEmpty {
+            if isBlocked {
+                Text("blocked")
+                    .font(.footnote)
+                    .foregroundColor(.gray)
+                    .padding(.top, 6)
+            } else if comment.text.isNotNullOrEmpty {
                 Text(comment.text.orEmpty.markdowned)
                     .font(.callout)
                     .textSelection(.enabled)

@@ -4,6 +4,7 @@ import HackerNewsKit
 fileprivate extension String {
     static let favListKey = "favList"
     static let pinListKey = "pinList"
+    static let blockListKey = "blockListKey"
     static let isAutomaticDownloadEnabledKey = "isAutomaticDownloadEnabled"
     static let useCellularDataKey = "useCellularData"
     static let downloadFrequencyKey = "downloadFrequency"
@@ -44,6 +45,7 @@ enum FetchMode: Int, Equatable, CaseIterable {
 class SettingsStore: ObservableObject {
     @Published var favList: [Int] = .init()
     @Published var pinList: [Int] = .init()
+    @Published var blocklist: Set<String> = .init()
     @Published var isAutomaticDownloadEnabled: Bool = .init() {
         didSet {
             UserDefaults.standard.set(isAutomaticDownloadEnabled, forKey: .isAutomaticDownloadEnabledKey)
@@ -85,6 +87,12 @@ class SettingsStore: ObservableObject {
             UserDefaults.standard.set([Int](), forKey: .pinListKey)
         }
 
+        if let blocklist = UserDefaults.standard.array(forKey: .blockListKey) as? [String] {
+            self.blocklist = Set(blocklist)
+        } else {
+            UserDefaults.standard.set([String](), forKey: .blockListKey)
+        }
+
         isAutomaticDownloadEnabled = UserDefaults.standard.bool(forKey: .isAutomaticDownloadEnabledKey)
         useCellularData = UserDefaults.standard.bool(forKey: .useCellularDataKey)
 
@@ -120,5 +128,15 @@ class SettingsStore: ObservableObject {
             pinList.append(id)
         }
         UserDefaults.standard.set(Array(pinList), forKey: .pinListKey)
+    }
+
+    func block(_ id: String) -> Void {
+        blocklist.insert(id)
+        UserDefaults.standard.set(Array(blocklist), forKey: .blockListKey)
+    }
+
+    func unblock(_ id: String) -> Void {
+        blocklist.remove(id)
+        UserDefaults.standard.set(Array(blocklist), forKey: .blockListKey)
     }
 }
