@@ -9,6 +9,7 @@ struct Home: View {
     @ObservedObject private var router: Router = .shared
     @ObservedObject private var offlineRepository: OfflineRepository = .shared
     
+    @State private var isEulaDialogPresented: Bool = .init()
     @State private var isLoginDialogPresented: Bool = .init()
     @State private var isAboutSheetPresented: Bool = .init()
     @State private var isUrlSheetPresented: Bool = .init()
@@ -234,27 +235,85 @@ struct Home: View {
                     .textInputAutocapitalization(.never)
                 SecureField("Password", text: $password)
                 Button(Action.login.label, action: {
-                    guard username.isNotEmpty && password.isNotEmpty else {
-                        HapticFeedbackService.shared.error()
-                        return
-                    }
-                    
-                    Task {
-                        // TODO: Ask user whether or not the app should store their login info.
-                        let res = await auth.logIn(username: username, password: password, shouldRememberMe: true)
-                        
-                        if res {
-                            HapticFeedbackService.shared.success()
-                            actionPerformed = .login
-                        } else {
-                            HapticFeedbackService.shared.error()
-                        }
+                    if username.isNotEmpty && password.isNotEmpty {
+                        self.isEulaDialogPresented = true
                     }
                 })
-                Button("Cancel", role: .cancel, action: {})
+                .foregroundStyle(.orange)
+                Button("Cancel", role: .cancel, action: {}).foregroundStyle(.orange)
             }, message: {
                 Text("Please enter your username and password.")
             })
+            .sheet(isPresented: $isEulaDialogPresented) {
+                ZStack(alignment: .bottom) {
+                    if let url = URL(string: "https://news.ycombinator.com/newsguidelines.html") {
+                        WebView(url: url)
+                            .ignoresSafeArea()
+                    }
+
+                    VStack {
+                        Text("By signing in, you are agreeing to the Hacker News Guidelines.")
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 24)
+                            .padding(.top, 12)
+                            .font(.callout)
+                        HStack {
+                            Button {
+                                HapticFeedbackService.shared.ultralight()
+                                self.isEulaDialogPresented = false
+                            } label: {
+                                Text("Reject")
+                                    .padding(.horizontal, 24)
+                                    .padding(.vertical, 12)
+                                    .foregroundStyle(.red)
+                            }
+                            .buttonStyle(BorderedButtonStyle())
+                            .frame(maxWidth: .infinity)
+                            .padding(.bottom)
+
+                            Spacer()
+
+                            Button {
+                                HapticFeedbackService.shared.ultralight()
+                                self.isEulaDialogPresented = false
+
+                                guard username.isNotEmpty && password.isNotEmpty else {
+                                    HapticFeedbackService.shared.error()
+                                    return
+                                }
+
+                                Task {
+                                    let res = await auth.logIn(username: username, password: password, shouldRememberMe: true)
+
+                                    if res {
+                                        actionPerformed = .login
+                                    } else {
+                                        actionPerformed = .failure
+                                    }
+                                }
+                            } label: {
+                                Text("Accept")
+                                    .padding(.horizontal, 24)
+                                    .padding(.vertical, 12)
+                                    .foregroundStyle(.orange)
+                                    .fontWeight(.bold)
+                            }
+                            .buttonStyle(BorderedButtonStyle())
+                            .frame(maxWidth: .infinity)
+                            .padding(.bottom)
+                        }
+                    }
+                    .padding()
+                    .background {
+                        Rectangle()
+                            .fill(.background)
+                            .cornerRadius(16)
+                            .padding()
+                            .shadow(radius: 4.0)
+                    }
+                }
+                .presentationDetents([.large])
+            }
             .task {
                 await storyStore.fetchStories()
             }

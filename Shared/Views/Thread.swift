@@ -307,9 +307,8 @@ struct Thread: View {
 
             if res {
                 itemStore.actionPerformed = .flag
-                HapticFeedbackService.shared.success()
             } else {
-                HapticFeedbackService.shared.error()
+                itemStore.actionPerformed = .failure
             }
         }
     }

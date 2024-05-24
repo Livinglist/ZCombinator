@@ -15,6 +15,5 @@ struct CopyButton: View {
     private func onCopy() {
         UIPasteboard.general.string = text
         actionPerformed.wrappedValue = .copy
-        HapticFeedbackService.shared.success()
     }
 }

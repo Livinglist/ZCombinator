@@ -41,9 +41,8 @@ struct ReplyView: View {
                         
                         if res {
                             actionPerformed?.wrappedValue = .reply
-                            HapticFeedbackService.shared.success()
                         } else {
-                            HapticFeedbackService.shared.error()
+                            actionPerformed?.wrappedValue = .failure
                         }
                     }
                     self.presentationMode.wrappedValue.dismiss()

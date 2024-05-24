@@ -21,9 +21,8 @@ struct UpvoteButton: View {
             
             if res {
                 actionPerformed.wrappedValue = .upvote
-                HapticFeedbackService.shared.success()
             } else {
-                HapticFeedbackService.shared.error()
+                actionPerformed.wrappedValue = .failure
             }
         }
     }

@@ -15,7 +15,6 @@ struct ToastContainer<Content: View>: View {
     }
     
     var body: some View {
-        
         content
             .toast(isPresenting: $isToastPresented) {
                 AlertToast(
@@ -26,6 +25,7 @@ struct ToastContainer<Content: View>: View {
             .onChange(of: actionPerformed) { _, newValue in
                 if newValue != .none {
                     isToastPresented = true
+                    HapticFeedbackService.shared.trigger(newValue.feedback)
                 }
             }
             .onChange(of: isToastPresented) { _, newValue in
