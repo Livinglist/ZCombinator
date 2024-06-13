@@ -7,6 +7,14 @@ struct Settings: View {
     var body: some View {
         List {
             Section {
+                Toggle(isOn: $store.isFaviconEnabled) {
+                    Text("Show Favicon")
+                }
+            } header: {
+                Text("")
+            }
+
+            Section {
                 Picker("Default Story Type", selection: $store.defaultStoryType) {
                     ForEach(StoryType.allCases, id: \.self) { value in
                         Text(value.label.capitalized)

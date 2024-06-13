@@ -320,9 +320,9 @@ struct Home: View {
             .onOpenURL(perform: { url in
                 if let id = url.absoluteString.itemId {
                     Task {
-                        let story = await StoryRepository.shared.fetchStory(id)
-                        guard let story = story else { return }
-                        router.to(story)
+                        let item = await StoryRepository.shared.fetchItem(id)
+                        guard let item = item else { return }
+                        router.to(item)
                     }
                 }
             })

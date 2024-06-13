@@ -14,6 +14,7 @@ enum Action: Equatable {
     case login
     case reply
     case copy
+    case subscribe
     case lazyFetching
     case eagerFetching
     case failure
@@ -32,6 +33,7 @@ enum Action: Equatable {
              .login,
              .reply,
              .copy,
+             .subscribe,
              .lazyFetching,
              .eagerFetching:
             return .success
@@ -68,6 +70,8 @@ enum Action: Equatable {
             return "Reply"
         case .copy:
             return "Copy"
+        case .subscribe:
+            return "Subscribe"
         case .failure:
             return .init()
         case .lazyFetching:
@@ -105,6 +109,8 @@ enum Action: Equatable {
             return "plus.message"
         case .copy:
             return "doc.on.doc"
+        case .subscribe:
+            return "binoculars"
         case .failure:
             return .init()
         case .lazyFetching:
@@ -144,6 +150,8 @@ enum Action: Equatable {
             return "arrowshape.turn.up.left.circle.fill"
         case .copy:
             return "doc.on.doc.fill"
+        case .subscribe:
+            return "binoculars.fill"
         case .failure:
             return "wrongwaysign"
         case .lazyFetching:
@@ -184,6 +192,8 @@ enum Action: Equatable {
             return "Copied"
         case .failure:
             return "Error"
+        case .subscribe:
+            return "Subscribed"
         case .lazyFetching:
             return "Lazy Fetching"
         case .eagerFetching:

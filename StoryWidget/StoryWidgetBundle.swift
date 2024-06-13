@@ -5,5 +5,6 @@ import SwiftUI
 struct StoryWidgetBundle: WidgetBundle {
     var body: some Widget {
         StoryWidget()
+        LiveActivityWidget()
     }
 }

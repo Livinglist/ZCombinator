@@ -24,7 +24,6 @@
 		E50FB9FB2886738D00AA325C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50FB9CD2886738D00AA325C /* Assets.xcassets */; };
 		E514FC362A02C41D00BEFC14 /* HackerNewsKit in Frameworks */ = {isa = PBXBuildFile; productRef = E514FC352A02C41D00BEFC14 /* HackerNewsKit */; };
 		E514FC3A2A02C45E00BEFC14 /* Int+OrZero.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514FC392A02C45E00BEFC14 /* Int+OrZero.swift */; };
-		E514FC3D2A02C61600BEFC14 /* HackerNewsKit in Frameworks */ = {isa = PBXBuildFile; productRef = E514FC3C2A02C61600BEFC14 /* HackerNewsKit */; };
 		E514FC3F2A02CA6000BEFC14 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514FC3E2A02CA6000BEFC14 /* Status.swift */; };
 		E514FC412A02EB8E00BEFC14 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514FC402A02EB8E00BEFC14 /* Search.swift */; };
 		E514FC432A02EBD400BEFC14 /* SearchStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E514FC422A02EBD400BEFC14 /* SearchStore.swift */; };
@@ -35,6 +34,9 @@
 		E52134C028877C06005CFB77 /* ItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134BF28877C06005CFB77 /* ItemRow.swift */; };
 		E52134C328877ED7005CFB77 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52134C228877ED7005CFB77 /* Thread.swift */; };
 		E526555F2887E28800D0B79A /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E526555E2887E28800D0B79A /* SafariView.swift */; };
+		E5299F522C1AB5360086E2CB /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5299F512C1AB5360086E2CB /* LiveActivityManager.swift */; };
+		E5299F532C1AB5360086E2CB /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5299F512C1AB5360086E2CB /* LiveActivityManager.swift */; };
+		E5299F552C1AC4FF0086E2CB /* SubscriptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5299F542C1AC4FF0086E2CB /* SubscriptionButton.swift */; };
 		E52C17702A02427E00282117 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E52C176F2A02427E00282117 /* WidgetKit.framework */; };
 		E52C17722A02427E00282117 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E52C17712A02427E00282117 /* SwiftUI.framework */; };
 		E52C17752A02427E00282117 /* StoryWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C17742A02427E00282117 /* StoryWidgetBundle.swift */; };
@@ -85,6 +87,8 @@
 		E5A2CECF2A08B94200D683C6 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A2CECE2A08B94200D683C6 /* ShareViewController.swift */; };
 		E5A2CED22A08B94200D683C6 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5A2CED02A08B94200D683C6 /* MainInterface.storyboard */; };
 		E5A2CED62A08B94200D683C6 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E5A2CECC2A08B94200D683C6 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E5A8DB762C1A8EBD00C056B3 /* Favicon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A8DB752C1A8EBD00C056B3 /* Favicon.swift */; };
+		E5A8DB7B2C1AB0D900C056B3 /* LiveActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A8DB772C1AACB000C056B3 /* LiveActivityWidget.swift */; };
 		E5B5B91F2AB78748005CE503 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5B91E2AB78748005CE503 /* AppDelegate.swift */; };
 		E5B8A3D62BBE4FC000F526B5 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B8A3D52BBE4FC000F526B5 /* Settings.swift */; };
 		E5BF9E6B2A0CAA5C0030E588 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = E5BF9E6A2A0CAA5C0030E588 /* SwiftSoup */; };
@@ -188,6 +192,8 @@
 		E52134BF28877C06005CFB77 /* ItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemRow.swift; sourceTree = "<group>"; };
 		E52134C228877ED7005CFB77 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		E526555E2887E28800D0B79A /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
+		E5299F512C1AB5360086E2CB /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
+		E5299F542C1AC4FF0086E2CB /* SubscriptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionButton.swift; sourceTree = "<group>"; };
 		E52C176E2A02427D00282117 /* StoryWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StoryWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E52C176F2A02427E00282117 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E52C17712A02427E00282117 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -235,6 +241,8 @@
 		E5A2CECE2A08B94200D683C6 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		E5A2CED12A08B94200D683C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E5A2CED32A08B94200D683C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5A8DB752C1A8EBD00C056B3 /* Favicon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favicon.swift; sourceTree = "<group>"; };
+		E5A8DB772C1AACB000C056B3 /* LiveActivityWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityWidget.swift; sourceTree = "<group>"; };
 		E5B5B91E2AB78748005CE503 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5B8A3D52BBE4FC000F526B5 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		E5C448DA2AB6B17A006C023B /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
@@ -267,7 +275,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E57E2F362AB3E81C00AFB9C8 /* HackerNewsKit in Frameworks */,
-				E514FC3D2A02C61600BEFC14 /* HackerNewsKit in Frameworks */,
 				E5BF9E6B2A0CAA5C0030E588 /* SwiftSoup in Frameworks */,
 				E56C06C0288679E900D4E685 /* Alamofire in Frameworks */,
 				E54B013E29FE302100F7F0A0 /* AlertToast in Frameworks */,
@@ -343,6 +350,7 @@
 				E514FC442A02FEF100BEFC14 /* PinButton.swift */,
 				E57640312A0302A10075F5D1 /* FlagButton.swift */,
 				E57E0D3B2A0B08E800E13963 /* CopyButton.swift */,
+				E5299F542C1AC4FF0086E2CB /* SubscriptionButton.swift */,
 			);
 			path = ActionMenu;
 			sourceTree = "<group>";
@@ -451,6 +459,7 @@
 				E5448C022AB1246F00737F18 /* Timeline+Placeholder.swift */,
 				E5448C052AB1249A00737F18 /* StoryTimelineProvider.swift */,
 				E51CCDE92AB178CA00F522BD /* StorySource.swift */,
+				E5A8DB772C1AACB000C056B3 /* LiveActivityWidget.swift */,
 			);
 			path = StoryWidget;
 			sourceTree = "<group>";
@@ -482,6 +491,7 @@
 				E504A0422A0227F80090AFAB /* ShareMenu.swift */,
 				E5C7B9792A086C9A00CA6066 /* CommentTile.swift */,
 				E580A3682A0A215E0025AD83 /* ToastContainer.swift */,
+				E5A8DB752C1A8EBD00C056B3 /* Favicon.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -493,6 +503,7 @@
 				E53650122A0DA7E4001CBFEF /* AppNotification.swift */,
 				E5689EF02A09558B00F6CC48 /* Router.swift */,
 				E57E2F312AB3C51900AFB9C8 /* OfflineRepository.swift */,
+				E5299F512C1AB5360086E2CB /* LiveActivityManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -588,7 +599,6 @@
 			packageProductDependencies = (
 				E56C06BF288679E900D4E685 /* Alamofire */,
 				E54B013D29FE302100F7F0A0 /* AlertToast */,
-				E514FC3C2A02C61600BEFC14 /* HackerNewsKit */,
 				E5BF9E6A2A0CAA5C0030E588 /* SwiftSoup */,
 				E57E2F352AB3E81C00AFB9C8 /* HackerNewsKit */,
 			);
@@ -829,6 +839,7 @@
 				E5EF2CDB289C77C200AA5290 /* ScaleButtonStyle.swift in Sources */,
 				E504A0362A01F79B0090AFAB /* FavStore.swift in Sources */,
 				E5EF2CCB289C6F8C00AA5290 /* StringExtension.swift in Sources */,
+				E5A8DB762C1A8EBD00C056B3 /* Favicon.swift in Sources */,
 				E5C448DB2AB6B17A006C023B /* NetworkMonitor.swift in Sources */,
 				E57E0D3C2A0B08E800E13963 /* CopyButton.swift in Sources */,
 				E5E048D9289F737700702733 /* BoolExtension.swift in Sources */,
@@ -839,6 +850,7 @@
 				E526555F2887E28800D0B79A /* SafariView.swift in Sources */,
 				E57E2F322AB3C51900AFB9C8 /* OfflineRepository.swift in Sources */,
 				E5EF2CE4289C783F00AA5290 /* CustomText.swift in Sources */,
+				E5299F522C1AB5360086E2CB /* LiveActivityManager.swift in Sources */,
 				E504A0432A0227F80090AFAB /* ShareMenu.swift in Sources */,
 				E5EF2CD8289C777A00AA5290 /* ContextMenu.swift in Sources */,
 				E5E048D0289F69D700702733 /* AuthButton.swift in Sources */,
@@ -847,6 +859,7 @@
 				E5448C062AB1249A00737F18 /* StoryTimelineProvider.swift in Sources */,
 				E5C448E02AB6CD64006C023B /* CommentCollection.swift in Sources */,
 				E54D07012A01BB2D00F3E57B /* UserDefaultWrapper.swift in Sources */,
+				E5299F552C1AC4FF0086E2CB /* SubscriptionButton.swift in Sources */,
 				E5C7B97E2A0887D600CA6066 /* Profile.swift in Sources */,
 				E5687FAD289E194A00901F1F /* TextView.swift in Sources */,
 				E57640322A0302A10075F5D1 /* FlagButton.swift in Sources */,
@@ -899,6 +912,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5A8DB7B2C1AB0D900C056B3 /* LiveActivityWidget.swift in Sources */,
 				E52C17752A02427E00282117 /* StoryWidgetBundle.swift in Sources */,
 				E5448C042AB1246F00737F18 /* Timeline+Placeholder.swift in Sources */,
 				E51CCDEB2AB178CA00F522BD /* StorySource.swift in Sources */,
@@ -906,6 +920,7 @@
 				E5448C072AB1249A00737F18 /* StoryTimelineProvider.swift in Sources */,
 				E52C17772A02427E00282117 /* StoryWidget.swift in Sources */,
 				E5448C012AB1244500737F18 /* SelectStoryTypeIntent.swift in Sources */,
+				E5299F532C1AB5360086E2CB /* LiveActivityManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,13 +1106,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ZCombinator--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Z Combinator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.magazines-and-newspapers";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1108,7 +1124,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.2;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
@@ -1129,13 +1145,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "ZCombinator (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QMWX3X2NF7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ZCombinator--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Z Combinator";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.magazines-and-newspapers";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1146,7 +1163,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.2;
+				MARKETING_VERSION = 1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator;
 				PRODUCT_NAME = ZCombinator;
 				SDKROOT = iphoneos;
@@ -1260,7 +1277,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.StoryWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1290,7 +1307,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.StoryWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1321,7 +1338,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.ActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1351,7 +1368,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.ActionExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1380,7 +1397,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1408,7 +1425,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.6.0;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jiaqi.ZCombinator.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1524,10 +1541,6 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		E514FC352A02C41D00BEFC14 /* HackerNewsKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = HackerNewsKit;
-		};
-		E514FC3C2A02C61600BEFC14 /* HackerNewsKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = HackerNewsKit;
 		};

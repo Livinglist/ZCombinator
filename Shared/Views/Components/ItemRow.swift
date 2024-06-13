@@ -30,6 +30,7 @@ struct ItemRow: View {
     @ViewBuilder
     var menu: some View {
         Menu {
+            SubscriptionButton(item: item, actionPerformed: $actionPerformed)
             UpvoteButton(id: item.id, actionPerformed: $actionPerformed)
             DownvoteButton(id: item.id, actionPerformed: $actionPerformed)
             FavButton(id: item.id, actionPerformed: $actionPerformed)
@@ -72,6 +73,10 @@ struct ItemRow: View {
                                 Spacer()
                             }
                             HStack {
+                                if let url = item.url, url.isNotEmpty && settings.isFaviconEnabled {
+                                    Favicon(url: url)
+                                }
+
                                 if let url = item.readableUrl {
                                     Text(url)
                                         .font(.footnote)

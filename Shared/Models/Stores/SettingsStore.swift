@@ -10,6 +10,7 @@ fileprivate extension String {
     static let downloadFrequencyKey = "downloadFrequency"
     static let defaultStoryTypeKey = "defaultStoryType"
     static let defaultFetchModeKey = "defaultFetchMode"
+    static let isFaviconEnabledKey = "isFaviconEnabled"
 }
 
 enum DownloadFrequency: TimeInterval, Equatable, CaseIterable {
@@ -46,6 +47,11 @@ class SettingsStore: ObservableObject {
     @Published var favList: [Int] = .init()
     @Published var pinList: [Int] = .init()
     @Published var blocklist: Set<String> = .init()
+    @Published var isFaviconEnabled: Bool = .init() {
+        didSet {
+            UserDefaults.standard.set(isFaviconEnabled, forKey: .isFaviconEnabledKey)
+        }
+    }
     @Published var isAutomaticDownloadEnabled: Bool = .init() {
         didSet {
             UserDefaults.standard.set(isAutomaticDownloadEnabled, forKey: .isAutomaticDownloadEnabledKey)
@@ -93,6 +99,7 @@ class SettingsStore: ObservableObject {
             UserDefaults.standard.set([String](), forKey: .blockListKey)
         }
 
+        isFaviconEnabled = UserDefaults.standard.bool(forKey: .isFaviconEnabledKey)
         isAutomaticDownloadEnabled = UserDefaults.standard.bool(forKey: .isAutomaticDownloadEnabledKey)
         useCellularData = UserDefaults.standard.bool(forKey: .useCellularDataKey)
 
