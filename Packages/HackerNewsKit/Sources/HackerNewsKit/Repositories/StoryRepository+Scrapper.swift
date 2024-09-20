@@ -26,7 +26,11 @@ extension StoryRepository {
         let itemId = item.id;
         let descendants = item is Story ? item.descendants : nil;
         var parentTextCount = 0
-        
+        let dateFormatter : DateFormatter = DateFormatter()
+        let locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000000Z"
+        dateFormatter.locale = locale
+
         func fetchElements(page: Int) async throws -> Elements {
             do {
                 let url = "\(Self.itemBaseUrl)\(itemId)&p=\(page)"
@@ -95,8 +99,8 @@ extension StoryRepository {
                 /// Get comment age.
                 guard let cmtAgeElements = try? element.select(Self.commentAgeSelector) else { continue }
                 guard let ageString = try? cmtAgeElements.attr("title") else { continue }
-                guard let timestamp = try? Date(ageString.appending("Z"), strategy: .iso8601).timeIntervalSince1970 else { continue }
-                
+                guard let timestamp = dateFormatter.date(from: ageString)?.timeIntervalSince1970 else { continue }
+
                 /// Get comment indent.
                 guard let cmtIndentElements = try? element.select(Self.commentIndentSelector) else { continue }
                 let indentString = try? cmtIndentElements.attr("indent")
