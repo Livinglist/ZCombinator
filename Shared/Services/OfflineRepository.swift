@@ -93,9 +93,14 @@ public class OfflineRepository: ObservableObject {
         isDownloading = false
     }
 
-    public func downloadAllStories() async -> Void {
+    public func downloadAllStories(isTriggerdByUser: Bool) async -> Void {
         let settings = SettingsStore.shared
-        guard settings.isAutomaticDownloadEnabled && (settings.useCellularData || NetworkMonitor.shared.isOnWifi) else { return }
+
+        /// Initiate download process if:
+        /// - process is triggered by user action.
+        /// or:
+        /// - process is triggered by the system and the network status is satisfied.
+        guard isTriggerdByUser || (settings.isAutomaticDownloadEnabled && (settings.useCellularData || NetworkMonitor.shared.isOnWifi)) else { return }
 
         isDownloading = true
         
