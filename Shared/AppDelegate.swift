@@ -13,7 +13,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             }
             
             Task {
-                await OfflineRepository.shared.downloadAllStories()
+                await OfflineRepository.shared.downloadAllStories(isTriggerdByUser: false)
                 
                 task.setTaskCompleted(success: true)
             }

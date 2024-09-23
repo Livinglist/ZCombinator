@@ -133,7 +133,7 @@ struct Home: View {
                     Button {
                         Task {
                             HapticFeedbackService.shared.light()
-                            await offlineRepository.downloadAllStories()
+                            await offlineRepository.downloadAllStories(isTriggerdByUser: true)
                         }
                     } label: {
                         if offlineRepository.isDownloading {
