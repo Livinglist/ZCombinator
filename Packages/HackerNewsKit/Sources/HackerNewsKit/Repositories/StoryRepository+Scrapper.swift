@@ -18,7 +18,7 @@ extension StoryRepository {
     fileprivate static let itemBaseUrl = "https://news.ycombinator.com/item?id=";
     fileprivate static let athingComtrSelector = "#hnmain > tbody > tr > td > table > tbody > .athing.comtr";
     fileprivate static let commentTextSelector = "td > table > tbody > tr > td.default > div.comment > div.commtext";
-    fileprivate static let commentHeadSelector = "td > table > tbody > tr > td.default > div > span > a";
+    fileprivate static let commentHeaderSelector = "td > table > tbody > tr > td.default > div > span > a";
     fileprivate static let commentAgeSelector = "td > table > tbody > tr > td.default > div > span > span.age";
     fileprivate static let commentIndentSelector = "td > table > tbody > tr > td.ind";
     
@@ -28,7 +28,8 @@ extension StoryRepository {
         var parentTextCount = 0
         let dateFormatter : DateFormatter = DateFormatter()
         let locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.000000Z"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.timeZone = .gmt
         dateFormatter.locale = locale
 
         func fetchElements(page: Int) async throws -> Elements {
@@ -93,12 +94,12 @@ extension StoryRepository {
                 let parsedText = parseCommentTextHtml(html: cmtText)
                 
                 /// Get comment author.
-                guard let cmtHeadElements = try? element.select(Self.commentHeadSelector) else { continue }
+                guard let cmtHeadElements = try? element.select(Self.commentHeaderSelector) else { continue }
                 guard let cmtAuthor = try? cmtHeadElements.first()?.text() else { continue }
                 
                 /// Get comment age.
                 guard let cmtAgeElements = try? element.select(Self.commentAgeSelector) else { continue }
-                guard let ageString = try? cmtAgeElements.attr("title") else { continue }
+                guard let ageString = try? cmtAgeElements.attr("title").components(separatedBy: .whitespaces).first else { continue }
                 guard let timestamp = dateFormatter.date(from: ageString)?.timeIntervalSince1970 else { continue }
 
                 /// Get comment indent.
